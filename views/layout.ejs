@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-ng-app="PDIAP">
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>MOVACI</title>
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="/bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+      body {
+        background: #eeeeee;
+      }
+      .wrapper {
+        padding: 15px 35px;
+        margin-top: 50px;
+        max-width: 450px;
+      }
+      .wrapper-registro {
+        padding: 0 30%;
+        margin-top: 5%;
+      }
+      .material-icons { padding-top: 5px !important; }
+      .btnEnviar {
+        width: 70%;
+        border-radius: 50px;
+      }
+      .btn[disabled] {
+        background:gray !important;
+        pointer-events: none;
+        cursor: not-allowed !important;
+      }
+      .text-green {
+        color: #4CAF50 !important;
+      }
+      .text-red {
+        color: #f44336 !important;
+      }
+      #senha-fraca {
+        color: #ef5350;
+        font-size: 13.5px!important;
+        margin-left: 3rem;
+      }
+      #senha-regular {
+        color: #fbc02d;
+        font-size: 13.5px!important;
+        margin-left: 3rem;
+      }
+      #senha-forte {
+        color: #66bb6a;
+        font-size: 13.5px!important;
+        margin-left: 3rem;
+      }
+      input:not([type]):focus:not([readonly]),
+      input[type=text]:focus:not([readonly]),
+      input[type=password]:focus:not([readonly]),
+      input[type=email]:focus:not([readonly]),
+      input[type=url]:focus:not([readonly]),
+      input[type=time]:focus:not([readonly]),
+      input[type=date]:focus:not([readonly]),
+      input[type=datetime]:focus:not([readonly]),
+      input[type=datetime-local]:focus:not([readonly]),
+      input[type=tel]:focus:not([readonly]),
+      input[type=number]:focus:not([readonly]),
+      input[type=search]:focus:not([readonly]),
+      textarea.materialize-textarea:focus:not([readonly]) {
+        border-color: #26a69a !important;
+        box-shadow: 0 1px 0 0 #26a69a !important;
+      }
+      input:not([type]):focus:not([readonly])+label,
+      input[type=text]:focus:not([readonly])+label,
+      input[type=password]:focus:not([readonly])+label,
+      input[type=email]:focus:not([readonly])+label,
+      input[type=url]:focus:not([readonly])+label,
+      input[type=time]:focus:not([readonly])+label,
+      input[type=date]:focus:not([readonly])+label,
+      input[type=datetime]:focus:not([readonly])+label,
+      input[type=datetime-local]:focus:not([readonly])+label,
+      input[type=tel]:focus:not([readonly])+label,
+      input[type=number]:focus:not([readonly])+label,
+      input[type=search]:focus:not([readonly])+label,
+      textarea.materialize-textarea:focus:not([readonly])+label {
+        color: #424242 !important;
+      }
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active,
+      textarea:-webkit-autofill,
+      textarea:-webkit-autofill:hover,
+      textarea:-webkit-autofill:focus,
+      textarea:-webkit-autofill:active,
+      select:-webkit-autofill,
+      select:-webkit-autofill:hover,
+      select:-webkit-autofill:focus,
+      select:-webkit-autofill:active {
+        transition: background-color 5000s ease-in-out 0s;
+        -webkit-text-fill-color: inherit !important;
+      }
+      .redefinir {
+        font-size: 0.9em;
+        margin-top: 30px;
+      }
+      .btn-redefinir {
+        cursor: pointer;
+      }
+      .spinner-layer { border-color: #fff !important; }
+      select { display: inline-block; }
+      .preloader-wrapper.small-1 {
+        width: 24px !important;
+        height: 24px !important;
+        vertical-align: middle !important;
+        margin-right: 8px;
+      }
+      .wrapper-registro h5 { padding-top: 50px; }
+    </style>
+  </head>
+  <body>
+    
+    <data-ng-view ></data-ng-view>
+
+    <!--JavaScript-->   
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/bower_components/Materialize/dist/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/js/init.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+         $('select').material_select();
+      });
+    </script>
+    <script type="text/javascript" src="/libs/angular-route.min.js"></script>
+    <script type="text/javascript" src="/libs/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="/libs/angular-resource.min.js"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
+    <script type="text/javascript" src="/js/routes/routes.js"></script>
+    <script type="text/javascript" src="/js/configs/checkLoggedin.js"></script>
+    <script type="text/javascript" src="/js/interceptors/loginInterceptor.js"></script>
+    <script type="text/javascript" src="/js/configs/values.js"></script>
+    <script type="text/javascript" src="/js/configs/interceptorsConfig.js"></script>
+    <script type="text/javascript" src="/js/controllers/loginCtrl.js"></script>
+    <script type="text/javascript" src="/js/controllers/adminCtrl.js"></script>
+    <script type="text/javascript" src="/js/controllers/registroCtrl.js"></script>
+    <script type="text/javascript" src="/js/services/projetosAPIService.js"></script>
+    
+
+    
+  </body>
+</html>
