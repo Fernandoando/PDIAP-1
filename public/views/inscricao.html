@@ -1,0 +1,285 @@
+<div>
+  <nav>
+    <div class="nav-wrapper grey darken-1">
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#/login">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="wrapper-registro">
+  <h1 class="center-align">Inscrição de Projetos</h1>
+  <h5 class="center-align">- Ignora -</h5>
+  <div class="row">
+    <form name="inscricaoProjeto" class="col s12" novalidate>
+      <!-- Nome do projeto -->
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.nomeProjeto.$pristine || inscricaoProjeto.nomeProjeto.$untouched" class="material-icons prefix grey-text text-darken-3">label</i>
+          <i data-ng-show="inscricaoProjeto.nomeProjeto.$valid && inscricaoProjeto.nomeProjeto.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.nomeProjeto.$invalid && inscricaoProjeto.nomeProjeto.$touched && inscricaoProjeto.nomeProjeto.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="nomeProjeto" name="nomeProjeto" type="text" data-ng-model="projeto.nomeProjeto" class="validate" data-ng-required="true" data-ng-minlength="3">
+          <label for="nomeProjeto" ng-class="{ 'text-green': inscricaoProjeto.nomeProjeto.$valid && inscricaoProjeto.nomeProjeto.$touched }">Nome do Projeto</label>
+        </div>
+      </div>
+      <div class="row col s12">
+        <label>Categoria</label>
+        <select>
+          <option value="" disabled selected>Escolha uma opção...</option>
+          <option value="1">Mango</option>
+          <option value="2">Orange</option>
+          <option value="3">Apple</option>
+        </select>               
+      </div>
+      <div class="row col s12">
+        <label>Eixo Temático</label>
+        <select>
+          <option value="" disabled selected>Escolha uma opção...</option>
+          <option value="1">Mango</option>
+          <option value="2">Orange</option>
+          <option value="3">Apple</option>
+        </select>               
+      </div>
+      <h5>Informações sobre a Instituição de Ensino</h5>
+      <hr>
+      <div class="row">
+        <div class="input-field col s12">
+         <!--  <i data-ng-show="inscricaoProjeto.nomeEscola.$pristine || inscricaoProjeto.nomeEscola.$untouched" class="material-icons prefix grey-text text-darken-3">store</i>
+          <i data-ng-show="inscricaoProjeto.nomeEscola.$valid && inscricaoProjeto.nomeEscola.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.nomeEscola.$invalid && inscricaoProjeto.nomeEscola.$touched && inscricaoProjeto.nomeEscola.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="nomeEscola" name="nomeEscola" type="text" data-ng-model="projeto.nomeEscola" data-ng-required="true">
+          <label for="nomeEscola">Nome da Escola</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.cidadeEscola.$pristine || inscricaoProjeto.cidadeEscola.$untouched" class="material-icons prefix grey-text text-darken-3">location_on</i>
+          <i data-ng-show="inscricaoProjeto.cidadeEscola.$valid && inscricaoProjeto.cidadeEscola.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.cidadeEscola.$invalid && inscricaoProjeto.cidadeEscola.$touched && inscricaoProjeto.cidadeEscola.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="cidadeEscola" name="cidadeEscola" type="text" data-ng-model="projeto.cidadeEscola" data-ng-required="true">
+          <label for="cidadeEscola">Cidade</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.cidadeEscola.$pristine || inscricaoProjeto.cidadeEscola.$untouched" class="material-icons prefix grey-text text-darken-3">picture_in_picture</i>
+          <i data-ng-show="inscricaoProjeto.cidadeEscola.$valid && inscricaoProjeto.cidadeEscola.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.cidadeEscola.$invalid && inscricaoProjeto.cidadeEscola.$touched && inscricaoProjeto.cidadeEscola.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="cidadeEscola" name="cidadeEscola" type="text" data-ng-model="projeto.cidadeEscola" data-ng-required="true">
+          <label for="cidadeEscola">CEP</label>
+        </div>
+      </div>
+      <div class="row col s12">
+        <label>Estado</label>
+        <select>
+          <option value="" disabled selected>Escolha uma opção...</option>
+          <option value="1">RS</option>
+          <option value="2">SC</option>
+          <option value="3">PR</option>
+        </select>               
+      </div>
+      <h5>Informações sobre o(s) Orientador(es)</h5>
+      <hr>
+      <h5>Número de Orientadores</h5>
+      <p>
+        <input class="with-gap" name="group1" type="radio" id="orient1" checked />
+        <label for="orient1">1</label>
+        <input class="with-gap" name="group1" type="radio" id="orient2"  />
+        <label for="orient2">2</label>
+        <input class="with-gap" name="group1" type="radio" id="orient3"  />
+        <label for="orient3">3</label>
+      </p>
+      <h5>Dados do orientador 1:</h5>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.nomeOrient1.$pristine || inscricaoProjeto.nomeOrient1.$untouched" class="material-icons prefix grey-text text-darken-3">account_circle</i>
+          <i data-ng-show="inscricaoProjeto.nomeOrient1.$valid && inscricaoProjeto.nomeOrient1.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.nomeOrient1.$invalid && inscricaoProjeto.nomeOrient1.$touched && inscricaoProjeto.nomeOrient1.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="nomeOrient1" name="nomeOrient1" type="text" data-ng-model="projeto.nomeOrient1" data-ng-required="true">
+          <label for="nomeOrient1">Nome completo</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.cpfOrient1.$pristine || inscricaoProjeto.cpfOrient1.$untouched" class="material-icons prefix grey-text text-darken-3">account_circle</i>
+          <i data-ng-show="inscricaoProjeto.cpfOrient1.$valid && inscricaoProjeto.cpfOrient1.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.cpfOrient1.$invalid && inscricaoProjeto.cpfOrient1.$touched && inscricaoProjeto.cpfOrient1.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="cpfOrient1" name="cpfOrient1" type="text" data-ng-model="projeto.cpfOrient1" data-ng-required="true">
+          <label for="cpfOrient1">CPF</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.emailOrient1.$pristine || inscricaoProjeto.emailOrient1.$untouched" class="material-icons prefix grey-text text-darken-3">email</i>
+          <i data-ng-show="inscricaoProjeto.emailOrient1.$valid && inscricaoProjeto.emailOrient1.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.emailOrient1.$invalid && inscricaoProjeto.emailOrient1.$touched && inscricaoProjeto.emailOrient1.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="emailOrient1" name="emailOrient1" type="email" data-ng-model="projeto.emailOrient1" data-ng-required="true" data-ng-pattern="/^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/">
+          <label for="emailOrient1">E-mail</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.foneOrient1.$pristine || inscricaoProjeto.foneOrient1.$untouched" class="material-icons prefix grey-text text-darken-3">phone</i>
+          <i data-ng-show="inscricaoProjeto.foneOrient1.$valid && inscricaoProjeto.foneOrient1.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.foneOrient1.$invalid && inscricaoProjeto.foneOrient1.$touched && inscricaoProjeto.foneOrient1.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="foneOrient1" name="foneOrient1" type="text" data-ng-model="projeto.foneOrient1" data-ng-required="true">
+          <label for="foneOrient1">Telefone</label>
+        </div>
+      </div>
+      <div class="row col s12">
+        <label>Tamanho da Camisa</label>
+        <select>
+          <option value="" disabled selected>Escolha uma opção...</option>
+          <option value="1">P - Pequena</option>
+          <option value="2">M - Média</option>
+          <option value="3">G - Grande</option>
+        </select>               
+      </div>
+
+      <!-- Alunos -->
+      <h5>Informações sobre o(s) Aluno(s)</h5>
+      <hr>
+      <h5>Número de Alunos</h5>
+      <p>
+        <input class="with-gap" name="group1" type="radio" id="orient1" checked />
+        <label for="orient1">1</label>
+        <input class="with-gap" name="group1" type="radio" id="orient2"  />
+        <label for="orient2">2</label>
+        <input class="with-gap" name="group1" type="radio" id="orient3"  />
+        <label for="orient3">3</label>
+      </p>
+      <h5>Dados do aluno 1:</h5>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.nomeAluno1.$pristine || inscricaoProjeto.nomeAluno1.$untouched" class="material-icons prefix grey-text text-darken-3">account_circle</i>
+          <i data-ng-show="inscricaoProjeto.nomeAluno1.$valid && inscricaoProjeto.nomeAluno1.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.nomeAluno1.$invalid && inscricaoProjeto.nomeAluno1.$touched && inscricaoProjeto.nomeAluno1.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="nomeAluno1" name="nomeAluno1" type="text" data-ng-model="projeto.nomeAluno1" data-ng-required="true">
+          <label for="nomeAluno1">Nome completo</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.cpfAluno1.$pristine || inscricaoProjeto.cpfAluno1.$untouched" class="material-icons prefix grey-text text-darken-3">account_circle</i>
+          <i data-ng-show="inscricaoProjeto.cpfAluno1.$valid && inscricaoProjeto.cpfAluno1.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.cpfAluno1.$invalid && inscricaoProjeto.cpfAluno1.$touched && inscricaoProjeto.cpfAluno1.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="cpfAluno1" name="cpfAluno1" type="text" data-ng-model="projeto.cpfAluno1" data-ng-required="true">
+          <label for="cpfAluno1">CPF</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.emailAluno1.$pristine || inscricaoProjeto.emailAluno1.$untouched" class="material-icons prefix grey-text text-darken-3">email</i>
+          <i data-ng-show="inscricaoProjeto.emailAluno1.$valid && inscricaoProjeto.emailAluno1.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.emailAluno1.$invalid && inscricaoProjeto.emailAluno1.$touched && inscricaoProjeto.emailAluno1.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="emailAluno1" name="emailAluno1" type="email" data-ng-model="projeto.emailAluno1" data-ng-required="true">
+          <label for="emailAluno1">E-mail</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.foneAluno1.$pristine || inscricaoProjeto.foneAluno1.$untouched" class="material-icons prefix grey-text text-darken-3">phone</i>
+          <i data-ng-show="inscricaoProjeto.foneAluno1.$valid && inscricaoProjeto.foneAluno1.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.foneAluno1.$invalid && inscricaoProjeto.foneAluno1.$touched && inscricaoProjeto.foneAluno1.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="foneAluno1" name="foneAluno1" type="text" data-ng-model="projeto.foneAluno1" data-ng-required="true">
+          <label for="foneAluno1">Telefone</label>
+        </div>
+      </div>
+      <div class="row col s12">
+        <label>Tamanho da Camisa</label>
+        <select>
+          <option value="" disabled selected>Escolha uma opção...</option>
+          <option value="1">P - Pequena</option>
+          <option value="2">M - Média</option>
+          <option value="3">G - Grande</option>
+        </select>               
+      </div>
+      <h5>Informações Adicionais</h5>
+      <hr>
+      <h5>Necessita de hospedagem?</h5>
+      <p>
+        <input class="with-gap" name="group1" type="radio" id="hosp-sim" />
+        <label for="hosp-sim">Sim</label>
+        <input class="with-gap" name="group1" type="radio" id="hosp-nao" />
+        <label for="hosp-nao">Não</label>
+      </p>
+      <div class="row col s12">
+        <!-- <label>Para quem?</label> -->
+        <select multiple>
+          <option value="" disabled selected>Para quem?</option>
+          <option value="1">Orientador 1 - nome</option>
+          <option value="2">Orientador 2 - nome</option>
+          <option value="3">Orientador 3 - nome</option>
+          <option value="4">Aluno 1 - nome</option>
+          <option value="5">Aluno 2 - nome</option>
+          <option value="6">Aluno 3 - nome</option>
+        </select>               
+      </div>
+
+      <!-- Resumo -->
+      <h5>Resumo do Projeto</h5>
+      <hr>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="textarea1" class="materialize-textarea" length="120"></textarea>
+              <label for="textarea1">Textarea</label>
+              <span class="right-align">Min.1000 - Max.2000 | Caracteres restantes: 2000</span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.nomeProjeto2.$pristine || inscricaoProjeto.nomeProjeto2.$untouched" class="material-icons prefix grey-text text-darken-3">label</i>
+          <i data-ng-show="inscricaoProjeto.nomeProjeto2.$valid && inscricaoProjeto.nomeProjeto2.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.nomeProjeto2.$invalid && inscricaoProjeto.nomeProjeto2.$touched && inscricaoProjeto.nomeProjeto2.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="nomeProjeto2" name="nomeProjeto2" type="text" data-ng-model="projeto.nomeProjeto2" class="validate" data-ng-required="true" data-ng-minlength="3">
+          <label for="nomeProjeto2" ng-class="{ 'text-green': inscricaoProjeto.nomeProjeto2.$valid && inscricaoProjeto.nomeProjeto2.$touched }">Confirme o Nome do Projeto</label>
+        </div>
+      </div>
+
+      <!-- Email e Senha do projeto -->
+      <h5>Informações de Login</h5>
+      <hr>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.emailProjeto.$pristine || inscricaoProjeto.emailProjeto.$untouched" class="material-icons prefix grey-text text-darken-3">email</i>
+          <i data-ng-show="inscricaoProjeto.emailProjeto.$valid && inscricaoProjeto.emailProjeto.$touched" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.emailProjeto.$invalid && inscricaoProjeto.emailProjeto.$touched && inscricaoProjeto.emailProjeto.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="emailProjeto" name="emailProjeto" type="email" data-ng-model="projeto.emailProjeto" data-ng-required="true">
+          <label for="emailProjeto">E-mail</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.password.$pristine || inscricaoProjeto.password.$invalid || inscricaoProjeto.password.$untouched" class="material-icons prefix grey-text text-darken-3">lock_outline</i>
+          <i data-ng-show="inscricaoProjeto.password.$valid && inscricaoProjeto.password.$touched && inscricaoProjeto.password.$dirty" class="material-icons prefix text-green">done</i> -->
+          <!-- <i data-ng-show="inscricaoProjeto.password2.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="password" name="password" type="password" data-ng-model="projeto.password" data-ng-required="true">
+          <label for="password">Senha</label>
+          <!-- <span data-ng-if="projeto.password.length < 6" id="senha-fraca">senha fraca</span>
+          <span data-ng-if="projeto.password.length > 5 && projeto.password.length < 14" id="senha-regular">senha regular</span>
+          <span data-ng-if="projeto.password.length > 13" id="senha-forte">senha forte</span> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <!-- <i data-ng-show="inscricaoProjeto.password2.$pristine" class="material-icons prefix grey-text text-darken-3">lock_outline</i>
+          <i data-ng-show="inscricaoProjeto.password2.$valid && inscricaoProjeto.password2.$dirty && validarSenha()" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.password2.$dirty && !validarSenha()" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="password2" name="password2" type="password" data-ng-model="projeto.password2" data-ng-required="true">
+          <label for="password2">Confirme a senha</label>
+        </div>
+      </div>
+      
+      <!-- Finalizar -->
+      <div class="row center-align">
+        <a class="waves-effect waves-light btn btn-large" data-ng-disabled="!inscricaoProjeto.$valid || !PasswordValid" data-ng-click="registrar(projeto)">Finalizar</a>
+      </div>
+    </form>
+    {{registro}}
+    {{msg}}
+  </div>
+</div>

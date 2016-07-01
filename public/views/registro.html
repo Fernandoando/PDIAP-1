@@ -1,0 +1,71 @@
+<div>
+  <nav>
+    <div class="nav-wrapper grey darken-1">
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#/login">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="wrapper-registro">
+  <h2 class="center-align">Registrar</h2>
+  <div class="row">
+    <form name="inscricaoProjeto" class="col s12" novalidate>
+      <div class="row">
+        <div class="input-field col s12">
+          <i data-ng-show="(inscricaoProjeto.name.$pristine) || (inscricaoProjeto.name.$invalid && inscricaoProjeto.name.$untouched)" class="material-icons prefix grey-text text-darken-3">perm_identity</i>
+          <i data-ng-show="inscricaoProjeto.name.$valid" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.name.$invalid && inscricaoProjeto.name.$touched && inscricaoProjeto.name.$dirty" class="material-icons prefix text-red">error_outline</i>
+          <input id="name" name="name" type="text" data-ng-model="projeto.name" class="validate" data-ng-required="true" data-ng-minlength="3">
+          <label for="name" ng-class="{ 'text-green': inscricaoProjeto.name.$valid && inscricaoProjeto.name.$touched }">Nome completo</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <i data-ng-show="(inscricaoProjeto.email.$pristine) || (inscricaoProjeto.email.$invalid && inscricaoProjeto.email.$untouched)" class="material-icons prefix grey-text text-darken-3">email</i>
+          <i data-ng-show="inscricaoProjeto.email.$valid" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.email.$invalid && inscricaoProjeto.email.$touched && inscricaoProjeto.email.$dirty" class="material-icons prefix text-red">error_outline</i>
+          <input id="email" name="email" type="email" data-ng-model="projeto.email" data-ng-required="true" data-ng-pattern="/^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <i data-ng-show="(inscricaoProjeto.username.$pristine) || (inscricaoProjeto.username.$invalid && inscricaoProjeto.username.$untouched)" class="material-icons prefix grey-text text-darken-3">account_circle</i>
+          <i data-ng-show="inscricaoProjeto.username.$valid" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.username.$invalid && inscricaoProjeto.username.$touched && inscricaoProjeto.username.$dirty" class="material-icons prefix text-red">error_outline</i>
+          <input id="username" name="username" type="text" data-ng-model="projeto.username" data-ng-required="true" data-ng-minlength="2">
+          <label for="username">Username</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <i data-ng-show="inscricaoProjeto.password.$pristine || inscricaoProjeto.password.$invalid || inscricaoProjeto.password.$untouched" class="material-icons prefix grey-text text-darken-3">lock_outline</i>
+          <i data-ng-show="inscricaoProjeto.password.$valid && inscricaoProjeto.password.$touched && inscricaoProjeto.password.$dirty" class="material-icons prefix text-green">done</i>
+          <!-- <i data-ng-show="inscricaoProjeto.password2.$dirty" class="material-icons prefix text-red">error_outline</i> -->
+          <input id="password" name="password" type="password" data-ng-model="projeto.password" data-ng-required="true">
+          <label for="password">Senha</label>
+          <!-- <span data-ng-if="projeto.password.length < 6" id="senha-fraca">senha fraca</span>
+          <span data-ng-if="projeto.password.length > 5 && projeto.password.length < 14" id="senha-regular">senha regular</span>
+          <span data-ng-if="projeto.password.length > 13" id="senha-forte">senha forte</span> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <i data-ng-show="inscricaoProjeto.password2.$pristine" class="material-icons prefix grey-text text-darken-3">lock_outline</i>
+          <i data-ng-show="inscricaoProjeto.password2.$valid && inscricaoProjeto.password2.$dirty && validarSenha()" class="material-icons prefix text-green">done</i>
+          <i data-ng-show="inscricaoProjeto.password2.$dirty && !validarSenha()" class="material-icons prefix text-red">error_outline</i>
+          <input id="password2" name="password2" type="password" data-ng-model="projeto.password2" data-ng-required="true">
+          <label for="password2">Confirme a senha</label>
+        </div>
+      </div>
+      <!-- Senha valida: {{PasswordValid}} -->
+      <div class="row center-align">
+        <a class="waves-effect waves-light btn btn-large" data-ng-disabled="!inscricaoProjeto.$valid || !PasswordValid" data-ng-click="registrar(projeto)">Registrar</a>
+      </div>
+      {{registro}} 
+      <br>
+      {{msg}}
+    </form>
+  </div>
+</div>
