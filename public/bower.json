@@ -1,0 +1,15 @@
+{
+  "name": "PDIAP",
+  "description": "implementação em Angular da API",
+  "main": "index.html",
+  "authors": [
+    "Ricardo Swarovsky",
+    "Tiago Portaluppi"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "Materialize": "materialize#^0.97.6",
+    "angular": "^1.5.6"
+  }
+}
