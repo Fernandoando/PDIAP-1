@@ -8,17 +8,14 @@ const express = require('express')
 , session = require('express-session')
 , ProjetoSchema = require('../models/projeto-schema');
 
-// GET na index (/projetos)
 router.get('/', function(req, res, next) {
   res.send('Projetos po');
 });
 
-// GET na página de registros (/projetos/registro)
 router.get('/registro', (req, res) => {
 	res.send('página de registro');
 });
 
-// GET na página de login (/projetos/login)
 router.get('/login', (req, res) => {
 	res.send('página de login');
 });
@@ -37,6 +34,7 @@ router.put('/novoIntegrante', (req, res) => {
   console.log(cpf);
   console.log(telefone);
   console.log(tamCamiseta);
+  
   ProjetoSchema.findOneAndUpdate(
     {"email": findEmail}, 
     {$push: {integrantes: {
@@ -46,13 +44,12 @@ router.put('/novoIntegrante', (req, res) => {
         telefone: telefone,
         tamCamiseta: tamCamiseta
     }}
-}).then(function (projeto) {
-    console.log(projeto);
+    }).then(function (projeto) {
+      console.log(projeto);
     res.json({success: true});
-});
+  });
 })
 
-// POST na rota de registro (/projetos/registro)
 router.post('/registro', (req, res) => {
 
   let nomeProjeto = req.body.nomeProjeto
@@ -106,6 +103,14 @@ router.post('/registro', (req, res) => {
   ,   telefoneAluno3 = req.body.telefoneAluno3
   ,   tamCamisetaAluno3 = req.body.tamCamisetaAluno3;
 
+  let arrayIntegrantes;
+let newIntegrante5;
+
+      if (tipoAluno3 || nomeAluno3 || emailAluno3
+          || cpfAluno3 || telefoneAluno3 || tamCamisetaAluno3) {
+        arrayIntegrantes = newIntegrante5 + ", teste";
+      console.log("console.log teste"+arrayIntegrantes);
+      }
 
   	// Validações
   	//req.checkBody('name', 'Name is required').notEmpty();
@@ -183,49 +188,22 @@ router.post('/registro', (req, res) => {
       email: email,
       password: password,
       password2: password2,
-
-      integrantes: [newIntegrante, newIntegrante2, newIntegrante3, newIntegrante4, newIntegrante5]
-      
-      /*orientador1: [{
-        nomeOrientador1: nomeOrientador1,
-        emailOrientador1: emailOrientador1,
-        cpfOrientador1: cpfOrientador1,
-        telefoneOrientador1: telefoneOrientador1,
-        tamCamisetaOrientador1: tamCamisetaOrientador1
-      }],      
-      
-      orientador2: [{
-      nomeOrientador2: nomeOrientador2,
-      emailOrientador2: emailOrientador2,
-      cpfOrientador2: cpfOrientador2,
-      telefoneOrientador2: telefoneOrientador2,
-      tamCamisetaOrientador2: tamCamisetaOrientador2
-      }],
-
-      aluno1: [{
-      nomeAluno1: nomeAluno1,
-      emailAluno1: emailAluno1,
-      cpfAluno1: cpfAluno1,
-      telefoneAluno1: telefoneAluno1,
-      tamCamisetaAluno1: tamCamisetaAluno1
-      }],
-
-      aluno2: [{
-      nomeAluno2: nomeAluno2,
-      emailAluno2: emailAluno2,
-      cpfAluno2: cpfAluno2,
-      telefoneAluno2: telefoneAluno2,
-      tamCamisetaAluno2: tamCamisetaAluno2
-      }],
-
-      aluno3: [{
-      nomeAluno3: nomeAluno3,
-      emailAluno3: emailAluno3,
-      cpfAluno3: cpfAluno3,
-      telefoneAluno3: telefoneAluno3,
-      tamCamisetaAluno3: tamCamisetaAluno3
-      }]*/
 		});
+
+    if(tipoAluno3 && nomeAluno3 && emailAluno3 && cpfAluno3 && telefoneAluno3 && tamCamisetaAluno3){
+      newProject.integrantes.push(newIntegrante5);
+    }
+
+    if(tipoAluno2 && nomeAluno2 && emailAluno2 && cpfAluno2 && telefoneAluno2 && tamCamisetaAluno2){
+      newProject.integrantes.push(newIntegrante4);
+    }
+    
+    if(tipoOrientador2 && nomeOrientador2 && emailOrientador2 && cpfOrientador2 && telefoneOrientador2 && tamCamisetaOrientador2){
+          newProject.integrantes.push(newIntegrante2);
+    }
+
+    newProject.integrantes.push(newIntegrante);
+    newProject.integrantes.push(newIntegrante3);
 
 		Projeto.createProject(newProject, (err, user) => {});
 
