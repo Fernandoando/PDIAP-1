@@ -103,15 +103,6 @@ router.post('/registro', (req, res) => {
   ,   telefoneAluno3 = req.body.telefoneAluno3
   ,   tamCamisetaAluno3 = req.body.tamCamisetaAluno3;
 
-  let arrayIntegrantes;
-let newIntegrante5;
-
-      if (tipoAluno3 || nomeAluno3 || emailAluno3
-          || cpfAluno3 || telefoneAluno3 || tamCamisetaAluno3) {
-        arrayIntegrantes = newIntegrante5 + ", teste";
-      console.log("console.log teste"+arrayIntegrantes);
-      }
-
   	// Validações
   	//req.checkBody('name', 'Name is required').notEmpty();
   	req.checkBody('email', 'Email is required').notEmpty();
