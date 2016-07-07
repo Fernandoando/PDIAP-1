@@ -59,7 +59,7 @@ const ProjetoSchema = new Schema({
 	},
 
 	email: {
-		type: String, required: true, unique: 'Email já existe.', uniqueCaseInsensitive: true
+		type: String, required: true, unique: true, uniqueCaseInsensitive: true
 	},
 	password: {
 		type: String, required: true
@@ -69,6 +69,6 @@ const ProjetoSchema = new Schema({
 	
 }, { collection: 'betaPorcaoAPI' })
 
-ProjetoSchema.plugin(uniqueValidator);
+//ProjetoSchema.plugin(uniqueValidator);
 const Projeto = module.exports = mongoose.model('Projeto', ProjetoSchema);
 //const Integrante = module.exports = mongoose.model('IntegranteSchema', IntegranteSchema);

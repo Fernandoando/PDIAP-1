@@ -8,12 +8,45 @@ const express = require('express')
 , session = require('express-session')
 , ProjetoSchema = require('../models/projeto-schema');
 
+/*router.post('/teste', function(req, res) {
+      var query = {};
+      //generetae query for partial search
+      query.email = new RegExp(req.body.email, 'i');// assume email is field name for query.email
+
+        ProjetoSchema.find(query.email,'email -_id', function(error, emails){
+          if(error) {
+            return res.status(400).send({msg:"error occurred"});
+          }
+          return res.status(200).send(emails);
+        });
+});
+
+router.get('/testaemail', function(req, res) {
+ //     var query2 = req.body.email;
+   //   var query = new RegExp(["^", query2, "$"].join(""), "i");
+//ProjetoSchema.find({'email':''},'email -_id', function(error, emails){
+
+        ProjetoSchema.find('email','email -_id', function(error, emails){
+          if(error) {
+            return res.status(400).send({msg:"error occurred"});
+          }
+          return res.status(200).send(emails);
+        });
+});*/
+
 router.get('/', function(req, res, next) {
   res.send('Projetos po');
 });
 
-router.get('/registro', (req, res) => {
-	res.send('página de registro');
+router.get('/registro', testaEmail, (req, res) => {
+
+  /*ProjetoSchema.find('email','email -_id', function(error, emails){
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    }
+      return res.status(200).send(emails);
+   });*/
+
 });
 
 router.get('/login', (req, res) => {
@@ -50,7 +83,30 @@ router.put('/novoIntegrante', (req, res) => {
   });
 })
 
-router.post('/registro', (req, res) => {
+function testaEmail(req, res) {
+    ProjetoSchema.find('email','email -_id', function(error, emails){
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    } else
+      return res.status(200).send(emails);
+  });
+}
+
+function testaEmail2(req, res, next) {
+  var query2 = req.body.email;
+  var query = new RegExp(["^", query2, "$"].join(""), "i");
+
+  ProjetoSchema.find({'email':query},'email -_id', function(error, emails){
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    } else if(emails != 0) {
+      res.status(202).send("Email já cadastrado");
+    } else
+      return next();
+    });
+}
+
+router.post('/registro', testaEmail2, (req, res) => {
 
   let nomeProjeto = req.body.nomeProjeto
   ,   tipo = req.body.tipo
@@ -104,10 +160,8 @@ router.post('/registro', (req, res) => {
   ,   tamCamisetaAluno3 = req.body.tamCamisetaAluno3;
 
   	// Validações
-  	//req.checkBody('name', 'Name is required').notEmpty();
   	req.checkBody('email', 'Email is required').notEmpty();
   	req.checkBody('email', 'Email is not valid').isEmail();
-  	//req.checkBody('username', 'Username is required').notEmpty();
   	req.checkBody('password', 'Password is required').notEmpty();
   	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
@@ -203,49 +257,6 @@ router.post('/registro', (req, res) => {
   res.send('OK');
 });
 
-// POST na rota de registro (/projetos/registro)
-router.post('/registroVelho', (req, res) => {
-  let name = req.body.name
-  ,   email = req.body.email
-  ,   username = req.body.username
-  ,   password = req.body.password
-  ,   password2 = req.body.password2;
-
-    // Validações
-    req.checkBody('name', 'Name is required').notEmpty();
-    req.checkBody('email', 'Email is required').notEmpty();
-    req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('username', 'Username is required').notEmpty();
-    req.checkBody('password', 'Password is required').notEmpty();
-    req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-
-  console.log(name);
-  console.log(email);
-  console.log(username);
-  console.log(password);
-  console.log(password2);
-
-  let errors = req.validationErrors();
-
-  if(errors){
-    res.send('error');
-    console.log('Erros: '+errors);
-  } else {
-    let newProject = new ProjetoSchema({
-      name: name,
-      email: email,
-      username: username,
-      password: password
-    });
-
-    Projeto.createProject(newProject, (err, user) => {
-      if(err) throw err;
-      console.log(user);
-    });
-    res.send('OK');
-  }
-});
-
 // Setando a estatégia a ser usada no passport
 passport.use(new LocalStrategy(
 	(email, password, done) => {
@@ -324,8 +335,6 @@ router.post('/logout', (req, res) => {
 router.get('/update', (req, res) => {
   res.send('Página de update');
 });
-
-//=========================================================
 
 router.put('/update', ensureAuthenticated, (req, res) => {
   let id = req.user.id;
