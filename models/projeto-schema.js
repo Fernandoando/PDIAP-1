@@ -67,10 +67,18 @@ const ProjetoSchema = new Schema({
 		type: String
 	},
 
+
+	resetPasswordToken: {type: String},
+    resetPasswordCreatedDate: {type: Date},
+
+
 	integrantes: [IntegranteSchema]
 	
 }, { collection: 'betaPorcaoAPI' });
 
-//ProjetoSchema.plugin(uniqueValidator);
+ProjetoSchema.methods.hasExpired= function(){
+    let now = new Date().now;
+    return (now - ProjetoSchema.resetPasswordCreatedDate) > 7; //token is a week old
+};
+
 const Projeto = module.exports = mongoose.model('Projeto', ProjetoSchema);
-//const Integrante = module.exports = mongoose.model('IntegranteSchema', IntegranteSchema);

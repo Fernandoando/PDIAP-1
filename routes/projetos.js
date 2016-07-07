@@ -6,7 +6,9 @@ const express = require('express')
 , LocalStrategy = require('passport-local').Strategy
 , Projeto = require('../controllers/projeto-controller')
 , session = require('express-session')
-, ProjetoSchema = require('../models/projeto-schema');
+, ProjetoSchema = require('../models/projeto-schema')
+, crypto = require('crypto')
+, bcrypt = require('bcryptjs');
 
 function testaEmail(req, res) {
     ProjetoSchema.find('email','email -_id', function(error, emails){
@@ -260,6 +262,56 @@ router.put('/update', ensureAuthenticated, (req, res) => {
     }
   });
 });
+
+router.post('/redefinir-senha', (req, res) => {
+  let email = req.body.email;
+  crypto.randomBytes(20, (err, buf) => {
+    let token = buf.toString('hex');
+    console.log(token);
+
+    ProjetoSchema.findOneAndUpdate({email: email}, {$set:{resetPasswordToken:token, resetPasswordCreatedDate:Date.now() + 3600000}}, {new: true}, function(err, doc){
+      if(err){
+          console.log("Something wrong when updating data!");
+      } else{
+        //FALTA ENVIAR O EMAIL COM O LINK PRA TROCAR A SENHA
+        res.status(200).send("url: http://localhost:3000/projetos/nova-senha/"+email+"/"+token);
+        console.log(doc);
+      }
+    });
+  });
+});
+
+router.post('/nova-senha/:email/:token', (req, res) => {
+  if(req.params.token === '') {
+    res.status(400).send("erro");
+    //console.log('err');
+  } else {
+    ProjetoSchema.findOne({email: (req.params.email)}, function(err, usr) {
+      if(err || !usr) {
+        res.status(400).send("erro2");            
+      } else if(usr.resetPasswordToken == req.params.token && !usr.hasExpired()) {
+        usr.resetPasswordToken = undefined;
+        usr.resetPasswordCreatedDate = undefined;
+        let password = req.body.password;
+
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(password, salt, (err, hash) => {
+            usr.password = hash;
+            usr.save((err, usr) => {
+              if(err) throw err;
+              //console.log(usr);
+              res.status(200).send('Senha alterada');
+            });
+          });
+        });
+      } else {
+        res.status(400).send("erro3");  
+      }
+    });
+  };
+});
+
+
 
 //=====================================================================
 
