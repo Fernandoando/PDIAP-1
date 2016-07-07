@@ -78,7 +78,7 @@ const ProjetoSchema = new Schema({
 
 ProjetoSchema.methods.hasExpired= function(){
     let now = new Date().now;
-    return (now - ProjetoSchema.resetPasswordCreatedDate) > 7; //token is a week old
+    return (now - ProjetoSchema.resetPasswordCreatedDate) > 1; //token is a week old
 };
 
 const Projeto = module.exports = mongoose.model('Projeto', ProjetoSchema);
