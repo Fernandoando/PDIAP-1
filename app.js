@@ -14,6 +14,7 @@ const express = require('express')
 ,     routes = require('./routes/index')
 ,     projetos = require('./routes/projetos')
 ,     avaliadores = require('./routes/avaliadores')
+,     saberes = require('./routes/saberes-docentes')
 ,     db = require('./configs/db-config')
 ,     app = express();
 
@@ -73,6 +74,7 @@ app.use((req, res, next) => {
 app.use('/', routes);
 app.use('/projetos', projetos);
 app.use('/avaliadores', avaliadores);
+app.use('/saberes-docentes', saberes);
 
           /*// Set Port
           app.set('port', (process.env.PORT || 3000));
