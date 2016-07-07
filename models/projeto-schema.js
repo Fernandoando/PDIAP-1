@@ -63,6 +63,9 @@ const ProjetoSchema = new Schema({
 	password: {
 		type: String, required: true
 	},
+	aprovado: {
+		type: String
+	},
 
 	integrantes: [IntegranteSchema]
 	

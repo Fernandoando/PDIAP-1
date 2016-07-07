@@ -244,7 +244,22 @@ router.post('/logout', (req, res) => {
   res.redirect('/#/login');
 });
 
+router.get('/update', (req, res) => {
+  res.send('Página de update');
+});
 
+router.put('/update', ensureAuthenticated, (req, res) => {
+  let id = req.user.id;
+  let newProject = req.body;
+  ProjetoSchema.update({_id:id}, {$set:newProject}, {new: true}, function(err,docs) {
+    if(err) {
+      console.log("Deu erro");
+    } else {
+      console.log("Projeto modificado", docs);
+      res.status(200).send(newProject);
+    }
+  });
+});
 
 //=====================================================================
 
@@ -265,23 +280,6 @@ router.get('/todos', ensureAuthenticated, (req, res) => {
 });
 
 
-
-router.get('/update', (req, res) => {
-  res.send('Página de update');
-});
-
-router.put('/update', ensureAuthenticated, (req, res) => {
-  let id = req.user.id;
-  let newProject = req.body;
-  ProjetoSchema.update({_id:id}, {$set:newProject}, {new: true}, function(err,docs) {
-    if(err) {
-      console.log("Deu erro");
-    } else {
-      console.log("Projeto modificado", docs);
-      res.status(200).send(newProject);
-    }
-  });
-});
 
 /*router.put("/:id",function (req,res) {
           var newUser = req.body;
