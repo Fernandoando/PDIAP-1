@@ -13,6 +13,7 @@ const express = require('express')
 ,     bodyParser = require('body-parser')
 ,     routes = require('./routes/index')
 ,     projetos = require('./routes/projetos')
+,     avaliadores = require('./routes/avaliadores')
 ,     db = require('./configs/db-config')
 ,     app = express();
 
@@ -71,6 +72,7 @@ app.use((req, res, next) => {
 
 app.use('/', routes);
 app.use('/projetos', projetos);
+app.use('/avaliadores', avaliadores);
 
           /*// Set Port
           app.set('port', (process.env.PORT || 3000));

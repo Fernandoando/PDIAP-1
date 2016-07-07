@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 ,	bcrypt = require('bcryptjs')
-,	uniqueValidator = require('mongoose-unique-validator')
 ,	Schema = mongoose.Schema;
 
 const IntegranteSchema = new Schema({
@@ -67,7 +66,7 @@ const ProjetoSchema = new Schema({
 
 	integrantes: [IntegranteSchema]
 	
-}, { collection: 'betaPorcaoAPI' })
+}, { collection: 'betaPorcaoAPI' });
 
 //ProjetoSchema.plugin(uniqueValidator);
 const Projeto = module.exports = mongoose.model('Projeto', ProjetoSchema);
