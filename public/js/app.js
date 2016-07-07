@@ -2,5 +2,5 @@
 	'use strict';
 	
 	angular
-		.module('PDIAP', ['ngResource', 'ngRoute']);
+		.module('PDIAP', ['ngResource', 'ngRoute', 'ngMaterial']);
 })();

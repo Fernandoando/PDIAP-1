@@ -4,11 +4,13 @@
     <base href="/">
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>MOVACI</title>
     <!--CSS-->
-    <link rel="stylesheet" type="text/css" href="/bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection"/>
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection"/> -->
     <style>
       body {
         background: #eeeeee;
@@ -19,24 +21,18 @@
         max-width: 450px;
       }
       .wrapper-registro {
-        padding: 0 30%;
+        padding: 0 15%;
         margin-top: 5%;
+        background: #eeeeee;
       }
-      .material-icons { padding-top: 5px !important; }
       .btnEnviar {
         width: 70%;
         border-radius: 50px;
       }
-      .btn[disabled] {
-        background:gray !important;
-        pointer-events: none;
-        cursor: not-allowed !important;
-      }
-      .text-green {
-        color: #4CAF50 !important;
-      }
-      .text-red {
-        color: #f44336 !important;
+      .message-error {     
+        font-size: 12.5px !important;
+        padding: 5px !important;
+        color: #dd2c00;
       }
       #senha-fraca {
         color: #ef5350;
@@ -53,7 +49,24 @@
         font-size: 13.5px!important;
         margin-left: 3rem;
       }
-      input:not([type]):focus:not([readonly]),
+      input:not([type]),
+      input[type=text],
+      input[type=password],
+      input[type=email],
+      input[type=url],
+      input[type=time],
+      input[type=date],
+      input[type=datetime],
+      input[type=datetime-local],
+      input[type=tel],
+      input[type=number],
+      input[type=search],
+      textarea.materialize-textarea,
+      md-select .md-select-value {
+        height: 2.1rem !important;
+      }
+      /*label { font-size: 16px !important; }*/
+      /*input:not([type]):focus:not([readonly]),
       input[type=text]:focus:not([readonly]),
       input[type=password]:focus:not([readonly]),
       input[type=email]:focus:not([readonly]),
@@ -68,8 +81,8 @@
       textarea.materialize-textarea:focus:not([readonly]) {
         border-color: #26a69a !important;
         box-shadow: 0 1px 0 0 #26a69a !important;
-      }
-      input:not([type]):focus:not([readonly])+label,
+      }*/
+      /*input:not([type]):focus:not([readonly])+label,
       input[type=text]:focus:not([readonly])+label,
       input[type=password]:focus:not([readonly])+label,
       input[type=email]:focus:not([readonly])+label,
@@ -83,7 +96,7 @@
       input[type=search]:focus:not([readonly])+label,
       textarea.materialize-textarea:focus:not([readonly])+label {
         color: #424242 !important;
-      }
+      }*/
       input:-webkit-autofill,
       input:-webkit-autofill:hover,
       input:-webkit-autofill:focus,
@@ -99,6 +112,34 @@
         transition: background-color 5000s ease-in-out 0s;
         -webkit-text-fill-color: inherit !important;
       }
+      md-input-container.md-default-theme.md-input-invalid.md-input-focused label,
+      md-input-container.md-input-invalid.md-input-focused label,
+      md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused label,
+      md-input-container:not(.md-input-invalid).md-input-focused label {
+        color: rgba(0, 0, 0, 0.87) !important;
+      }
+      md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-input,
+      md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+        border-color: #43a047 !important;
+      }
+      md-select.md-default-theme:not([disabled]):focus .md-select-value,
+      md-select:not([disabled]):focus .md-select-value {
+        border-bottom-color: #43a047 !important;
+      }
+      /* teal lighten 1 #26a69a*/
+      md-select.md-default-theme.ng-touched.ng-invalid .md-select-value,
+      md-select.ng-touched.ng-invalid .md-select-value {
+        border-bottom-color: #dd2c00 !important; 
+      }
+      .teal.lighten-1 {
+        background-color: #26a69a !important;
+      }
+      .md-button[disabled] {
+        color: #fff !important;
+        background-color: gray !important;
+        cursor: not-allowed !important;
+      }
+        
       .redefinir {
         font-size: 0.9em;
         margin-top: 30px;
@@ -106,15 +147,13 @@
       .btn-redefinir {
         cursor: pointer;
       }
-      .spinner-layer { border-color: #fff !important; }
-      select { display: inline-block; }
+ /*     .spinner-layer { border-color: #fff !important; }*/
       .preloader-wrapper.small-1 {
         width: 24px !important;
         height: 24px !important;
         vertical-align: middle !important;
         margin-right: 8px;
       }
-      .wrapper-registro h5 { padding-top: 50px; }
     </style>
   </head>
   <body>
@@ -123,14 +162,15 @@
 
     <!--JavaScript-->   
     <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/bower_components/Materialize/dist/js/materialize.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-material/angular-material.js"></script>
+    <!-- <script type="text/javascript" src="/bower_components/Materialize/dist/js/materialize.min.js"></script> -->
+    <!-- <script type="text/javascript" src="/bower_components/angular-materialize/src/angular-materialize.js"></script> -->
     <script type="text/javascript" src="/js/init.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function() {
-         $('select').material_select();
-      });
-    </script>
+    <!-- Angular Material -->
+    <!-- <script src="/bower_components/angular-messages/angular-messages.js"></script> -->
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script> 
     <script type="text/javascript" src="/libs/angular-route.min.js"></script>
     <script type="text/javascript" src="/libs/angular-cookies.min.js"></script>
     <script type="text/javascript" src="/libs/angular-resource.min.js"></script>
@@ -144,8 +184,6 @@
     <script type="text/javascript" src="/js/controllers/adminCtrl.js"></script>
     <script type="text/javascript" src="/js/controllers/registroCtrl.js"></script>
     <script type="text/javascript" src="/js/services/projetosAPIService.js"></script>
-    
-
-    
+    <script type="text/javascript" src="/js/controllers/autocompleteCtrl.js"></script>       
   </body>
 </html>

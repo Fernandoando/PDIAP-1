@@ -41,11 +41,29 @@
 				return $http(request);
 			};
 
+			let _getCategorias = function() {
+				const request = {
+					url: '/js/categorias-eixos.json',
+					method: 'GET',
+				}
+				return $http(request);
+			};
+
+			let _getEstados = function() {
+				const request = {
+					url: '/js/estados-cidades.json',
+					method: 'GET',
+				}
+				return $http(request);
+			};
+
 			return {
 				saveProjeto: _saveProjeto,
 				postLogin: _postLogin,
 				getProjeto: _getProjeto,
-				getTodosProjetos: _getTodosProjetos
+				getTodosProjetos: _getTodosProjetos,
+				getCategorias: _getCategorias,
+				getEstados: _getEstados
 			};
 		});
 })();

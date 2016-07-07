@@ -1,7 +1,6 @@
 {
   "name": "PDIAP",
   "description": "implementação em Angular da API",
-  "main": "index.html",
   "authors": [
     "Ricardo Swarovsky",
     "Tiago Portaluppi"
@@ -10,6 +9,8 @@
   "homepage": "",
   "dependencies": {
     "Materialize": "materialize#^0.97.6",
-    "angular": "^1.5.6"
+    "angular": "^1.5.6",
+    "angular-material": "^1.0.9",
+    "angular-materialize": "^0.1.9"
   }
 }

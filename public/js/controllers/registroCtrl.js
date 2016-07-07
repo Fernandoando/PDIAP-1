@@ -5,10 +5,14 @@
 		.module('PDIAP')
 		.controller('registroCtrl', function($scope, $location, projetosAPI) {
 
+			// $scope.selectCategoria = {};
+
 			$scope.registro = false;
 			$scope.msg = 'msg';
 			$scope.PasswordValid = false;
 			$scope.EnvioValid = false;
+			$scope.eixos = [];
+			$scope.cidades = [];
 
 		  	$scope.registrar = function(projeto){
 			   	
@@ -44,6 +48,52 @@
 				}
 				return $scope.PasswordValid;
 			}
-			
+
+			projetosAPI.getCategorias()
+			.success(function(data) {
+				$scope.listaCategorias = data.categorias;
+			})
+			.error(function(status) {
+				console.log(status);
+			});
+
+			projetosAPI.getEstados()
+			.success(function(data) {
+				$scope.listaEstados = data.estados;
+			})
+			.error(function(status) {
+				console.log(status);
+			});
+
+			$scope.selectEixos = function(cat) {
+				angular.forEach($scope.listaCategorias, function (value, key){
+			        //verifica a categoria selecionada
+			        console.log(value.categoria);
+			        if(cat === value.categoria){
+			            console.log(value.eixos);
+			            $scope.eixos = [];
+			            //adiciona os eixos em $scope.eixos
+			            for (var i in value.eixos) {
+							$scope.eixos.push(value.eixos[i]);
+					    }                 
+			        }
+			    });
+			}
+
+			$scope.selectCidades = function(cid) {
+				angular.forEach($scope.listaEstados, function (value, key){
+			        //verifica o estado selecionado
+			        console.log(value.nome);
+			        if(cid === value.nome){
+			        	console.log(value.cidades);
+			            $scope.cidades = [];
+			            //adiciona as cidades em $scope.cidades
+			            for (var x in value.cidades) {
+							$scope.cidades.push(value.cidades[x]);
+					    }                 
+			        }
+			    });
+			}
+		
 		});
 })();
