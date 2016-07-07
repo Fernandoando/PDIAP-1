@@ -8,81 +8,6 @@ const express = require('express')
 , session = require('express-session')
 , ProjetoSchema = require('../models/projeto-schema');
 
-/*router.post('/teste', function(req, res) {
-      var query = {};
-      //generetae query for partial search
-      query.email = new RegExp(req.body.email, 'i');// assume email is field name for query.email
-
-        ProjetoSchema.find(query.email,'email -_id', function(error, emails){
-          if(error) {
-            return res.status(400).send({msg:"error occurred"});
-          }
-          return res.status(200).send(emails);
-        });
-});
-
-router.get('/testaemail', function(req, res) {
- //     var query2 = req.body.email;
-   //   var query = new RegExp(["^", query2, "$"].join(""), "i");
-//ProjetoSchema.find({'email':''},'email -_id', function(error, emails){
-
-        ProjetoSchema.find('email','email -_id', function(error, emails){
-          if(error) {
-            return res.status(400).send({msg:"error occurred"});
-          }
-          return res.status(200).send(emails);
-        });
-});*/
-
-router.get('/', function(req, res, next) {
-  res.send('Projetos po');
-});
-
-router.get('/registro', testaEmail, (req, res) => {
-
-  /*ProjetoSchema.find('email','email -_id', function(error, emails){
-    if(error) {
-      return res.status(400).send({msg:"error occurred"});
-    }
-      return res.status(200).send(emails);
-   });*/
-
-});
-
-router.get('/login', (req, res) => {
-	res.send('página de login');
-});
-
-router.put('/novoIntegrante', (req, res) => {
-  let nome = req.body.nomeAluno1
-  ,   email = req.body.emailAluno1
-  ,   cpf = req.body.cpfAluno1
-  ,   telefone = req.body.telefoneAluno1
-  ,   tamCamiseta = req.body.tamCamisetaAluno1
-  ,   findEmail = req.body.email;
-
-  console.log(findEmail);
-  console.log(nome);
-  console.log(email);
-  console.log(cpf);
-  console.log(telefone);
-  console.log(tamCamiseta);
-  
-  ProjetoSchema.findOneAndUpdate(
-    {"email": findEmail}, 
-    {$push: {integrantes: {
-        nome: nome,
-        email: email,
-        cpf: cpf,
-        telefone: telefone,
-        tamCamiseta: tamCamiseta
-    }}
-    }).then(function (projeto) {
-      console.log(projeto);
-    res.json({success: true});
-  });
-})
-
 function testaEmail(req, res) {
     ProjetoSchema.find('email','email -_id', function(error, emails){
     if(error) {
@@ -105,6 +30,25 @@ function testaEmail2(req, res, next) {
       return next();
     });
 }
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  else{
+    res.send('0');
+    res.redirect('/#/login');
+  }
+}
+
+router.get('/', function(req, res, next) {
+  res.send('Projetos po');
+});
+
+router.get('/registro', testaEmail, (req, res) => {});
+
+router.get('/login', (req, res) => {
+	res.send('página de login');
+});
 
 router.post('/registro', testaEmail2, (req, res) => {
 
@@ -221,15 +165,12 @@ router.post('/registro', testaEmail2, (req, res) => {
       nomeProjeto: nomeProjeto,
       tipo: tipo,
       categoria: categoria,
-      eixo: eixo,
-      
+      eixo: eixo,      
       nomeEscola: nomeEscola,
       cep: cep,
       cidade: cidade,
-      estado: estado,
-      
-      resumo: resumo,
-      
+      estado: estado,      
+      resumo: resumo,      
       email: email,
       password: password,
       password2: password2,
@@ -257,7 +198,7 @@ router.post('/registro', testaEmail2, (req, res) => {
   res.send('OK');
 });
 
-// Setando a estatégia a ser usada no passport
+// Setando a estatégia do Passport
 passport.use(new LocalStrategy(
 	(email, password, done) => {
 	Projeto.getProjectByEmail(email, (err, user) => {
@@ -286,29 +227,28 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-// POST na rota de login (/projetos/login)
-router.post('/login',
-  passport.authenticate('local'), (req, res) => {
+router.post('/login', passport.authenticate('local'), (req, res) => {
     res.send(req.user);
     //res.redirect('/projetos/dados');
     //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
-  });
+});
 
-// Função pra validar se está autenticado ou não
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated())
-    return next();
-  else{
-    res.send('0');
-    res.redirect('/#/login');
-  }
-    // Return error content: res.jsonp(...) or redirect: res.redirect('/login')
-}
-
-// GET na rota home, redirecionado após logar (/projetos/home) -> vai printar SOMENTE as informações do projeto
 router.get('/home', ensureAuthenticated, (req, res) => {
   res.send(req.user);
 });
+
+router.post('/logout', (req, res) => {
+  req.logout();
+  res.send(200);
+  //res.clearCookie('userid');
+  res.redirect('/#/login');
+});
+
+
+
+//=====================================================================
+
+
 
 //método ligeiro
     /*
@@ -324,13 +264,7 @@ router.get('/todos', ensureAuthenticated, (req, res) => {
   })
 });
 
-// POST pra dar logout :P (/projetos/logout)
-router.post('/logout', (req, res) => {
-	req.logout();
-  res.send(200);
-	//res.clearCookie('userid');
-	res.redirect('/#/login');
-});
+
 
 router.get('/update', (req, res) => {
   res.send('Página de update');
@@ -360,5 +294,36 @@ router.put('/update', ensureAuthenticated, (req, res) => {
             }
           });
         });﻿*/
+
+router.put('/novoIntegrante', (req, res) => {
+  let nome = req.body.nomeAluno1
+  ,   email = req.body.emailAluno1
+  ,   cpf = req.body.cpfAluno1
+  ,   telefone = req.body.telefoneAluno1
+  ,   tamCamiseta = req.body.tamCamisetaAluno1
+  ,   findEmail = req.body.email;
+
+  console.log(findEmail);
+  console.log(nome);
+  console.log(email);
+  console.log(cpf);
+  console.log(telefone);
+  console.log(tamCamiseta);
+  
+  ProjetoSchema.findOneAndUpdate(
+    {"email": findEmail}, 
+    {$push: {integrantes: {
+        nome: nome,
+        email: email,
+        cpf: cpf,
+        telefone: telefone,
+        tamCamiseta: tamCamiseta
+    }}
+    }).then(function (projeto) {
+      console.log(projeto);
+    res.json({success: true});
+  });
+})
+
 
 module.exports = router;
