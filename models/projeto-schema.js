@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose')
 ,	bcrypt = require('bcryptjs')
 ,	Schema = mongoose.Schema;
@@ -76,7 +78,7 @@ const ProjetoSchema = new Schema({
 	
 }, { collection: 'betaPorcaoAPI' });
 
-ProjetoSchema.methods.hasExpired= function(){
+ProjetoSchema.methods.hasExpired = function(){
     let now = new Date().now;
     return (now - ProjetoSchema.resetPasswordCreatedDate) > 1; //token is a week old
 };
