@@ -25,7 +25,7 @@
         margin-top: 5%;
         background: #eeeeee;
       }
-      .btnEnviar {
+      .btnEntrar {
         width: 70%;
         border-radius: 50px;
       }
@@ -112,6 +112,7 @@
         transition: background-color 5000s ease-in-out 0s;
         -webkit-text-fill-color: inherit !important;
       }
+      md-input-container { margin: 10px 0 0 0 !important; }
       md-input-container.md-default-theme.md-input-invalid.md-input-focused label,
       md-input-container.md-input-invalid.md-input-focused label,
       md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused label,
@@ -134,18 +135,30 @@
       .teal.lighten-1 {
         background-color: #26a69a !important;
       }
-      .md-button[disabled] {
+      .red {
+        background-color: #f44336 !important;
+      }
+      .white-text { color: #fff !important; }
+      .md-button[disabled], .md-button.md-raised[disabled] {
         color: #fff !important;
         background-color: gray !important;
         cursor: not-allowed !important;
       }
-        
+      .md-button, .md-button.md-raised { color: #fff !important; }
+      md-card { 
+        margin: 0;
+        font-size: 15px !important; 
+      }
+
       .redefinir {
         font-size: 0.9em;
-        margin-top: 30px;
+        margin-top: 20px;
+        color: #616161;
       }
       .btn-redefinir {
+        color: #424242;
         cursor: pointer;
+        font-weight: bold;
       }
  /*     .spinner-layer { border-color: #fff !important; }*/
       .preloader-wrapper.small-1 {

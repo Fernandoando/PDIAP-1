@@ -1,66 +1,47 @@
-<div>
-	<nav>
-		<div class="nav-wrapper grey darken-1">
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="#/inscricao">Inscrever</a></li>
-			</ul>
-		</div>
-	</nav>
-</div>
-<div class="wrapper container grey lighten-2">
-	<h2 class="center-align">Login</h2>
-	
-	<div class="row center-align" data-ng-if="erro  && !logado && !loading">
-      <div class="col m12">
-        	<div class="card-panel red lighten-1">
-          	<span class="white-text">{{message}}</span>
-        	</div>
-      </div>
-   </div>
-	
-	<div class="row">
-		<form name="userLogin" class="col s12" novalidate>
-			<div class="row" style="margin-bottom:15px!important;">
-				<div class="input-field col s12">
-					<i class="material-icons prefix">perm_identity</i> <!--account_circle-->
-					<input id="icon_prefix" name="email" type="email" data-ng-model="user.email" data-ng-required="true">
-					<label for="icon_prefix">Email</label>
-				</div>
-			</div>
-			<div class="row">	
-				<div class="input-field col s12">
-					<i class="material-icons prefix">lock_outline</i>
-					<input id="icon_prefix2" name="password" type="password" data-ng-model="user.password" data-ng-required="true">
-					<label for="icon_prefix2">Senha</label>
-				</div>
-			</div>
-			<div class="row center-align">
-				<a class="waves-effect waves-light btn btn-large btnEnviar" data-ng-click="login()" data-ng-disabled="!userLogin.$valid">
-					<span style="line-height:54px!important;" data-ng-show="loading && userLogin.$valid">
-						<span><div class="preloader-wrapper small-1 active">
-					    	<div class="spinner-layer spinner-white-only">
-					      		<div class="circle-clipper left">
-					        		<div class="circle"></div>
-					      		</div><div class="gap-patch">
-					        		<div class="circle"></div>
-					      		</div><div class="circle-clipper right">
-					        		<div class="circle"></div>
-					      		</div>
-					    	</div>
-					  	</div>
-					  	</span>
-					  	<span>Validando</span>
-				  	</span>
-				  	<span style="line-height:54px!important;" data-ng-show="!loading">Entrar</span>
-				</a>
-			</div>
-			<div class="row center-align redefinir grey-text">
-				Esqueceu sua senha?<a class="btn-redefinir grey-text text-darken-2" data-ng-click=""> Redefinir</a>  
-			</div>
-		</form>
-		<!-- {{loading}} -->
-	</div>
+<li><a href="#/inscricao">Inscrever</a></li>
 
-	<!-- <p>Logado: {{logado}}</p> -->
+   	<div class="md-padding" layout="column" layout-align="center center">
+   	<h1>Login</h1>
+   	<md-content style="width:35%!important;padding:30px;">
+      	<form name="userLogin" novalidate>    
+         	<md-card class="red white-text" style="margin-bottom:30px!important;text-align:center;" data-ng-if="erro  && !logado && !loading">
+			  	<md-card-title>
+			    	<md-card-title-text>
+			      		{{message}}
+			    	</md-card-title-text>
+			  	</md-card-title>
+			</md-card>
+         	<md-input-container class="md-block" flex-gt-sm>
+               	<label>E-mail</label>
+               	<input type="email" name="email" data-ng-model="user.email" required data-ng-pattern="/^.+@.+\..+$/" />
+               	<!-- <div class="md-errors-spacer">
+                  	<div data-ng-if="projetoForm.email.$dirty || projetoForm.email.$touched">
+                     	<div class="message-error" data-ng-if="projetoForm.email.$error.required">Preencha esse campo.</div>
+                     	<div class="message-error" data-ng-if="projetoForm.email.$error.pattern && projetoForm.email.$touched">Email inválido.</div>
+                  	</div>
+               	</div> -->
+        	</md-input-container>
+	        <md-input-container class="md-block" flex-gt-sm>
+	           	<label>Senha</label>
+	            <input type="password" name="password" data-ng-model="user.password" required />
+	            <!-- <div class="md-errors-spacer">
+	               <div data-ng-if="userLogin.nomeProjeto.$dirty || userLogin.nomeProjeto.$touched">
+	                  <div class="message-error" data-ng-if="userLogin.nomeProjeto.$error.required">Preencha esse campo.</div>
+	                  <div class="message-error" data-ng-if="userLogin.nomeProjeto.$error.pattern && userLogin.nomeProjeto.$touched">Email Inválido.</div>
+	               </div>
+	            </div> -->
+	        </md-input-container>
+	        <div layout="row" layout-align="center center">
+	        <md-button class="md-raised teal lighten-1 btnEntrar" data-ng-disabled="!userLogin.$valid" data-ng-click="login()">
+	        <span data-ng-show="loading && userLogin.$valid">...</span>
+	        <span data-ng-show="!loading">Entrar</span>
+	        </md-button>
+	        </div>
+	        <div layout="row" layout-align="center center" class="redefinir">
+				Esqueceu sua senha?<a class="btn-redefinir" data-ng-click=""> Redefinir</a>  
+			</div>
+	    </form>
+	</md-content>
+	</div>	
 
-</div>
+

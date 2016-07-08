@@ -26,7 +26,6 @@
                      <md-option data-ng-value="x.categoria" data-ng-repeat="x in listaCategorias" data-ng-click="selectEixos(x.categoria)">{{x.categoria}}</md-option>
                   </md-optgroup>
                </md-select>
-               {{projeto.categoria}}
                <div class="md-errors-spacer">
                   <div data-ng-if="projetoForm.eixo.$touched">
                      <div class="message-error" data-ng-if="projetoForm.eixo.$error.required">Selecione uma opção.</div>
