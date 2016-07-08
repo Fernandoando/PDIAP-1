@@ -11,7 +11,7 @@ const express = require('express')
 , bcrypt = require('bcryptjs');
 
 function testaEmail(req, res) {
-    ProjetoSchema.find('email','email -_id', function(error, emails){
+    ProjetoSchema.find('email','email -_id', (error, emails) => {
     if(error) {
       return res.status(400).send({msg:"error occurred"});
     } else
@@ -20,10 +20,10 @@ function testaEmail(req, res) {
 }
 
 function testaEmail2(req, res, next) {
-  var query2 = req.body.email;
-  var query = new RegExp(["^", query2, "$"].join(""), "i");
+  let query2 = req.body.email
+  ,   query = new RegExp(["^", query2, "$"].join(""), "i");
 
-  ProjetoSchema.find({'email':query},'email -_id', function(error, emails){
+  ProjetoSchema.find({'email':query},'email -_id', (error, emails) => {
     if(error) {
       return res.status(400).send({msg:"error occurred"});
     } else if(emails != 0) {
@@ -42,7 +42,7 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   res.send('Projetos po');
 });
 
@@ -251,9 +251,9 @@ router.get('/update', (req, res) => {
 });
 
 router.put('/update', ensureAuthenticated, (req, res) => {
-  let id = req.user.id;
-  let newProject = req.body;
-  ProjetoSchema.update({_id:id}, {$set:newProject}, {new: true}, function(err,docs) {
+  let id = req.user.id
+  ,   newProject = req.body;
+  ProjetoSchema.update({_id:id}, {$set:newProject}, {new: true}, (err,docs) => {
     if(err) {
       console.log("Deu erro");
     } else {
@@ -286,7 +286,7 @@ router.post('/nova-senha/:email/:token', (req, res) => {
     res.status(400).send("erro");
     //console.log('err');
   } else {
-    ProjetoSchema.findOne({email: (req.params.email)}, function(err, usr) {
+    ProjetoSchema.findOne({email: (req.params.email)}, (err, usr) => {
       if(err || !usr) {
         res.status(400).send("erro2");            
       } else if(usr.resetPasswordToken == req.params.token && !usr.hasExpired()) {
