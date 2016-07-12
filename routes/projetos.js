@@ -193,7 +193,7 @@ router.post('/registro', testaEmail2, (req, res) => {
     newProject.integrantes.push(newIntegrante);
     newProject.integrantes.push(newIntegrante3);
 
-		Projeto.createProject(newProject, (err, user) => {});
+		Projeto.createProject(newProject);
 
 		res.redirect('/projetos/login');
 	}

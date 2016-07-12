@@ -15,10 +15,10 @@ const IntegranteSchema = new Schema({
 		type: String
 	},
 	cpf: {
-		type: Number
+		type: String
 	},
 	telefone: {
-		type: Number
+		type: String
 	},
 	tamCamiseta: {
 		type: String
@@ -44,7 +44,7 @@ const ProjetoSchema = new Schema({
 		type: String
 	},
 	cep: {
-		type: Number
+		type: String
 	},
 	cidade: {
 		type: String
