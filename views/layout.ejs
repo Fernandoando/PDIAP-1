@@ -8,22 +8,38 @@
     <title>MOVACI</title>
     <!--CSS-->
     
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
     <!-- <link rel="stylesheet" type="text/css" href="/bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection"/> -->
     <style>
-      body {
-        background: #eeeeee;
-      }
       .wrapper {
         padding: 15px 35px;
         margin-top: 50px;
         max-width: 450px;
       }
       .wrapper-registro {
-        padding: 0 15%;
-        margin-top: 5%;
-        background: #eeeeee;
+        width: 100%;
+        background: #f5f5f5;
+      }     
+      .bloco-left {
+        width: 23% !important;
+        max-width: 23 % !important;
+        padding-right: 50px;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        -webkit-align-items: center;
+        justify-content: flex-start;
+        -webkit-justify-content: flex-start;
+      }
+      .bloco-left span { 
+        text-transform: uppercase;
+        font-size: 13px;
+        color: rgba(0,0,0,0.5);
+      }
+      .bloco-right {
+        width: 77% !important;
+        max-width: 77% !important;
       }
       .btnEntrar {
         width: 70%;
@@ -34,21 +50,24 @@
         padding: 5px !important;
         color: #dd2c00;
       }
-      #senha-fraca {
-        color: #ef5350;
-        font-size: 13.5px!important;
-        margin-left: 3rem;
+      .finalizar button{
+        border-radius: 50px;
+        padding: 5px 30px;
+      }
+      hr {
+        background: rgba(0,0,0,0.12);
+        border: none!important;
+        margin-top: 1.4em;
+        margin-bottom: 2em !important;
       }
       #senha-regular {
         color: #fbc02d;
-        font-size: 13.5px!important;
-        margin-left: 3rem;
       }
       #senha-forte {
         color: #66bb6a;
-        font-size: 13.5px!important;
-        margin-left: 3rem;
       }
+      ::-webkit-input-placeholder { color: rgba(0,0,0,0.4); }
+      :-moz-placeholder { color: rgba(0,0,0,0.4); }
       input:not([type]),
       input[type=text],
       input[type=password],
@@ -60,43 +79,23 @@
       input[type=datetime-local],
       input[type=tel],
       input[type=number],
-      input[type=search],
-      textarea.materialize-textarea,
-      md-select .md-select-value {
+      textarea.materialize-textarea, 
+      md-select .md-select-value { 
         height: 2.1rem !important;
       }
-      /*label { font-size: 16px !important; }*/
-      /*input:not([type]):focus:not([readonly]),
-      input[type=text]:focus:not([readonly]),
-      input[type=password]:focus:not([readonly]),
-      input[type=email]:focus:not([readonly]),
-      input[type=url]:focus:not([readonly]),
-      input[type=time]:focus:not([readonly]),
-      input[type=date]:focus:not([readonly]),
-      input[type=datetime]:focus:not([readonly]),
-      input[type=datetime-local]:focus:not([readonly]),
-      input[type=tel]:focus:not([readonly]),
-      input[type=number]:focus:not([readonly]),
-      input[type=search]:focus:not([readonly]),
-      textarea.materialize-textarea:focus:not([readonly]) {
-        border-color: #26a69a !important;
-        box-shadow: 0 1px 0 0 #26a69a !important;
+      md-input-container textarea {
+        overflow: auto !important;
+      }
+      /*md-select .md-select-value {
+        height: 1.85rem !important;
       }*/
-      /*input:not([type]):focus:not([readonly])+label,
-      input[type=text]:focus:not([readonly])+label,
-      input[type=password]:focus:not([readonly])+label,
-      input[type=email]:focus:not([readonly])+label,
-      input[type=url]:focus:not([readonly])+label,
-      input[type=time]:focus:not([readonly])+label,
-      input[type=date]:focus:not([readonly])+label,
-      input[type=datetime]:focus:not([readonly])+label,
-      input[type=datetime-local]:focus:not([readonly])+label,
-      input[type=tel]:focus:not([readonly])+label,
-      input[type=number]:focus:not([readonly])+label,
-      input[type=search]:focus:not([readonly])+label,
-      textarea.materialize-textarea:focus:not([readonly])+label {
-        color: #424242 !important;
-      }*/
+      md-input-container label:not(.md-no-float):not(.md-container-ignore), 
+      md-input-container .md-placeholder, md-input-container .md-placeholder {
+        padding-left: 5px !important;
+      }
+      md-select .md-select-value {
+        max-width: 100% !important;
+      }
       input:-webkit-autofill,
       input:-webkit-autofill:hover,
       input:-webkit-autofill:focus,
@@ -112,7 +111,38 @@
         transition: background-color 5000s ease-in-out 0s;
         -webkit-text-fill-color: inherit !important;
       }
+      md-input-container.md-default-theme .md-input, 
+      md-input-container .md-input {
+        border-color: rgba(0,0,0,0.3);
+        padding-left: 3px !important;
+      }
+      md-input-container .md-input.ng-invalid.ng-dirty {
+        border-width: 0 0 1px 0;
+      }
+      md-input-container.md-input-focused .md-input {
+        border-width: 0 0 2px 0 !important;
+      }
       md-input-container { margin: 10px 0 0 0 !important; }
+      md-input-container.md-default-theme label,
+      md-input-container label {
+        color: rgba(0, 0, 0, 0.4) !important;
+      }
+      md-input-container.md-default-theme:not(.md-input-invalid).md-input-has-value label,
+      md-input-container:not(.md-input-invalid).md-input-has-value label {
+        color: #43a047 !important;
+      }
+      md-input-container.md-default-theme.md-input-invalid .md-input:not(.ng-dirty),
+      md-input-container.md-input-invalid .md-input:not(.ng-dirty) {
+        border-color: rgba(0,0,0,0.3);
+      }
+      md-input-container.md-default-theme.md-input-invalid:not(.md-input-has-value).md-input-focused .md-input,
+      md-input-container.md-input-invalid:not(.md-input-has-value).md-input-focused .md-input {
+        border-color: #43a047 !important;
+      }
+      md-input-container.md-default-theme.md-input-invalid:not(.md-input-focused).ng-dirty .md-input,
+      md-input-container.md-input-invalid:not(.md-input-focused).ng-dirty .md-input {
+        border-color: #dd2c00 !important;
+      }       
       md-input-container.md-default-theme.md-input-invalid.md-input-focused label,
       md-input-container.md-input-invalid.md-input-focused label,
       md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused label,
@@ -123,14 +153,53 @@
       md-input-container:not(.md-input-invalid).md-input-focused .md-input {
         border-color: #43a047 !important;
       }
+      md-select.md-default-theme .md-select-value, 
+      md-select .md-select-value {
+        border-bottom-color: rgba(0,0,0,0.3) !important;
+        padding-left: 3px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        max-width: 100% !important; 
+      }
       md-select.md-default-theme:not([disabled]):focus .md-select-value,
       md-select:not([disabled]):focus .md-select-value {
         border-bottom-color: #43a047 !important;
       }
       /* teal lighten 1 #26a69a*/
-      md-select.md-default-theme.ng-touched.ng-invalid .md-select-value,
+      /*md-select.md-default-theme.ng-touched.ng-invalid .md-select-value,
       md-select.ng-touched.ng-invalid .md-select-value {
         border-bottom-color: #dd2c00 !important; 
+      }*/
+      md-select.md-default-theme .md-select-value.md-select-placeholder, 
+      md-select .md-select-value.md-select-placeholder {
+        color: rgba(0,0,0,0.4) !important;
+      }
+      md-select-menu.md-default-theme md-option[selected], 
+      md-select-menu md-option[selected] {
+        color: #43a047 !important;
+      }
+      md-autocomplete.md-default-theme, 
+      md-autocomplete {
+        background: transparent !important;
+        height: 2.1rem !important;
+        margin-bottom: 24px !important;
+      }
+      input[type=search] {
+        border-bottom: 1px solid rgba(0,0,0,0.3) !important;
+      }
+      md-autocomplete-wrap {
+        box-shadow: none !important;
+        height: 2.1rem !important;
+      }
+      md-autocomplete input:not(.md-input) {
+        font-size: 16px !important;
+        padding: 0 3px !important;
+        height: 2.1rem !important;
+        line-height: 26px !important;
+        padding-top: 2px;
+        padding-bottom: 1px;
+        padding-left: 2px;
+        padding-right: 2px;
       }
       .teal.lighten-1 {
         background-color: #26a69a !important;
@@ -149,7 +218,9 @@
         margin: 0;
         font-size: 15px !important; 
       }
-
+      md-icon {
+        color: rgba(0,0,0,0.87);
+      }
       .redefinir {
         font-size: 0.9em;
         margin-top: 20px;
@@ -159,6 +230,10 @@
         color: #424242;
         cursor: pointer;
         font-weight: bold;
+      }
+      .h5-2 {
+        font-size: 0.85em!important;
+        margin-top: 0.9em!important;
       }
  /*     .spinner-layer { border-color: #fff !important; }*/
       .preloader-wrapper.small-1 {
@@ -192,11 +267,15 @@
     <script type="text/javascript" src="/js/configs/checkLoggedin.js"></script>
     <script type="text/javascript" src="/js/interceptors/loginInterceptor.js"></script>
     <script type="text/javascript" src="/js/configs/values.js"></script>
+    <script type="text/javascript" src="/js/configs/icons.js"></script>
     <script type="text/javascript" src="/js/configs/interceptorsConfig.js"></script>
     <script type="text/javascript" src="/js/controllers/loginCtrl.js"></script>
     <script type="text/javascript" src="/js/controllers/adminCtrl.js"></script>
     <script type="text/javascript" src="/js/controllers/registroCtrl.js"></script>
     <script type="text/javascript" src="/js/services/projetosAPIService.js"></script>
-    <script type="text/javascript" src="/js/controllers/autocompleteCtrl.js"></script>       
+    <script type="text/javascript" src="/js/controllers/autocompleteCtrl.js"></script>
+    <script type="text/javascript" src="/js/directives/cepMask.js"></script>
+    <script type="text/javascript" src="/js/directives/foneMask.js"></script>
+    <script type="text/javascript" src="/js/directives/cpfMask.js"></script>       
   </body>
 </html>

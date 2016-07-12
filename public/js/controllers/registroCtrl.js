@@ -10,6 +10,7 @@
 			$scope.registro = false;
 			$scope.msg = 'msg';
 			$scope.PasswordValid = false;
+			$scope.loginHabilitado = false;
 			$scope.EnvioValid = false;
 			$scope.eixos = [];
 			$scope.cidades = [];
@@ -40,14 +41,23 @@
 			   	});
 			};
 
+			// $scope.validarSenha = function() {
+			// 	if ($scope.projeto.password == $scope.projeto.password2) {
+			// 		$scope.PasswordValid = true;
+			// 	} else {
+			// 		$scope.PasswordValid = false;
+			// 	}
+			// 	return $scope.PasswordValid;
+			// };
+
 			$scope.validarSenha = function() {
-				if ($scope.projeto.password == $scope.projeto.password2) {
-					$scope.PasswordValid = true;
-				} else {
-					$scope.PasswordValid = false;
-				}
+				$scope.PasswordValid = angular.equals($scope.projeto.password, $scope.projeto.password2);
 				return $scope.PasswordValid;
-			}
+			};
+
+			$scope.habilitarLogin = function() {
+				return $scope.loginHabilitado = true;
+			};
 
 			projetosAPI.getCategorias()
 			.success(function(data) {

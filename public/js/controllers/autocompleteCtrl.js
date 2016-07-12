@@ -8,11 +8,6 @@
     var self = this;
     self.noCache = true;
     self.states  = loadAll();
-    
-    self.newState = newState;
-    function newState(state) {
-      alert("Sorry! You'll need to create a Constituion for " + state + " first!");
-    }
 
     self.querySearch = querySearch;
     function querySearch (query) {
@@ -30,11 +25,13 @@
     self.searchTextChange = searchTextChange;
     function searchTextChange(text) {
       $log.info('Text changed to ' + text);
+      self.kralho = text;
     }
 
     self.selectedItemChange = selectedItemChange;
     function selectedItemChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
+      self.kralho = item.display;
     }
 
     function loadAll() {
