@@ -294,17 +294,18 @@
          </div>            
          <!-- Cadastrar dados p/ login -->
          <div class="row finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-            <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm.$valid" data-ng-click="habilitarLogin()" data-ng-if="!loginHabilitado">
+            <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="projetoForm.$valid" data-ng-click="habilitarLogin()" data-ng-if="!loginHabilitado">
                <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'#fff'}"></md-icon> Avançar
             </md-button>
          </div>
 
          <div data-ng-if="loginHabilitado">
-         <div layout="row" style="background:#bdbdbd;padding:7px">
-            <div class="bloco-left">
+         <p style="font-weight:bold;text-align:center;color:rgba(0,0,0,0.73);">Os dados informados serão usados para a criação de um login único do projeto.</p>
+         <div layout="row">
+            <div class="bloco-left" style="padding-left:20px;background:#81c784;">
                <span>Cadastro Login</span>
             </div> 
-            <div class="bloco-right">
+            <div class="bloco-right" style="border:1.5px solid #81c784;padding:20px;">
                <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex-gt-sm>
                      <label>E-mail</label>
@@ -320,11 +321,11 @@
                <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex-gt-sm>
                      <label>Senha</label>
-                     <input type="password" name="password" data-ng-model="projeto.password" required data-ng-minlength="5" />
+                     <input type="password" name="password" data-ng-model="projeto.password" required data-ng-minlength="5" id="pw1" />
                      <div class="md-errors-spacer">
                         <div data-ng-if="projetoForm.password.$dirty">
                            <div class="message-error" data-ng-if="projetoForm.password.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-if="projetoForm.password.$error.minlength">Senha fraca</div>
+                           <div class="message-error" data-ng-if="projetoForm.password.$error.minlength && projetoForm.password.$touched">Senha muito fraca</div>
                            <div class="message-error" id="senha-regular" data-ng-if="projeto.password.length > 4 && projeto.password.length < 12">Senha regular</div>
                            <div class="message-error" id="senha-forte" data-ng-if="projeto.password.length >= 12">Senha forte</div>
                         </div>
@@ -333,21 +334,20 @@
                   <div flex="5" hide-xs hide-sm></div>
                   <md-input-container class="md-block" flex-gt-sm>
                      <label>Confirme a senha</label>
-                     <input type="password" name="password2" data-ng-model="projeto.password2" required ng-class="{'ng-valid': PasswordValid}"/>
+                     <input type="password" name="password2" data-ng-model="projeto.password2" required id="pw2" pw-check="pw1" />
                      <div class="md-errors-spacer">
                         <div data-ng-if="projetoForm.password2.$dirty">
                            <div class="message-error" data-ng-if="projetoForm.password2.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-if="!validarSenha()">Senha não confere!</div>
+                           <div class="message-error" data-ng-if="projetoForm.password2.$error.pwmatch && !projetoForm.password2.$error.required">Senha não confere!</div>
                         </div>
                      </div>
                   </md-input-container>
-                  {{PasswordValid}}
                </div>
             </div>
          </div>      
          <!-- Finalizar inscrição -->
          <div class="row finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-            <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm.$valid || !PasswordValid" data-ng-click="registrar(projeto)">
+            <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm.$valid || projetoForm.password2.$error.pwmatch" data-ng-click="registrar(projeto)">
                <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'#fff'}"></md-icon> Finalizar
             </md-button>
          </div>

@@ -9,7 +9,6 @@
 
 			$scope.registro = false;
 			$scope.msg = 'msg';
-			$scope.PasswordValid = false;
 			$scope.loginHabilitado = false;
 			$scope.EnvioValid = false;
 			$scope.eixos = [];
@@ -39,20 +38,6 @@
 			    	console.log(status);
 			    	//$location.url('/inscricao');
 			   	});
-			};
-
-			// $scope.validarSenha = function() {
-			// 	if ($scope.projeto.password == $scope.projeto.password2) {
-			// 		$scope.PasswordValid = true;
-			// 	} else {
-			// 		$scope.PasswordValid = false;
-			// 	}
-			// 	return $scope.PasswordValid;
-			// };
-
-			$scope.validarSenha = function() {
-				$scope.PasswordValid = angular.equals($scope.projeto.password, $scope.projeto.password2);
-				return $scope.PasswordValid;
 			};
 
 			$scope.habilitarLogin = function() {

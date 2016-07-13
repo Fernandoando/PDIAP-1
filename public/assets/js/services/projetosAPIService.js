@@ -43,7 +43,7 @@
 
 			let _getCategorias = function() {
 				const request = {
-					url: '/js/categorias-eixos.json',
+					url: 'assets/js/categorias-eixos.json',
 					method: 'GET',
 				}
 				return $http(request);
@@ -51,7 +51,7 @@
 
 			let _getEstados = function() {
 				const request = {
-					url: '/js/estados-cidades.json',
+					url: 'assets/js/estados-cidades.json',
 					method: 'GET',
 				}
 				return $http(request);

@@ -3,246 +3,14 @@
   <head>
     <base href="/">
     <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>MOVACI</title>
-    <!--CSS-->
     
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <!--CSS-->
     <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection"/> -->
-    <style>
-      .wrapper {
-        padding: 15px 35px;
-        margin-top: 50px;
-        max-width: 450px;
-      }
-      .wrapper-registro {
-        width: 100%;
-        background: #f5f5f5;
-      }     
-      .bloco-left {
-        width: 23% !important;
-        max-width: 23 % !important;
-        padding-right: 50px;
-        display: flex;
-        display: -webkit-flex;
-        align-items: center;
-        -webkit-align-items: center;
-        justify-content: flex-start;
-        -webkit-justify-content: flex-start;
-      }
-      .bloco-left span { 
-        text-transform: uppercase;
-        font-size: 13px;
-        color: rgba(0,0,0,0.5);
-      }
-      .bloco-right {
-        width: 77% !important;
-        max-width: 77% !important;
-      }
-      .btnEntrar {
-        width: 70%;
-        border-radius: 50px;
-      }
-      .message-error {     
-        font-size: 12.5px !important;
-        padding: 5px !important;
-        color: #dd2c00;
-      }
-      .finalizar button{
-        border-radius: 50px;
-        padding: 5px 30px;
-      }
-      hr {
-        background: rgba(0,0,0,0.12);
-        border: none!important;
-        margin-top: 1.4em;
-        margin-bottom: 2em !important;
-      }
-      #senha-regular {
-        color: #fbc02d;
-      }
-      #senha-forte {
-        color: #66bb6a;
-      }
-      ::-webkit-input-placeholder { color: rgba(0,0,0,0.4); }
-      :-moz-placeholder { color: rgba(0,0,0,0.4); }
-      input:not([type]),
-      input[type=text],
-      input[type=password],
-      input[type=email],
-      input[type=url],
-      input[type=time],
-      input[type=date],
-      input[type=datetime],
-      input[type=datetime-local],
-      input[type=tel],
-      input[type=number],
-      textarea.materialize-textarea, 
-      md-select .md-select-value { 
-        height: 2.1rem !important;
-      }
-      md-input-container textarea {
-        overflow: auto !important;
-      }
-      /*md-select .md-select-value {
-        height: 1.85rem !important;
-      }*/
-      md-input-container label:not(.md-no-float):not(.md-container-ignore), 
-      md-input-container .md-placeholder, md-input-container .md-placeholder {
-        padding-left: 5px !important;
-      }
-      md-select .md-select-value {
-        max-width: 100% !important;
-      }
-      input:-webkit-autofill,
-      input:-webkit-autofill:hover,
-      input:-webkit-autofill:focus,
-      input:-webkit-autofill:active,
-      textarea:-webkit-autofill,
-      textarea:-webkit-autofill:hover,
-      textarea:-webkit-autofill:focus,
-      textarea:-webkit-autofill:active,
-      select:-webkit-autofill,
-      select:-webkit-autofill:hover,
-      select:-webkit-autofill:focus,
-      select:-webkit-autofill:active {
-        transition: background-color 5000s ease-in-out 0s;
-        -webkit-text-fill-color: inherit !important;
-      }
-      md-input-container.md-default-theme .md-input, 
-      md-input-container .md-input {
-        border-color: rgba(0,0,0,0.3);
-        padding-left: 3px !important;
-      }
-      md-input-container .md-input.ng-invalid.ng-dirty {
-        border-width: 0 0 1px 0;
-      }
-      md-input-container.md-input-focused .md-input {
-        border-width: 0 0 2px 0 !important;
-      }
-      md-input-container { margin: 10px 0 0 0 !important; }
-      md-input-container.md-default-theme label,
-      md-input-container label {
-        color: rgba(0, 0, 0, 0.4) !important;
-      }
-      md-input-container.md-default-theme:not(.md-input-invalid).md-input-has-value label,
-      md-input-container:not(.md-input-invalid).md-input-has-value label {
-        color: #43a047 !important;
-      }
-      md-input-container.md-default-theme.md-input-invalid .md-input:not(.ng-dirty),
-      md-input-container.md-input-invalid .md-input:not(.ng-dirty) {
-        border-color: rgba(0,0,0,0.3);
-      }
-      md-input-container.md-default-theme.md-input-invalid:not(.md-input-has-value).md-input-focused .md-input,
-      md-input-container.md-input-invalid:not(.md-input-has-value).md-input-focused .md-input {
-        border-color: #43a047 !important;
-      }
-      md-input-container.md-default-theme.md-input-invalid:not(.md-input-focused).ng-dirty .md-input,
-      md-input-container.md-input-invalid:not(.md-input-focused).ng-dirty .md-input {
-        border-color: #dd2c00 !important;
-      }       
-      md-input-container.md-default-theme.md-input-invalid.md-input-focused label,
-      md-input-container.md-input-invalid.md-input-focused label,
-      md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused label,
-      md-input-container:not(.md-input-invalid).md-input-focused label {
-        color: rgba(0, 0, 0, 0.87) !important;
-      }
-      md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-input,
-      md-input-container:not(.md-input-invalid).md-input-focused .md-input {
-        border-color: #43a047 !important;
-      }
-      md-select.md-default-theme .md-select-value, 
-      md-select .md-select-value {
-        border-bottom-color: rgba(0,0,0,0.3) !important;
-        padding-left: 3px !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        max-width: 100% !important; 
-      }
-      md-select.md-default-theme:not([disabled]):focus .md-select-value,
-      md-select:not([disabled]):focus .md-select-value {
-        border-bottom-color: #43a047 !important;
-      }
-      /* teal lighten 1 #26a69a*/
-      /*md-select.md-default-theme.ng-touched.ng-invalid .md-select-value,
-      md-select.ng-touched.ng-invalid .md-select-value {
-        border-bottom-color: #dd2c00 !important; 
-      }*/
-      md-select.md-default-theme .md-select-value.md-select-placeholder, 
-      md-select .md-select-value.md-select-placeholder {
-        color: rgba(0,0,0,0.4) !important;
-      }
-      md-select-menu.md-default-theme md-option[selected], 
-      md-select-menu md-option[selected] {
-        color: #43a047 !important;
-      }
-      md-autocomplete.md-default-theme, 
-      md-autocomplete {
-        background: transparent !important;
-        height: 2.1rem !important;
-        margin-bottom: 24px !important;
-      }
-      input[type=search] {
-        border-bottom: 1px solid rgba(0,0,0,0.3) !important;
-      }
-      md-autocomplete-wrap {
-        box-shadow: none !important;
-        height: 2.1rem !important;
-      }
-      md-autocomplete input:not(.md-input) {
-        font-size: 16px !important;
-        padding: 0 3px !important;
-        height: 2.1rem !important;
-        line-height: 26px !important;
-        padding-top: 2px;
-        padding-bottom: 1px;
-        padding-left: 2px;
-        padding-right: 2px;
-      }
-      .teal.lighten-1 {
-        background-color: #26a69a !important;
-      }
-      .red {
-        background-color: #f44336 !important;
-      }
-      .white-text { color: #fff !important; }
-      .md-button[disabled], .md-button.md-raised[disabled] {
-        color: #fff !important;
-        background-color: gray !important;
-        cursor: not-allowed !important;
-      }
-      .md-button, .md-button.md-raised { color: #fff !important; }
-      md-card { 
-        margin: 0;
-        font-size: 15px !important; 
-      }
-      md-icon {
-        color: rgba(0,0,0,0.87);
-      }
-      .redefinir {
-        font-size: 0.9em;
-        margin-top: 20px;
-        color: #616161;
-      }
-      .btn-redefinir {
-        color: #424242;
-        cursor: pointer;
-        font-weight: bold;
-      }
-      .h5-2 {
-        font-size: 0.85em!important;
-        margin-top: 0.9em!important;
-      }
- /*     .spinner-layer { border-color: #fff !important; }*/
-      .preloader-wrapper.small-1 {
-        width: 24px !important;
-        height: 24px !important;
-        vertical-align: middle !important;
-        margin-right: 8px;
-      }
-    </style>
+    <link rel="stylesheet" href="/assets/css/style.css">
+
   </head>
   <body>
     
@@ -252,30 +20,28 @@
     <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-material/angular-material.js"></script>
-    <!-- <script type="text/javascript" src="/bower_components/Materialize/dist/js/materialize.min.js"></script> -->
-    <!-- <script type="text/javascript" src="/bower_components/angular-materialize/src/angular-materialize.js"></script> -->
-    <script type="text/javascript" src="/js/init.js"></script>
-    <!-- Angular Material -->
-    <!-- <script src="/bower_components/angular-messages/angular-messages.js"></script> -->
-    <script src="/bower_components/angular-aria/angular-aria.js"></script>
-    <script src="/bower_components/angular-animate/angular-animate.js"></script> 
-    <script type="text/javascript" src="/libs/angular-route.min.js"></script>
-    <script type="text/javascript" src="/libs/angular-cookies.min.js"></script>
-    <script type="text/javascript" src="/libs/angular-resource.min.js"></script>
-    <script type="text/javascript" src="/js/app.js"></script>
-    <script type="text/javascript" src="/js/routes/routes.js"></script>
-    <script type="text/javascript" src="/js/configs/checkLoggedin.js"></script>
-    <script type="text/javascript" src="/js/interceptors/loginInterceptor.js"></script>
-    <script type="text/javascript" src="/js/configs/values.js"></script>
-    <script type="text/javascript" src="/js/configs/icons.js"></script>
-    <script type="text/javascript" src="/js/configs/interceptorsConfig.js"></script>
-    <script type="text/javascript" src="/js/controllers/loginCtrl.js"></script>
-    <script type="text/javascript" src="/js/controllers/adminCtrl.js"></script>
-    <script type="text/javascript" src="/js/controllers/registroCtrl.js"></script>
-    <script type="text/javascript" src="/js/services/projetosAPIService.js"></script>
-    <script type="text/javascript" src="/js/controllers/autocompleteCtrl.js"></script>
-    <script type="text/javascript" src="/js/directives/cepMask.js"></script>
-    <script type="text/javascript" src="/js/directives/foneMask.js"></script>
-    <script type="text/javascript" src="/js/directives/cpfMask.js"></script>       
+    <script type="text/javascript" src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.js"></script>
+    <!-- <script type="text/javascript" src="/bower_components/angular-messages/angular-messages.js"></script> --> 
+    <script type="text/javascript" src="assets/libs/angular-route.min.js"></script>
+    <script type="text/javascript" src="assets/libs/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="assets/libs/angular-resource.min.js"></script>
+    <script type="text/javascript" src="assets/js/init.js"></script>
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/routes/routes.js"></script>
+    <script type="text/javascript" src="assets/js/configs/checkLoggedin.js"></script>
+    <script type="text/javascript" src="assets/js/interceptors/loginInterceptor.js"></script>
+    <script type="text/javascript" src="assets/js/configs/values.js"></script>
+    <script type="text/javascript" src="assets/js/configs/icons.js"></script>
+    <script type="text/javascript" src="assets/js/configs/interceptorsConfig.js"></script>
+    <script type="text/javascript" src="assets/js/controllers/loginCtrl.js"></script>
+    <script type="text/javascript" src="assets/js/controllers/adminCtrl.js"></script>
+    <script type="text/javascript" src="assets/js/controllers/registroCtrl.js"></script>
+    <script type="text/javascript" src="assets/js/services/projetosAPIService.js"></script>
+    <script type="text/javascript" src="assets/js/controllers/autocompleteCtrl.js"></script>
+    <script type="text/javascript" src="assets/js/directives/cepMask.js"></script>
+    <script type="text/javascript" src="assets/js/directives/foneMask.js"></script>
+    <script type="text/javascript" src="assets/js/directives/cpfMask.js"></script>
+    <script type="text/javascript" src="assets/js/directives/pwCheck.js"></script>       
   </body>
 </html>
