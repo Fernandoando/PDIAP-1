@@ -122,7 +122,7 @@
 	        }
 	        
 	        $scope.removeOrientador = function(index) {
-	        	$scope.dynamicFields.splice(index, 1);
+	        	$scope.dynamicFields1.splice(index, 1);
 	        	$scope.count1--;
 	        	if ($scope.count1 !== 2) {
 	        		$scope.btnAdd = true;
