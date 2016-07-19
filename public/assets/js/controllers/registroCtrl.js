@@ -89,6 +89,52 @@
 			        }
 			    });
 			}
+
+			$scope.dynamicFields1 = [
+				{nome:'nomeOrientador1', email:'emailOrientador1', cpf:'cpfOrientador1', telefone:'telefoneOrientador1', camiseta:'tamCamisetaOrientador1'}
+			];
+			$scope.dynamicFields2 = [
+				{nome:'nomeAluno1', email:'emailAluno1', cpf:'cpfAluno1', telefone:'telefoneAluno1', camiseta:'tamCamisetaAluno1'}
+			];
+
+			$scope.btnAdd1 = true;
+			$scope.btnAdd2 = true;
+			$scope.count1 = 1;
+			$scope.count2 = 1;
+	        
+	        $scope.addOrientador = function() {
+	        	$scope.count1++;
+	            $scope.dynamicFields1.push(
+	            	{nome:'nomeOrientador'+$scope.count1, email:'emailOrientador'+$scope.count1, cpf:'cpfOrientador'+$scope.count1, telefone:'telefoneOrientador'+$scope.count1, camiseta:'tamCamisetaOrientador'+$scope.count1}
+	            );
+	        	if ($scope.count1 === 2) {
+	        		$scope.btnAdd1 = false;
+	        	}
+	        }
+	        $scope.addAluno = function() {
+	        	$scope.count2++;
+	            $scope.dynamicFields2.push(
+	            	{nome:'nomeOrientador'+$scope.count2, email:'emailOrientador'+$scope.count2, cpf:'cpfOrientador'+$scope.count2, telefone:'telefoneOrientador'+$scope.count2, camiseta:'tamCamisetaOrientador'+$scope.count2}
+	            );
+	        	if ($scope.count2 === 3) {
+	        		$scope.btnAdd2 = false;
+	        	}
+	        }
+	        
+	        $scope.removeOrientador = function(index) {
+	        	$scope.dynamicFields.splice(index, 1);
+	        	$scope.count1--;
+	        	if ($scope.count1 !== 2) {
+	        		$scope.btnAdd = true;
+	        	}
+        	};
+        	$scope.removeAluno = function(index) {
+	        	$scope.dynamicFields2.splice(index, 1);
+	        	$scope.count2--;
+	        	if ($scope.count2 !== 3) {
+	        		$scope.btnAdd2 = true;
+	        	}
+        	};
 		
 		});
 })();
