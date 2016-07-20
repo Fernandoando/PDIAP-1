@@ -11,11 +11,20 @@ const express = require('express')
 , bcrypt = require('bcryptjs');
 
 function testaEmail(req, res) {
-    ProjetoSchema.find('email','email -_id', (error, emails) => {
+  ProjetoSchema.find('email','email -_id', (error, emails) => {
     if(error) {
       return res.status(400).send({msg:"error occurred"});
     } else
       return res.status(200).send(emails);
+  });
+}
+
+function testaEmailEEscola(req, res) {
+    ProjetoSchema.find('email nomeEscola','email nomeEscola -_id', (error, escolas) => {
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    } else
+      return res.status(200).send(escolas);
   });
 }
 
@@ -48,7 +57,7 @@ router.get('/', (req, res, next) => {
   res.send('Projetos po');
 });
 
-router.get('/registro', testaEmail, (req, res) => {});
+router.get('/registro', testaEmailEEscola, (req, res) => {});
 
 router.get('/login', (req, res) => {
 	res.send('página de login');
