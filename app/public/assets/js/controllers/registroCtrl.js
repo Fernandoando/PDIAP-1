@@ -129,7 +129,7 @@
 	        	$scope.dynamicFields1.splice(index, 1);
 	        	$scope.count1--;
 	        	if ($scope.count1 !== 2) {
-	        		$scope.btnAdd = true;
+	        		$scope.btnAdd1 = true;
 	        	}
         	};
         	$scope.removeAluno = function(index) {
