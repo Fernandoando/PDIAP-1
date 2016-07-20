@@ -9,7 +9,7 @@
 		    		templateUrl: '/views/index.html'
 			   	})
 			   	.when('/home', {
-			    	templateUrl: '/views/admin.html',
+			    	templateUrl: '/views/oi.html',
 			    	controller: 'adminCtrl',
 			    	// resolve: {
 			    	// 	loggedin: checkLoggedin

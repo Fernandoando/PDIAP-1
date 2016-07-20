@@ -57,13 +57,22 @@
 				return $http(request);
 			};
 
+			let _getEmails = function() {
+				const request = {
+					url: '/projetos/registro',
+					method: 'GET',
+				}
+				return $http(request);
+			};			
+
 			return {
 				saveProjeto: _saveProjeto,
 				postLogin: _postLogin,
 				getProjeto: _getProjeto,
 				getTodosProjetos: _getTodosProjetos,
 				getCategorias: _getCategorias,
-				getEstados: _getEstados
+				getEstados: _getEstados,
+				getEmails: _getEmails
 			};
 		});
 })();

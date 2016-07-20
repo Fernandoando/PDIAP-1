@@ -208,7 +208,16 @@ md-autocomplete input:not(.md-input) {
   background-color: gray !important;
   cursor: not-allowed !important;
 }
-.md-button, .md-button.md-raised { color: #fff !important; }
+md-progress-circular.md-default-theme.loading-login .md-inner .md-left .md-half-circle,
+md-progress-circular.loading-login .md-inner .md-left .md-half-circle {
+ border-left-color: rgba(255,255,255,0.87) !important;
+ border-top-color: rgba(255,255,255,0.87) !important;  
+}
+md-progress-circular.md-default-theme.loading-login .md-inner .md-right .md-half-circle, 
+md-progress-circular.loading-login .md-inner .md-right .md-half-circle {
+  border-right-color: rgba(255,255,255,0.87) !important;
+  border-top-color: rgba(255,255,255,0.87) !important;  
+}
 md-card { 
   margin: 0;
   font-size: 15px !important; 

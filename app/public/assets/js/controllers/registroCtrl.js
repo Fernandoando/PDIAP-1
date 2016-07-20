@@ -10,22 +10,25 @@
 			$scope.registro = false;
 			$scope.msg = 'msg';
 			$scope.loginHabilitado = false;
-			$scope.EnvioValid = false;
+			$scope.emailDuplicado = false;
 			$scope.eixos = [];
 			$scope.cidades = [];
+			$scope.emails = [];
 
 		  	$scope.registrar = function(projeto){
 			   	
 			   	projetosAPI.saveProjeto(projeto)
-			   	.success(function(projeto) { 
-	    	
+			   	.success(function(projeto, status) {     	
 			    	console.log(projeto);
-			    	if (projeto !== 'error') {
+			    	if (status === 202) {
+			    		$scope.emailDuplicado = true;
+			    		$scope.projetoForm.email.$setValidity('duplicado',false);
+		    			console.log('email duplicado: '+$scope.emailDuplicado);
+			    	} else if (projeto !== 'error') {
 			    		$scope.registro = true;
 				    	$scope.msg = 'Registrado com sucesso!';
 	           			//$location.url('/inscricao');
-	           			delete $scope.projeto;
-						$scope.inscricaoProjeto.$setPristine();	
+	           			resetForm();							
 			    	} else {
 			    		$scope.registro = false;
 			    		$scope.msg = 'Erro ao registrar projeto.';
@@ -38,6 +41,7 @@
 			    	console.log(status);
 			    	//$location.url('/inscricao');
 			   	});
+			   	console.log(projeto);
 			};
 
 			$scope.habilitarLogin = function() {
@@ -73,10 +77,10 @@
 					    }                 
 			        }
 			    });
-			}
+			};
 
 			$scope.selectCidades = function(cid) {
-				angular.forEach($scope.listaEstados, function (value, key){
+				angular.forEach($scope.listaEstados, function (value, key) {
 			        //verifica o estado selecionado
 			        console.log(value.nome);
 			        if(cid === value.nome){
@@ -88,7 +92,7 @@
 					    }                 
 			        }
 			    });
-			}
+			};
 
 			$scope.dynamicFields1 = [
 				{nome:'nomeOrientador1', email:'emailOrientador1', cpf:'cpfOrientador1', telefone:'telefoneOrientador1', camiseta:'tamCamisetaOrientador1'}
@@ -110,16 +114,16 @@
 	        	if ($scope.count1 === 2) {
 	        		$scope.btnAdd1 = false;
 	        	}
-	        }
+	        };
 	        $scope.addAluno = function() {
 	        	$scope.count2++;
 	            $scope.dynamicFields2.push(
-	            	{nome:'nomeOrientador'+$scope.count2, email:'emailOrientador'+$scope.count2, cpf:'cpfOrientador'+$scope.count2, telefone:'telefoneOrientador'+$scope.count2, camiseta:'tamCamisetaOrientador'+$scope.count2}
+	            	{nome:'nomeAluno'+$scope.count2, email:'emailAluno'+$scope.count2, cpf:'cpfAluno'+$scope.count2, telefone:'telefoneAluno'+$scope.count2, camiseta:'tamCamisetaAluno'+$scope.count2}
 	            );
 	        	if ($scope.count2 === 3) {
 	        		$scope.btnAdd2 = false;
 	        	}
-	        }
+	        };
 	        
 	        $scope.removeOrientador = function(index) {
 	        	$scope.dynamicFields1.splice(index, 1);
@@ -135,6 +139,44 @@
 	        		$scope.btnAdd2 = true;
 	        	}
         	};
+
+			projetosAPI.getEmails()
+			.success(function(data) {
+				angular.forEach(data, function (value) {
+					$scope.emails.push(value.email);
+				});
+				console.log($scope.emails);
+			});
+
+			$scope.verificaEmail = function(email) {
+		    	for (var i in $scope.emails) {
+		        	if ($scope.emails[i] == email) {
+		            	$scope.projetoForm.email.$setValidity('duplicado',false);
+		            	break; // importante parar caso email seja igual, senão não funciona
+		        	} else {
+		            	$scope.projetoForm.email.$setValidity('duplicado',true);
+		        	}
+		    	}
+		    };
+
+		    let resetForm = function() {
+		    	delete $scope.projeto;
+				$scope.projetoForm.$setPristine();
+		   	 	$scope.btnAdd1 = true;
+				$scope.btnAdd2 = true;
+				$scope.count1 = 1;
+				$scope.count2 = 1;
+				$scope.dynamicFields1 = [
+					{nome:'nomeOrientador1', email:'emailOrientador1', cpf:'cpfOrientador1', telefone:'telefoneOrientador1', camiseta:'tamCamisetaOrientador1'}
+				];
+				$scope.dynamicFields2 = [
+					{nome:'nomeAluno1', email:'emailAluno1', cpf:'cpfAluno1', telefone:'telefoneAluno1', camiseta:'tamCamisetaAluno1'}
+				];
+				$scope.eixos = [];
+				$scope.cidades = [];
+				$scope.loginHabilitado = false;
+				$scope.emailDuplicado = false;
+		    }; 
 		
 		});
 })();

@@ -5,11 +5,11 @@
    	<md-content style="width:35%!important;padding:30px;">
       	<form name="userLogin" novalidate>    
          	<md-card class="red white-text" style="margin-bottom:30px!important;text-align:center;" data-ng-if="erro  && !logado && !loading">
-			  	<md-card-title>
+			  	<md-card-title-media style="padding:16px;">
 			    	<md-card-title-text>
 			      		{{message}}
 			    	</md-card-title-text>
-			  	</md-card-title>
+			  	</md-card-title-media>
 			</md-card>
          	<md-input-container class="md-block" flex-gt-sm>
                	<label>E-mail</label>
@@ -32,8 +32,12 @@
 	            </div> -->
 	        </md-input-container>
 	        <div layout="row" layout-align="center center">
-	        <md-button class="md-raised teal lighten-1 btnEntrar" data-ng-disabled="!userLogin.$valid" data-ng-click="login()">
-		        <span data-ng-show="loading && userLogin.$valid">...</span>
+	        <md-button class="md-raised md-primary teal lighten-1 btnEntrar" data-ng-disabled="!userLogin.$valid" data-ng-click="login()">
+		        <span data-ng-show="loading && userLogin.$valid">
+		        	<div layout="row" layout-sm="column" layout-align="space-around">
+      					<md-progress-circular md-mode="indeterminate" md-diameter="40" class="loading-login"></md-progress-circular>
+    				</div>
+		        </span>
 		        <span data-ng-show="!loading">Entrar</span>
 	        </md-button>
 	        </div>

@@ -4,10 +4,9 @@
 	angular
 		.module('PDIAP')
 		.controller('loginCtrl', function($scope, $rootScope, $location, projetosAPI) {
-		  	$scope.voce = "adasdasda";
-		  	$scope.user = {};
+		  	//$scope.user = {};
 
-		  	$scope.login = function(){
+		  	$scope.login = function() {
 			  	const email = $scope.user.email;
 			  	const password = $scope.user.password;
 			  	
@@ -16,7 +15,8 @@
 			    	$rootScope.logado = true;
 			    	$rootScope.message = 'Sucesso';
 			    	$scope.erro = false;
-			    	console.log(projeto);
+			    	localStorage.setItem('token','TOKEN_TESTE');
+			    	console.log("foiii");
 			    	$location.url('/home');
 			   	})
 			   	.error(function() { // authentication failed
@@ -24,6 +24,7 @@
 			    	$rootScope.message = 'Os dados informados estão incorretos.';
 			    	$scope.erro = true;
 			    	$location.url('/login');
+			    	console.log("deu merda");
 			   	});
 			};
 		});
