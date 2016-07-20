@@ -28,8 +28,10 @@ function testaEmail2(req, res, next) {
       return res.status(400).send({msg:"error occurred"});
     } else if(emails != 0) {
       res.status(202).send("Email já cadastrado");
-    } else
+    } else {
+      res.status(200).send("show");
       return next();
+    }
     });
 }
 
