@@ -19,6 +19,16 @@ function testaEmail(req, res) {
   });
 }
 
+function testaEscola(req, res) {
+  ProjetoSchema.find('nomeEscola','nomeEscola -_id', (error, escolas) => {
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    } else
+      return res.json(200, {escolas});
+  });
+}
+
+
 function testaEmailEEscola(req, res) {
     ProjetoSchema.find('email nomeEscola','email nomeEscola -_id', (error, escolas) => {
     if(error) {
@@ -58,6 +68,8 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/registro', testaEmailEEscola, (req, res) => {});
+
+router.get('/registro2', testaEscola, (req, res) => {});
 
 router.get('/login', (req, res) => {
 	res.send('página de login');
