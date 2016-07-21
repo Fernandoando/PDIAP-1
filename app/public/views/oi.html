@@ -1,5 +1,5 @@
 <div data-ng-controller="sidenavCtrl" layout="column" style="height:100%;" data-ng-cloak="" class="sidenavdemoBasicUsage">
-	
+
   	<section layout="row" flex="">
 
 	    <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-disable-backdrop="" md-whiteframe="4" style="height:100%!important;">
@@ -20,10 +20,15 @@
 	    </md-sidenav>
 
 	    <md-content flex="" style="overflow:initial!important;">
-   			
+
    			<md-toolbar md-scroll-shrink ng-if="true" style="background:#424242!important;">
-      			<div class="md-toolbar-tools">    			
-         			<span flex></span>      			
+      			<div class="md-toolbar-tools">
+							<div hide-gt-sm>
+		        		<md-button ng-click="toggleLeft()" class="md-icon-button">
+		        			<md-icon md-svg-src="menu" style="color:#fdfdfd!important;"></md-icon>
+		        		</md-button>
+		        	</div>
+							<span flex></span>
          			<md-menu>
 		          		<md-button aria-label="Open demo menu" style="width:45px;height:45px;border-radius:50%;background:white;margin-right:10px;" class="md-icon-button" ng-click="$mdOpenMenu($event)">
 		         				<span style="color:#424242;font-size:17px;">A</span>
@@ -42,7 +47,7 @@
 		        	</md-menu>
       			</div>
    			</md-toolbar>
-	      	
+
 	      	<div layout="column" layout-align="top center">
 	        	<p>
 	        		The left sidenav will 'lock open' on a medium (>=960px wide) device.
@@ -50,11 +55,6 @@
 	        	<p>
 	        		The right sidenav will focus on a specific child element.
 	        	</p>
-	        	<div>
-	        		<md-button ng-click="toggleLeft()" class="md-primary" hide-gt-md="">
-	        			Toggle left
-	        		</md-button>
-	        	</div>
 	      	</div>
 
 	      	<div flex=""></div>

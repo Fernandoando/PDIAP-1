@@ -5,10 +5,8 @@
 }
 .wrapper-registro {
   width: 100%;
-}     
+}
 .bloco-left {
-  width: 23% !important;
-  max-width: 23% !important;
   padding-right: 50px;
   display: flex;
   display: -webkit-flex;
@@ -17,20 +15,16 @@
   justify-content: flex-start;
   -webkit-justify-content: flex-start;
 }
-.bloco-left span { 
+.bloco-left span {
   text-transform: uppercase;
   font-size: 13px;
   color: rgba(0,0,0,0.5);
-}
-.bloco-right {
-  width: 77% !important;
-  max-width: 77% !important;
 }
 .btnEntrar {
   width: 70%;
   border-radius: 50px;
 }
-.message-error {     
+.message-error {
   font-size: 12.5px !important;
   padding: 5px !important;
   color: #dd2c00;
@@ -64,8 +58,8 @@ input[type=datetime],
 input[type=datetime-local],
 input[type=tel],
 input[type=number],
-textarea.materialize-textarea, 
-md-select .md-select-value { 
+textarea.materialize-textarea,
+md-select .md-select-value {
   height: 2.1rem !important;
 }
 md-input-container textarea {
@@ -74,7 +68,7 @@ md-input-container textarea {
 /*md-select .md-select-value {
 height: 1.85rem !important;
 }*/
-md-input-container label:not(.md-no-float):not(.md-container-ignore), 
+md-input-container label:not(.md-no-float):not(.md-container-ignore),
 md-input-container .md-placeholder, md-input-container .md-placeholder {
   padding-left: 5px !important;
 }
@@ -96,7 +90,7 @@ select:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: inherit !important;
 }
-md-input-container.md-default-theme .md-input, 
+md-input-container.md-default-theme .md-input,
 md-input-container .md-input {
   border-color: rgba(0,0,0,0.3);
   padding-left: 3px !important;
@@ -127,7 +121,7 @@ md-input-container.md-input-invalid:not(.md-input-has-value).md-input-focused .m
 md-input-container.md-default-theme.md-input-invalid:not(.md-input-focused).ng-dirty .md-input,
 md-input-container.md-input-invalid:not(.md-input-focused).ng-dirty .md-input {
   border-color: #dd2c00 !important;
-}       
+}
 md-input-container.md-default-theme.md-input-invalid.md-input-focused label,
 md-input-container.md-input-invalid.md-input-focused label,
 md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused label,
@@ -138,13 +132,13 @@ md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-
 md-input-container:not(.md-input-invalid).md-input-focused .md-input {
   border-color: #43a047 !important;
 }
-md-select.md-default-theme .md-select-value, 
+md-select.md-default-theme .md-select-value,
 md-select .md-select-value {
   border-bottom-color: rgba(0,0,0,0.3) !important;
   padding-left: 3px !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-  max-width: 100% !important; 
+  max-width: 100% !important;
 }
 md-select.md-default-theme:not([disabled]):focus .md-select-value,
 md-select:not([disabled]):focus .md-select-value {
@@ -153,17 +147,17 @@ md-select:not([disabled]):focus .md-select-value {
 /* teal lighten 1 #26a69a*/
 /*md-select.md-default-theme.ng-touched.ng-invalid .md-select-value,
 md-select.ng-touched.ng-invalid .md-select-value {
-border-bottom-color: #dd2c00 !important; 
+border-bottom-color: #dd2c00 !important;
 }*/
-md-select.md-default-theme .md-select-value.md-select-placeholder, 
+md-select.md-default-theme .md-select-value.md-select-placeholder,
 md-select .md-select-value.md-select-placeholder {
   color: rgba(0,0,0,0.4) !important;
 }
-md-select-menu.md-default-theme md-option[selected], 
+md-select-menu.md-default-theme md-option[selected],
 md-select-menu md-option[selected] {
   color: #43a047 !important;
 }
-md-autocomplete.md-default-theme, 
+md-autocomplete.md-default-theme,
 md-autocomplete {
   background: transparent !important;
   height: 2.1rem !important;
@@ -190,7 +184,7 @@ md-autocomplete input:not(.md-input) {
   background-color: #43a047 !important;
 }
 .md-fab.md-button.md-warn {
-  background-color: #dd2c00 !important;
+  background-color: #f44336 !important;
   min-height: 30px !important;
   line-height: 0 !important;
   width: 30px;
@@ -211,16 +205,16 @@ md-autocomplete input:not(.md-input) {
 md-progress-circular.md-default-theme.loading-login .md-inner .md-left .md-half-circle,
 md-progress-circular.loading-login .md-inner .md-left .md-half-circle {
  border-left-color: rgba(255,255,255,0.87) !important;
- border-top-color: rgba(255,255,255,0.87) !important;  
+ border-top-color: rgba(255,255,255,0.87) !important;
 }
-md-progress-circular.md-default-theme.loading-login .md-inner .md-right .md-half-circle, 
+md-progress-circular.md-default-theme.loading-login .md-inner .md-right .md-half-circle,
 md-progress-circular.loading-login .md-inner .md-right .md-half-circle {
   border-right-color: rgba(255,255,255,0.87) !important;
-  border-top-color: rgba(255,255,255,0.87) !important;  
+  border-top-color: rgba(255,255,255,0.87) !important;
 }
-md-card { 
+md-card {
   margin: 0;
-  font-size: 15px !important; 
+  font-size: 15px !important;
 }
 md-icon {
   color: rgba(0,0,0,0.87);

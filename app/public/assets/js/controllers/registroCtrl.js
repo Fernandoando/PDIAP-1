@@ -3,7 +3,7 @@
 
 	angular
 		.module('PDIAP')
-		.controller('registroCtrl', function($scope, $location, projetosAPI) {
+		.controller('registroCtrl', function($scope, $q, $location, projetosAPI) {
 
 			// $scope.selectCategoria = {};
 
@@ -14,11 +14,12 @@
 			$scope.eixos = [];
 			$scope.cidades = [];
 			$scope.emails = [];
+			$scope.escolas = [];
 
 		  	$scope.registrar = function(projeto){
-			   	
+
 			   	projetosAPI.saveProjeto(projeto)
-			   	.success(function(projeto, status) {     	
+			   	.success(function(projeto, status) {
 			    	console.log(projeto);
 			    	if (status === 202) {
 			    		$scope.emailDuplicado = true;
@@ -28,14 +29,14 @@
 			    		$scope.registro = true;
 				    	$scope.msg = 'Registrado com sucesso!';
 	           			//$location.url('/inscricao');
-	           			resetForm();							
+	           			resetForm();
 			    	} else {
 			    		$scope.registro = false;
 			    		$scope.msg = 'Erro ao registrar projeto.';
 			    		//$location.url('/inscricao');
-			    	}	    	
+			    	}
 			   	})
-			   	.error(function(status) { 
+			   	.error(function(status) {
 			    	$scope.registro = false;
 			    	$scope.msg = 'Erro ao registrar projeto.';
 			    	console.log(status);
@@ -74,7 +75,7 @@
 			            //adiciona os eixos em $scope.eixos
 			            for (var i in value.eixos) {
 							$scope.eixos.push(value.eixos[i]);
-					    }                 
+					    }
 			        }
 			    });
 			};
@@ -88,8 +89,8 @@
 			            $scope.cidades = [];
 			            //adiciona as cidades em $scope.cidades
 			            for (var x in value.cidades) {
-							$scope.cidades.push(value.cidades[x]);
-					    }                 
+										$scope.cidades.push(value.cidades[x]);
+							    }
 			        }
 			    });
 			};
@@ -105,7 +106,7 @@
 			$scope.btnAdd2 = true;
 			$scope.count1 = 1;
 			$scope.count2 = 1;
-	        
+
 	        $scope.addOrientador = function() {
 	        	$scope.count1++;
 	            $scope.dynamicFields1.push(
@@ -124,7 +125,7 @@
 	        		$scope.btnAdd2 = false;
 	        	}
 	        };
-	        
+
 	        $scope.removeOrientador = function(index) {
 	        	$scope.dynamicFields1.splice(index, 1);
 	        	$scope.count1--;
@@ -144,8 +145,10 @@
 			.success(function(data) {
 				angular.forEach(data, function (value) {
 					$scope.emails.push(value.email);
+					$scope.escolas.push(value.nomeEscola);
 				});
 				console.log($scope.emails);
+				console.log($scope.escolas);
 			});
 
 			$scope.verificaEmail = function(email) {
@@ -159,24 +162,62 @@
 		    	}
 		    };
 
+				$scope.states = loadAll();
+				$scope.simulateQuery = false;
+				$scope.querySearch = querySearch;
+				function querySearch (query) {
+		      var results = query ? $scope.states.filter( createFilterFor(query) ) : $scope.states,
+		          deferred;
+		      if ($scope.simulateQuery) {
+		        deferred = $q.defer();
+		        $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+		        return deferred.promise;
+		      } else {
+		        return results;
+		      }
+		    }
+
+				function createFilterFor(query) {
+		      var lowercaseQuery = angular.lowercase(query);
+		      return function filterFn(states) {
+		        return (states.value.indexOf(lowercaseQuery) === 0);
+		      };
+		    }
+
+			function loadAll() {
+				var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
+								Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
+								Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
+								Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
+								North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
+								South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
+								Wisconsin, Wyoming';
+				return allStates.split(/, +/g).map( function (state) {
+					return {
+						value: state.toLowerCase(),
+						display: state
+					};
+				});
+			}
+
 		    let resetForm = function() {
 		    	delete $scope.projeto;
-				$scope.projetoForm.$setPristine();
+					$scope.projetoForm.$setPristine();
 		   	 	$scope.btnAdd1 = true;
-				$scope.btnAdd2 = true;
-				$scope.count1 = 1;
-				$scope.count2 = 1;
-				$scope.dynamicFields1 = [
-					{nome:'nomeOrientador1', email:'emailOrientador1', cpf:'cpfOrientador1', telefone:'telefoneOrientador1', camiseta:'tamCamisetaOrientador1'}
-				];
-				$scope.dynamicFields2 = [
-					{nome:'nomeAluno1', email:'emailAluno1', cpf:'cpfAluno1', telefone:'telefoneAluno1', camiseta:'tamCamisetaAluno1'}
-				];
-				$scope.eixos = [];
-				$scope.cidades = [];
-				$scope.loginHabilitado = false;
-				$scope.emailDuplicado = false;
-		    }; 
-		
+					$scope.btnAdd2 = true;
+					$scope.count1 = 1;
+					$scope.count2 = 1;
+					$scope.dynamicFields1 = [
+						{nome:'nomeOrientador1', email:'emailOrientador1', cpf:'cpfOrientador1', telefone:'telefoneOrientador1', camiseta:'tamCamisetaOrientador1'}
+					];
+					$scope.dynamicFields2 = [
+						{nome:'nomeAluno1', email:'emailAluno1', cpf:'cpfAluno1', telefone:'telefoneAluno1', camiseta:'tamCamisetaAluno1'}
+					];
+					$scope.eixos = [];
+					$scope.cidades = [];
+					$scope.loginHabilitado = false;
+					$scope.emailDuplicado = false;
+		    };
+
 		});
 })();
