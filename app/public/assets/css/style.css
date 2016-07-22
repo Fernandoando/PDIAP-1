@@ -1,3 +1,4 @@
+ui-view { height: inherit !important; }
 .wrapper {
   padding: 15px 35px;
   margin-top: 50px;
@@ -179,6 +180,9 @@ md-autocomplete input:not(.md-input) {
   padding-bottom: 1px;
   padding-left: 2px;
   padding-right: 2px;
+}
+.md-tab {
+  font-size: 13px !important;
 }
 .md-fab.md-button:hover {
   background-color: #43a047 !important;

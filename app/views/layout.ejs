@@ -6,29 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>MOVACI</title>
-    
+
     <!--CSS-->
     <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 
   </head>
   <body>
-    
-    <data-ng-view ></data-ng-view>
 
-    <!--JavaScript-->   
+    <!-- <data-ng-view></data-ng-view> -->
+    <ui-view></ui-view>
+
+    <!--JavaScript-->
     <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-material/angular-material.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-aria/angular-aria.js"></script>
     <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.js"></script>
-    <!-- <script type="text/javascript" src="/bower_components/angular-messages/angular-messages.js"></script> --> 
-    <script type="text/javascript" src="assets/libs/angular-route.min.js"></script>
+    <!-- <script type="text/javascript" src="/bower_components/angular-messages/angular-messages.js"></script> -->
+    <!-- <script type="text/javascript" src="assets/libs/angular-route.min.js"></script> -->
     <script type="text/javascript" src="assets/libs/angular-cookies.min.js"></script>
     <script type="text/javascript" src="assets/libs/angular-resource.min.js"></script>
     <script type="text/javascript" src="assets/js/init.js"></script>
     <script type="text/javascript" src="assets/js/app.js"></script>
-    <script type="text/javascript" src="assets/js/routes/routes.js"></script>
+    <!-- <script type="text/javascript" src="assets/js/routes/routes.js"></script> -->
+    <script type="text/javascript" src="assets/js/routes/ui-routes.js"></script>
     <script type="text/javascript" src="assets/js/configs/checkLoggedin.js"></script>
     <script type="text/javascript" src="assets/js/interceptors/authInterceptor.js"></script>
     <script type="text/javascript" src="assets/js/configs/values.js"></script>
@@ -38,11 +41,12 @@
     <script type="text/javascript" src="assets/js/controllers/adminCtrl.js"></script>
     <script type="text/javascript" src="assets/js/controllers/registroCtrl.js"></script>
     <script type="text/javascript" src="assets/js/controllers/sidenavCtrl.js"></script>
+    <script type="text/javascript" src="assets/js/controllers/updateCtrl.js"></script>
     <script type="text/javascript" src="assets/js/services/projetosAPIService.js"></script>
     <script type="text/javascript" src="assets/js/controllers/autocompleteCtrl.js"></script>
     <script type="text/javascript" src="assets/js/directives/cepMask.js"></script>
     <script type="text/javascript" src="assets/js/directives/foneMask.js"></script>
     <script type="text/javascript" src="assets/js/directives/cpfMask.js"></script>
-    <script type="text/javascript" src="assets/js/directives/pwCheck.js"></script>       
+    <script type="text/javascript" src="assets/js/directives/pwCheck.js"></script>
   </body>
 </html>

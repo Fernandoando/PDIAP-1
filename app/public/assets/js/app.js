@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	
+
 	angular
-		.module('PDIAP', ['ngResource', 'ngRoute', 'ngMaterial']);
+		.module('PDIAP', ['ngResource','ngMaterial','ui.router']);
 })();

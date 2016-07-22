@@ -2,32 +2,24 @@
 	'use strict';
 
 	angular
-		.module('PDIAP')
-		.controller('adminCtrl', function($scope, $location, projetosAPI) {
+	.module('PDIAP')
+	.controller('adminCtrl', function($scope, $rootScope, $location, projetosAPI) {
 
-  			$scope.projeto = {};
-  			$scope.projetos = [];
-  			$scope.integrantes = [];
+		$scope.projeto = {};
+		$scope.integrantes = [];
+		$rootScope.header = '';
 
-  			projetosAPI.getProjeto()
-  			.success(function(projetos) {
-		        $scope.projeto = projetos;
-		        console.log(projetos);
-		        for (var i in projetos.integrantes){
-					$scope.projetos.push(projetos.integrantes[i]);
-		        }
-
-		   //      if (projeto !== '0') {
-     //   				projetosAPI.getTodosProjetos()
-					// .success(function(projetos) {
-					//     for (var i in projetos)
-					//       	$scope.projetos.push(projetos[i]);
-					// });
-		   //  	} else {
-			  //       $location.url('/login');
-		   //    	}
-		  	});
-
-		  	
+		projetosAPI.getProjeto()
+		.success(function(projetos) {
+			$scope.projeto = projetos;
+			console.log(projetos);
+			for (var i in projetos.integrantes){
+				$scope.integrantes.push(projetos.integrantes[i]);
+			}
+			console.log(projetos.integrantes);
 		});
+
+
+
+	});
 })();

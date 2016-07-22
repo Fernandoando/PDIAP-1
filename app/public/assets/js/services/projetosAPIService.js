@@ -63,7 +63,7 @@
 					method: 'GET',
 				}
 				return $http(request);
-			};			
+			};
 
 			return {
 				saveProjeto: _saveProjeto,
