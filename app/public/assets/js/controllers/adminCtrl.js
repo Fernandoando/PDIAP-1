@@ -13,13 +13,10 @@
 		.success(function(projetos) {
 			$scope.projeto = projetos;
 			console.log(projetos);
-			for (var i in projetos.integrantes){
-				$scope.integrantes.push(projetos.integrantes[i]);
-			}
-			console.log(projetos.integrantes);
+			// for (var i in projetos.integrantes){
+			// 	$scope.integrantes.push(projetos.integrantes[i]);
+			// }
+			// console.log(projetos.integrantes);
 		});
-
-
-
 	});
 })();

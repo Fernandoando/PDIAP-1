@@ -22,6 +22,16 @@
 						ctrl.$setViewValue(_formatCep(ctrl.$viewValue));
 						ctrl.$render();
 					});
+
+					ctrl.$parsers.push(function(value) {
+						if (value.length === 10) {
+							var cepArray = value.split(/[.\/-]/);
+							var model = cepArray[0]+cepArray[1]+cepArray[2];
+							return model;
+						} else {
+							return value;
+						}
+					});
 				}
 			};
 		});

@@ -1,399 +1,398 @@
 <header>
-   <md-toolbar md-scroll-shrink ng-if="true" style="background:#424242!important;height:80px;">
-      <div class="md-toolbar-tools">
-         <h3 style="color:black;">Logo</h3>
-      </div>
-   </md-toolbar>
+  <md-toolbar md-scroll-shrink ng-if="true" style="background:#424242!important;height:80px;">
+    <div class="md-toolbar-tools">
+      <h3 style="color:black;">Logo</h3>
+    </div>
+  </md-toolbar>
 </header>
 <section  class="wrapper-registro" style="background:#66bb6a;" layout="column" layout-align="center center" data-ng-cloak>
 
-   <div layout="column" layout-align="center center" style="margin:30px 0;color:rgba(0,0,0,0.73)!important;">
-      <h1>Inscrição de projetos</h1>
-      <span>Inscreva essa tua ideia maneira ai, pae. Depois tem que ver um texto melhor ok.</span>
-   </div>
+  <div layout="column" layout-align="center center" style="margin:30px 0;color:rgba(0,0,0,0.73)!important;">
+    <h1>Inscrição de projetos</h1>
+    <span>Inscreva essa tua ideia maneira ai, pae. Depois tem que ver um texto melhor ok.</span>
+  </div>
 
-   <md-content flex layout="column" layout-align="center center" style="width:100%!important;background:#fdfdfd;padding:40px;">
-      <form name="projetoForm" novalidate style="width:85%;max-width:850px;padding:8px;">
-         <div layout="row">
-            <div class="bloco-left" flex="25">
-               <span>Sobre o Projeto</span>
+  <md-content flex layout="column" layout-align="center center" style="width:100%!important;background:#fdfdfd;padding:40px;">
+    <form name="projetoForm" novalidate style="width:85%;max-width:850px;padding:8px;">
+      <div layout="row">
+        <div class="bloco-left" flex="25">
+          <span>Sobre o Projeto</span>
+        </div>
+        <div class="bloco-right" flex="75">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nome do Projeto</label>
+            <input type="text" name="nomeProjeto" data-ng-model="projeto.nomeProjeto" required />
+            <div class="md-errors-spacer">
+              <div data-ng-if="projetoForm.nomeProjeto.$dirty">
+                <div class="message-error" data-ng-if="projetoForm.nomeProjeto.$error.required">Preencha esse campo.</div>
+              </div>
             </div>
-            <div class="bloco-right" flex="75">
-               <md-input-container class="md-block" flex-gt-sm>
-                  <label>Nome do Projeto</label>
-                  <input type="text" name="nomeProjeto" data-ng-model="projeto.nomeProjeto" required />
-                  <div class="md-errors-spacer">
-                     <div data-ng-if="projetoForm.nomeProjeto.$dirty">
-                        <div class="message-error" data-ng-if="projetoForm.nomeProjeto.$error.required">Preencha esse campo.</div>
-                     </div>
-                  </div>
-               </md-input-container>
-               <div layout="row">
-                  <md-input-container class="md-block" flex="80">
-                     <label>Categoria...</label>
-                     <md-select name="categoria" data-ng-model="projeto.categoria" required style="width:100%!important;">
-                        <md-optgroup label="Categorias">
-                           <md-option data-ng-value="x.categoria" data-ng-repeat="x in listaCategorias" data-ng-click="selectEixos(x.categoria)">{{x.categoria}}</md-option>
-                        </md-optgroup>
-                     </md-select>
-                     <div class="md-errors-spacer"></div>
-                     <!-- <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.categoria.$touched">
-                           <div class="message-error" data-ng-if="projetoForm.categoria.$error.required">Selecione uma opção.</div>
-                        </div>
-                     </div> -->
-                  </md-input-container>
-                  <div flex layout="column" layout-align="center center">
-                    <md-button md-no-ink style="height:36px;font-size:13px;">Saiba mais</md-button>
-                  </div>
-                </div>
-                <div layout="row">
-                  <md-input-container class="md-block" flex="80">
-                     <label>Eixo Temático...</label>
-                     <md-select name="eixo" data-ng-model="projeto.eixo" required style="width:100%!important;">
-                        <md-optgroup label="Eixos Temáticos" data-ng-if="projeto.categoria !== undefined">
-                           <md-option data-ng-value="y" data-ng-repeat="y in eixos">{{y}}</md-option>
-                        </md-optgroup>
-                        <md-option value="" disabled data-ng-if="projeto.categoria === undefined">Selecione uma Categoria</md-option>
-                     </md-select>
-                     <div class="md-errors-spacer"></div>
-                     <!-- <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.eixo.$touched">
-                           <div class="message-error" data-ng-if="projetoForm.eixo.$error.required && projeto.categoria !== undefined">Selecione uma opção.</div>
-                        </div>
-                     </div> -->
-                  </md-input-container>
-                  <div flex layout="column" layout-align="center center">
-                    <md-button md-no-ink style="height:36px;font-size:13px;">Saiba mais</md-button>
-                  </div>
-               </div>
+          </md-input-container>
+          <div layout="row">
+            <md-input-container class="md-block" flex="80">
+              <label>Categoria...</label>
+              <md-select name="categoria" data-ng-model="projeto.categoria" required style="width:100%!important;">
+                <md-optgroup label="Categorias">
+                  <md-option data-ng-value="x.categoria" data-ng-repeat="x in listaCategorias" data-ng-click="selectEixos(x.categoria)">{{x.categoria}}</md-option>
+                </md-optgroup>
+              </md-select>
+              <div class="md-errors-spacer"></div>
+              <!-- <div class="md-errors-spacer">
+              <div data-ng-if="projetoForm.categoria.$touched">
+              <div class="message-error" data-ng-if="projetoForm.categoria.$error.required">Selecione uma opção.</div>
             </div>
-         </div>
-         <hr size="3">
-         <div layout="row">
-            <div class="bloco-left" flex="25">
-               <span>Instituição de origem</span>
+          </div> -->
+        </md-input-container>
+        <div flex layout="column" layout-align="center center">
+          <md-button md-no-ink style="height:36px;font-size:13px;">Saiba mais</md-button>
+        </div>
+      </div>
+      <div layout="row">
+        <md-input-container class="md-block" flex="80">
+          <label>Eixo Temático...</label>
+          <md-select name="eixo" data-ng-model="projeto.eixo" required style="width:100%!important;">
+            <md-optgroup label="Eixos Temáticos" data-ng-if="projeto.categoria !== undefined">
+              <md-option data-ng-value="y" data-ng-repeat="y in eixos">{{y}}</md-option>
+            </md-optgroup>
+            <md-option value="" disabled data-ng-if="projeto.categoria === undefined">Selecione uma Categoria</md-option>
+          </md-select>
+          <div class="md-errors-spacer"></div>
+          <!-- <div class="md-errors-spacer">
+          <div data-ng-if="projetoForm.eixo.$touched">
+          <div class="message-error" data-ng-if="projetoForm.eixo.$error.required && projeto.categoria !== undefined">Selecione uma opção.</div>
+        </div>
+      </div> -->
+    </md-input-container>
+    <div flex layout="column" layout-align="center center">
+      <md-button md-no-ink style="height:36px;font-size:13px;">Saiba mais</md-button>
+    </div>
+  </div>
+</div>
+</div>
+<hr size="3">
+<div layout="row">
+  <div class="bloco-left" flex="25">
+    <span>Instituição de origem</span>
+  </div>
+  <div class="bloco-right" flex="75">
+    <div layout-gt-sm="row">
+      <md-autocomplete flex="100"
+      md-no-cache="noCache"
+      md-selected-item="selectedItem"
+      md-search-text="projeto.nomeEscola"
+      md-items="item in escolas"
+      md-item-text="item"
+      md-min-length="1"
+      placeholder="Nome da instituição"
+      name="nomeEscola">
+      <md-item-template>
+        <span md-highlight-text="projeto.nomeEscola" md-highlight-flags="^i">{{item}}</span>
+      </md-item-template>
+      <!-- <div class="md-errors-spacer">
+      <div data-ng-if="projetoForm.nomeEscola.$touched">
+      <div class="message-error" data-ng-if="projetoForm.nomeEscola.$error.required">Selecione uma opção.</div>
+    </div>
+  </div> -->
+</md-autocomplete>
+</div>
+<div layout-gt-sm="row">
+  <md-input-container class="md-block" flex-gt-sm="20">
+    <label>Estado</label>
+    <md-select name="estado" data-ng-model="projeto.estado" required>
+      <md-option data-ng-value="z.nome" data-ng-repeat="z in listaEstados" data-ng-click="selectCidades(z.nome)">{{z.sigla}}</md-option>
+    </md-select>
+    <div class="md-errors-spacer"></div>
+    <!-- <div class="md-errors-spacer">
+    <div data-ng-if="projetoForm.estado.$touched">
+    <div class="message-error" data-ng-if="projetoForm.estado.$error.required">Selecione uma opção.</div>
+  </div>
+</div> -->
+</md-input-container>
+<div flex="5" hide-xs hide-sm></div>
+<md-input-container class="md-block" flex-gt-sm>
+  <label>Cidade</label>
+  <md-select name="cidade" data-ng-model="projeto.cidade" required>
+    <md-option value="" disabled data-ng-if="projeto.estado === undefined">Selecione um Estado</md-option>
+    <md-option data-ng-value="c" data-ng-repeat="c in cidades">{{c}}</md-option>
+  </md-select>
+  <div class="md-errors-spacer"></div>
+  <!-- <div class="md-errors-spacer">
+  <div data-ng-if="projetoForm.cidade.$touched">
+  <div class="message-error" data-ng-if="projetoForm.cidade.$error.required">Selecione uma opção.</div>
+</div>
+</div> -->
+</md-input-container>
+<div flex="5" hide-xs hide-sm></div>
+<md-input-container class="md-block" flex-gt-sm="20">
+  <label>CEP</label>
+  <input type="text" name="cep" data-ng-model="projeto.cep" required minlength="10" maxlength="10" cep-mask/>
+  <div class="md-errors-spacer">
+    <div data-ng-if="projetoForm.cep.$dirty">
+      <div class="message-error" data-ng-if="projetoForm.cep.$error.required">Preencha esse campo.</div>
+      <div class="message-error" data-ng-if="projetoForm.cep.$error.minlength && projetoForm.cep.$touched">CEP inválido.</div>
+    </div>
+  </div>
+</md-input-container>
+</div>
+</div>
+</div>
+<hr size="3">
+<div layout="row">
+  <div class="bloco-left" flex="25">
+    <span>Orientador(es)</span>
+  </div>
+  <div class="bloco-right" flex="75">
+    <div ng-repeat="item1 in dynamicFields1" ng-form="projetoForm">
+      <h5 class="h5-2">
+        <md-icon md-svg-icon="account-box-outline" ng-style="{width:'19px', height:'19px'}"></md-icon> Orientador {{$index+1}}:
+        <md-button data-ng-if="!$first" class="md-fab md-mini md-warn" aria-label="Remover orientador" data-ng-click="removeOrientador($index)">
+          <md-tooltip md-direction="right">Remover orientador</md-tooltip>
+          <md-icon md-svg-src="close" style="color:#fdfdfd!important;width:19px;height:19px;"></md-icon>
+        </md-button>
+      </h5>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Nome completo</label>
+          <input type="text" name="{{item1.nome}}" data-ng-model="projeto[item1.nome]" required minlength="2" />
+          <div class="md-errors-spacer">
+            <div data-ng-show="projetoForm.{{item1.nome}}.$dirty">
+              <div class="message-error" data-ng-show="projetoForm.{{item1.nome}}.$error.required">Preencha esse campo.</div>
             </div>
-            <div class="bloco-right" flex="75">
-               <div layout-gt-sm="row">
-                  <md-autocomplete flex="100"
-                        md-no-cache="noCache"
-                        md-selected-item="selectedItem"
-                        md-search-text="projeto.nomeEscola"
-                        md-items="item in escolas"
-                        md-item-text="item"
-                        md-min-length="1"
-                        placeholder="Nome da instituição"
-                        name="nomeEscola">
-                     <md-item-template>
-                        <span md-highlight-text="projeto.nomeEscola" md-highlight-flags="^i">{{item}}</span>
-                     </md-item-template>
-                     <!-- <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.nomeEscola.$touched">
-                           <div class="message-error" data-ng-if="projetoForm.nomeEscola.$error.required">Selecione uma opção.</div>
-                        </div>
-                     </div> -->
-                  </md-autocomplete>
-                  <br>
-               </div>
-               <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex-gt-sm="30">
-                     <label>Estado</label>
-                     <md-select name="estado" data-ng-model="projeto.estado" required>
-                        <md-option data-ng-value="z.nome" data-ng-repeat="z in listaEstados" data-ng-click="selectCidades(z.nome)">{{z.nome}}</md-option>
-                     </md-select>
-                     <div class="md-errors-spacer"></div>
-                     <!-- <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.estado.$touched">
-                           <div class="message-error" data-ng-if="projetoForm.estado.$error.required">Selecione uma opção.</div>
-                        </div>
-                     </div> -->
-                  </md-input-container>
-                  <div flex="5" hide-xs hide-sm></div>
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>Cidade</label>
-                     <md-select name="cidade" data-ng-model="projeto.cidade" required>
-                        <md-option value="" disabled data-ng-if="projeto.estado === undefined">Selecione um Estado</md-option>
-                        <md-option data-ng-value="c" data-ng-repeat="c in cidades">{{c}}</md-option>
-                     </md-select>
-                     <div class="md-errors-spacer"></div>
-                     <!-- <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.cidade.$touched">
-                           <div class="message-error" data-ng-if="projetoForm.cidade.$error.required">Selecione uma opção.</div>
-                        </div>
-                     </div> -->
-                  </md-input-container>
-                  <div flex="5" hide-xs hide-sm></div>
-                  <md-input-container class="md-block" flex-gt-sm="20">
-                     <label>CEP</label>
-                     <input type="text" name="cep" data-ng-model="projeto.cep" required minlength="10" maxlength="10" cep-mask/>
-                     <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.cep.$dirty">
-                           <div class="message-error" data-ng-if="projetoForm.cep.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-if="projetoForm.cep.$error.minlength && projetoForm.cep.$touched">CEP inválido.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-               </div>
+          </div>
+        </md-input-container>
+        <div flex="5" hide-xs hide-sm></div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>E-mail</label>
+          <input type="email" name="{{item1.email}}" data-ng-model="projeto[item1.email]" required data-ng-pattern="/^.+@.+\..+$/" />
+          <div class="md-errors-spacer">
+            <div data-ng-show="projetoForm.{{item1.email}}.$dirty">
+              <div class="message-error" data-ng-show="projetoForm.{{item1.email}}.$error.required">Preencha esse campo.</div>
+              <div class="message-error" data-ng-show="projetoForm.{{item1.email}}.$error.pattern && projetoForm.{{item1.email}}.$touched">Email inválido.</div>
             </div>
-         </div>
-         <hr size="3">
-         <div layout="row">
-            <div class="bloco-left" flex="25">
-               <span>Orientador(es)</span>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>CPF</label>
+          <input type="text" name="{{item1.cpf}}" data-ng-model="projeto[item1.cpf]" required minlength="14" maxlength="14" cpf-mask/>
+          <div class="md-errors-spacer">
+            <div data-ng-show="projetoForm.{{item1.cpf}}.$dirty">
+              <div class="message-error" data-ng-show="projetoForm.{{item1.cpf}}.$error.required">Preencha esse campo.</div>
+              <div class="message-error" data-ng-show="projetoForm.{{item1.cpf}}.$error.minlength && projetoForm.{{item1.cpf}}.$touched">CPF inválido.</div>
             </div>
-            <div class="bloco-right" flex="75">
-              <div ng-repeat="item1 in dynamicFields1" ng-form="projetoForm">
-              <h5 class="h5-2">
-                <md-icon md-svg-icon="account-box-outline" ng-style="{width:'19px', height:'19px'}"></md-icon> Orientador {{$index+1}}:
-                <md-button data-ng-if="!$first" class="md-fab md-mini md-warn" aria-label="Remover orientador" data-ng-click="removeOrientador($index)">
-                  <md-tooltip md-direction="right">Remover orientador</md-tooltip>
-                  <md-icon md-svg-src="close" style="color:#fdfdfd!important;width:19px;height:19px;"></md-icon>
-                </md-button>
-              </h5>
-               <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>Nome completo</label>
-                     <input type="text" name="{{item1.nome}}" data-ng-model="projeto[item1.nome]" required minlength="2" />
-                     <div class="md-errors-spacer">
-                        <div data-ng-show="projetoForm.{{item1.nome}}.$dirty">
-                           <div class="message-error" data-ng-show="projetoForm.{{item1.nome}}.$error.required">Preencha esse campo.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-                  <div flex="5" hide-xs hide-sm></div>
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>E-mail</label>
-                     <input type="email" name="{{item1.email}}" data-ng-model="projeto[item1.email]" required data-ng-pattern="/^.+@.+\..+$/" />
-                     <div class="md-errors-spacer">
-                        <div data-ng-show="projetoForm.{{item1.email}}.$dirty">
-                           <div class="message-error" data-ng-show="projetoForm.{{item1.email}}.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-show="projetoForm.{{item1.email}}.$error.pattern && projetoForm.{{item1.email}}.$touched">Email inválido.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-               </div>
-               <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>CPF</label>
-                     <input type="text" name="{{item1.cpf}}" data-ng-model="projeto[item1.cpf]" required  minlength="14" maxlength="14" cpf-mask/>
-                     <div class="md-errors-spacer">
-                        <div data-ng-show="projetoForm.{{item1.cpf}}.$dirty">
-                           <div class="message-error" data-ng-show="projetoForm.{{item1.cpf}}.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-show="projetoForm.{{item1.cpf}}.$error.minlength && projetoForm.{{item1.cpf}}.$touched">CPF inválido.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-                  <div flex="5" hide-xs hide-sm></div>
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>Telefone</label>
-                     <input type="text" name="{{item1.telefone}}" data-ng-model="projeto[item1.telefone]" required minlength="14" maxlength="14" fone-mask/>
-                     <div class="md-errors-spacer">
-                        <div data-ng-show="projetoForm.{{item1.telefone}}.$dirty">
-                           <div class="message-error" data-ng-show="projetoForm.{{item1.telefone}}.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-show="projetoForm.{{item1.telefone}}.$error.minlength && projetoForm.{{item1.telefone}}.$touched">Telefone inválido.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-                  <div flex="5" hide-xs hide-sm></div>
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>Tamanho da camisa</label>
-                     <md-select name="{{item1.camiseta}}" data-ng-model="projeto[item1.camiseta]" required>
-                        <md-option value="P">P - Pequena</md-option>
-                        <md-option value="M">M - Média</md-option>
-                        <md-option value="G">G - Grande</md-option>
-                     </md-select>
-                     <div class="md-errors-spacer"></div>
-<!--                      <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.{{item1.camiseta}}.$touched">
-                           <div class="message-error" data-ng-if="projetoForm.{{item1.camiseta}}.$error.required">Selecione uma opção.</div>
-                        </div>
-                     </div> -->
-                  </md-input-container>
-               </div>
-               </div>
-               <div layout="column" layout-align="center center" data-ng-if="btnAdd1">
-                  <md-button class="md-fab md-mini" style="background:#66bb6a;" aria-label="Adicionar orientador" data-ng-click="addOrientador()">
-                     <md-tooltip md-direction="left">Adicionar orientador</md-tooltip>
-                     <md-icon md-svg-src="plus" style="color:#fdfdfd!important;"></md-icon>
-                  </md-button>
-               </div>
-               <!-- <div ng-repeat="item in dynamicFields" ng-form="projetoForm">
-                  <integrantes-block model-var="nomeOrientador2"></integrantes-block>
-               </div> -->
+          </div>
+        </md-input-container>
+        <div flex="5" hide-xs hide-sm></div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Telefone</label>
+          <input type="text" name="{{item1.telefone}}" data-ng-model="projeto[item1.telefone]" required minlength="14" maxlength="14" fone-mask/>
+          <div class="md-errors-spacer">
+            <div data-ng-show="projetoForm.{{item1.telefone}}.$dirty">
+              <div class="message-error" data-ng-show="projetoForm.{{item1.telefone}}.$error.required">Preencha esse campo.</div>
+              <div class="message-error" data-ng-show="projetoForm.{{item1.telefone}}.$error.minlength && projetoForm.{{item1.telefone}}.$touched">Telefone inválido.</div>
+            </div>
+          </div>
+        </md-input-container>
+        <div flex="5" hide-xs hide-sm></div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Tamanho da camisa</label>
+          <md-select name="{{item1.camiseta}}" data-ng-model="projeto[item1.camiseta]" required>
+            <md-option value="P">P - Pequena</md-option>
+            <md-option value="M">M - Média</md-option>
+            <md-option value="G">G - Grande</md-option>
+          </md-select>
+          <div class="md-errors-spacer"></div>
+          <!--                      <div class="md-errors-spacer">
+          <div data-ng-if="projetoForm.{{item1.camiseta}}.$touched">
+          <div class="message-error" data-ng-if="projetoForm.{{item1.camiseta}}.$error.required">Selecione uma opção.</div>
+        </div>
+      </div> -->
+    </md-input-container>
+  </div>
+</div>
+<div layout="column" layout-align="center center" data-ng-if="btnAdd1">
+  <md-button class="md-fab md-mini" style="background:#66bb6a;" aria-label="Adicionar orientador" data-ng-click="addOrientador()">
+    <md-tooltip md-direction="left">Adicionar orientador</md-tooltip>
+    <md-icon md-svg-src="plus" style="color:#fdfdfd!important;"></md-icon>
+  </md-button>
+</div>
+<!-- <div ng-repeat="item in dynamicFields" ng-form="projetoForm">
+<integrantes-block model-var="nomeOrientador2"></integrantes-block>
+</div> -->
 
+</div>
+</div>
+<hr size="3">
+<div layout="row">
+  <div class="bloco-left" flex="25">
+    <span>Aluno(s)</span>
+  </div>
+  <div class="bloco-right" flex="75">
+    <div ng-repeat="item2 in dynamicFields2" ng-form="projetoForm">
+      <h5 class="h5-2">
+        <md-icon md-svg-icon="account-multiple" ng-style="{width:'19px', height:'19px'}"></md-icon> Aluno {{$index+1}}:
+        <md-button data-ng-if="!$first" class="md-fab md-mini md-warn" aria-label="Remover aluno" data-ng-click="removeAluno($index)">
+          <md-tooltip md-direction="right">Remover aluno</md-tooltip>
+          <md-icon md-svg-src="close" style="color:#fdfdfd!important;width:19px;height:19px;"></md-icon>
+        </md-button>
+      </h5>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Nome completo</label>
+          <input type="text" name="{{item2.nome}}" data-ng-model="projeto[item2.nome]" required minlength="2" />
+          <div class="md-errors-spacer">
+            <div data-ng-show="projetoForm.{{item2.nome}}.$dirty">
+              <div class="message-error" data-ng-show="projetoForm.{{item2.nome}}.$error.required">Preencha esse campo.</div>
             </div>
-         </div>
-         <hr size="3">
-         <div layout="row">
-            <div class="bloco-left" flex="25">
-               <span>Aluno(s)</span>
+          </div>
+        </md-input-container>
+        <div flex="5" hide-xs hide-sm></div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>E-mail</label>
+          <input type="email" name="{{item2.email}}" data-ng-model="projeto[item2.email]" required data-ng-pattern="/^.+@.+\..+$/" />
+          <div class="md-errors-spacer">
+            <div data-ng-show="projetoForm.{{item2.email}}.$dirty">
+              <div class="message-error" data-ng-show="projetoForm.{{item2.email}}.$error.required">Preencha esse campo.</div>
+              <div class="message-error" data-ng-show="projetoForm.{{item2.email}}.$error.pattern && projetoForm.{{item2.email}}.$touched">Email inválido.</div>
             </div>
-            <div class="bloco-right" flex="75">
-               <div ng-repeat="item2 in dynamicFields2" ng-form="projetoForm">
-               <h5 class="h5-2">
-                 <md-icon md-svg-icon="account-multiple" ng-style="{width:'19px', height:'19px'}"></md-icon> Aluno {{$index+1}}:
-                 <md-button data-ng-if="!$first" class="md-fab md-mini md-warn" aria-label="Remover aluno" data-ng-click="removeAluno($index)">
-                   <md-tooltip md-direction="right">Remover aluno</md-tooltip>
-                   <md-icon md-svg-src="close" style="color:#fdfdfd!important;width:19px;height:19px;"></md-icon>
-                 </md-button>
-               </h5>
-               <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>Nome completo</label>
-                     <input type="text" name="{{item2.nome}}" data-ng-model="projeto[item2.nome]" required minlength="2" />
-                     <div class="md-errors-spacer">
-                        <div data-ng-show="projetoForm.{{item2.nome}}.$dirty">
-                           <div class="message-error" data-ng-show="projetoForm.{{item2.nome}}.$error.required">Preencha esse campo.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-                  <div flex="5" hide-xs hide-sm></div>
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>E-mail</label>
-                     <input type="email" name="{{item2.email}}" data-ng-model="projeto[item2.email]" required data-ng-pattern="/^.+@.+\..+$/" />
-                     <div class="md-errors-spacer">
-                        <div data-ng-show="projetoForm.{{item2.email}}.$dirty">
-                           <div class="message-error" data-ng-show="projetoForm.{{item2.email}}.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-show="projetoForm.{{item2.email}}.$error.pattern && projetoForm.{{item2.email}}.$touched">Email inválido.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-               </div>
-               <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>CPF</label>
-                     <input type="text" name="{{item2.cpf}}" data-ng-model="projeto[item2.cpf]" required minlength="14" maxlength="14" cpf-mask/>
-                     <div class="md-errors-spacer">
-                        <div data-ng-show="projetoForm.{{item2.cpf}}.$dirty">
-                           <div class="message-error" data-ng-show="projetoForm.{{item2.cpf}}.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-show="projetoForm.{{item2.cpf}}.$error.minlength && projetoForm.{{item2.cpf}}.$touched">CPF inválido.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-                  <div flex="5" hide-xs hide-sm></div>
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>Telefone</label>
-                     <input type="text" name="{{item2.telefone}}" data-ng-model="projeto[item2.telefone]" required minlength="14" maxlength="14" fone-mask/>
-                     <div class="md-errors-spacer">
-                        <div data-ng-show="projetoForm.{{item2.telefone}}.$dirty">
-                           <div class="message-error" data-ng-show="projetoForm.{{item2.telefone}}.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-show="projetoForm.{{item2.telefone}}.$error.minlength && projetoForm.{{item2.telefone}}.$touched">Telefone inválido.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-                  <div flex="5" hide-xs hide-sm></div>
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>Tamanho da camisa</label>
-                     <md-select name="{{item2.camiseta}}" data-ng-model="projeto[item2.camiseta]" required>
-                        <md-option value="P">P - Pequena</md-option>
-                        <md-option value="M">M - Média</md-option>
-                        <md-option value="G">G - Grande</md-option>
-                     </md-select>
-                     <div class="md-errors-spacer"></div>
-                     <!-- <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.{{item2.camiseta}}.$touched">
-                           <div class="message-error" data-ng-if="projetoForm.{{item2.camiseta}}.$error.required">Selecione uma opção.</div>
-                        </div>
-                     </div> -->
-                  </md-input-container>
-               </div>
-               </div>
-               <div layout="column" layout-align="center center" data-ng-if="btnAdd2">
-                  <md-button class="md-fab md-mini" style="background:#66bb6a;" aria-label="Adicionar aluno" data-ng-click="addAluno()">
-                     <md-tooltip md-direction="left">Adicionar aluno</md-tooltip>
-                     <md-icon md-svg-src="plus" style="color:#fdfdfd!important;"></md-icon>
-                  </md-button>
-               </div>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>CPF</label>
+          <input type="text" name="{{item2.cpf}}" data-ng-model="projeto[item2.cpf]" required minlength="14" maxlength="14" cpf-mask/>
+          <div class="md-errors-spacer">
+            <div data-ng-show="projetoForm.{{item2.cpf}}.$dirty">
+              <div class="message-error" data-ng-show="projetoForm.{{item2.cpf}}.$error.required">Preencha esse campo.</div>
+              <div class="message-error" data-ng-show="projetoForm.{{item2.cpf}}.$error.minlength && projetoForm.{{item2.cpf}}.$touched">CPF inválido.</div>
             </div>
-         </div>
-         <hr size="3">
-         <div layout="row">
-            <div class="bloco-left" flex="25">
-               <span>Resumo</span>
+          </div>
+        </md-input-container>
+        <div flex="5" hide-xs hide-sm></div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Telefone</label>
+          <input type="text" name="{{item2.telefone}}" data-ng-model="projeto[item2.telefone]" required minlength="14" maxlength="14" fone-mask/>
+          <div class="md-errors-spacer">
+            <div data-ng-show="projetoForm.{{item2.telefone}}.$dirty">
+              <div class="message-error" data-ng-show="projetoForm.{{item2.telefone}}.$error.required">Preencha esse campo.</div>
+              <div class="message-error" data-ng-show="projetoForm.{{item2.telefone}}.$error.minlength && projetoForm.{{item2.telefone}}.$touched">Telefone inválido.</div>
             </div>
-            <div class="bloco-right" flex="75">
-               <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex="100">
-                     <label>Resumo do Projeto</label>
-                     <textarea style="height:200px!important;" name="resumo" ng-model="projeto.resumo" md-maxlength="100" rows="1" md-select-on-focus></textarea>
-                     <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.resumo.$dirty">
-                           <div class="message-error" data-ng-if="projetoForm.resumo.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-if="projetoForm.resumo.$invalid">Resumo excedeu o número de caracteres |</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-               </div>
-            </div>
-         </div>
+          </div>
+        </md-input-container>
+        <div flex="5" hide-xs hide-sm></div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Tamanho da camisa</label>
+          <md-select name="{{item2.camiseta}}" data-ng-model="projeto[item2.camiseta]" required>
+            <md-option value="P">P - Pequena</md-option>
+            <md-option value="M">M - Média</md-option>
+            <md-option value="G">G - Grande</md-option>
+          </md-select>
+          <div class="md-errors-spacer"></div>
+          <!-- <div class="md-errors-spacer">
+          <div data-ng-if="projetoForm.{{item2.camiseta}}.$touched">
+          <div class="message-error" data-ng-if="projetoForm.{{item2.camiseta}}.$error.required">Selecione uma opção.</div>
+        </div>
+      </div> -->
+    </md-input-container>
+  </div>
+</div>
+<div layout="column" layout-align="center center" data-ng-if="btnAdd2">
+  <md-button class="md-fab md-mini" style="background:#66bb6a;" aria-label="Adicionar aluno" data-ng-click="addAluno()">
+    <md-tooltip md-direction="left">Adicionar aluno</md-tooltip>
+    <md-icon md-svg-src="plus" style="color:#fdfdfd!important;"></md-icon>
+  </md-button>
+</div>
+</div>
+</div>
+<hr size="3">
+<div layout="row">
+  <div class="bloco-left" flex="25">
+    <span>Resumo</span>
+  </div>
+  <div class="bloco-right" flex="75">
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block" flex="100">
+        <label>Resumo do Projeto</label>
+        <textarea style="height:200px!important;" name="resumo" ng-model="projeto.resumo" md-maxlength="100" rows="1" md-select-on-focus></textarea>
+        <div class="md-errors-spacer">
+          <div data-ng-if="projetoForm.resumo.$dirty">
+            <div class="message-error" data-ng-if="projetoForm.resumo.$error.required">Preencha esse campo.</div>
+            <div class="message-error" data-ng-if="projetoForm.resumo.$invalid">Resumo excedeu o número de caracteres |</div>
+          </div>
+        </div>
+      </md-input-container>
+    </div>
+  </div>
+</div>
 
-         <div class="row finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-            <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="projetoForm.$valid" data-ng-click="habilitarLogin()" data-ng-if="!loginHabilitado">
-               <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Avançar
-            </md-button>
-         </div>
+<div class="row finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+  <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="projetoForm.$valid" data-ng-click="habilitarLogin()" data-ng-if="!loginHabilitado">
+    <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Avançar
+  </md-button>
+</div>
 
-         <!-- Cadastrar dados p/ login -->
-         <div data-ng-if="loginHabilitado">
-         <p style="font-weight:bold;text-align:center;color:rgba(0,0,0,0.73);">Os dados informados serão usados para a criação de um login único do projeto.</p>
-         <div layout="row">
-            <div class="bloco-left" flex="25" style="padding-left:20px;background:#81c784;">
-               <span>Cadastro Login</span>
+<!-- Cadastrar dados p/ login -->
+<div data-ng-if="loginHabilitado">
+  <p style="font-weight:bold;text-align:center;color:rgba(0,0,0,0.73);">Os dados informados serão usados para a criação de um login único do projeto.</p>
+  <div layout="row">
+    <div class="bloco-left" flex="25" style="padding-left:20px;background:#81c784;">
+      <span>Cadastro Login</span>
+    </div>
+    <div class="bloco-right" flex="75" style="border:1.5px solid #81c784;padding:20px;">
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>E-mail</label>
+          <input type="email" name="email" data-ng-model="projeto.email" data-ng-change="verificaEmail(projeto.email)" required data-ng-pattern="/^.+@.+\..+$/" />
+          <div class="md-errors-spacer">
+            <div data-ng-if="projetoForm.email.$dirty">
+              <div class="message-error" data-ng-if="projetoForm.email.$error.required">Preencha esse campo.</div>
+              <div class="message-error" data-ng-if="projetoForm.email.$error.pattern && projetoForm.email.$touched">Email inválido.</div>
+              <div class="message-error" data-ng-if="projetoForm.email.$error.duplicado">Email já está sendo utilizado.</div>
             </div>
-            <div class="bloco-right" flex="75" style="border:1.5px solid #81c784;padding:20px;">
-               <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>E-mail</label>
-                     <input type="email" name="email" data-ng-model="projeto.email" data-ng-change="verificaEmail(projeto.email)" required data-ng-pattern="/^.+@.+\..+$/" />
-                     <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.email.$dirty">
-                           <div class="message-error" data-ng-if="projetoForm.email.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-if="projetoForm.email.$error.pattern && projetoForm.email.$touched">Email inválido.</div>
-                           <div class="message-error" data-ng-if="projetoForm.email.$error.duplicado">Email já está sendo utilizado.</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-               </div>
-               <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>Senha</label>
-                     <input type="password" name="password" data-ng-model="projeto.password" required data-ng-minlength="5" id="pw1" />
-                     <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.password.$dirty">
-                           <div class="message-error" data-ng-if="projetoForm.password.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-if="projetoForm.password.$error.minlength && projetoForm.password.$touched">Senha muito fraca</div>
-                           <div class="message-error" id="senha-regular" data-ng-if="projeto.password.length > 4 && projeto.password.length < 12">Senha regular</div>
-                           <div class="message-error" id="senha-forte" data-ng-if="projeto.password.length >= 12">Senha forte</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-                  <div flex="5" hide-xs hide-sm></div>
-                  <md-input-container class="md-block" flex-gt-sm>
-                     <label>Confirme a senha</label>
-                     <input type="password" name="password2" data-ng-model="projeto.password2" required id="pw2" pw-check="pw1" />
-                     <div class="md-errors-spacer">
-                        <div data-ng-if="projetoForm.password2.$dirty">
-                           <div class="message-error" data-ng-if="projetoForm.password2.$error.required">Preencha esse campo.</div>
-                           <div class="message-error" data-ng-if="projetoForm.password2.$error.pwmatch && !projetoForm.password2.$error.required">Senha não confere!</div>
-                        </div>
-                     </div>
-                  </md-input-container>
-               </div>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Senha</label>
+          <input type="password" name="password" data-ng-model="projeto.password" required data-ng-minlength="5" id="pw1" />
+          <div class="md-errors-spacer">
+            <div data-ng-if="projetoForm.password.$dirty">
+              <div class="message-error" data-ng-if="projetoForm.password.$error.required">Preencha esse campo.</div>
+              <div class="message-error" data-ng-if="projetoForm.password.$error.minlength && projetoForm.password.$touched">Senha muito fraca</div>
+              <div class="message-error" id="senha-regular" data-ng-if="projeto.password.length > 4 && projeto.password.length < 12">Senha regular</div>
+              <div class="message-error" id="senha-forte" data-ng-if="projeto.password.length >= 12">Senha forte</div>
             </div>
-         </div>
-         <!-- Finalizar inscrição -->
-         <div class="row finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-            <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm.$valid || projetoForm.password2.$error.pwmatch" data-ng-click="registrar(projeto)">
-               <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
-            </md-button>
-         </div>
-         </div>
-      </form>
-   </md-content>
+          </div>
+        </md-input-container>
+        <div flex="5" hide-xs hide-sm></div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Confirme a senha</label>
+          <input type="password" name="password2" data-ng-model="projeto.password2" required id="pw2" pw-check="pw1" />
+          <div class="md-errors-spacer">
+            <div data-ng-if="projetoForm.password2.$dirty">
+              <div class="message-error" data-ng-if="projetoForm.password2.$error.required">Preencha esse campo.</div>
+              <div class="message-error" data-ng-if="projetoForm.password2.$error.pwmatch && !projetoForm.password2.$error.required">Senha não confere!</div>
+            </div>
+          </div>
+        </md-input-container>
+      </div>
+    </div>
+  </div>
+  <!-- Finalizar inscrição -->
+  <div class="row finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+    <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm.$valid || projetoForm.password2.$error.pwmatch" data-ng-click="registrar(projeto)">
+      <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
+    </md-button>
+  </div>
+</div>
+</form>
+</md-content>
 
 </section>
 {{registro}}<br>{{msg}}
 <footer>
-   <div layout="row" style="height:150px;background:green;"></div>
+  <div layout="row" style="height:150px;background:green;"></div>
 </footer>

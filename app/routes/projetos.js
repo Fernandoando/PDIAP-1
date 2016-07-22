@@ -92,7 +92,7 @@ router.post('/registro', testaEmail2, (req, res) => {
   ,   password = req.body.password
   ,   password2 = req.body.password2
 
-  //,   tipoOrientador1 = req.body.tipoOrientador1  
+  //,   tipoOrientador1 = req.body.tipoOrientador1
   ,   nomeOrientador1 = req.body.nomeOrientador1
   ,   emailOrientador1 = req.body.emailOrientador1
   ,   cpfOrientador1 = req.body.cpfOrientador1
@@ -188,31 +188,32 @@ router.post('/registro', testaEmail2, (req, res) => {
 		let newProject = new ProjetoSchema({
       nomeProjeto: nomeProjeto,
       categoria: categoria,
-      eixo: eixo,      
+      eixo: eixo,
       nomeEscola: nomeEscola,
       cep: cep,
       cidade: cidade,
-      estado: estado,      
-      resumo: resumo,      
+      estado: estado,
+      resumo: resumo,
       email: email,
       password: password,
       password2: password2,
 		});
 
-    if(nomeAluno3 && emailAluno3 && cpfAluno3 && telefoneAluno3 && tamCamisetaAluno3){
-      newProject.integrantes.push(newIntegrante5);
-    }
+    newProject.integrantes.push(newIntegrante);
 
-    if(nomeAluno2 && emailAluno2 && cpfAluno2 && telefoneAluno2 && tamCamisetaAluno2){
-      newProject.integrantes.push(newIntegrante4);
-    }
-    
     if(nomeOrientador2 && emailOrientador2 && cpfOrientador2 && telefoneOrientador2 && tamCamisetaOrientador2){
           newProject.integrantes.push(newIntegrante2);
     }
 
-    newProject.integrantes.push(newIntegrante);
     newProject.integrantes.push(newIntegrante3);
+    
+    if(nomeAluno2 && emailAluno2 && cpfAluno2 && telefoneAluno2 && tamCamisetaAluno2){
+      newProject.integrantes.push(newIntegrante4);
+    }
+
+    if(nomeAluno3 && emailAluno3 && cpfAluno3 && telefoneAluno3 && tamCamisetaAluno3){
+      newProject.integrantes.push(newIntegrante5);
+    }
 
 		Projeto.createProject(newProject);
 
@@ -309,7 +310,7 @@ router.post('/nova-senha/:email/:token', (req, res) => {
   } else {
     ProjetoSchema.findOne({email: (req.params.email)}, (err, usr) => {
       if(err || !usr) {
-        res.status(400).send("erro2");            
+        res.status(400).send("erro2");
       } else if(usr.resetPasswordToken == req.params.token && !usr.hasExpired()) {
         usr.resetPasswordToken = undefined;
         usr.resetPasswordCreatedDate = undefined;
@@ -326,7 +327,7 @@ router.post('/nova-senha/:email/:token', (req, res) => {
           });
         });
       } else {
-        res.status(400).send("erro3");  
+        res.status(400).send("erro3");
       }
     });
   };
@@ -378,9 +379,9 @@ router.put('/novoIntegrante', (req, res) => {
   console.log(cpf);
   console.log(telefone);
   console.log(tamCamiseta);
-  
+
   ProjetoSchema.findOneAndUpdate(
-    {"email": findEmail}, 
+    {"email": findEmail},
     {$push: {integrantes: {
         nome: nome,
         email: email,
