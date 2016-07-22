@@ -29,9 +29,6 @@ const ProjetoSchema = new Schema({
 	nomeProjeto: {
 		type: String
 	},
-	tipo: {
-		type: String
-	},
 	categoria: {
 		type: String
 	},

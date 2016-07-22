@@ -78,7 +78,6 @@ router.get('/login', (req, res) => {
 router.post('/registro', testaEmail2, (req, res) => {
 
   let nomeProjeto = req.body.nomeProjeto
-  ,   tipo = req.body.tipo
   ,   categoria = req.body.categoria
   ,   eixo = req.body.eixo
 
@@ -93,35 +92,35 @@ router.post('/registro', testaEmail2, (req, res) => {
   ,   password = req.body.password
   ,   password2 = req.body.password2
 
-  ,   tipoOrientador1 = req.body.tipoOrientador1  
+  //,   tipoOrientador1 = req.body.tipoOrientador1  
   ,   nomeOrientador1 = req.body.nomeOrientador1
   ,   emailOrientador1 = req.body.emailOrientador1
   ,   cpfOrientador1 = req.body.cpfOrientador1
   ,   telefoneOrientador1 = req.body.telefoneOrientador1
   ,   tamCamisetaOrientador1 = req.body.tamCamisetaOrientador1
 
-  ,   tipoOrientador2 = req.body.tipoOrientador2
+  //,   tipoOrientador2 = req.body.tipoOrientador2
   ,   nomeOrientador2 = req.body.nomeOrientador2
   ,   emailOrientador2 = req.body.emailOrientador2
   ,   cpfOrientador2 = req.body.cpfOrientador2
   ,   telefoneOrientador2 = req.body.telefoneOrientador2
   ,   tamCamisetaOrientador2 = req.body.tamCamisetaOrientador2
 
-  ,   tipoAluno1 = req.body.tipoAluno1
+  //,   tipoAluno1 = req.body.tipoAluno1
   ,   nomeAluno1 = req.body.nomeAluno1
   ,   emailAluno1 = req.body.emailAluno1
   ,   cpfAluno1 = req.body.cpfAluno1
   ,   telefoneAluno1 = req.body.telefoneAluno1
   ,   tamCamisetaAluno1 = req.body.tamCamisetaAluno1
 
-  ,   tipoAluno2 = req.body.tipoAluno2
+  //,   tipoAluno2 = req.body.tipoAluno2
   ,   nomeAluno2 = req.body.nomeAluno2
   ,   emailAluno2 = req.body.emailAluno2
   ,   cpfAluno2 = req.body.cpfAluno2
   ,   telefoneAluno2 = req.body.telefoneAluno2
   ,   tamCamisetaAluno2 = req.body.tamCamisetaAluno2
 
-  ,   tipoAluno3 = req.body.tipoAluno3
+  //,   tipoAluno3 = req.body.tipoAluno3
   ,   nomeAluno3 = req.body.nomeAluno3
   ,   emailAluno3 = req.body.emailAluno3
   ,   cpfAluno3 = req.body.cpfAluno3
@@ -142,7 +141,7 @@ router.post('/registro', testaEmail2, (req, res) => {
 	} else {
 
     let newIntegrante = ({
-      tipo: tipoOrientador1,
+      tipo: "Orientador",
       nome: nomeOrientador1,
       email: emailOrientador1,
       cpf: cpfOrientador1,
@@ -151,7 +150,7 @@ router.post('/registro', testaEmail2, (req, res) => {
     });
 
     let newIntegrante2 = ({
-      tipo: tipoOrientador2,
+      tipo: "Orientador",
       nome: nomeOrientador2,
       email: emailOrientador2,
       cpf: cpfOrientador2,
@@ -160,7 +159,7 @@ router.post('/registro', testaEmail2, (req, res) => {
     });
 
     let newIntegrante3 = ({
-      tipo: tipoAluno1,
+      tipo: "Aluno",
       nome: nomeAluno1,
       email: emailAluno1,
       cpf: cpfAluno1,
@@ -169,7 +168,7 @@ router.post('/registro', testaEmail2, (req, res) => {
     });
 
     let newIntegrante4 = ({
-      tipo: tipoAluno2,
+      tipo: "Aluno",
       nome: nomeAluno2,
       email: emailAluno2,
       cpf: cpfAluno2,
@@ -178,7 +177,7 @@ router.post('/registro', testaEmail2, (req, res) => {
     });
 
     let newIntegrante5 = ({
-      tipo: tipoAluno3,
+      tipo: "Aluno",
       nome: nomeAluno3,
       email: emailAluno3,
       cpf: cpfAluno3,
@@ -188,7 +187,6 @@ router.post('/registro', testaEmail2, (req, res) => {
 
 		let newProject = new ProjetoSchema({
       nomeProjeto: nomeProjeto,
-      tipo: tipo,
       categoria: categoria,
       eixo: eixo,      
       nomeEscola: nomeEscola,
@@ -201,15 +199,15 @@ router.post('/registro', testaEmail2, (req, res) => {
       password2: password2,
 		});
 
-    if(tipoAluno3 && nomeAluno3 && emailAluno3 && cpfAluno3 && telefoneAluno3 && tamCamisetaAluno3){
+    if(nomeAluno3 && emailAluno3 && cpfAluno3 && telefoneAluno3 && tamCamisetaAluno3){
       newProject.integrantes.push(newIntegrante5);
     }
 
-    if(tipoAluno2 && nomeAluno2 && emailAluno2 && cpfAluno2 && telefoneAluno2 && tamCamisetaAluno2){
+    if(nomeAluno2 && emailAluno2 && cpfAluno2 && telefoneAluno2 && tamCamisetaAluno2){
       newProject.integrantes.push(newIntegrante4);
     }
     
-    if(tipoOrientador2 && nomeOrientador2 && emailOrientador2 && cpfOrientador2 && telefoneOrientador2 && tamCamisetaOrientador2){
+    if(nomeOrientador2 && emailOrientador2 && cpfOrientador2 && telefoneOrientador2 && tamCamisetaOrientador2){
           newProject.integrantes.push(newIntegrante2);
     }
 
@@ -354,8 +352,6 @@ router.get('/todos', ensureAuthenticated, (req, res) => {
   })
 });
 
-
-
 /*router.put("/:id",function (req,res) {
           var newUser = req.body;
           UserModel.update({_id:newUser._id},{$set:newUser},function (err,docs) {
@@ -397,6 +393,5 @@ router.put('/novoIntegrante', (req, res) => {
     res.json({success: true});
   });
 })
-
 
 module.exports = router;
