@@ -11,15 +11,12 @@
         <md-button ng-click="close()" class="md-primary" hide-gt-sm="">
           Close Sidenav Left
         </md-button>
-        <p hide="" show-gt-sm="">
-          This sidenav is locked open on your device. To go back to the default behavior,
-          narrow your display.
-        </p>
+        <p hide="" show-gt-sm="">{{projeto.nomeProjeto}}</p>
       </md-content>
 
     </md-sidenav>
     <!-- conteúdo da página -->
-    <md-content flex="" style="overflow:overlay!important;background:#fdfdfd;">
+    <md-content flex="" style="overflow:auto!important;background:#fdfdfd;">
       <!-- tollbar -->
       <md-toolbar ng-if="true" style="background:#424242!important;">
         <div class="md-toolbar-tools">
@@ -31,7 +28,7 @@
           <h2 style="padding-left:20px;"><span>{{header}}</span></h2>
           <span flex></span>
           <md-menu>
-            <md-button aria-label="Open demo menu" style="width:45px;height:45px;border-radius:50%;background:white;margin-right:10px;" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+            <md-button aria-label="Open demo menu" style="width:45px;height:45px;border-radius:50%;background:white;margin-right:30px;" class="md-icon-button" ng-click="$mdOpenMenu($event)">
               <span style="color:#424242;font-size:17px;">A</span>
             </md-button>
             <md-menu-content width="4">

@@ -206,7 +206,7 @@ router.post('/registro', testaEmail2, (req, res) => {
     }
 
     newProject.integrantes.push(newIntegrante3);
-    
+
     if(nomeAluno2 && emailAluno2 && cpfAluno2 && telefoneAluno2 && tamCamisetaAluno2){
       newProject.integrantes.push(newIntegrante4);
     }

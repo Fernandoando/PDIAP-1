@@ -194,6 +194,71 @@ md-autocomplete input:not(.md-input) {
   width: 30px;
   height: 30px;
 }
+.icon-btn-default {
+  width: 20px;
+  height: 20px;
+  color: rgba(255,255,255,0.87);
+  padding-bottom: 3px;
+}
+.icon-update {
+  top: 9px !important;
+  cursor: pointer;
+  color: #424242 !important;
+}
+md-select[disabled] .md-select-value {
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+}
+md-input-container .md-input[disabled], [disabled] md-input-container .md-input {
+  margin-bottom: 0 !important;
+}
+md-input-container.md-default-theme .md-input[disabled],
+md-input-container .md-input[disabled],
+md-input-container.md-default-theme .md-input [disabled],
+md-input-container .md-input [disabled],
+md-select.md-default-theme[disabled] .md-select-value,
+md-select[disabled] .md-select-value {
+  background-image: none !important;
+}
+md-autocomplete[disabled] input {
+  border-bottom: none !important;
+}
+md-tabs.md-default-theme .md-tab.md-active,
+md-tabs .md-tab.md-active,
+md-tabs.md-default-theme .md-tab.md-active md-icon,
+md-tabs .md-tab.md-active md-icon,
+md-tabs.md-default-theme .md-tab.md-focused,
+md-tabs .md-tab.md-focused,
+md-tabs.md-default-theme .md-tab.md-focused md-icon,
+md-tabs .md-tab.md-focused md-icon {
+  color: #43a047 !important;
+}
+.ui-alert {
+  background: #66bb6a;
+  width: 100%;
+  padding: 20px;
+  color: #0A3C0D;
+}
+.gray-lighten1-text {
+  color: #bdbdbd !important;
+}
+svg {
+  width: 24px;
+}
+.icon-autocomplete {
+  margin-right: 10px;
+  padding-bottom: 16px;
+}
+.icon-update:focus {
+  outline-color: transparent;
+}
+.icon-close {
+  color: #0A3C0D;
+  cursor: pointer;
+}
+.fechar {
+  display: none !important;
+}
 .teal.lighten-1 {
   background-color: #26a69a !important;
 }

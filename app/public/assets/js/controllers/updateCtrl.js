@@ -9,6 +9,18 @@
 		$scope.orientadores = [];
 		$scope.alunos = [];
 
+		// alterar primeiro no array, ou criar novo array dps enviar esse array
+		$scope.update = function(projeto) {
+			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
+			projetosAPI.putProjeto(projeto)
+			.success(function(projeto){
+				console.log(projeto);
+			})
+			.error(function(status){
+				console.log('update error: '+status);
+			});
+		};
+
 		projetosAPI.getProjeto()
 		.success(function(data) {
 			console.log(data);
@@ -18,12 +30,13 @@
 			angular.forEach(data.integrantes, function (value, key){
 				if (value.tipo === 'Orientador') {
 					$scope.orientadores.push(value);
+					console.log(value._id);
 					x++;
-					var str1 = 'projeto.nomeOrientador'+x;
-					var str2 = 'projeto.emailOrientador'+x;
-					var str3 = 'projeto.cpfOrientador'+x;
-					var str4 = 'projeto.telefoneOrientador'+x;
-					var str5 = 'projeto.tamCamisetaOrientador'+x;
+					var str1 = 'projeto3.nomeOrientador'+x;
+					var str2 = 'projeto3.emailOrientador'+x;
+					var str3 = 'projeto3.cpfOrientador'+x;
+					var str4 = 'projeto3.telefoneOrientador'+x;
+					var str5 = 'projeto3.tamCamisetaOrientador'+x;
 					var model1 = $parse(str1);
 					var model2 = $parse(str2);
 					var model3 = $parse(str3);
@@ -47,11 +60,11 @@
 				} else if (value.tipo === 'Aluno') {
 					$scope.alunos.push(value);
 					y++;
-					var str1 = 'projeto.nomeAluno'+y;
-					var str2 = 'projeto.emailAluno'+y;
-					var str3 = 'projeto.cpfAluno'+y;
-					var str4 = 'projeto.telefoneAluno'+y;
-					var str5 = 'projeto.tamCamisetaAluno'+y;
+					var str1 = 'projeto3.nomeAluno'+y;
+					var str2 = 'projeto3.emailAluno'+y;
+					var str3 = 'projeto3.cpfAluno'+y;
+					var str4 = 'projeto3.telefoneAluno'+y;
+					var str5 = 'projeto3.tamCamisetaAluno'+y;
 					var model1 = $parse(str1);
 					var model2 = $parse(str2);
 					var model3 = $parse(str3);
@@ -74,8 +87,8 @@
 					model5.assign($scope, value.tamCamiseta);
 				}
 			});
-			// console.log($scope.alunos);
-			// console.log($scope.orientadores);
+			console.log($scope.alunos);
+			console.log($scope.orientadores);
 			for (var i = 0; i < $scope.orientadores.length; i++) {
 				addOrientadorUpdate();
 			}
@@ -83,6 +96,11 @@
 				addAlunoUpdate();
 			}
 		});
+
+		$scope.editing = false;
+		$scope.edit = function() {
+			$scope.editing = !$scope.editing;
+		}
 
 		$scope.dynamicFields11 = [];
 		$scope.dynamicFields22 = [];
@@ -130,8 +148,8 @@
 		};
 
 		$scope.maskCEP = function() {
-			$scope.projeto.cep = $scope.projeto.cep.substring(0,2) + "." + $scope.projeto.cep.substring(2);
-			$scope.projeto.cep = $scope.projeto.cep.substring(0,6) + "-" + $scope.projeto.cep.substring(6);
+			$scope.projeto2.cep = $scope.projeto2.cep.substring(0,2) + "." + $scope.projeto2.cep.substring(2);
+			$scope.projeto2.cep = $scope.projeto2.cep.substring(0,6) + "-" + $scope.projeto2.cep.substring(6);
 		};
 	});
 })();
