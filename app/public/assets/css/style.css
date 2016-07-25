@@ -1,3 +1,16 @@
+::-webkit-scrollbar-track {
+  background-color: #F4F4F4;
+}
+::-webkit-scrollbar-button {
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background: #F4F4F4;
+}
+::-webkit-scrollbar-thumb {
+  background: #bdbdbd;
+  border-radius: 5px;
+}
 ui-view { height: inherit !important; }
 .wrapper {
   padding: 15px 35px;
@@ -66,15 +79,14 @@ md-select .md-select-value {
 md-input-container textarea {
   overflow: auto !important;
 }
-/*md-select .md-select-value {
-height: 1.85rem !important;
-}*/
 md-input-container label:not(.md-no-float):not(.md-container-ignore),
-md-input-container .md-placeholder, md-input-container .md-placeholder {
+md-input-container .md-placeholder {
   padding-left: 5px !important;
 }
-md-select .md-select-value {
-  max-width: 100% !important;
+md-input-container:not(.md-input-has-value):not(.md-input-focused) label,
+md-input-container .md-placeholder {
+  margin-bottom: -3px !important;
+  padding-left: 15px !important;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -94,7 +106,8 @@ select:-webkit-autofill:active {
 md-input-container.md-default-theme .md-input,
 md-input-container .md-input {
   border-color: rgba(0,0,0,0.3);
-  padding-left: 3px !important;
+  padding-left: 3px;
+  margin: 3px 0 !important;
 }
 md-input-container .md-input.ng-invalid.ng-dirty {
   border-width: 0 0 1px 0;
@@ -133,12 +146,19 @@ md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-
 md-input-container:not(.md-input-invalid).md-input-focused .md-input {
   border-color: #43a047 !important;
 }
+.md-select-value .md-select-icon {
+  padding-bottom: 5px !important;
+}
+md-select {
+  margin: 3px 0 !important;
+}
 md-select.md-default-theme .md-select-value,
 md-select .md-select-value {
+  max-width: 100% !important;
   border-bottom-color: rgba(0,0,0,0.3) !important;
   padding-left: 3px !important;
   padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  padding-bottom: 1px !important;
   max-width: 100% !important;
 }
 md-select.md-default-theme:not([disabled]):focus .md-select-value,
@@ -181,6 +201,14 @@ md-autocomplete input:not(.md-input) {
   padding-left: 2px;
   padding-right: 2px;
 }
+.saiba-mais {
+  min-height: 35px;
+  height: 35px;
+  font-size: 12px;
+  line-height: 35px;
+  margin-bottom: 19px;
+  margin-right: 0 !important;
+}
 .md-tab {
   font-size: 13px !important;
 }
@@ -200,11 +228,6 @@ md-autocomplete input:not(.md-input) {
   color: rgba(255,255,255,0.87);
   padding-bottom: 3px;
 }
-.icon-update {
-  top: 9px !important;
-  cursor: pointer;
-  color: #424242 !important;
-}
 md-select[disabled] .md-select-value {
   border-bottom: none !important;
   margin-bottom: 0 !important;
@@ -223,6 +246,9 @@ md-select[disabled] .md-select-value {
 md-autocomplete[disabled] input {
   border-bottom: none !important;
 }
+md-tabs-wrapper {
+  border: none !important;
+}
 md-tabs.md-default-theme .md-tab.md-active,
 md-tabs .md-tab.md-active,
 md-tabs.md-default-theme .md-tab.md-active md-icon,
@@ -231,7 +257,22 @@ md-tabs.md-default-theme .md-tab.md-focused,
 md-tabs .md-tab.md-focused,
 md-tabs.md-default-theme .md-tab.md-focused md-icon,
 md-tabs .md-tab.md-focused md-icon {
-  color: #43a047 !important;
+  color: #212121 !important;
+}
+md-tabs.md-default-theme md-ink-bar,
+md-tabs md-ink-bar {
+  color: transparent !important;
+  background: #43a047 !important;
+}
+.input-disabled {
+  background-color: #eee !important;
+  border-radius: 4px !important;
+  border-bottom: none !important;
+  color: #757575 !important;
+  padding-left: 10px !important;
+}
+md-select.input-disabled md-select-value {
+  border-bottom: none !important;
 }
 .ui-alert {
   background: #66bb6a;
@@ -273,8 +314,8 @@ svg {
 }
 md-progress-circular.md-default-theme.loading-login .md-inner .md-left .md-half-circle,
 md-progress-circular.loading-login .md-inner .md-left .md-half-circle {
- border-left-color: rgba(255,255,255,0.87) !important;
- border-top-color: rgba(255,255,255,0.87) !important;
+  border-left-color: rgba(255,255,255,0.87) !important;
+  border-top-color: rgba(255,255,255,0.87) !important;
 }
 md-progress-circular.md-default-theme.loading-login .md-inner .md-right .md-half-circle,
 md-progress-circular.loading-login .md-inner .md-right .md-half-circle {

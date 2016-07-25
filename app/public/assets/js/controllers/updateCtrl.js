@@ -6,6 +6,7 @@
 	.controller('updateCtrl', function($scope, $rootScope, $parse, $location, projetosAPI) {
 
 		$rootScope.header = 'Alteração do projeto';
+		$scope.alterado = false;
 		$scope.orientadores = [];
 		$scope.alunos = [];
 
@@ -15,6 +16,7 @@
 			projetosAPI.putProjeto(projeto)
 			.success(function(projeto){
 				console.log(projeto);
+				$scope.alterado = true;
 			})
 			.error(function(status){
 				console.log('update error: '+status);
