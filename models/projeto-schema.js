@@ -2,7 +2,12 @@
 
 const mongoose = require('mongoose')
 ,	bcrypt = require('bcryptjs')
+,	autoIncrement = require('mongoose-auto-increment')
 ,	Schema = mongoose.Schema;
+
+var connection = mongoose.createConnection("mongodb://172.17.0.2:27017/loginapp");
+ 
+autoIncrement.initialize(connection);
 
 const IntegranteSchema = new Schema({
 	tipo: {
@@ -26,6 +31,9 @@ const IntegranteSchema = new Schema({
 });
 
 const ProjetoSchema = new Schema({
+	numInscricao: {
+		type: Schema.Types.ObjectId
+	},
 	nomeProjeto: {
 		type: String
 	},
@@ -79,5 +87,7 @@ ProjetoSchema.methods.hasExpired = function(){
     let now = new Date().now;
     return (now - ProjetoSchema.resetPasswordCreatedDate) > 1; //token is a week old
 };
+
+ProjetoSchema.plugin(autoIncrement.plugin, {model: 'Projeto', field: 'numInscricao'});
 
 const Projeto = module.exports = mongoose.model('Projeto', ProjetoSchema);
