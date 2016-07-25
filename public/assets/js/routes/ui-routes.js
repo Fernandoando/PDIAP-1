@@ -3,11 +3,28 @@
 
 	angular
 	.module('PDIAP')
-	.config(function($stateProvider, $urlRouterProvider) {
-		// For any unmatched url, redirect to /state1
+	.config(function($locationProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
+
+		let checkLoggedin = function($q, $http, $location, $rootScope) {
+
+				var deferred = $q.defer(); // Inicializa nova promissa
+				$rootScope.logado = false;
+
+				$http.get('/projetos/home').success(function(projeto) {
+					if (projeto !== '0') { // Authenticated
+							$rootScope.logado = true;
+							deferred.resolve();
+				} else { // Not Authenticated
+							$rootScope.logado = false;
+							deferred.reject();
+							$location.url('/login');
+					}
+			});
+
+				return deferred.promise;
+		};
+
 		//$urlRouterProvider.otherwise("/state1");
-		//
-		// Now set up the states
 		$stateProvider
 		.state('index', {
 			url: "/",
@@ -33,6 +50,9 @@
 					controller: 'adminCtrl'
 				},
 				'@home': {templateUrl: '/views/home-admin.html'}
+			},
+			resolve: {
+				loggedin: checkLoggedin
 			}
 		})
 		.state('home.update', {

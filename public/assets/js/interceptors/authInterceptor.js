@@ -20,13 +20,14 @@
 				},
 				response: function(response) {
 					$timeout(function() {
-						$rootScope.loading = false;	
+						$rootScope.loading = false;
 					}, 800);
 					return response;
+					console.log(response.status);
 				},
 				responseError: function(rejection) {
 					$timeout(function() {
-						$rootScope.loading = false;	
+						$rootScope.loading = false;
 					}, 800);
 					console.log("response: "+rejection.status);
 					if (rejection.status === 401 || rejection.status === 403)
