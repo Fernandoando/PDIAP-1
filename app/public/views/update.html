@@ -8,15 +8,15 @@
       <md-tab label="Projeto">
         <md-content class="md-padding" style="background:#fdfdfd;padding-top:25px;">
           <md-content flex layout="column" layout-align="center center" style="width:100%!important;background:#fdfdfd;">
-            <form name="projetoForm" novalidate style="width:85%;max-width:850px;padding:8px;">
+            <form name="projetoForm1" novalidate style="width:85%;max-width:850px;padding:8px;">
               <div layout="row">
                 <div class="bloco-right" flex>
                   <md-input-container class="md-block" data-ng-init="editing1=false" flex-gt-sm>
                     <label>Nome do Projeto</label>
                     <input type="text" name="nomeProjeto" data-ng-model="projeto1.nomeProjeto" data-ng-click="editing1=true" data-ng-class="{'input-disabled': !editing1}" data-ng-focus="editing1=true" data-ng-blur="editing1=false" required/>
                     <div class="md-errors-spacer">
-                      <div data-ng-if="projetoForm.nomeProjeto1.$dirty">
-                        <div class="message-error" data-ng-if="projetoForm.nomeProjeto.$error.required">Preencha esse campo.</div>
+                      <div data-ng-if="projetoForm1.nomeProjeto.$dirty">
+                        <div class="message-error" data-ng-if="projetoForm1.nomeProjeto.$error.required">Preencha esse campo.</div>
                       </div>
                     </div>
                   </md-input-container>
@@ -30,8 +30,8 @@
                       </md-select>
                       <div class="md-errors-spacer"></div>
                       <!-- <div class="md-errors-spacer">
-                      <div data-ng-if="projetoForm.categoria.$touched">
-                      <div class="message-error" data-ng-if="projetoForm.categoria.$error.required">Selecione uma opção.</div>
+                      <div data-ng-if="projetoForm1.categoria.$touched">
+                      <div class="message-error" data-ng-if="projetoForm1.categoria.$error.required">Selecione uma opção.</div>
                     </div>
                   </div> -->
                 </md-input-container>
@@ -50,8 +50,8 @@
                   </md-select>
                   <div class="md-errors-spacer"></div>
                   <!-- <div class="md-errors-spacer">
-                  <div data-ng-if="projetoForm.eixo.$touched">
-                  <div class="message-error" data-ng-if="projetoForm.eixo.$error.required && projeto.categoria !== undefined">Selecione uma opção.</div>
+                  <div data-ng-if="projetoForm1.eixo.$touched">
+                  <div class="message-error" data-ng-if="projetoForm1.eixo.$error.required && projeto.categoria !== undefined">Selecione uma opção.</div>
                 </div>
               </div> -->
             </md-input-container>
@@ -64,9 +64,9 @@
               <label>Resumo do Projeto</label>
               <textarea style="height:200px!important;" name="resumo" data-ng-model="projeto1.resumo" data-ng-click="editing4=true" data-ng-class="{'input-disabled': !editing4}" data-ng-focus="editing4=true" data-ng-blur="editing4=false" md-maxlength="100" rows="1" md-select-on-focus></textarea>
               <div class="md-errors-spacer">
-                <div data-ng-if="projetoForm.resumo.$dirty">
-                  <div class="message-error" data-ng-if="projetoForm.resumo.$error.required">Preencha esse campo.</div>
-                  <div class="message-error" data-ng-if="projetoForm.resumo.$invalid">Resumo excedeu o número de caracteres |</div>
+                <div data-ng-if="projetoForm1.resumo.$dirty">
+                  <div class="message-error" data-ng-if="projetoForm1.resumo.$error.required">Preencha esse campo.</div>
+                  <div class="message-error" data-ng-if="projetoForm1.resumo.$invalid">Resumo excedeu o número de caracteres |</div>
                 </div>
               </div>
             </md-input-container>
@@ -74,7 +74,7 @@
         </div>
       </div>
       <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-        <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm.$valid" data-ng-click="update(projeto1)">
+        <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm1.$valid" data-ng-click="update(projeto1)">
           <md-icon md-svg-icon="check" class="icon-btn-default"></md-icon>
           Salvar
         </md-button>
@@ -86,7 +86,7 @@
 <md-tab label="Instituição">
   <md-content class="md-padding" style="background:#fdfdfd;padding-top:25px;">
     <md-content flex layout="column" layout-align="center center" style="width:100%!important;background:#fdfdfd;">
-      <form name="projetoForm" novalidate style="width:85%;max-width:850px;padding:8px;">
+      <form name="projetoForm2" novalidate style="width:85%;max-width:850px;padding:8px;">
         <div layout="row">
           <div class="bloco-right" flex>
             <div layout-gt-sm="row">
@@ -94,7 +94,8 @@
               <md-autocomplete flex="100"
               data-ng-disabled="!editing5"
               data-ng-blur="editing5=false"
-              md-no-cache="noCache"
+              data-ng-required="true"
+              md-no-cache="true"
               md-selected-item="selectedItem"
               md-search-text="projeto2.nomeEscola"
               md-items="item in escolas"
@@ -105,12 +106,13 @@
               <md-item-template>
                 <span md-highlight-text="projeto2.nomeEscola" md-highlight-flags="^i">{{item}}</span>
               </md-item-template>
-              <!-- <div class="md-errors-spacer">
-              <div data-ng-if="projetoForm.nomeEscola.$touched">
-              <div class="message-error" data-ng-if="projetoForm.nomeEscola.$error.required">Selecione uma opção.</div>
-            </div>
-          </div> -->
         </md-autocomplete>
+        <br>
+        <div class="md-errors-spacer">
+        <div data-ng-if="projetoForm2.searchText.$dirty">
+        <div class="message-error" data-ng-if="projetoForm2.searchText.$error.required">Selecione uma opção.</div>
+      </div>
+    </div>
       </div>
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm="20">
@@ -121,8 +123,8 @@
           </md-select>
           <div class="md-errors-spacer"></div>
           <!-- <div class="md-errors-spacer">
-          <div data-ng-if="projetoForm.estado.$touched">
-          <div class="message-error" data-ng-if="projetoForm.estado.$error.required">Selecione uma opção.</div>
+          <div data-ng-if="projetoForm2.estado.$touched">
+          <div class="message-error" data-ng-if="projetoForm2.estado.$error.required">Selecione uma opção.</div>
         </div>
       </div> -->
     </md-input-container>
@@ -136,8 +138,8 @@
       </md-select>
       <div class="md-errors-spacer"></div>
       <!-- <div class="md-errors-spacer">
-      <div data-ng-if="projetoForm.cidade.$touched">
-      <div class="message-error" data-ng-if="projetoForm.cidade.$error.required">Selecione uma opção.</div>
+      <div data-ng-if="projetoForm2.cidade.$touched">
+      <div class="message-error" data-ng-if="projetoForm2.cidade.$error.required">Selecione uma opção.</div>
     </div>
   </div> -->
 </md-input-container>
@@ -147,9 +149,9 @@
   <md-icon md-svg-src="border-color" class="icon-update" data-ng-init="editing8=false" data-ng-click="editing8=true" data-ng-class="{'gray-lighten1-text': editing8}"></md-icon>
   <input type="text" name="cep" data-ng-init="maskCEP()" data-ng-disabled="!editing8" data-ng-model="projeto2.cep" required minlength="10" maxlength="10" cep-mask data-ng-blur="editing8=false"/>
   <div class="md-errors-spacer">
-    <div data-ng-if="projetoForm.cep.$dirty">
-      <div class="message-error" data-ng-if="projetoForm.cep.$error.required">Preencha esse campo.</div>
-      <div class="message-error" data-ng-if="projetoForm.cep.$error.minlength && projetoForm.cep.$touched">CEP inválido.</div>
+    <div data-ng-if="projetoForm2.cep.$dirty">
+      <div class="message-error" data-ng-if="projetoForm2.cep.$error.required">Preencha esse campo.</div>
+      <div class="message-error" data-ng-if="projetoForm2.cep.$error.minlength && projetoForm2.cep.$touched">CEP inválido.</div>
     </div>
   </div>
   <!-- {{mascara(projeto.cep)}} -->
@@ -158,7 +160,7 @@
 </div>
 </div>
 <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-  <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm.$valid" data-ng-click="update(projeto2)">
+  <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm2.$valid" data-ng-click="update(projeto2)">
     <md-icon md-svg-icon="check" class="icon-btn-default"></md-icon>
     Salvar
   </md-button>

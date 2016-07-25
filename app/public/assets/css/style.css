@@ -264,6 +264,10 @@ md-tabs md-ink-bar {
   color: transparent !important;
   background: #43a047 !important;
 }
+.md-ripple-container {
+  width: 0 !important;
+  height: 0 !important;
+}
 .input-disabled {
   background-color: #eee !important;
   border-radius: 4px !important;
