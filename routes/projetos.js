@@ -89,6 +89,7 @@ router.post('/registro', testaEmail2, (req, res) => {
   ,   resumo = req.body.resumo
 
   ,   email = req.body.email
+  ,   username = email
   ,   password = req.body.password
   ,   password2 = req.body.password2
 
@@ -223,9 +224,9 @@ router.post('/registro', testaEmail2, (req, res) => {
 });
 
 // Setando a estatégia do Passport
-passport.use(new LocalStrategy(
-	(email, password, done) => {
-	Projeto.getProjectByEmail(email, (err, user) => {
+passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'},
+	(username, password, done) => {
+	Projeto.getProjectByEmail(username, (err, user) => {
 	  	if(err) throw err;
 	   	if(!user){
 	   		return done(null, false, {message: 'Unknown User'});
@@ -238,7 +239,7 @@ passport.use(new LocalStrategy(
    			return done(null, false, {message: 'Invalid password'});
    		}
    	});
-   });
+  });
 }));
 
 passport.serializeUser((user, done) => {

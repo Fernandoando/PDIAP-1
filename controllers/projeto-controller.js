@@ -26,8 +26,8 @@ module.exports.createProject = (newProject, callback) => {
 // 	});
 // }
 
-module.exports.getProjectByEmail = (email, callback) => {
-	let query = {email: email};
+module.exports.getProjectByEmail = (username, callback) => {
+	let query = {email: username};
 	Projeto.findOne(query, callback);
 }
 
