@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose')
-,	bcrypt = require('bcryptjs')
 ,	Schema = mongoose.Schema;
 
 const SaberesSchema = new Schema({
@@ -23,7 +22,7 @@ const SaberesSchema = new Schema({
 	tamCamiseta: {
 		type: String
 	},
-	outros: {
+	escola: {
 		type: String
 	}
 }, { collection: 'saberesCollection' });

@@ -20,7 +20,7 @@ router.post('/registro', (req, res) => {
   	,   cpf = req.body.cpf
   	,   telefone = req.body.telefone
   	,   tamCamiseta = req.body.tamCamiseta
-  	,   outros = req.body.outros
+  	,   escola = req.body.escola
 
 	let newSaberes = SaberesSchema({
 		nome: nome,
@@ -29,7 +29,7 @@ router.post('/registro', (req, res) => {
 		cpf: cpf,
 		telefone: telefone,
 		tamCamiseta: tamCamiseta,
-		outros: outros
+		escola: escola
 	});
 
 	Saberes.createSaberes(newSaberes, (callback) => {});
