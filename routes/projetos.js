@@ -286,6 +286,42 @@ router.put('/update', ensureAuthenticated, (req, res) => {
   });
 });
 
+
+
+
+
+
+router.put('/updateIntegrante', ensureAuthenticated, (req, res) => {
+
+let id2 = req.body.integrantes_id;
+let id = req.user.id;
+
+  let newIntegrante = ({
+    tipo: req.body.tipo,
+    nome: req.body.nome,
+    email: req.body.email,
+    cpf: req.body.cpf,
+    telefone: req.body.telefone,
+    tamCamiseta: req.body.tamCamiseta,
+    _id: id2
+  });
+
+  ProjetoSchema.findOneAndUpdate({"_id": id,"integrantes._id": id2},
+    {"$set": {"integrantes.$": newIntegrante}}, {new:true},
+    (err,doc) => {
+      if (err) throw err;
+      res.send(doc);
+    }
+  );
+});
+
+
+
+
+
+
+
+
 router.post('/redefinir-senha', (req, res) => {
   let email = req.body.email;
   crypto.randomBytes(20, (err, buf) => {
