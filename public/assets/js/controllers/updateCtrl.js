@@ -62,11 +62,11 @@
 				} else if (value.tipo === 'Aluno') {
 					$scope.alunos.push(value);
 					y++;
-					var str1 = 'projeto3.nomeAluno'+y;
-					var str2 = 'projeto3.emailAluno'+y;
-					var str3 = 'projeto3.cpfAluno'+y;
-					var str4 = 'projeto3.telefoneAluno'+y;
-					var str5 = 'projeto3.tamCamisetaAluno'+y;
+					var str1 = 'projeto4.nomeAluno'+y;
+					var str2 = 'projeto4.emailAluno'+y;
+					var str3 = 'projeto4.cpfAluno'+y;
+					var str4 = 'projeto4.telefoneAluno'+y;
+					var str5 = 'projeto4.tamCamisetaAluno'+y;
 					var model1 = $parse(str1);
 					var model2 = $parse(str2);
 					var model3 = $parse(str3);

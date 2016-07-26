@@ -3,15 +3,16 @@
 
 	angular
 	.module('PDIAP')
-	.controller('adminCtrl', function($scope, $rootScope, $location, projetosAPI) {
+	.controller('adminCtrl', function($scope, $rootScope, $location, $mdSidenav, $mdToast, projetosAPI) {
 
 		$scope.projeto = {};
 		$scope.projeto1 = {};
 		$scope.projeto2 = {};
+		$scope.projetoEmail = '';
 		// $scope.projeto3 = {};
 		// $scope.projeto4 = {};
 		$scope.integrantes = [];
-		$rootScope.header = '';
+		$rootScope.header = 'Dashboard';
 
 		projetosAPI.getProjeto()
 		.success(function(projeto) {
@@ -26,6 +27,8 @@
 			$scope.projeto2.cidade = projeto.cidade;
 			$scope.projeto2.cep = projeto.cep;
 
+			$scope.projetoEmail = projeto.email;
+
 			console.log($scope.projeto1);
 			console.log($scope.projeto2);
 			// for (var i in projetos.integrantes){
@@ -33,5 +36,47 @@
 			// }
 			// console.log(projetos.integrantes);
 		});
+
+		$scope.toggleSidenav = function(menu) {
+			$mdSidenav(menu).toggle();
+		}
+		$scope.toast = function(message) {
+			var toast = $mdToast.simple().content('You clicked ' + message).position('bottom right');
+			$mdToast.show(toast);
+		};
+
+		$scope.data = {
+			sidenav: {
+				sections: [{
+					name: 'Dashboard',
+					expand: false,
+					actions: [{
+						name: 'Dashboard',
+						icon: 'view-dashboard',
+						link: 'home'
+					}, {
+						name: 'Alterar projeto',
+						icon: 'flask',
+						link: 'home.update'
+					}, {
+						name: 'Dados da conta',
+						icon: 'account-settings-variant',
+						link: 'Action 2'
+					}]
+				}, {
+					name: 'Programação',
+					expand: false,
+					link: 'home.update'
+				}, {
+					name: 'Regulamentos',
+					expand: false,
+					link: ''
+				}, {
+					name: 'Modelos',
+					expand: false,
+					link: ''
+				}]
+			}
+		};
 	});
 })();
