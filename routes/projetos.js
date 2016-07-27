@@ -286,11 +286,6 @@ router.put('/update', ensureAuthenticated, (req, res) => {
   });
 });
 
-
-
-
-
-
 router.put('/updateIntegrante', ensureAuthenticated, (req, res) => {
 
 let id2 = req.body.integrantes_id;
@@ -315,12 +310,26 @@ let id = req.user.id;
   );
 });
 
+router.put('/novoIntegrante', ensureAuthenticated, (req, res) => {
 
+let newIntegrante = ({
+    tipo: req.body.tipo,
+    nome: req.body.nome,
+    email: req.body.email,
+    cpf: req.body.cpf,
+    telefone: req.body.telefone,
+    tamCamiseta: req.body.tamCamiseta
+  });
 
-
-
-
-
+    ProjetoSchema.findOne({_id: req.user.id}, (err, usr) => {
+      if (err) throw err;
+      usr.integrantes.push(newIntegrante);
+      usr.save((err, usr) => {
+        if (err) throw err;
+        res.status(200).send('Add');
+      });
+    });
+});
 
 router.post('/redefinir-senha', (req, res) => {
   let email = req.body.email;
@@ -401,35 +410,5 @@ router.get('/todos', ensureAuthenticated, (req, res) => {
             }
           });
         });﻿*/
-
-router.put('/novoIntegrante', (req, res) => {
-  let nome = req.body.nomeAluno1
-  ,   email = req.body.emailAluno1
-  ,   cpf = req.body.cpfAluno1
-  ,   telefone = req.body.telefoneAluno1
-  ,   tamCamiseta = req.body.tamCamisetaAluno1
-  ,   findEmail = req.body.email;
-
-  console.log(findEmail);
-  console.log(nome);
-  console.log(email);
-  console.log(cpf);
-  console.log(telefone);
-  console.log(tamCamiseta);
-
-  ProjetoSchema.findOneAndUpdate(
-    {"email": findEmail},
-    {$push: {integrantes: {
-        nome: nome,
-        email: email,
-        cpf: cpf,
-        telefone: telefone,
-        tamCamiseta: tamCamiseta
-    }}
-    }).then(function (projeto) {
-      console.log(projeto);
-    res.json({success: true});
-  });
-})
 
 module.exports = router;
