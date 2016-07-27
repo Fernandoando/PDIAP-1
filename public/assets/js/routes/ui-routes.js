@@ -20,7 +20,6 @@
 							$location.url('/login');
 					}
 			});
-
 				return deferred.promise;
 		};
 
@@ -40,6 +39,11 @@
 		.state('inscricao', {
 			url: "/inscricao",
 			templateUrl: "/views/inscricao.html",
+			controller: "registroCtrl"
+		})
+		.state('inscricao-saberes', {
+			url: "/inscricao-saberes",
+			templateUrl: "/views/saberes.html",
 			controller: "registroCtrl"
 		})
 		.state('home', {

@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('updateCtrl', function($scope, $rootScope, $parse, $location, projetosAPI) {
+	.controller('updateCtrl', function($scope, $rootScope, $parse, $location, $mdToast, projetosAPI) {
 
 		$rootScope.header = 'Alteração do projeto';
 		$scope.alterado = false;
@@ -17,11 +17,34 @@
 			.success(function(projeto){
 				console.log(projeto);
 				$scope.alterado = true;
+				$scope.toast('Alteração feita com sucesso!','success-toast');
 			})
 			.error(function(status){
 				console.log('update error: '+status);
+				$scope.toast('Falha na alteração','failed-toast');
 			});
 		};
+
+		$scope.updateIntegrante = function(projeto) {
+			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
+			console.log($scope.dynamicFields11.length);
+			// projetosAPI.putIntegrante(projeto)
+			// .success(function(projeto){
+			// 	console.log(projeto);
+			// 	$scope.alterado = true;
+			// 	$scope.toast('Alteração feita com sucesso!','success-toast');
+			// })
+			// .error(function(status){
+			// 	console.log('update error: '+status);
+			// 	$scope.toast('Falha na alteração','failed-toast');
+			// });
+		};
+
+		// let toast = function(message) {
+		// 	var toast = $mdToast.simple().content(message).position('top right');
+		// 	$mdToast.show(toast);
+		// };
+
 
 		projetosAPI.getProjeto()
 		.success(function(data) {

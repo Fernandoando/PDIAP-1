@@ -1,49 +1,35 @@
 <!-- <li><a href="#/inscricao">Inscrever</a></li> -->
 
 <div class="md-padding" layout="column" layout-align="center center">
-   	<h1>Login</h1>
-   	<md-content style="width:35%!important;padding:30px;">
-      	<form name="userLogin" novalidate>
-         	<md-card class="red white-text" style="margin-bottom:30px!important;text-align:center;" data-ng-if="erro  && !logado && !loading">
-			  	<md-card-title-media style="padding:16px;">
-			    	<md-card-title-text>
-			      		{{message}}
-			    	</md-card-title-text>
-			  	</md-card-title-media>
-			</md-card>
-         	<md-input-container class="md-block" flex-gt-sm>
-               	<label>E-mail</label>
-               	<input type="email" name="email" data-ng-model="user.email" required data-ng-pattern="/^.+@.+\..+$/" />
-               	<!-- <div class="md-errors-spacer">
-                  	<div data-ng-if="projetoForm.email.$dirty || projetoForm.email.$touched">
-                     	<div class="message-error" data-ng-if="projetoForm.email.$error.required">Preencha esse campo.</div>
-                     	<div class="message-error" data-ng-if="projetoForm.email.$error.pattern && projetoForm.email.$touched">Email inválido.</div>
-                  	</div>
-               	</div> -->
-        	</md-input-container>
-	        <md-input-container class="md-block" flex-gt-sm>
-	           	<label>Senha</label>
-	            <input type="password" name="password" data-ng-model="user.password" required />
-	            <!-- <div class="md-errors-spacer">
-	               <div data-ng-if="userLogin.nomeProjeto.$dirty || userLogin.nomeProjeto.$touched">
-	                  <div class="message-error" data-ng-if="userLogin.nomeProjeto.$error.required">Preencha esse campo.</div>
-	                  <div class="message-error" data-ng-if="userLogin.nomeProjeto.$error.pattern && userLogin.nomeProjeto.$touched">Email Inválido.</div>
-	               </div>
-	            </div> -->
-	        </md-input-container>
-	        <div layout="row" layout-align="center center">
-	        <md-button class="md-raised md-primary teal lighten-1 btnEntrar" data-ng-disabled="!userLogin.$valid" data-ng-click="login()">
-		        <span data-ng-show="loading && userLogin.$valid">
-		        	<div layout="row" layout-sm="column" layout-align="space-around">
-      					<md-progress-circular md-mode="indeterminate" md-diameter="40" class="loading-login"></md-progress-circular>
-    				</div>
-		        </span>
-		        <span data-ng-show="!loading">Entrar</span>
-	        </md-button>
-	        </div>
-	        <div layout="row" layout-align="center center" class="redefinir">
-				Esqueceu sua senha?<a class="btn-redefinir" data-ng-click=""> Redefinir</a>
-			</div>
-	    </form>
-	</md-content>
+  <h1>Login</h1>
+  <md-content style="width:35%!important;padding:30px;">
+    <form name="userLogin" novalidate>
+      <md-card class="red white-text" style="margin-bottom:30px!important;text-align:center;" data-ng-if="erro  && !logado && !loading">
+        <md-card-title-media style="padding:16px;">
+          <md-card-title-text>{{message}}</md-card-title-text>
+        </md-card-title-media>
+      </md-card>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>E-mail</label>
+        <input type="email" name="email" data-ng-model="user.email" required data-ng-pattern="/^.+@.+\..+$/" />
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Senha</label>
+        <input type="password" name="password" data-ng-model="user.password" required />
+      </md-input-container>
+      <div layout="row" layout-align="center center">
+        <md-button class="md-raised md-primary teal lighten-1 btnEntrar" data-ng-disabled="!userLogin.$valid" data-ng-click="login()">
+          <span data-ng-show="loading && userLogin.$valid">
+            <div layout="row" layout-sm="column" layout-align="space-around">
+              <md-progress-circular md-mode="indeterminate" md-diameter="40" class="loading-login"></md-progress-circular>
+            </div>
+          </span>
+          <span data-ng-show="!loading">Entrar</span>
+        </md-button>
+      </div>
+      <div layout="row" layout-align="center center" class="redefinir">
+        Esqueceu sua senha?<a class="btn-redefinir" data-ng-click=""> Redefinir</a>
+      </div>
+    </form>
+  </md-content>
 </div>

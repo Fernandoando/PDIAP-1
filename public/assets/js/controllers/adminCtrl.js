@@ -39,9 +39,9 @@
 
 		$scope.toggleSidenav = function(menu) {
 			$mdSidenav(menu).toggle();
-		}
-		$scope.toast = function(message) {
-			var toast = $mdToast.simple().content('You clicked ' + message).position('bottom right');
+		};
+		$scope.toast = function(message,tema) {
+			var toast = $mdToast.simple().textContent(message).action('✖').position('top right').theme(tema).hideDelay(10000);
 			$mdToast.show(toast);
 		};
 
@@ -70,7 +70,7 @@
 				}, {
 					name: 'Regulamentos',
 					expand: false,
-					link: ''
+					link: 'home.update'
 				}, {
 					name: 'Modelos',
 					expand: false,

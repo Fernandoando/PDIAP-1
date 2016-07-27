@@ -4,7 +4,7 @@
 <div ng-cloak data-ng-controller="registroCtrl">
   <md-content style="background:#fdfdfd;">
     <ui-alert data-ng-if="alterado" message="Os dados do projeto foram alterados!"></ui-alert>
-    <md-tabs md-dynamic-height md-border-bottom>
+    <md-tabs md-dynamic-height md-border-bottom class="update-inputs">
       <md-tab label="Projeto">
         <md-content class="md-padding" style="background:#fdfdfd;padding-top:25px;">
           <md-content flex layout="column" layout-align="center center" style="width:100%!important;background:#fdfdfd;">
@@ -250,7 +250,7 @@
       </div>
     </div>
 <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-  <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm3.$valid" data-ng-click="update(projeto3)">
+  <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm3.$valid" data-ng-click="updateIntegrante(projeto3)">
     <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon>
     Salvar
   </md-button>

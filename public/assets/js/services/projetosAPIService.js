@@ -74,6 +74,15 @@
 			return $http(request);
 		};
 
+		let _putIntegrante = function(integrante) {
+			const request = {
+				url: '/projetos/novoIntegrante',
+				method: 'PUT',
+				data: integrante
+			}
+			return $http(request);
+		};
+
 		return {
 			saveProjeto: _saveProjeto,
 			postLogin: _postLogin,
@@ -82,7 +91,8 @@
 			getCategorias: _getCategorias,
 			getEstados: _getEstados,
 			getEmails: _getEmails,
-			putProjeto: _putProjeto
+			putProjeto: _putProjeto,
+			putIntegrante: _putIntegrante
 		};
 	});
 })();

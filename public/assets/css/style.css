@@ -1,4 +1,15 @@
-body { overflow: hidden; }
+@import url(https://fonts.googleapis.com/css?family=Cookie);
+@import url(https://fonts.googleapis.com/css?family=Great+Vibes);
+@import url(https://fonts.googleapis.com/css?family=Bad+Script);
+@font-face {
+  font-family: 'Baron';
+  src: local('Baron Neue'), url(/Baron_Neue.otf) format('opentype');
+}
+body .admin-page { overflow: hidden !important; }
+::selection {
+  background: #eee;
+  color: #000;
+}
 ::-webkit-scrollbar-track {
   background-color: #F4F4F4;
 }
@@ -81,13 +92,15 @@ md-select .md-select-value {
 md-input-container textarea {
   overflow: auto !important;
 }
-md-input-container label:not(.md-no-float):not(.md-container-ignore),
-md-input-container .md-placeholder {
-  padding-left: 5px !important;
-}
 md-input-container:not(.md-input-has-value):not(.md-input-focused) label,
 md-input-container .md-placeholder {
   margin-bottom: -3px !important;
+}
+md-input-container label {
+  padding-left: 6px !important;
+}
+.update-inputs md-input-container:not(.md-input-has-value):not(.md-input-focused) label,
+.update-inputs md-input-container .md-placeholder {
   padding-left: 15px !important;
 }
 input:-webkit-autofill,
@@ -161,7 +174,6 @@ md-select .md-select-value {
   padding-left: 3px !important;
   padding-top: 0 !important;
   padding-bottom: 1px !important;
-  max-width: 100% !important;
 }
 md-select.md-default-theme:not([disabled]):focus .md-select-value,
 md-select:not([disabled]):focus .md-select-value {
@@ -179,6 +191,12 @@ md-select .md-select-value.md-select-placeholder {
 md-select-menu.md-default-theme md-option[selected],
 md-select-menu md-option[selected] {
   color: #43a047 !important;
+}
+.md-select-menu-container {
+  min-width: 390px !important;
+}
+md-option:hover {
+  background: rgb(238,238,238);
 }
 md-autocomplete.md-default-theme,
 md-autocomplete {
@@ -210,6 +228,72 @@ md-autocomplete input:not(.md-input) {
   padding-left: 2px;
   padding-right: 2px;
 }
+md-radio-button.md-default-theme.md-checked .md-off,
+md-radio-button.md-checked .md-off {
+  border-color: #43a047 !important;
+}
+md-radio-button.md-default-theme .md-on,
+md-radio-button .md-on {
+  background-color: #43a047 !important;
+}
+md-radio-group.md-default-theme .md-checked .md-ink-ripple,
+md-radio-group .md-checked .md-ink-ripple {
+  color: transparent !important;
+}
+md-radio-button.md-checked .md-on {
+  -webkit-transform: scale(0.7);
+  transform: scale(0.7);
+}
+md-radio-button .md-container,
+md-radio-button .md-on,
+md-radio-button .md-off {
+  width: 25px;
+  height: 25px;
+}
+md-radio-button .md-label {
+  color: #616161 !important;
+}
+md-select[multiple] .md-container {
+  display: inline-block !important;
+}
+.md-checkbox-enabled.md-default-theme[selected] .md-icon,
+.md-checkbox-enabled[selected] .md-icon {
+  background-color: #43a047 !important;
+}
+.inscricao-header {
+  z-index: 1;
+  width: 100%;
+  height: 180px;
+  background: url('/views/mapa5.jpg') no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.inscricao-header-content {
+  z-index: 55;
+  color: #fff !important;
+}
+.inscricao-header-content p {
+  margin: 0 !important;
+}
+.inscricao-header-content h1 {
+  margin: 0 0 10px 0 !important;
+  font-family: 'Baron', arial;
+  font-size: 38px;
+  letter-spacing: 1px;
+}
+.inscricao-content {
+  width: 100% !important;
+  background: #fdfdfd;
+  padding: 40px;
+}
+.inscricao-content form {
+  width: 85%;
+  max-width: 680px;
+  padding: 8px;
+}
+svg:not(:root) { overflow: hidden; }
+.poly { fill: #fdfdfd; }
+
 .saiba-mais {
   min-height: 35px;
   height: 35px;
@@ -303,7 +387,9 @@ md-select.input-disabled md-select-value {
 .md-subheader {
   background: transparent !important;
 }
-.md-button.hide-hover:not([disabled]):hover {
+.md-button.hide-hover:not([disabled]):hover,
+.md-button.md-failed-toast-theme:not([disabled]):hover,
+.md-button.md-success-toast-theme:not([disabled]):hover {
   background: transparent !important;
 }
 md-list-item {
@@ -329,6 +415,15 @@ md-list-item .md-list-item-inner > md-icon:first-child:not(.md-avatar-icon) {
 }
 md-list-item .md-button {
   margin: 0 !important;
+}
+md-toast.md-success-toast-theme .md-toast-content {
+  background: #4caf50 !important;
+}
+md-toast.md-failed-toast-theme .md-toast-content {
+  background: #f44336 !important;
+}
+md-toast {
+  position: fixed !important;
 }
 .ui-alert {
   background: #66bb6a;

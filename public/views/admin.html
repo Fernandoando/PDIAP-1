@@ -1,4 +1,4 @@
-<div layout="row" layout-fill ng-cloak>
+<div layout="row" layout-fill ng-cloak class="admin-page">
 
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" role="sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
     <!-- toolbar da sidenav -->
@@ -11,20 +11,21 @@
         </div>
         <span flex></span>
         <!-- <md-button class="md-icon-button" aria-label="User Settings" ng-click="toast('Logout')">
-        <md-icon>more_vert</md-icon>
+        <md-icon md-svg-src="rocket"></md-icon>
       </md-button> -->
     </div>
   </md-toolbar>
   <!-- menu da sidenav -->
   <md-content role="navigation">
-    <md-list ng-repeat="section in data.sidenav.sections">
+    <md-list data-ng-repeat="section in data.sidenav.sections">
+      <!-- não botar data no ng-click abaixo -->
       <md-list-item ng-click="section.expand = !section.expand" ui-sref="{{section.link}}">
         <p class="md-subheader" style="color:#424242;">{{section.name}}</p>
         <span flex></span>
         <!-- <md-icon class="md-primary md-icon-button"></md-icon> -->
-        <md-icon ng-if="section.link === undefined" md-svg-src="{{section.expand ? 'chevron-up' : 'chevron-down'}}" style="color:#424242;"></md-icon>
+        <md-icon data-ng-if="section.link === undefined" md-svg-src="{{section.expand ? 'chevron-up' : 'chevron-down'}}" style="color:#424242;"></md-icon>
       </md-list-item>
-      <md-list-item ng-show="section.expand" ng-repeat="action in section.actions" ui-sref="{{action.link}}">
+      <md-list-item data-ng-show="section.expand" data-ng-repeat="action in section.actions" ui-sref="{{action.link}}">
         <md-icon md-svg-src="{{action.icon}}"></md-icon>
         <p class="md-body-2">{{action.name}}</p>
         <!-- <span flex></span> -->
@@ -51,7 +52,7 @@
         </md-button>
         <md-menu-content width="4">
           <md-menu-item>
-            <md-button ng-click="">Option 1</md-button>
+            <md-button ng-click="toast('affffffff','failed-toast')">Option 1</md-button>
           </md-menu-item>
           <md-menu-item>
             <md-button ui-sref="home.update">Dados da conta</md-button>
