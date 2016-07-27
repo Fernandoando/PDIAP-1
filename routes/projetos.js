@@ -76,57 +76,9 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/registro', testaEmail2, (req, res) => {
-
-  let nomeProjeto = req.body.nomeProjeto
-  ,   categoria = req.body.categoria
-  ,   eixo = req.body.eixo
-
-  ,   nomeEscola = req.body.nomeEscola
-  ,   cep = req.body.cep
-  ,   cidade = req.body.cidade
-  ,   estado = req.body.estado
-
-  ,   resumo = req.body.resumo
-
-  ,   email = req.body.email
-  ,   username = email
+  let  email = req.body.email
   ,   password = req.body.password
   ,   password2 = req.body.password2
-
-  //,   tipoOrientador1 = req.body.tipoOrientador1
-  ,   nomeOrientador1 = req.body.nomeOrientador1
-  ,   emailOrientador1 = req.body.emailOrientador1
-  ,   cpfOrientador1 = req.body.cpfOrientador1
-  ,   telefoneOrientador1 = req.body.telefoneOrientador1
-  ,   tamCamisetaOrientador1 = req.body.tamCamisetaOrientador1
-
-  //,   tipoOrientador2 = req.body.tipoOrientador2
-  ,   nomeOrientador2 = req.body.nomeOrientador2
-  ,   emailOrientador2 = req.body.emailOrientador2
-  ,   cpfOrientador2 = req.body.cpfOrientador2
-  ,   telefoneOrientador2 = req.body.telefoneOrientador2
-  ,   tamCamisetaOrientador2 = req.body.tamCamisetaOrientador2
-
-  //,   tipoAluno1 = req.body.tipoAluno1
-  ,   nomeAluno1 = req.body.nomeAluno1
-  ,   emailAluno1 = req.body.emailAluno1
-  ,   cpfAluno1 = req.body.cpfAluno1
-  ,   telefoneAluno1 = req.body.telefoneAluno1
-  ,   tamCamisetaAluno1 = req.body.tamCamisetaAluno1
-
-  //,   tipoAluno2 = req.body.tipoAluno2
-  ,   nomeAluno2 = req.body.nomeAluno2
-  ,   emailAluno2 = req.body.emailAluno2
-  ,   cpfAluno2 = req.body.cpfAluno2
-  ,   telefoneAluno2 = req.body.telefoneAluno2
-  ,   tamCamisetaAluno2 = req.body.tamCamisetaAluno2
-
-  //,   tipoAluno3 = req.body.tipoAluno3
-  ,   nomeAluno3 = req.body.nomeAluno3
-  ,   emailAluno3 = req.body.emailAluno3
-  ,   cpfAluno3 = req.body.cpfAluno3
-  ,   telefoneAluno3 = req.body.telefoneAluno3
-  ,   tamCamisetaAluno3 = req.body.tamCamisetaAluno3;
 
   	// Validações
   	req.checkBody('email', 'Email is required').notEmpty();
@@ -143,76 +95,75 @@ router.post('/registro', testaEmail2, (req, res) => {
 
     let newIntegrante = ({
       tipo: "Orientador",
-      nome: nomeOrientador1,
-      email: emailOrientador1,
-      cpf: cpfOrientador1,
-      telefone: telefoneOrientador1,
-      tamCamiseta: tamCamisetaOrientador1
+      nome: req.body.nomeOrientador1,
+      email: req.body.emailOrientador1,
+      cpf: req.body.cpfOrientador1,
+      telefone: req.body.telefoneOrientador1,
+      tamCamiseta: req.body.tamCamisetaOrientador1
     });
 
     let newIntegrante2 = ({
       tipo: "Orientador",
-      nome: nomeOrientador2,
-      email: emailOrientador2,
-      cpf: cpfOrientador2,
-      telefone: telefoneOrientador2,
-      tamCamiseta: tamCamisetaOrientador2
+      nome: req.body.nomeOrientador2,
+      email: req.body.emailOrientador2,
+      cpf: req.body.cpfOrientador2,
+      telefone: req.body.telefoneOrientador2,
+      tamCamiseta: req.body.tamCamisetaOrientador2
     });
 
     let newIntegrante3 = ({
       tipo: "Aluno",
-      nome: nomeAluno1,
-      email: emailAluno1,
-      cpf: cpfAluno1,
-      telefone: telefoneAluno1,
-      tamCamiseta: tamCamisetaAluno1
+      nome: req.body.nomeAluno1,
+      email: req.body.emailAluno1,
+      cpf: req.body.cpfAluno1,
+      telefone: req.body.telefoneAluno1,
+      tamCamiseta: req.body.tamCamisetaAluno1
     });
 
     let newIntegrante4 = ({
       tipo: "Aluno",
-      nome: nomeAluno2,
-      email: emailAluno2,
-      cpf: cpfAluno2,
-      telefone: telefoneAluno2,
-      tamCamiseta: tamCamisetaAluno2
+      nome: req.body.nomeAluno2,
+      email: req.body.emailAluno2,
+      cpf: req.body.cpfAluno2,
+      telefone: req.body.telefoneAluno2,
+      tamCamiseta: req.body.tamCamisetaAluno2
     });
 
     let newIntegrante5 = ({
       tipo: "Aluno",
-      nome: nomeAluno3,
-      email: emailAluno3,
-      cpf: cpfAluno3,
-      telefone: telefoneAluno3,
-      tamCamiseta: tamCamisetaAluno3
+      nome: req.body.nomeAluno3,
+      email: req.body.emailAluno3,
+      cpf: req.body.cpfAluno3,
+      telefone: req.body.telefoneAluno3,
+      tamCamiseta: req.body.tamCamisetaAluno3
     });
 
 		let newProject = new ProjetoSchema({
-      nomeProjeto: nomeProjeto,
-      categoria: categoria,
-      eixo: eixo,
-      nomeEscola: nomeEscola,
-      cep: cep,
-      cidade: cidade,
-      estado: estado,
-      resumo: resumo,
-      email: email,
-      password: password,
-      password2: password2,
+      nomeProjeto: req.body.nomeProjeto,
+      categoria: req.body.categoria,
+      eixo: req.body.eixo,
+      nomeEscola: req.body.nomeEscola,
+      cep: req.body.cep,
+      cidade: req.body.cidade,
+      estado: req.body.estado,
+      resumo: req.body.resumo,
+      email: req.body.email,
+      password: req.body.password
 		});
 
     newProject.integrantes.push(newIntegrante);
 
-    if(nomeOrientador2 && emailOrientador2 && cpfOrientador2 && telefoneOrientador2 && tamCamisetaOrientador2){
+    if(req.body.nomeOrientador2 && req.body.emailOrientador2 && req.body.cpfOrientador2 && req.body.telefoneOrientador2 && req.body.tamCamisetaOrientador2){
           newProject.integrantes.push(newIntegrante2);
     }
 
     newProject.integrantes.push(newIntegrante3);
 
-    if(nomeAluno2 && emailAluno2 && cpfAluno2 && telefoneAluno2 && tamCamisetaAluno2){
+    if(req.body.nomeAluno2 && req.body.emailAluno2 && req.body.cpfAluno2 && req.body.telefoneAluno2 && req.body.tamCamisetaAluno2){
       newProject.integrantes.push(newIntegrante4);
     }
 
-    if(nomeAluno3 && emailAluno3 && cpfAluno3 && telefoneAluno3 && tamCamisetaAluno3){
+    if(req.body.nomeAluno3 && req.body.emailAluno3 && req.body.cpfAluno3 && req.body.telefoneAluno3 && req.body.tamCamisetaAluno3){
       newProject.integrantes.push(newIntegrante5);
     }
 

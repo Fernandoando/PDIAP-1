@@ -5,8 +5,8 @@ const mongoose = require('mongoose')
 ,	autoIncrement = require('mongoose-auto-increment')
 ,	Schema = mongoose.Schema;
 
-//var connection = mongoose.createConnection("mongodb://localhost:27017/loginapp");
-var connection = mongoose.createConnection("mongodb://172.17.0.2:27017/loginapp");
+var connection = mongoose.createConnection("mongodb://localhost:27017/loginapp");
+//var connection = mongoose.createConnection("mongodb://172.17.0.2:27017/loginapp");
 
 autoIncrement.initialize(connection);
 
@@ -44,7 +44,9 @@ const ProjetoSchema = new Schema({
 	eixo: {
 		type: String
 	},
-
+	alojamento: {
+		type: String
+	},
 
 	nomeEscola: {
 		type: String
