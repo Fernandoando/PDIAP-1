@@ -11,31 +11,47 @@
 		$scope.projetoEmail = '';
 		// $scope.projeto3 = {};
 		// $scope.projeto4 = {};
+		$scope.projeto5 = {};
 		$scope.integrantes = [];
 		$rootScope.header = 'Dashboard';
 
-		projetosAPI.getProjeto()
-		.success(function(projeto) {
-			$scope.projeto = projeto;
-			$scope.projeto1.nomeProjeto = projeto.nomeProjeto;
-			$scope.projeto1.categoria = projeto.categoria;
-			$scope.projeto1.eixo = projeto.eixo;
-			$scope.projeto1.resumo = projeto.resumo;
+		let carregarProjeto = function() {
+			projetosAPI.getProjeto()
+			.success(function(projeto) {
+				$scope.projeto = projeto;
+				$scope.projeto1.nomeProjeto = projeto.nomeProjeto;
+				$scope.projeto1.categoria = projeto.categoria;
+				$scope.projeto1.eixo = projeto.eixo;
+				$scope.projeto1.resumo = projeto.resumo;
 
-			$scope.projeto2.nomeEscola = projeto.nomeEscola;
-			$scope.projeto2.estado = projeto.estado;
-			$scope.projeto2.cidade = projeto.cidade;
-			$scope.projeto2.cep = projeto.cep;
+				$scope.projeto2.nomeEscola = projeto.nomeEscola;
+				$scope.projeto2.estado = projeto.estado;
+				$scope.projeto2.cidade = projeto.cidade;
+				if (projeto.cep.length === 8) {
+					projeto.cep = projeto.cep.substring(0,2) + "." + projeto.cep.substring(2);
+					projeto.cep = projeto.cep.substring(0,6) + "-" + projeto.cep.substring(6);
+				}
+				$scope.projeto2.cep = projeto.cep;
 
-			$scope.projetoEmail = projeto.email;
+				$scope.projetoEmail = projeto.email;
 
-			console.log($scope.projeto1);
-			console.log($scope.projeto2);
-			// for (var i in projetos.integrantes){
-			// 	$scope.integrantes.push(projetos.integrantes[i]);
-			// }
-			// console.log(projetos.integrantes);
-		});
+				if (projeto.hospedagem !== undefined) {
+					$scope.projeto5.hospedagem = projeto.hospedagem.split(",");
+					// console.log($scope.projeto5.hospedagem);
+					$scope.hospedagemVerify = 'Sim';
+				} else {
+					$scope.hospedagemVerify = 'Não';
+				}
+
+				//$scope.projeto5.hospedagem = ['orientador 1'];
+
+				// for (var i in projeto.integrantes){
+				// 	$scope.integrantes.push(projeto.integrantes[i]);
+				// }
+				// console.log($scope.integrantes);
+			});
+		};
+		$scope.carregarProjeto = carregarProjeto;
 
 		$scope.toggleSidenav = function(menu) {
 			$mdSidenav(menu).toggle();
@@ -61,7 +77,7 @@
 					}, {
 						name: 'Dados da conta',
 						icon: 'account-settings-variant',
-						link: 'Action 2'
+						link: 'home.conta'
 					}]
 				}, {
 					name: 'Programação',

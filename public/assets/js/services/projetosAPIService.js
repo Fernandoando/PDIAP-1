@@ -76,7 +76,7 @@
 
 		let _putIntegrante = function(integrante) {
 			const request = {
-				url: '/projetos/novoIntegrante',
+				url: '/projetos/updateIntegrante',
 				method: 'PUT',
 				data: integrante
 			}

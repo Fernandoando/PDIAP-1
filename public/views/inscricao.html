@@ -327,7 +327,7 @@
     <span>Informações Adicionais</span>
   </div>
   <div class="bloco-right" flex-xs="100" flex="75">
-    <div layout="row" style="margin-bottom:35px;margin-top:25px;">
+    <div layout="row" style="margin-bottom:35px;margin-top:25px;height:18px!important;">
       <span style="margin-right:30px;color:#616161;">Algum integrante necessita de hospedagem?</span>
       <md-radio-group layout="row" data-ng-model="hospedagemVerify" name="hospedagemVerify" ng-required="true">
         <md-radio-button value="Sim">Sim</md-radio-button>
@@ -337,7 +337,7 @@
     </div>
     <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" flex-gt-sm>
       <label>Quais?</label>
-      <md-select name="hospedagem" data-ng-model="hospedagem" multiple data-ng-focus="montarIntegrantes(projeto)" required>
+      <md-select name="hospedagem" data-ng-model="projeto.hospedagem" multiple data-ng-focus="montarIntegrantes(projeto)" required>
         <md-optgroup label="Orientador(es)" data-ng-if="projeto.nomeOrientador1 !== undefined">
           <md-option ng-value="eae" ng-repeat="eae in orientadoresArray">{{eae}}</md-option>
         </md-optgroup>
@@ -363,7 +363,7 @@
     <div layout-gt-sm="row">
       <md-input-container class="md-block" flex="100">
         <label>Resumo do Projeto</label>
-        <textarea style="height:200px!important;" name="resumo" ng-model="projeto.resumo" md-maxlength="100" rows="1" md-select-on-focus required></textarea>
+        <textarea style="height:200px!important;" name="resumo" ng-model="projeto.resumo" md-maxlength="2000" rows="1" md-select-on-focus required></textarea>
         <div class="md-errors-spacer">
           <div data-ng-if="projetoForm.resumo.$dirty">
             <div class="message-error" data-ng-if="projetoForm.resumo.$error.required">Preencha esse campo |</div>
@@ -441,5 +441,5 @@
 
 </section>
 <footer>
-  <div layout="row" style="height:150px;background:green;"></div>
+  <div layout="row" style="height:150px;"></div>
 </footer>

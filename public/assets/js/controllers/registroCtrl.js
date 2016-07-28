@@ -143,7 +143,9 @@
 		projetosAPI.getEmails()
 		.success(function(data) {
 			angular.forEach(data, function (value) {
-				$scope.emails.push(value.email);
+				if (value.email !== undefined) {
+					$scope.emails.push(value.email);
+				}
 				if (value.nomeEscola !== undefined) {
 					$scope.escolas.push(value.nomeEscola);
 				}
@@ -203,7 +205,7 @@
 
 		$scope.orientadoresArray = [];
 		$scope.alunosArray = [];
-$scope.animals = ["gato","cachorro"];
+
 		$scope.montarIntegrantes = function(projeto) {
 			$scope.orientadoresArray = [];
 			$scope.alunosArray = [];
@@ -227,43 +229,7 @@ $scope.animals = ["gato","cachorro"];
 				}
 				console.log(projeto.nomeAluno2);
 			}
-			// if (projeto.nomeOrientador1 !== undefined) {
-			// 	$scope.orientadoresArray.push(projeto.nomeOrientador1);
-			// }
-			// if (projeto.nomeOrientador2 !== undefined) {
-			// 	$scope.orientadoresArray.push(projeto.nomeOrientador2);
-			// }
-			// if (projeto.nomeAluno1 !== undefined) {
-			// 	$scope.alunosArray.push(projeto.nomeAluno1);
-			// }
-			// if (projeto.nomeAluno2 !== undefined) {
-			// 	$scope.alunosArray.push(projeto.nomeAluno2);
-			// }
-			// if (projeto.nomeAluno3 !== undefined) {
-			// 	$scope.alunosArray.push(projeto.nomeAluno3);
-			// }
-	};
-
-		// var x1 = 0;
-		// angular.forEach($scope.dynamicFields1, function (value, key) {
-		// 	x1++;
-		// 	var str = 'projeto.nomeOrientador'+x1;
-		// 	var model = $parse(str);
-		// 	model.assign($scope, value.nome);
-		// });
-
-
-
-		$scope.toppings = [
-        { category: 'meat', name: 'Pepperoni' },
-        { category: 'meat', name: 'Sausage' },
-        { category: 'meat', name: 'Ground Beef' },
-        { category: 'meat', name: 'Bacon' },
-        { category: 'veg', name: 'Mushrooms' },
-        { category: 'veg', name: 'Onion' },
-        { category: 'veg', name: 'Green Pepper' },
-        { category: 'veg', name: 'Green Olives' }
-      ];
+		};
 
 		let resetForm = function() {
 			delete $scope.projeto;

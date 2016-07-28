@@ -1,4 +1,4 @@
-<div layout="row" layout-fill ng-cloak class="admin-page">
+<div layout="row" layout-fill ng-cloak class="admin-page" data-ng-init="carregarProjeto()">
 
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" role="sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
     <!-- toolbar da sidenav -->
@@ -7,7 +7,7 @@
         <md-icon md-svg-src="rocket" style="margin: 0 8px;"></md-icon>
         <div layout="column">
           <span class="md-body-2">{{projeto1.nomeProjeto | limitTo:20}}...</span>
-          <span class="md-caption">{{projetoEmail}}</span>
+          <span class="md-caption">Inscrição: {{projeto.numInscricao}}</span>
         </div>
         <span flex></span>
         <!-- <md-button class="md-icon-button" aria-label="User Settings" ng-click="toast('Logout')">
@@ -52,13 +52,23 @@
         </md-button>
         <md-menu-content width="4">
           <md-menu-item>
-            <md-button ng-click="toast('affffffff','failed-toast')">Option 1</md-button>
+            <md-button ui-sref="home.update">
+              <md-icon md-svg-src="flask"></md-icon>
+              Alterar projeto
+            </md-button>
           </md-menu-item>
           <md-menu-item>
-            <md-button ui-sref="home.update">Dados da conta</md-button>
+            <md-button ui-sref="home.conta">
+              <md-icon md-svg-src="account-settings-variant"></md-icon>
+              Dados da conta
+            </md-button>
           </md-menu-item>
+          <md-menu-divider></md-menu-divider>
           <md-menu-item>
-            <md-button data-ng-click="logout()">Sair</md-button>
+            <md-button data-ng-click="logout()">
+              <md-icon md-svg-src="exit-to-app"></md-icon>
+              Sair
+            </md-button>
           </md-menu-item>
         </md-menu-content>
       </md-menu>

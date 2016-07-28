@@ -1,0 +1,33 @@
+<md-content data-ng-controller="contaCtrl" class="md-padding update-inputs" style="background:#fdfdfd;padding-top:25px;" ng-cloak>
+  <md-content flex layout="column" layout-align="center center" style="width:100%!important;background:#fdfdfd;">
+    <form name="contaForm" novalidate style="width:85%;max-width:850px;padding:8px;">
+      <div layout="row">
+        <div class="bloco-right" flex>
+          <div layout="row" layout-align="end center" class="senha" flex="100">
+          <md-button class="md-raised btn-2" data-ng-click="" style="margin:2px;">
+            <md-icon md-svg-icon="lock-outline" class="icon-btn-default grey-text darken-1"></md-icon>
+            Redefinir a senha
+          </md-button>
+        </div>
+          <md-input-container class="md-block" data-ng-init="editingE=false" flex-gt-sm>
+            <label>E-mail da conta</label>
+            <input type="email" name="email" data-ng-model="projeto.email" data-ng-change="verificaEmail1(projeto.email)" data-ng-class="{'input-disabled': !editingE}" data-ng-focus="editingE=true" data-ng-blur="editingE=false" required data-ng-pattern="/^.+@.+\..+$/" />
+            <div class="md-errors-spacer">
+              <div data-ng-if="contaForm.email.$dirty">
+                <div class="message-error" data-ng-if="contaForm.email.$error.required">Preencha esse campo.</div>
+                <div class="message-error" data-ng-if="contaForm.email.$error.pattern && contaForm.email.$touched">Email inválido.</div>
+                <div class="message-error" data-ng-if="contaForm.email.$error.duplicado">Email já está sendo utilizado.</div>
+              </div>
+            </div>
+          </md-input-container>
+        </div>
+      </div>
+      <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+        <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!contaForm.$valid" data-ng-click="update(email)">
+          <md-icon md-svg-icon="check" class="icon-btn-default white-text"></md-icon>
+          Salvar
+        </md-button>
+      </div>
+    </form>
+  </md-content>
+</md-content>

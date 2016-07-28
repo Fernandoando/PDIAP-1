@@ -5,6 +5,14 @@
   font-family: 'Baron';
   src: local('Baron Neue'), url(/Baron_Neue.otf) format('opentype');
 }
+@font-face {
+  font-family: 'Brandon';
+  src: local('Brandon'), url(/Brandon_blk.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Brandon-med';
+  src: local('Brandon'), url(/Brandon_med.otf) format('opentype');
+}
 body .admin-page { overflow: hidden !important; }
 ::selection {
   background: #eee;
@@ -55,9 +63,29 @@ ui-view { height: inherit !important; }
   padding: 5px !important;
   color: #dd2c00;
 }
-.finalizar button{
+.finalizar button {
   border-radius: 50px;
   padding: 5px 30px;
+}
+.senha button {
+  border-radius: 50px;
+  padding: 3px 25px;
+  font-size: 13px !important;
+  margin-bottom: 20px !important;
+  margin-right: 40px !important;
+}
+.btn-2 {
+  border: 2px solid #9e9e9e;
+  color: #757575 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.btn-2:hover {
+  background: #9e9e9e !important;
+  color: #fff !important;
+}
+.btn-2:hover md-icon {
+  color: #fff !important;
 }
 hr {
   background: rgba(0,0,0,0.12);
@@ -117,6 +145,76 @@ select:-webkit-autofill:focus,
 select:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: inherit !important;
+}
+md-dialog {
+  width: 400px;
+  background: #4caf50 !important;
+  top: -20% !important;
+}
+.login-content .md-dialog-container {
+  top: -20% !important;
+}
+md-dialog-content h2 {
+  text-align: center;
+  font-size: 27px !important;
+  font-family: 'Brandon', 'Roboto', helvetica;
+  color: rgba(255,255,255,0.87);
+}
+.md-prompt-input-container {
+  display: flex !important;
+}
+.login-content md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-input,
+.login-content md-input-container:not(.md-input-invalid).md-input-focused .md-input,
+.login-content md-input-container.md-default-theme.md-input-invalid .md-input,
+.login-content md-input-container.md-input-invalid .md-input,
+md-input-container.md-prompt-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-input,
+md-input-container.md-prompt-input-container:not(.md-input-invalid).md-input-focused .md-input {
+  border-color: #2e7d32 !important;
+}
+md-input-container.md-prompt-input-container.md-prompt-input-container.md-default-theme .md-input,
+md-input-container.md-prompt-input-container .md-input {
+  color: #fff !important;
+}
+md-dialog-actions {
+  background: rgba(255,255,255,0.87) !important;
+}
+md-dialog-actions button {
+  width: 50%;
+  color: #1b5e20 !important;
+  font-size: 13px !important;
+}
+.login-content {
+  width: 310px !important;
+}
+.login-content h1 {
+  font-size: 27px !important;
+  font-family: 'Brandon', 'Roboto', helvetica;
+  color: rgba(255,255,255,0.87);
+  text-transform: uppercase;
+}
+.login-content .md-button[disabled],
+.login-content .md-button[disabled] md-icon,
+.login-content .md-button.md-raised[disabled],
+.login-content .md-button.md-raised[disabled] md-icon {
+  color: #1b5e20 !important;
+  background-color: transparent !important;
+}
+.login-content md-input-container.md-default-theme label,
+.login-content md-input-container label,
+.login-content md-input-container.md-default-theme:not(.md-input-invalid).md-input-has-value label,
+.login-content md-input-container:not(.md-input-invalid).md-input-has-value label,
+.login-content md-input-container.md-default-theme.md-input-invalid.md-input-focused label,
+.login-content md-input-container.md-input-invalid.md-input-focused label,
+.login-content md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused label,
+.login-content md-input-container:not(.md-input-invalid).md-input-focused label {
+  color: rgba(0,0,0,0.4) !important;
+}
+.login-content md-card {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+md-sidenav {
+  width: 260px !important;
 }
 md-input-container.md-default-theme .md-input,
 md-input-container .md-input {
@@ -264,7 +362,7 @@ md-select[multiple] .md-container {
   z-index: 1;
   width: 100%;
   height: 180px;
-  background: url('/views/mapa5.jpg') no-repeat;
+  background: url('/assets/images/mapa5.jpg') no-repeat;
   background-size: cover;
   background-position: center center;
 }
@@ -277,9 +375,10 @@ md-select[multiple] .md-container {
 }
 .inscricao-header-content h1 {
   margin: 0 0 10px 0 !important;
-  font-family: 'Baron', arial;
+  font-family: 'Baron', 'Roboto', helvetica;
   font-size: 38px;
   letter-spacing: 1px;
+  /*text-transform: uppercase;*/
 }
 .inscricao-content {
   width: 100% !important;
@@ -291,6 +390,41 @@ md-select[multiple] .md-container {
   max-width: 680px;
   padding: 8px;
 }
+
+
+
+md-grid-list md-grid-tile figure {
+  display: block !important;
+}
+md-grid-tile figure {
+  padding: 40px !important;
+}
+md-grid-tile {
+  border-radius: 4px !important;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+}
+md-grid-tile span,
+md-grid-tile p {
+  color: #fff !important;
+}
+.gray {
+  background: #26a69a; } /*#3887be*/
+.green {
+  background: #b9f6ca; }
+.yellow {
+  background: #ffff8d; }
+.blue {
+  background: #84ffff; }
+.purple {
+  background: #b388ff; }
+.red {
+  background: #ff8a80; }
+md-grid-tile {
+  transition: all 400ms ease-out 50ms; }
+
+
+
+
 svg:not(:root) { overflow: hidden; }
 .poly { fill: #fdfdfd; }
 
@@ -318,8 +452,7 @@ svg:not(:root) { overflow: hidden; }
 .icon-btn-default {
   width: 20px;
   height: 20px;
-  color: rgba(255,255,255,0.87);
-  padding-bottom: 3px;
+  padding-bottom: 3px !important;
 }
 md-select[disabled] .md-select-value {
   border-bottom: none !important;
@@ -454,7 +587,10 @@ md-toast {
 .red {
   background-color: #f44336 !important;
 }
-.white-text { color: #fff !important; }
+.grey-text.darken-1 {
+  color: #757575 !important;
+}
+.white-text { color: rgba(255,255,255,0.87) !important; }
 .md-button[disabled],
 .md-button[disabled] md-icon,
 .md-button.md-raised[disabled],
@@ -482,17 +618,21 @@ md-icon {
 }
 .redefinir {
   font-size: 0.9em;
-  margin-top: 20px;
-  color: #616161;
+  margin-bottom: 20px;
+  color: rgba(255,255,255,0.87);
 }
 .btn-redefinir {
-  color: #424242;
+  color: #fff;
   cursor: pointer;
   font-weight: bold;
+  margin-left: 4px;
 }
 .h5-2 {
   font-size: 0.85em!important;
   margin-top: 0.9em!important;
+}
+footer {
+  background: url('/assets/images/bg-dark-texture.png');
 }
 @media only screen and (max-width: 959px) and (min-width: 0) and (orientation: landscape) {
   md-toolbar { min-height: 64px !important; }

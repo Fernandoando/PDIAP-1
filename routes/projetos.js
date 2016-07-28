@@ -146,6 +146,7 @@ router.post('/registro', testaEmail2, (req, res) => {
       cep: req.body.cep,
       cidade: req.body.cidade,
       estado: req.body.estado,
+      hospedagem: req.body.hospedagem,
       resumo: req.body.resumo,
       email: req.body.email,
       password: req.body.password

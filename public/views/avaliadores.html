@@ -1,0 +1,95 @@
+<!-- <header>
+<md-toolbar md-scroll-shrink ng-if="true" style="background:#4caf50!important;height:30px;">
+<div class="md-toolbar-tools">
+<md-icon md-svg-icon="menu" style="margin-left:20px;"></md-icon>
+<span flex></span>
+</div>
+</md-toolbar>
+</header> -->
+<!-- rgba(65,135,190,0.75) -->
+<!-- rgba(57,73,171,0.8) -->
+<!-- rgba(55,71,79,0.8) -->
+<!-- ver usar 0.8 alpha -->
+<section class="wrapper-registro" layout="column" layout-align="center center" data-ng-cloak>
+  <!-- Header -->
+  <div layout="column" layout-align="center center" style="position:absolute;width:100%;height:180px;background:rgba(55,71,79,0.8);top:0;z-index:2;">
+    <md-icon md-svg-icon="menu" style="margin:15px auto 0 60px;color:#eee;"></md-icon>
+    <div layout="column" layout-align="center center" class="inscricao-header-content">
+      <h1>Inscrição Avaliadores</h1>
+    </div>
+  </div>
+  <div class="inscricao-header"></div>
+  <div style="position:absolute;width:100%;height:20px;z-index:99;top:160px;">
+    <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none">
+    <polyline class="poly" points="100,100 0,100 100,0"/>
+  </svg>
+</div>
+
+<!-- Formulário -->
+<md-content flex layout="column" layout-align="center center" class="inscricao-content">
+  <form name="avaliadoresForm" novalidate>
+    <div layout-gt-xs="row">
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>Nome completo</label>
+        <input type="text" name="nome" data-ng-model="avaliadores.nome" required />
+        <div class="md-errors-spacer">
+          <div data-ng-if="avaliadoresForm.nome.$dirty">
+            <div class="message-error" data-ng-if="avaliadoresForm.nome.$error.required">Preencha esse campo.</div>
+          </div>
+        </div>
+      </md-input-container>
+      <div flex="5" hide-xs></div>
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>E-mail</label>
+        <input type="email" name="email" data-ng-model="avaliadores.email" required data-ng-pattern="/^.+@.+\..+$/" />
+        <div class="md-errors-spacer">
+          <div data-ng-show="avaliadoresForm.email.$dirty">
+            <div class="message-error" data-ng-show="avaliadoresForm.email.$error.required">Preencha esse campo.</div>
+            <div class="message-error" data-ng-show="avaliadoresForm.email.$error.pattern && avaliadoresForm.email.$touched">Email inválido.</div>
+          </div>
+        </div>
+      </md-input-container>
+    </div>
+
+    <div layout-gt-xs="row">
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>CPF</label>
+        <input type="text" name="cpf" data-ng-model="avaliadores.cpf" required minlength="14" maxlength="14" cpf-mask/>
+        <div class="md-errors-spacer">
+          <div data-ng-show="avaliadoresForm.cpf.$dirty">
+            <div class="message-error" data-ng-show="avaliadoresForm.cpf.$error.required">Preencha esse campo.</div>
+            <div class="message-error" data-ng-show="avaliadoresForm.cpf.$error.minlength && avaliadoresForm.cpf.$touched">CPF inválido.</div>
+          </div>
+        </div>
+      </md-input-container>
+      <div flex="5" hide-xs></div>
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>Telefone</label>
+        <input type="text" name="telefone" data-ng-model="avaliadores.telefone" required minlength="14" maxlength="14" fone-mask/>
+        <div class="md-errors-spacer">
+          <div data-ng-show="avaliadoresForm.telefone.$dirty">
+            <div class="message-error" data-ng-show="avaliadoresForm.telefone.$error.required">Preencha esse campo.</div>
+            <div class="message-error" data-ng-show="avaliadoresForm.telefone.$error.minlength && avaliadoresForm.telefone.$touched">Telefone inválido.</div>
+          </div>
+        </div>
+      </md-input-container>
+    </div>
+
+    <!-- Finalizar inscrição -->
+    <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+      <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!avaliadoresForm.$valid" data-ng-click="">
+        <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
+      </md-button>
+    </div>
+  </form>
+</md-content>
+
+</section>
+
+<footer>
+  <div layout="row" style="height:150px;"></div>
+</footer>

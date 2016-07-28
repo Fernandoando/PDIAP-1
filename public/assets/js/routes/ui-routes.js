@@ -7,20 +7,20 @@
 
 		let checkLoggedin = function($q, $http, $location, $rootScope) {
 
-				var deferred = $q.defer(); // Inicializa nova promissa
-				$rootScope.logado = false;
+			var deferred = $q.defer(); // Inicializa nova promissa
+			$rootScope.logado = false;
 
-				$http.get('/projetos/home').success(function(projeto) {
-					if (projeto !== '0') { // Authenticated
-							$rootScope.logado = true;
-							deferred.resolve();
+			$http.get('/projetos/home').success(function(projeto) {
+				if (projeto !== '0') { // Authenticated
+					$rootScope.logado = true;
+					deferred.resolve();
 				} else { // Not Authenticated
-							$rootScope.logado = false;
-							deferred.reject();
-							$location.url('/login');
-					}
+					$rootScope.logado = false;
+					deferred.reject();
+					$location.url('/login');
+				}
 			});
-				return deferred.promise;
+			return deferred.promise;
 		};
 
 		//$urlRouterProvider.otherwise("/state1");
@@ -28,14 +28,17 @@
 		.state('index', {
 			url: "/",
 			views: {
-				'': {templateUrl: '/views/index.html'}
+				'': {
+					templateUrl: '/views/index.html',
+					controller: "homeCtrl"
+				}
 			}
 		})
-		.state('login', {
-			url: "/login",
-			templateUrl: "/views/login.html",
-			controller: "loginCtrl"
-		})
+		// .state('login', {
+		// 	url: "/login",
+		// 	templateUrl: "/views/login.html",
+		// 	controller: "loginCtrl"
+		// })
 		.state('inscricao', {
 			url: "/inscricao",
 			templateUrl: "/views/inscricao.html",
@@ -44,7 +47,12 @@
 		.state('inscricao-saberes', {
 			url: "/inscricao-saberes",
 			templateUrl: "/views/saberes.html",
-			controller: "registroCtrl"
+			controller: "saberesCtrl"
+		})
+		.state('inscricao-avaliadores', {
+			url: "/inscricao-avaliadores",
+			templateUrl: "/views/avaliadores.html",
+			controller: "avaliadoresCtrl"
 		})
 		.state('home', {
 			url: "/home",
@@ -62,6 +70,11 @@
 		.state('home.update', {
 			url: "/update",
 			templateUrl: "/views/update.html",
+			controller: "updateCtrl"
+		})
+		.state('home.conta', {
+			url: "/update-conta",
+			templateUrl: "/views/conta.html",
 			controller: "updateCtrl"
 		});
 	});
