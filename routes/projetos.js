@@ -283,6 +283,19 @@ let newIntegrante = ({
     });
 });
 
+router.put('/removerIntegrante', ensureAuthenticated, (req, res) => {
+  let id = req.body.integrantes_id;
+
+  ProjetoSchema.findOne({"integrantes._id": id}, (err, usr) => {
+    if (err) throw err;
+    usr.integrantes.id(id).remove()
+    usr.save((err, usr) => {
+    if (err) throw err;
+      res.status(200).send('Removido');
+    });
+  });
+});
+
 router.post('/redefinir-senha', (req, res) => {
   let email = req.body.email;
   crypto.randomBytes(20, (err, buf) => {
