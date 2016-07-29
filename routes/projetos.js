@@ -8,7 +8,37 @@ const express = require('express')
 , session = require('express-session')
 , ProjetoSchema = require('../models/projeto-schema')
 , crypto = require('crypto')
-, bcrypt = require('bcryptjs');
+, bcrypt = require('bcryptjs')
+, nodemailer = require('nodemailer')
+, smtpTransport = require('nodemailer-smtp-transport');
+
+function email(para, titulo, texto, html){
+  const transporter = nodemailer.createTransport(smtpTransport({
+    host: 'smtp.zoho.com',
+    port: 587,
+    auth: {
+        user: 'contato@movaci.com.br',
+        pass: 'mya collins nossa gata'
+      }
+  }));
+
+  let mensagem = {
+    from: 'contato@movaci.com.br',
+    to: para,
+    subject: titulo,
+    text: texto,
+    html: html
+  };
+
+  transporter.sendMail(mensagem, (err, next) => {
+   if (err) {
+        console.log(err);
+   } else {
+        console.log('Message sent');
+        return next();
+   }
+  });
+}
 
 function testaEmail(req, res) {
   ProjetoSchema.find('email','email -_id', (error, emails) => {
@@ -63,7 +93,12 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
-
+function splita(arg){
+  if (arg !== undefined) {
+    let data = arg.replace(/([-.])/g,'');
+    return data;
+  }
+}
 
 router.get('/', (req, res, next) => {
   res.send('Projetos po');
@@ -76,13 +111,6 @@ router.get('/registro2', testaEscola, (req, res) => {});
 router.get('/login', (req, res) => {
 	res.send('página de login');
 });
-
-  function splita(arg){
-    if (arg !== undefined) {
-      let data = arg.replace(/([-.])/g,'');
-      return data;
-    }
-  }
 
 router.post('/registro', testaEmail2, (req, res) => {
   let  email = req.body.email
@@ -178,6 +206,33 @@ router.post('/registro', testaEmail2, (req, res) => {
     }
 
 		Projeto.createProject(newProject);
+
+    let para = req.body.email
+    ,   titulo = "MOVACI 2016 - Inscrição realizada com sucessowowowo!"
+    ,   texto = "E aí pessoal do projeto" +req.body.nomeProjeto+ ", tudo certo? Inscrição confirmada!"
+    ,   html = "<h1>Eae gata vc cadastrou um proujeto.</h1>";
+    
+    const transporter = nodemailer.createTransport(smtpTransport({
+    host: 'smtp.zoho.com',
+    port: 587,
+    auth: {
+        user: 'contato@movaci.com.br',
+        pass: 'chola viadinho'
+      }
+    }));
+
+    let mensagem = {
+      from: 'contato@movaci.com.br',
+      to: para,
+      subject: titulo,
+      text: texto,
+      html: html
+    };
+
+    transporter.sendMail(mensagem, (err) => {
+     if (err) throw err;
+     console.log("enviou a msg");
+    });
 
 		res.redirect('/projetos/login');
 	}
@@ -321,6 +376,32 @@ router.post('/redefinir-senha', (req, res) => {
     let token = buf.toString('hex');
     console.log(token);
 
+
+    let url = "url: http://localhost/projetos/nova-senha/"+email+"/"+token;
+
+    let titulo = "MOVACI 2016 - Redefinição de senha"
+    ,   texto = "E aí pessoal do projeto" +req.body.nomeProjeto+ ", tudo certo? Inscrição confirmada!"
+    ,   html = "<h1>"+url+"</h1>";
+    
+    const transporter = nodemailer.createTransport(smtpTransport({
+    host: 'smtp.zoho.com',
+    port: 587,
+    auth: {
+        user: 'contato@movaci.com.br',
+        pass: '*mo12va45ci78!'
+      }
+    }));
+
+    let mensagem = {
+      from: 'contato@movaci.com.br',
+      to: email,
+      subject: titulo,
+      text: texto,
+      html: html
+    };
+
+;
+
     ProjetoSchema.findOneAndUpdate({email: email}, {$set:{resetPasswordToken:token, resetPasswordCreatedDate:Date.now() + 3600000}}, {new: true}, function(err, doc){
       if(err){
           console.log("Something wrong when updating data!");
@@ -328,6 +409,10 @@ router.post('/redefinir-senha', (req, res) => {
         //FALTA ENVIAR O EMAIL COM O LINK PRA TROCAR A SENHA
         res.status(200).send("url: http://localhost:3000/projetos/nova-senha/"+email+"/"+token);
         console.log(doc);
+            transporter.sendMail(mensagem, (err) => {
+     if (err) throw err;
+     console.log("enviou a msg");
+    })
       }
     });
   });
