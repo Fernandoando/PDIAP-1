@@ -388,7 +388,7 @@ router.post('/redefinir-senha', (req, res) => {
     port: 587,
     auth: {
         user: 'contato@movaci.com.br',
-        pass: ''
+        pass: '' 
       }
     }));
 
