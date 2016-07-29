@@ -63,6 +63,8 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
+
+
 router.get('/', (req, res, next) => {
   res.send('Projetos po');
 });
@@ -74,6 +76,7 @@ router.get('/registro2', testaEscola, (req, res) => {});
 router.get('/login', (req, res) => {
 	res.send('página de login');
 });
+
 
 router.post('/registro', testaEmail2, (req, res) => {
   let  email = req.body.email
@@ -89,16 +92,23 @@ router.post('/registro', testaEmail2, (req, res) => {
 	let errors = req.validationErrors();
 
 	if(errors){
-		res.status(501).send('error');
+		//res.status(501).send('error');
     console.log("Errors: "+errors);
 	} else {
+
+  function splita(arg){
+    if (arg !== undefined) {
+      let data = arg.replace(/([-.])/g,'');
+      return data;
+    }
+  }
 
     let newIntegrante = ({
       tipo: "Orientador",
       nome: req.body.nomeOrientador1,
       email: req.body.emailOrientador1,
-      cpf: req.body.cpfOrientador1,
-      telefone: req.body.telefoneOrientador1,
+      cpf: splita(req.body.cpfOrientador1),
+      telefone: splita(req.body.telefoneOrientador1),
       tamCamiseta: req.body.tamCamisetaOrientador1
     });
 
@@ -106,8 +116,8 @@ router.post('/registro', testaEmail2, (req, res) => {
       tipo: "Orientador",
       nome: req.body.nomeOrientador2,
       email: req.body.emailOrientador2,
-      cpf: req.body.cpfOrientador2,
-      telefone: req.body.telefoneOrientador2,
+      cpf: splita(req.body.cpfOrientador2),
+      telefone: splita(req.body.telefoneOrientador2),
       tamCamiseta: req.body.tamCamisetaOrientador2
     });
 
@@ -115,8 +125,8 @@ router.post('/registro', testaEmail2, (req, res) => {
       tipo: "Aluno",
       nome: req.body.nomeAluno1,
       email: req.body.emailAluno1,
-      cpf: req.body.cpfAluno1,
-      telefone: req.body.telefoneAluno1,
+      cpf: splita(req.body.cpfAluno1),
+      telefone: splita(req.body.telefoneAluno1),
       tamCamiseta: req.body.tamCamisetaAluno1
     });
 
@@ -124,8 +134,8 @@ router.post('/registro', testaEmail2, (req, res) => {
       tipo: "Aluno",
       nome: req.body.nomeAluno2,
       email: req.body.emailAluno2,
-      cpf: req.body.cpfAluno2,
-      telefone: req.body.telefoneAluno2,
+      cpf: splita(req.body.cpfAluno2),
+      telefone: splita(req.body.telefoneAluno2),
       tamCamiseta: req.body.tamCamisetaAluno2
     });
 
@@ -133,8 +143,8 @@ router.post('/registro', testaEmail2, (req, res) => {
       tipo: "Aluno",
       nome: req.body.nomeAluno3,
       email: req.body.emailAluno3,
-      cpf: req.body.cpfAluno3,
-      telefone: req.body.telefoneAluno3,
+      cpf: splita(req.body.cpfAluno3),
+      telefone: splita(req.body.telefoneAluno3),
       tamCamiseta: req.body.tamCamisetaAluno3
     });
 
@@ -143,7 +153,7 @@ router.post('/registro', testaEmail2, (req, res) => {
       categoria: req.body.categoria,
       eixo: req.body.eixo,
       nomeEscola: req.body.nomeEscola,
-      cep: req.body.cep,
+      cep: splita(req.body.cep),
       cidade: req.body.cidade,
       estado: req.body.estado,
       hospedagem: req.body.hospedagem,
@@ -172,7 +182,7 @@ router.post('/registro', testaEmail2, (req, res) => {
 
 		res.redirect('/projetos/login');
 	}
-  res.send('OK');
+  //res.send('OK');
 });
 
 // Setando a estatégia do Passport
@@ -351,10 +361,35 @@ router.post('/nova-senha/:email/:token', (req, res) => {
 
 
 //método ligeiro
-    /*
-router.get('/home', ensureAuthenticated, function(req, res) {
-  res.send(req.isAuthenticated() ? req.user : '0');
-});*/
+
+router.get('/testekrl', function(req, res) {
+
+let cep = "95.800-000"
+,   cpf = "017.733.430-41"
+,   telefone = "(51) 3741-5039"
+
+
+if (cep !== undefined && cep.length==10) {
+  cep = cep.replace(/([-.])/g,'');
+  console.log(cep);
+}
+
+if (cpf !== undefined && cpf.length==14) {
+  cpf = cpf.replace(/([-.])/g,'');
+  console.log(cpf);
+}
+
+if (telefone !== undefined && telefone.length==14) {
+  telefone = telefone.replace(/([-.() ])/g,'');
+  console.log(telefone);
+}
+
+
+res.send(cep+" "+cpf+" "+telefone);
+});
+
+
+
 
 // GET na rota todos para mostrar TODOS os projetos cadastrados (projetos/todos)
 router.get('/todos', ensureAuthenticated, (req, res) => {
