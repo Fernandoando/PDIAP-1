@@ -27,7 +27,9 @@
 				$scope.alterado = true;
 				$scope.toast('Alteração feita com sucesso!','success-toast');
 				// maskCEP();
-				$scope.carregarProjeto();
+				// $scope.carregarProjeto();
+				// ver com ricardo se quando atualiza volta o projeto p body
+				// and dizer p não excluir os campos que não existem quando atualiza
 			})
 			.error(function(status){
 				console.log('update error: '+status);
@@ -150,7 +152,7 @@
 
 					value.telefone = "(" + value.telefone.substring(0);
 					value.telefone = value.telefone.substring(0,3) + ")" + value.telefone.substring(3);
-					value.telefone = value.telefone.substring(0,4) + " " + value.telefone.substring(4);
+					// value.telefone = value.telefone.substring(0,4) + " " + value.telefone.substring(4);
 					value.telefone = value.telefone.substring(0,9) + "-" + value.telefone.substring(9);
 
 					model0.assign($scope, value._id);
@@ -181,7 +183,7 @@
 
 					value.telefone = "(" + value.telefone.substring(0);
 					value.telefone = value.telefone.substring(0,3) + ")" + value.telefone.substring(3);
-					value.telefone = value.telefone.substring(0,4) + " " + value.telefone.substring(4);
+					// value.telefone = value.telefone.substring(0,4) + " " + value.telefone.substring(4);
 					value.telefone = value.telefone.substring(0,9) + "-" + value.telefone.substring(9);
 
 					model0.assign($scope, value._id);

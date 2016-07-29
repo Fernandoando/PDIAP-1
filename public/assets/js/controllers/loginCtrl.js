@@ -27,6 +27,16 @@
 			});
 		};
 
+		let enviarEmail = function(email) {
+			projetosAPI.postEmail(email)
+			.success(function(data) {
+				console.log('EMAIL ENVIADO');
+			})
+			.error(function() {
+				console.log('EMAIL NÃO FOI ENVIADO AF TIO');
+			});
+		};
+
 		$scope.showPrompt = function(ev) {
 			var confirm = $mdDialog.prompt()
 			.title('RECUPERAR SENHA')
@@ -37,6 +47,7 @@
 			.cancel('Fechar');
 			$mdDialog.show(confirm).then(function(result) {
 				console.log(result);
+				enviarEmail(result);
 			}, function() {
 				console.log('fechou');
 			});

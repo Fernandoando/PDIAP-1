@@ -365,9 +365,9 @@
               </md-radio-group>
               <div class="md-errors-spacer"></div>
             </div>
-            <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" flex-gt-sm>
+            <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" data-ng-init="editing19=false" flex-gt-sm>
               <label>Quais?</label>
-              <md-select name="hospedagem" data-ng-model="projeto5.hospedagem" multiple data-ng-focus="montarIntegrantes1(projeto3,projeto4)" required>
+              <md-select name="hospedagem" data-ng-model="projeto5.hospedagem" multiple data-ng-class="{'input-disabled': !editing19}" data-ng-focus="editing19=true;montarIntegrantes1(projeto3,projeto4)" data-ng-blur="editing19=false" required>
                 <md-optgroup label="Orientador(es)" data-ng-if="projeto3.nomeOrientador1 !== undefined">
                   <md-option ng-value="eae.nome" ng-repeat="eae in orientadores">{{eae.nome}}</md-option>
                 </md-optgroup>

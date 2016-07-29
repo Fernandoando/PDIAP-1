@@ -83,6 +83,15 @@
 			return $http(request);
 		};
 
+		let _postEmail = function(email) {
+			const request = {
+				url: '/projetos/redefinir-senha',
+				method: 'POST',
+				data: email
+			}
+			return $http(request);
+		};
+
 		return {
 			saveProjeto: _saveProjeto,
 			postLogin: _postLogin,
@@ -92,7 +101,8 @@
 			getEstados: _getEstados,
 			getEmails: _getEmails,
 			putProjeto: _putProjeto,
-			putIntegrante: _putIntegrante
+			putIntegrante: _putIntegrante,
+			postEmail: _postEmail
 		};
 	});
 })();

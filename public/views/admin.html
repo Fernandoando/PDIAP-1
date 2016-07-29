@@ -1,9 +1,9 @@
 <div layout="row" layout-fill ng-cloak class="admin-page" data-ng-init="carregarProjeto()">
 
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" role="sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" role="sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" style="background:#43a047;">
     <!-- toolbar da sidenav -->
     <md-toolbar class="md-tall md-hue-2" layout-align="center center" style="background:#43a047;">
-      <div layout="column" layout-align="center center" style="width:100%;">
+      <div layout="column" layout-align="center center" style="width:100%;margin-top:20px;">
         <div style="width:65px;height:65px;border-radius:50%;background:white;text-align:center">
           <span style="color:#424242;font-size:22px;line-height:65px;">A</span>
         </div>
@@ -19,14 +19,15 @@
     </div> -->
   </md-toolbar>
   <!-- menu da sidenav -->
-  <md-content role="navigation">
+  <hr size="3" style="background:#2e7d32;width:80%;">
+  <md-content role="navigation" style="background:#43a047;">
     <md-list data-ng-repeat="section in data.sidenav.sections">
       <!-- não botar data no ng-click abaixo -->
       <md-list-item ng-click="section.expand = !section.expand" ui-sref="{{section.link}}">
-        <p class="md-subheader" style="color:#424242;">{{section.name}}</p>
+        <p class="md-subheader" style="color:#f5f5f5;">{{section.name}}</p>
         <span flex></span>
         <!-- <md-icon class="md-primary md-icon-button"></md-icon> -->
-        <md-icon data-ng-if="section.link === undefined" md-svg-src="{{section.expand ? 'chevron-up' : 'chevron-down'}}" style="color:#424242;"></md-icon>
+        <md-icon data-ng-if="section.link === undefined" md-svg-src="{{section.expand ? 'chevron-up' : 'chevron-down'}}" style="color:#f5f5f5;"></md-icon>
       </md-list-item>
       <md-list-item data-ng-show="section.expand" data-ng-repeat="action in section.actions" ui-sref="{{action.link}}">
         <md-icon md-svg-src="{{action.icon}}"></md-icon>

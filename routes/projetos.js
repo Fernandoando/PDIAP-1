@@ -211,7 +211,7 @@ router.post('/registro', testaEmail2, (req, res) => {
     ,   titulo = "MOVACI 2016 - Inscrição realizada com sucessowowowo!"
     ,   texto = "E aí pessoal do projeto" +req.body.nomeProjeto+ ", tudo certo? Inscrição confirmada!"
     ,   html = "<h1>Eae gata vc cadastrou um proujeto.</h1>";
-    
+
     const transporter = nodemailer.createTransport(smtpTransport({
     host: 'smtp.zoho.com',
     port: 587,
@@ -382,7 +382,7 @@ router.post('/redefinir-senha', (req, res) => {
     let titulo = "MOVACI 2016 - Redefinição de senha"
     ,   texto = "E aí pessoal do projeto" +req.body.nomeProjeto+ ", tudo certo? Inscrição confirmada!"
     ,   html = "<h1>"+url+"</h1>";
-    
+
     const transporter = nodemailer.createTransport(smtpTransport({
     host: 'smtp.zoho.com',
     port: 587,

@@ -11,6 +11,7 @@
 		// $scope.projeto3 = {};
 		// $scope.projeto4 = {};
 		$scope.projeto5 = {};
+		$scope.conta = {};
 		$scope.projetoEmail = '';
 		$scope.integrantes = [];
 		$rootScope.header = 'Dashboard';
@@ -36,6 +37,7 @@
 				$scope.projeto2.cep = projeto.cep;
 				maskCEP();
 
+				$scope.conta.email = projeto.email;
 				$scope.projetoEmail = projeto.email;
 
 				$scope.projeto5.hospedagem = [];
