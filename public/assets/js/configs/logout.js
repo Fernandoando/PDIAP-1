@@ -9,7 +9,7 @@
 		   		$http.post('/projetos/logout');
 		   		localStorage.removeItem('token');
 		   		$rootScope.logado = false;
-		  		$location.url('/login');
+		  		$location.url('/');
 		   	};
 		});
 })();

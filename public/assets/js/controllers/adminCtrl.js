@@ -8,16 +8,22 @@
 		$scope.projeto = {};
 		$scope.projeto1 = {};
 		$scope.projeto2 = {};
-		$scope.projetoEmail = '';
 		// $scope.projeto3 = {};
 		// $scope.projeto4 = {};
 		$scope.projeto5 = {};
+		$scope.projetoEmail = '';
 		$scope.integrantes = [];
 		$rootScope.header = 'Dashboard';
+
+		let maskCEP = function() {
+			$scope.projeto2.cep = $scope.projeto2.cep.substring(0,2) + "." + $scope.projeto2.cep.substring(2);
+			$scope.projeto2.cep = $scope.projeto2.cep.substring(0,6) + "-" + $scope.projeto2.cep.substring(6);
+		};
 
 		let carregarProjeto = function() {
 			projetosAPI.getProjeto()
 			.success(function(projeto) {
+				$scope.nomeDoProjeto = projeto.nomeProjeto;
 				$scope.projeto = projeto;
 				$scope.projeto1.nomeProjeto = projeto.nomeProjeto;
 				$scope.projeto1.categoria = projeto.categoria;
@@ -27,14 +33,12 @@
 				$scope.projeto2.nomeEscola = projeto.nomeEscola;
 				$scope.projeto2.estado = projeto.estado;
 				$scope.projeto2.cidade = projeto.cidade;
-				if (projeto.cep.length === 8) {
-					projeto.cep = projeto.cep.substring(0,2) + "." + projeto.cep.substring(2);
-					projeto.cep = projeto.cep.substring(0,6) + "-" + projeto.cep.substring(6);
-				}
 				$scope.projeto2.cep = projeto.cep;
+				maskCEP();
 
 				$scope.projetoEmail = projeto.email;
 
+				$scope.projeto5.hospedagem = [];
 				if (projeto.hospedagem !== undefined) {
 					$scope.projeto5.hospedagem = projeto.hospedagem.split(",");
 					// console.log($scope.projeto5.hospedagem);

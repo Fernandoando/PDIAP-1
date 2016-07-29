@@ -11,27 +11,22 @@
 		$scope.alunos = [];
 		$scope.emails1 = [];
 
-		let maskCEP = function() {
-			$scope.projeto2.cep = $scope.projeto2.cep.substring(0,2) + "." + $scope.projeto2.cep.substring(2);
-			$scope.projeto2.cep = $scope.projeto2.cep.substring(0,6) + "-" + $scope.projeto2.cep.substring(6);
-		};
-
 		// alterar primeiro no array, ou criar novo array dps enviar esse array
 		$scope.update = function(projeto) {
-			if (projeto.cep !== undefined) {
-				if (projeto.cep.length == 10) {
-					var cepArray = projeto.cep.split(/[.\/-]/);
-					var model = cepArray[0]+cepArray[1]+cepArray[2];
-					projeto.cep = model;
-				}
-			}
+			// if (projeto.cep !== undefined) {
+			// 	if (projeto.cep.length == 10) {
+			// 		let cepArray = projeto.cep.split(/[.\/-]/);
+			// 		let model = cepArray[0]+cepArray[1]+cepArray[2];
+			// 		projeto.cep = model;
+			// 	}
+			// }
 			console.log(projeto);
 			projetosAPI.putProjeto(projeto)
 			.success(function(projeto){
 				console.log(projeto);
 				$scope.alterado = true;
 				$scope.toast('Alteração feita com sucesso!','success-toast');
-				maskCEP();
+				// maskCEP();
 				$scope.carregarProjeto();
 			})
 			.error(function(status){
@@ -40,31 +35,21 @@
 			});
 		};
 
-		// $scope.updateEmail = function(projeto) {
-		// 	var pacote = ({
-		// 		tipo: 'Orientador',
-		// 		nome: $scope.projeto3.nomeOrientador1,
-		// 		email: $scope.projeto3.emailOrientador1,
-		// 		cpf: $scope.projeto3.cpfOrientador1,
-		// 		telefone: $scope.projeto3.telefoneOrientador1,
-		// 		tamCamiseta: $scope.projeto3.tamCamisetaOrientador1,
-		// 		integrantes_id: $scope.projeto3.idOrientador1
-		// 	});
-		// 	projetosAPI.putProjeto(projeto)
-		// 	.success(function(projeto){
-		// 		console.log(projeto);
-		// 		$scope.alterado = true;
-		// 		$scope.toast('Alteração feita com sucesso!','success-toast');
-		// 	})
-		// 	.error(function(status){
-		// 		console.log('update error: '+status);
-		// 		$scope.toast('Falha na alteração','failed-toast');
-		// 	});
-		// };
+		let updateIntegrante = function(pacote) {
+			projetosAPI.putIntegrante(pacote)
+			.success(function(data){
+				console.log(data);
+				$scope.alterado = true;
+				$scope.toast('Alteração feita com sucesso!','success-toast');
+			})
+			.error(function(status){
+				console.log('update error: '+status);
+				$scope.toast('Falha na alteração','failed-toast');
+			});
+		};
 
 		$scope.updateOrientadores = function() {
 			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
-			console.log($scope.dynamicFields11.length);
 			for (var i = 1; i <= $scope.dynamicFields11.length; i++) {
 				if (i == 1) {
 					var pacote = ({
@@ -76,16 +61,7 @@
 						tamCamiseta: $scope.projeto3.tamCamisetaOrientador1,
 						integrantes_id: $scope.projeto3.idOrientador1
 					});
-					projetosAPI.putIntegrante(pacote)
-					.success(function(data){
-						console.log(data);
-						$scope.alterado = true;
-						$scope.toast('Alteração feita com sucesso!','success-toast');
-					})
-					.error(function(status){
-						console.log('update error: '+status);
-						$scope.toast('Falha na alteração','failed-toast');
-					});
+					updateIntegrante(pacote);
 				}
 				if (i == 2) {
 					var pacote = ({
@@ -97,16 +73,7 @@
 						tamCamiseta: $scope.projeto3.tamCamisetaOrientador2,
 						integrantes_id: $scope.projeto3.idOrientador2
 					});
-					projetosAPI.putIntegrante(pacote)
-					.success(function(data){
-						console.log(data);
-						$scope.alterado = true;
-						$scope.toast('Alteração feita com sucesso!','success-toast');
-					})
-					.error(function(status){
-						console.log('update error: '+status);
-						$scope.toast('Falha na alteração','failed-toast');
-					});
+					updateIntegrante(pacote);
 				}
 			}
 		};
@@ -125,16 +92,7 @@
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno1,
 						integrantes_id: $scope.projeto4.idAluno1
 					});
-					projetosAPI.putIntegrante(pacote)
-					.success(function(data){
-						console.log(data);
-						$scope.alterado = true;
-						$scope.toast('Alteração feita com sucesso!','success-toast');
-					})
-					.error(function(status){
-						console.log('update error: '+status);
-						$scope.toast('Falha na alteração','failed-toast');
-					});
+					updateIntegrante(pacote);
 				}
 				if (i == 2) {
 					var pacote = ({
@@ -146,16 +104,7 @@
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno2,
 						integrantes_id: $scope.projeto4.idAluno2
 					});
-					projetosAPI.putIntegrante(pacote)
-					.success(function(data){
-						console.log(data);
-						$scope.alterado = true;
-						$scope.toast('Alteração feita com sucesso!','success-toast');
-					})
-					.error(function(status){
-						console.log('update error: '+status);
-						$scope.toast('Falha na alteração','failed-toast');
-					});
+					updateIntegrante(pacote);
 				}
 				if (i == 3) {
 					var pacote = ({
@@ -167,16 +116,7 @@
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno3,
 						integrantes_id: $scope.projeto4.idAluno3
 					});
-					projetosAPI.putIntegrante(pacote)
-					.success(function(data){
-						console.log(data);
-						$scope.alterado = true;
-						$scope.toast('Alteração feita com sucesso!','success-toast');
-					})
-					.error(function(status){
-						console.log('update error: '+status);
-						$scope.toast('Falha na alteração','failed-toast');
-					});
+					updateIntegrante(pacote);
 				}
 			}
 		};
@@ -190,7 +130,6 @@
 			angular.forEach(data.integrantes, function (value, key){
 				if (value.tipo === 'Orientador') {
 					$scope.orientadores.push(value);
-					// console.log(value._id);
 					x++;
 					var str0 = 'projeto3.idOrientador'+x;
 					var str1 = 'projeto3.nomeOrientador'+x;
@@ -253,8 +192,8 @@
 					model5.assign($scope, value.tamCamiseta);
 				}
 			});
-			console.log($scope.alunos);
-			console.log($scope.orientadores);
+			// console.log($scope.alunos);
+			// console.log($scope.orientadores);
 			for (var i = 0; i < $scope.orientadores.length; i++) {
 				addOrientadorUpdate();
 			}
@@ -263,15 +202,17 @@
 			}
 		});
 
-		projetosAPI.getEmails()
-		.success(function(data) {
-			angular.forEach(data, function (value) {
-				if (value.email !== undefined) {
-					$scope.emails1.push(value.email);
-				}
+		$scope.carregaEmails = function() {
+			projetosAPI.getEmails()
+			.success(function(data) {
+				angular.forEach(data, function (value) {
+					if (value.email !== undefined) {
+						$scope.emails1.push(value.email);
+					}
+				});
+				console.log($scope.emails1);
 			});
-			console.log($scope.emails1);
-		});
+		};
 
 		$scope.carregaIntegrantes = function() {
 			$scope.orientadores = [];
@@ -299,6 +240,9 @@
 			}
 		};
 
+		// Funções construtoras dos campos dinâmicos dos integrantes
+		// =========================================================================
+
 		$scope.dynamicFields11 = [];
 		$scope.dynamicFields22 = [];
 		$scope.btnAdd11 = true;
@@ -316,7 +260,6 @@
 			}
 		};
 		$scope.addOrientadorUpdate = addOrientadorUpdate;
-
 
 		let addAlunoUpdate = function() {
 			$scope.count22++;
@@ -343,7 +286,7 @@
 				$scope.btnAdd22 = true;
 			}
 		};
-
+		// =========================================================================
 
 		$scope.orientadoresArray1 = [];
 		$scope.alunosArray1 = [];

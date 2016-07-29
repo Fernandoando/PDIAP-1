@@ -20,6 +20,7 @@
 			});
 		};
 	});
+	// ==========================================================
 	function DialogController($scope, $mdDialog) {
 		$scope.hide = function() {
 			$mdDialog.hide();
@@ -30,5 +31,6 @@
 		$scope.answer = function(answer) {
 			$mdDialog.hide(answer);
 		};
-	}
+	};
+	// ===========================================================
 })();

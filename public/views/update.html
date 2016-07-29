@@ -365,7 +365,7 @@
               </md-radio-group>
               <div class="md-errors-spacer"></div>
             </div>
-            <!-- <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" flex-gt-sm>
+            <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" flex-gt-sm>
               <label>Quais?</label>
               <md-select name="hospedagem" data-ng-model="projeto5.hospedagem" multiple data-ng-focus="montarIntegrantes1(projeto3,projeto4)" required>
                 <md-optgroup label="Orientador(es)" data-ng-if="projeto3.nomeOrientador1 !== undefined">
@@ -381,38 +381,39 @@
                   <div class="message-error" data-ng-if="projetoForm5.hospedagem.$error.required">Selecione uma opção</div>
                 </div>
               </div>
-            </md-input-container> -->
-            <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" flex-gt-sm>
-              <label>Quais?</label>
-              <md-select name="hospedagem" data-ng-model="projeto5.hospedagem" multiple required>
-                <md-optgroup label="Orientador(es)" data-ng-if="projeto3.nomeOrientador1 !== undefined">
-                  <md-option ng-value="projeto3.nomeOrientador1">{{projeto3.nomeOrientador1}}</md-option>
-                  <md-option ng-value="projeto3.nomeOrientador2" data-ng-if="projeto3.nomeOrientador2 !== undefined">{{projeto3.nomeOrientador2}}</md-option>
-                </md-optgroup>
-                <md-optgroup label="Aluno(s)" data-ng-if="projeto4.nomeAluno1 !== undefined">
-                  <md-option ng-value="projeto4.nomeAluno1">{{projeto4.nomeAluno1}}</md-option>
-                  <md-option ng-value="projeto4.nomeAluno2" data-ng-if="projeto4.nomeAluno2 !== undefined">{{projeto4.nomeAluno2}}</md-option>
-                  <md-option ng-value="projeto4.nomeAluno3" data-ng-if="projeto4.nomeAluno3 !== undefined">{{projeto4.nomeAluno3}}</md-option>
-                </md-optgroup>
-                <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto4.nomeAluno1 === undefined && projeto3.nomeOrientador1 === undefined" disabled></md-optgroup>
-              </md-select>
-              <div class="md-errors-spacer">
-                <div data-ng-if="projetoForm5.hospedagem.$touched">
-                  <div class="message-error" data-ng-if="projetoForm5.hospedagem.$error.required">Selecione uma opção</div>
-                </div>
-              </div>
             </md-input-container>
-          </div>
-        </div>
-        <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-          <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm5.$valid" data-ng-click="update(projeto5)">
-            <md-icon md-svg-icon="check" class="icon-btn-default"></md-icon>
-            Salvar
-          </md-button>
-        </div>
-      </form>
-    </md-content>
-  </md-content>
+            <!-- <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" flex-gt-sm>
+            <label>Quais?</label>
+            <md-select name="hospedagem" data-ng-model="projeto5.hospedagem" multiple required>
+            <md-optgroup label="Orientador(es)" data-ng-if="projeto3.nomeOrientador1 !== undefined">
+            <md-option ng-value="projeto3.nomeOrientador1">{{projeto3.nomeOrientador1}}</md-option>
+            <md-option ng-value="projeto3.nomeOrientador2" data-ng-if="projeto3.nomeOrientador2 !== undefined">{{projeto3.nomeOrientador2}}</md-option>
+          </md-optgroup>
+          <md-optgroup label="Aluno(s)" data-ng-if="projeto4.nomeAluno1 !== undefined">
+          <md-option ng-value="projeto4.nomeAluno1">{{projeto4.nomeAluno1}}</md-option>
+          <md-option ng-value="projeto4.nomeAluno2" data-ng-if="projeto4.nomeAluno2 !== undefined">{{projeto4.nomeAluno2}}</md-option>
+          <md-option ng-value="projeto4.nomeAluno3" data-ng-if="projeto4.nomeAluno3 !== undefined">{{projeto4.nomeAluno3}}</md-option>
+        </md-optgroup>
+        <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto4.nomeAluno1 === undefined && projeto3.nomeOrientador1 === undefined" disabled></md-optgroup>
+      </md-select>
+      {{projeto5.hospedagem}}
+      <div class="md-errors-spacer">
+      <div data-ng-if="projetoForm5.hospedagem.$touched">
+      <div class="message-error" data-ng-if="projetoForm5.hospedagem.$error.required">Selecione uma opção</div>
+    </div>
+  </div>
+</md-input-container> -->
+</div>
+</div>
+<div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+  <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm5.$valid" data-ng-click="update(projeto5)">
+    <md-icon md-svg-icon="check" class="icon-btn-default"></md-icon>
+    Salvar
+  </md-button>
+</div>
+</form>
+</md-content>
+</md-content>
 </md-tab>
 </md-tabs>
 </md-content>

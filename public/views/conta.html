@@ -3,15 +3,9 @@
     <form name="contaForm" novalidate style="width:85%;max-width:850px;padding:8px;">
       <div layout="row">
         <div class="bloco-right" flex>
-          <div layout="row" layout-align="end center" class="senha" flex="100">
-          <md-button class="md-raised btn-2" data-ng-click="" style="margin:2px;">
-            <md-icon md-svg-icon="lock-outline" class="icon-btn-default grey-text darken-1"></md-icon>
-            Redefinir a senha
-          </md-button>
-        </div>
           <md-input-container class="md-block" data-ng-init="editingE=false" flex-gt-sm>
             <label>E-mail da conta</label>
-            <input type="email" name="email" data-ng-model="projeto.email" data-ng-change="verificaEmail1(projeto.email)" data-ng-class="{'input-disabled': !editingE}" data-ng-focus="editingE=true" data-ng-blur="editingE=false" required data-ng-pattern="/^.+@.+\..+$/" />
+            <input type="email" name="email" data-ng-model="projeto.email" data-ng-change="verificaEmail1(projeto.email)" data-ng-class="{'input-disabled': !editingE}" data-ng-focus="editingE=true;carregaEmails()" data-ng-blur="editingE=false" required data-ng-pattern="/^.+@.+\..+$/" />
             <div class="md-errors-spacer">
               <div data-ng-if="contaForm.email.$dirty">
                 <div class="message-error" data-ng-if="contaForm.email.$error.required">Preencha esse campo.</div>
@@ -20,6 +14,12 @@
               </div>
             </div>
           </md-input-container>
+          <div layout="row" layout-align="center center" class="senha" flex="100">
+            <md-button class="md-raised btn-outline grey-text darken-1" data-ng-click="" style="width:100%;">
+              <md-icon md-svg-icon="lock-outline" class="icon-btn-default grey-text darken-1"></md-icon>
+              Redefinir a senha
+            </md-button>
+          </div>
         </div>
       </div>
       <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">

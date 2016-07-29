@@ -26,16 +26,15 @@
 						ctrl.$render();
 					});
 
-					ctrl.$parsers.push(function(value) {
-						if (value.length === 14) {
-							var cpfArray = value.split(/[.\/-]/);
-							var model = cpfArray[0]+cpfArray[1]+cpfArray[2]+cpfArray[3];
-							return model;
-						} else {
-							return value;
-						}
-					});
-
+					// ctrl.$parsers.push(function(value) {
+					// 	if (value.length === 14) {
+					// 		var cpfArray = value.split(/[.\/-]/);
+					// 		var model = cpfArray[0]+cpfArray[1]+cpfArray[2]+cpfArray[3];
+					// 		return model;
+					// 	} else {
+					// 		return value;
+					// 	}
+					// });
 				}
 			};
 		});

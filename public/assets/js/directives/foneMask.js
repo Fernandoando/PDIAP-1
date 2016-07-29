@@ -29,15 +29,15 @@
 						ctrl.$render();
 					});
 
-					ctrl.$parsers.push(function(value) {
-						if (value.length === 14) {
-							var foneArray = value.split(/[^0-9]/);
-							var model = foneArray[1]+foneArray[3]+foneArray[4];
-							return model;
-						} else {
-							return value;
-						}
-					});
+					// ctrl.$parsers.push(function(value) {
+					// 	if (value.length === 14) {
+					// 		var foneArray = value.split(/[^0-9]/);
+					// 		var model = foneArray[1]+foneArray[3]+foneArray[4];
+					// 		return model;
+					// 	} else {
+					// 		return value;
+					// 	}
+					// });
 				}
 			};
 		});

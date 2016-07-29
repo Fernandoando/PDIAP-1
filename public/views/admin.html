@@ -2,18 +2,21 @@
 
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" role="sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
     <!-- toolbar da sidenav -->
-    <md-toolbar class="md-tall md-hue-2" layout-align="end end" style="background:#43a047;">
-      <div class="md-toolbar-tools" layout style="padding:8px;">
+    <md-toolbar class="md-tall md-hue-2" layout-align="center center" style="background:#43a047;">
+      <div layout="column" layout-align="center center" style="width:100%;">
+        <div style="width:65px;height:65px;border-radius:50%;background:white;text-align:center">
+          <span style="color:#424242;font-size:22px;line-height:65px;">A</span>
+        </div>
+        <span class="md-body-2" style="padding-top:10px;">Inscrição: {{projeto.numInscricao}}</span>
+      </div>
+      <!-- <div class="md-toolbar-tools" layout style="padding:8px;">
         <md-icon md-svg-src="rocket" style="margin: 0 8px;"></md-icon>
         <div layout="column">
-          <span class="md-body-2">{{projeto1.nomeProjeto | limitTo:20}}...</span>
+          <span class="md-body-2">{{nomeDoProjeto | limitTo:20}}...</span>
           <span class="md-caption">Inscrição: {{projeto.numInscricao}}</span>
         </div>
         <span flex></span>
-        <!-- <md-button class="md-icon-button" aria-label="User Settings" ng-click="toast('Logout')">
-        <md-icon md-svg-src="rocket"></md-icon>
-      </md-button> -->
-    </div>
+    </div> -->
   </md-toolbar>
   <!-- menu da sidenav -->
   <md-content role="navigation">
@@ -36,7 +39,7 @@
 
 <!-- conteúdo da página -->
 <section layout="column" role="main" flex>
-  <md-toolbar role="toolbar" style="background:#424242;">
+  <md-toolbar role="toolbar" class="toolbar-admin">
     <div class="md-toolbar-tools">
       <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-sm aria-label="Menu">
         <md-icon md-svg-src="menu"></md-icon>
@@ -76,8 +79,8 @@
   </md-toolbar>
 
   <!-- conteúdo dinâmico -->
-  <section id="content" role="content" layout="column" layout-padding style="overflow:auto!important;background:#fdfdfd;">
-    <div ui-view></div>
+  <section id="content" role="content" layout="column" layout-padding style="overflow:auto!important;background:#fdfdfd;min-height:100%;">
+    <div ui-view style="background:#fdfdfd;"></div>
   </section>
 </section>
 </div>

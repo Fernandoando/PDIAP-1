@@ -10,7 +10,7 @@
         $timeout(function(){
           angular.element(element[0].querySelector("input.md-input")).bind("blur", function(){
             $timeout(function() {
-               scope.$eval(attributes.mdBlur);
+              scope.$eval(attributes.mdBlur);
             }, 100);
           });
         },0);
@@ -26,7 +26,7 @@
         $timeout(function(){
           angular.element(element[0].querySelector("input.md-input")).bind("focus", function(){
             $timeout(function() {
-               scope.$eval(attributes.mdFocus);
+              scope.$eval(attributes.mdFocus);
             }, 100);
           });
         },0);

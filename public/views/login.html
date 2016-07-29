@@ -1,18 +1,17 @@
 <md-dialog aria-label="ae krl" data-ng-controller="loginCtrl" class="login-content" ng-cloak>
 
-<div class="md-padding" layout="column" layout-align="center center">
-  <h1>Login</h1>
-  <!-- <md-content style="padding:30px;"> -->
-  <md-card class="white-text" style="text-align:center;" data-ng-if="erro  && !logado && !loading">
-    <md-card-title-media style="padding:0 16px 16px 16px;">
-      <md-card-title-text>{{message}}</md-card-title-text>
-    </md-card-title-media>
-  </md-card>
+  <div class="md-padding" layout="column" layout-align="center center">
+    <h1>Login</h1>
+    <!-- <md-content style="padding:30px;"> -->
+    <md-card class="white-text" style="text-align:center;" data-ng-if="erro  && !logado && !loading">
+      <md-card-title-media style="padding:0 16px 16px 16px;">
+        <md-card-title-text>{{message}}</md-card-title-text>
+      </md-card-title-media>
+    </md-card>
     <form name="userLogin" novalidate style="width:85%!important;">
-
       <md-input-container class="md-block" flex-gt-sm>
         <label>E-mail</label>
-        <input type="email" name="email" data-ng-model="user.email" required data-ng-pattern="/^.+@.+\..+$/" />
+        <input type="email" name="email" data-ng-model="user.email" data-ng-pattern="/^.+@.+\..+$/" autofocus required />
       </md-input-container>
       <md-input-container class="md-block" flex-gt-sm>
         <label>Senha</label>
@@ -31,8 +30,7 @@
           <span data-ng-show="!loading">Entrar</span>
         </md-button>
       </div>
-
     </form>
-  <!-- </md-content> -->
-</div>
+    <!-- </md-content> -->
+  </div>
 </md-dialog>
