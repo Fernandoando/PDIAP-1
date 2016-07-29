@@ -12,34 +12,6 @@ const express = require('express')
 , nodemailer = require('nodemailer')
 , smtpTransport = require('nodemailer-smtp-transport');
 
-function email(para, titulo, texto, html){
-  const transporter = nodemailer.createTransport(smtpTransport({
-    host: 'smtp.zoho.com',
-    port: 587,
-    auth: {
-        user: 'contato@movaci.com.br',
-        pass: 'mya collins nossa gata'
-      }
-  }));
-
-  let mensagem = {
-    from: 'contato@movaci.com.br',
-    to: para,
-    subject: titulo,
-    text: texto,
-    html: html
-  };
-
-  transporter.sendMail(mensagem, (err, next) => {
-   if (err) {
-        console.log(err);
-   } else {
-        console.log('Message sent');
-        return next();
-   }
-  });
-}
-
 function testaEmail(req, res) {
   ProjetoSchema.find('email','email -_id', (error, emails) => {
     if(error) {
@@ -48,16 +20,6 @@ function testaEmail(req, res) {
       return res.status(200).send(emails);
   });
 }
-
-function testaEscola(req, res) {
-  ProjetoSchema.find('nomeEscola','nomeEscola -_id', (error, escolas) => {
-    if(error) {
-      return res.status(400).send({msg:"error occurred"});
-    } else
-      return res.json(200, {escolas});
-  });
-}
-
 
 function testaEmailEEscola(req, res) {
     ProjetoSchema.find('email nomeEscola','email nomeEscola -_id', (error, escolas) => {
@@ -106,8 +68,6 @@ router.get('/', (req, res, next) => {
 
 router.get('/registro', testaEmailEEscola, (req, res) => {});
 
-router.get('/registro2', testaEscola, (req, res) => {});
-
 router.get('/login', (req, res) => {
 	res.send('página de login');
 });
@@ -116,13 +76,11 @@ router.post('/registro', testaEmail2, (req, res) => {
   let  email = req.body.email
   ,   password = req.body.password
   ,   password2 = req.body.password2
-
-  	// Validações
-  	req.checkBody('email', 'Email is required').notEmpty();
-  	req.checkBody('email', 'Email is not valid').isEmail();
-  	req.checkBody('password', 'Password is required').notEmpty();
-  	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-
+  	
+  req.checkBody('email', 'Email is required').notEmpty();
+  req.checkBody('email', 'Email is not valid').isEmail();
+  req.checkBody('password', 'Password is required').notEmpty();
+  req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 	let errors = req.validationErrors();
 
 	if(errors){
@@ -290,7 +248,14 @@ router.get('/update', (req, res) => {
 });
 
 router.put('/update', ensureAuthenticated, (req, res) => {
-  let newProject = ({
+
+
+  if (req.body.cep !== undefined){
+    req.body.cep = splita(req.body.cep);
+  }
+  let newProject = req.body;
+  console.log(newProject);
+  /*let newProject = ({
     nomeProjeto: req.body.nomeProjeto,
     categoria: req.body.categoria,
     eixo: req.body.eixo,
@@ -300,7 +265,7 @@ router.put('/update', ensureAuthenticated, (req, res) => {
     estado: req.body.estado,
     hospedagem: req.body.hospedagem,
     resumo: req.body.resumo
-  });
+  });*/
 
   ProjetoSchema.update({_id:req.user.id}, {$set:newProject}, {new: true}, (err,docs) => {
     if(err) {
@@ -400,17 +365,17 @@ router.post('/redefinir-senha', (req, res) => {
       html: html
     };
 
-    ProjetoSchema.findOneAndUpdate({email: email}, {$set:{resetPasswordToken:token, resetPasswordCreatedDate:Date.now() + 3600000}}, {new: true}, function(err, doc){
+    ProjetoSchema.findOneAndUpdate({email: email}, {$set:{resetPasswordToken:token, resetPasswordCreatedDate:Date.now() + 3600000}}, {upsert:true, new: true}, function(err, doc){
       if(err){
           console.log("Something wrong when updating data!");
       } else{
         //FALTA ENVIAR O EMAIL COM O LINK PRA TROCAR A SENHA
-        res.status(200).send("url: http://localhost:3000/projetos/nova-senha/"+email+"/"+token);
+        res.status(200).send("url: http://localhost/projetos/nova-senha/"+email+"/"+token);
         console.log(doc);
-            transporter.sendMail(mensagem, (err) => {
-     if (err) throw err;
-     console.log("enviou a msg");
-    })
+    /*transporter.sendMail(mensagem, (err) => {
+    if (err) throw err;
+    console.log("enviou a msg");
+    })*/
       }
     });
   });
