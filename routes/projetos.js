@@ -77,6 +77,12 @@ router.get('/login', (req, res) => {
 	res.send('página de login');
 });
 
+  function splita(arg){
+    if (arg !== undefined) {
+      let data = arg.replace(/([-.])/g,'');
+      return data;
+    }
+  }
 
 router.post('/registro', testaEmail2, (req, res) => {
   let  email = req.body.email
@@ -95,13 +101,6 @@ router.post('/registro', testaEmail2, (req, res) => {
 		//res.status(501).send('error');
     console.log("Errors: "+errors);
 	} else {
-
-  function splita(arg){
-    if (arg !== undefined) {
-      let data = arg.replace(/([-.])/g,'');
-      return data;
-    }
-  }
 
     let newIntegrante = ({
       tipo: "Orientador",
@@ -236,9 +235,19 @@ router.get('/update', (req, res) => {
 });
 
 router.put('/update', ensureAuthenticated, (req, res) => {
-  let id = req.user.id
-  ,   newProject = req.body;
-  ProjetoSchema.update({_id:id}, {$set:newProject}, {new: true}, (err,docs) => {
+  let newProject = ({
+    nomeProjeto: req.body.nomeProjeto,
+    categoria: req.body.categoria,
+    eixo: req.body.eixo,
+    nomeEscola: req.body.nomeEscola,
+    cep: splita(req.body.cep),
+    cidade: req.body.cidade,
+    estado: req.body.estado,
+    hospedagem: req.body.hospedagem,
+    resumo: req.body.resumo
+  });
+
+  ProjetoSchema.update({_id:req.user.id}, {$set:newProject}, {new: true}, (err,docs) => {
     if(err) {
       console.log("Deu erro");
     } else {
@@ -257,8 +266,8 @@ let id = req.user.id;
     tipo: req.body.tipo,
     nome: req.body.nome,
     email: req.body.email,
-    cpf: req.body.cpf,
-    telefone: req.body.telefone,
+    cpf: splita(req.body.cpf),
+    telefone: splita(req.body.telefone),
     tamCamiseta: req.body.tamCamiseta,
     _id: id2
   });
@@ -278,8 +287,8 @@ let newIntegrante = ({
     tipo: req.body.tipo,
     nome: req.body.nome,
     email: req.body.email,
-    cpf: req.body.cpf,
-    telefone: req.body.telefone,
+    cpf: splita(req.body.cpf),
+    telefone: splita(req.body.telefone),
     tamCamiseta: req.body.tamCamiseta
   });
 
