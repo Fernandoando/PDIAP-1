@@ -95,7 +95,7 @@ function ensureAuthenticated(req, res, next) {
 
 function splita(arg){
   if (arg !== undefined) {
-    let data = arg.replace(/([-.])/g,'');
+    let data = arg.replace(/([-.()])/g,'');
     return data;
   }
 }
@@ -399,8 +399,6 @@ router.post('/redefinir-senha', (req, res) => {
       text: texto,
       html: html
     };
-
-;
 
     ProjetoSchema.findOneAndUpdate({email: email}, {$set:{resetPasswordToken:token, resetPasswordCreatedDate:Date.now() + 3600000}}, {new: true}, function(err, doc){
       if(err){
