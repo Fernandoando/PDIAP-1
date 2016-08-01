@@ -166,10 +166,11 @@ router.post('/registro', testaUsername2, (req, res) => {
       cidade: req.body.cidade,
       estado: req.body.estado,
       hospedagem: req.body.hospedagem,
-      resumo: req.body.resumo,
       email: req.body.email,
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      createdAt: Date.now(),
+      resumo: req.body.resumo,
 		});
 
     newProject.integrantes.push(newIntegrante);
@@ -291,20 +292,19 @@ router.put('/update', ensureAuthenticated, (req, res) => {
     resumo: req.body.resumo
   });*/
 
-  ProjetoSchema.update({_id:req.user.id}, {$set:newProject}, {new: true}, (err,docs) => {
-    if(err) {
-      console.log("Deu erro");
-    } else {
-      console.log("Projeto modificado", docs);
-      res.status(200).send(newProject);
-    }
+  ProjetoSchema.update({_id:req.user.id}, {$set:newProject, updatedAt: Date.now()}, {upsert:true,new: true}, (err,docs) => {
+    if (err) throw err;
+    res.status(200).json(docs);
   });
+
 });
 
 router.put('/updateIntegrante', ensureAuthenticated, (req, res) => {
 
 let id2 = req.body.integrantes_id;
 let id = req.user.id;
+
+console.log(id2+"     "+id);
 
   let newIntegrante = ({
     tipo: req.body.tipo,
@@ -317,7 +317,7 @@ let id = req.user.id;
   });
 
   ProjetoSchema.findOneAndUpdate({"_id": id,"integrantes._id": id2},
-    {"$set": {"integrantes.$": newIntegrante}}, {new:true},
+    {"$set": {"integrantes.$": newIntegrante, updatedAt: Date.now()}}, {new:true},
     (err,doc) => {
       if (err) throw err;
       res.send(doc);
@@ -341,9 +341,15 @@ let newIntegrante = ({
       usr.integrantes.push(newIntegrante);
       usr.save((err, usr) => {
         if (err) throw err;
-        res.status(200).send('Add');
       });
     });
+
+
+    ProjetoSchema.update({_id:req.user.id}, {$set: {updatedAt: Date.now()}}, {upsert:true,new: true}, (err,docs) => {
+      if (err) throw err;
+      res.status(200).json(docs);
+    });
+
 });
 
 router.put('/removerIntegrante', ensureAuthenticated, (req, res) => {
@@ -354,9 +360,17 @@ router.put('/removerIntegrante', ensureAuthenticated, (req, res) => {
     usr.integrantes.id(id).remove()
     usr.save((err, usr) => {
     if (err) throw err;
-      res.status(200).send('Removido');
     });
   });
+
+
+    ProjetoSchema.update({_id:req.user.id}, {$set: {updatedAt: Date.now()}}, {upsert:true,new: true}, (err,docs) => {
+      if (err) throw err;
+      res.status(200).json(docs);
+    });
+
+
+
 });
 
 router.post('/redefinir-senha', (req, res) => {
