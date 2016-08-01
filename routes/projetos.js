@@ -76,7 +76,7 @@ function ensureAuthenticated(req, res, next) {
     return next();
   else{
     res.send('0');
-    res.redirect('/#/login');
+    res.redirect('/#/');
   }
 }
 
@@ -101,7 +101,7 @@ router.post('/registro', testaUsername2, (req, res) => {
   let  username = req.body.username
   ,   password = req.body.password
   ,   password2 = req.body.password2
-  	
+
   req.checkBody('username', 'Username is required').notEmpty();
   req.checkBody('password', 'Password is required').notEmpty();
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
@@ -396,7 +396,7 @@ router.post('/redefinir-senha', (req, res) => {
         port: 587,
         auth: {
             user: 'contato@movaci.com.br',
-            pass: 'mya collins nossa gata' 
+            pass: 'mya collins nossa gata'
           }
         }));
 
