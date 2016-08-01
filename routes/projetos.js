@@ -265,7 +265,7 @@ router.post('/logout', (req, res) => {
   req.logout();
   res.send(200);
   //res.clearCookie('userid');
-  res.redirect('/#/login');
+  res.redirect('/#/');
 });
 
 router.get('/update', (req, res) => {
