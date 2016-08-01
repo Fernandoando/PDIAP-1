@@ -46,6 +46,31 @@ function testaEmail2(req, res, next) {
     });
 }
 
+function testaUsernameEEscola(req, res) {
+    ProjetoSchema.find('username nomeEscola','username nomeEscola -_id', (error, escolas) => {
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    } else
+      return res.status(200).send(escolas);
+  });
+}
+
+function testaUsername2(req, res, next) {
+  let query2 = req.body.email
+  ,   query = new RegExp(["^", query2, "$"].join(""), "i");
+
+  ProjetoSchema.find({'username':query},'username -_id', (error, usernames) => {
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    } else if(usernames != 0) {
+      res.status(202).send("Username já cadastrado");
+    } else {
+      res.status(200).send("show");
+      return next();
+    }
+    });
+}
+
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated())
     return next();
@@ -66,19 +91,18 @@ router.get('/', (req, res, next) => {
   res.send('Projetos po');
 });
 
-router.get('/registro', testaEmailEEscola, (req, res) => {});
+router.get('/registro', testaUsernameEEscola, (req, res) => {});
 
 router.get('/login', (req, res) => {
 	res.send('página de login');
 });
 
-router.post('/registro', testaEmail2, (req, res) => {
-  let  email = req.body.email
+router.post('/registro', testaUsername2, (req, res) => {
+  let  username = req.body.username
   ,   password = req.body.password
   ,   password2 = req.body.password2
   	
-  req.checkBody('email', 'Email is required').notEmpty();
-  req.checkBody('email', 'Email is not valid').isEmail();
+  req.checkBody('username', 'Username is required').notEmpty();
   req.checkBody('password', 'Password is required').notEmpty();
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 	let errors = req.validationErrors();
@@ -144,6 +168,7 @@ router.post('/registro', testaEmail2, (req, res) => {
       hospedagem: req.body.hospedagem,
       resumo: req.body.resumo,
       email: req.body.email,
+      username: req.body.username,
       password: req.body.password
 		});
 
@@ -187,10 +212,10 @@ router.post('/registro', testaEmail2, (req, res) => {
       html: html
     };
 
-    transporter.sendMail(mensagem, (err) => {
+    /*transporter.sendMail(mensagem, (err) => {
      if (err) throw err;
      console.log("enviou a msg");
-    });
+    });*/
 
 		res.redirect('/projetos/login');
 	}
@@ -198,9 +223,8 @@ router.post('/registro', testaEmail2, (req, res) => {
 });
 
 // Setando a estatégia do Passport
-passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'},
-	(username, password, done) => {
-	Projeto.getProjectByEmail(username, (err, user) => {
+passport.use(new LocalStrategy((username, password, done) => {
+	Projeto.getProjectByUsername(username, (err, user) => {
 	  	if(err) throw err;
 	   	if(!user){
 	   		return done(null, false, {message: 'Unknown User'});
@@ -336,41 +360,41 @@ router.put('/removerIntegrante', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/redefinir-senha', (req, res) => {
-  let email = req.body.email;
+  let username = req.body.username;
   crypto.randomBytes(20, (err, buf) => {
     let token = buf.toString('hex');
     console.log(token);
 
-
-    let url = "url: http://localhost/projetos/nova-senha/"+email+"/"+token;
-
-    let titulo = "MOVACI 2016 - Redefinição de senha"
-    ,   texto = "E aí pessoal do projeto" +req.body.nomeProjeto+ ", tudo certo? Inscrição confirmada!"
-    ,   html = "<h1>"+url+"</h1>";
-
-    const transporter = nodemailer.createTransport(smtpTransport({
-    host: 'smtp.zoho.com',
-    port: 587,
-    auth: {
-        user: 'contato@movaci.com.br',
-        pass: '' 
-      }
-    }));
-
-    let mensagem = {
-      from: 'contato@movaci.com.br',
-      to: email,
-      subject: titulo,
-      text: texto,
-      html: html
-    };
-
-    ProjetoSchema.findOneAndUpdate({email: email}, {$set:{resetPasswordToken:token, resetPasswordCreatedDate:Date.now() + 3600000}}, {upsert:true, new: true}, function(err, doc){
+    ProjetoSchema.findOneAndUpdate({username: username}, {$set:{resetPasswordToken:token, resetPasswordCreatedDate:Date.now() + 3600000}}, {upsert:true, new: true}, function(err, doc){
       if(err){
-          console.log("Something wrong when updating data!");
+        console.log("Something wrong when updating data!");
       } else{
+        let email = doc.email;
+        let nome_projeto = doc.nomeProjeto;
+        let url = "url: http://localhost/projetos/nova-senha/"+username+"/"+token;
+
+        let titulo = "MOVACI 2016 - Redefinição de senha"
+        ,   texto = " "
+        ,   html = "<h1>Blablab "+nome_projeto+" labalabla  "+url+"</h1>";
+
+        const transporter = nodemailer.createTransport(smtpTransport({
+        host: 'smtp.zoho.com',
+        port: 587,
+        auth: {
+            user: 'contato@movaci.com.br',
+            pass: 'mya collins nossa gata' 
+          }
+        }));
+
+        let mensagem = {
+          from: 'contato@movaci.com.br',
+          to: email,
+          subject: titulo,
+          text: texto,
+          html: html
+        };
         //FALTA ENVIAR O EMAIL COM O LINK PRA TROCAR A SENHA
-        res.status(200).send("url: http://localhost/projetos/nova-senha/"+email+"/"+token);
+        res.status(200).send("url: http://localhost/projetos/nova-senha/"+username+"/"+token);
         console.log(doc);
     /*transporter.sendMail(mensagem, (err) => {
     if (err) throw err;
@@ -381,12 +405,12 @@ router.post('/redefinir-senha', (req, res) => {
   });
 });
 
-router.post('/nova-senha/:email/:token', (req, res) => {
+router.post('/nova-senha/:username/:token', (req, res) => {
   if(req.params.token === '') {
     res.status(400).send("erro");
     //console.log('err');
   } else {
-    ProjetoSchema.findOne({email: (req.params.email)}, (err, usr) => {
+    ProjetoSchema.findOne({username: (req.params.username)}, (err, usr) => {
       if(err || !usr) {
         res.status(400).send("erro2");
       } else if(usr.resetPasswordToken == req.params.token && !usr.hasExpired()) {

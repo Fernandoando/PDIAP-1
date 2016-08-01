@@ -68,8 +68,11 @@ const ProjetoSchema = new Schema({
 		type: String
 	},
 
+	username: {
+		type: String, required: true, unique: true, uniqueCaseInsensitive:true
+	},
 	email: {
-		type: String, required: true, unique: true, uniqueCaseInsensitive: true
+		type: String, required: true
 	},
 	password: {
 		type: String, required: true

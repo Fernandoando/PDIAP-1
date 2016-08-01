@@ -31,6 +31,11 @@ module.exports.getProjectByEmail = (username, callback) => {
 	Projeto.findOne(query, callback);
 }
 
+module.exports.getProjectByUsername = (username, callback) => {
+	let query = {username: username};
+	Projeto.findOne(query, callback);
+}
+
 module.exports.getProjects = (req, res) => {
   const query = getQuery(req);
   Projeto.find(query, (err, data) => callback(err, data, res));
