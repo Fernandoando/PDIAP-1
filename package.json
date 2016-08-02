@@ -1,6 +1,6 @@
 {
-  "name": "primeiro-beta",
-  "version": "0.0.0",
+  "name": "beta-porcao",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "start": "nodemon -L bin/www"
