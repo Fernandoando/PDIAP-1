@@ -17,7 +17,7 @@
 				} else { // Not Authenticated
 					$rootScope.logado = false;
 					deferred.reject();
-					$location.url('/login');
+					$location.url('/');
 				}
 			});
 			return deferred.promise;
@@ -76,6 +76,11 @@
 			url: "/update-conta",
 			templateUrl: "/views/conta.html",
 			controller: "updateCtrl"
+		})
+		.state('nova-senha', {
+			url: "/nova-senha",
+			templateUrl: "/views/nova-senha.html",
+			controller: "homeCtrl"
 		});
 	});
 })();

@@ -1,5 +1,5 @@
 /* IMPORT FONTS */
-@import url(https://fonts.googleapis.com/css?family=Great+Vibes);
+/*@import url(https://fonts.googleapis.com/css?family=Great+Vibes);*/
 @font-face {
   font-family: 'Baron';
   src: local('Baron Neue'), url(/Baron_Neue.otf) format('opentype');
@@ -125,6 +125,9 @@ md-autocomplete input:not(.md-input) {
 md-select[multiple] .md-container {
   display: inline-block !important;
 }
+.md-button {
+  font-weight: normal !important;
+}
 .md-button[disabled],
 .md-button[disabled] md-icon,
 .md-button.md-raised[disabled],
@@ -227,9 +230,7 @@ md-input-container.md-prompt-input-container:not(.md-input-invalid).md-input-foc
   border-color: #2e7d32 !important;
 }
 md-input-container.md-prompt-input-container.md-default-theme .md-input,
-md-input-container.md-prompt-input-container .md-input {
-  color: #fff !important;
-}
+md-input-container.md-prompt-input-container .md-input,
 .login-content md-input-container.md-default-theme .md-input,
 .login-content md-input-container .md-input {
   color: #1b5e20 !important;
@@ -465,6 +466,11 @@ md-grid-tile {
   height: 20px;
   padding-bottom: 3px !important;
 }
+.icon-integrantes {
+  width: 19px;
+  height: 19px;
+  vertical-align: bottom;
+}
 md-tabs-wrapper {
   border: none !important;
 }
@@ -512,6 +518,11 @@ md-select.input-disabled md-select-value {
 .md-subheader.md-default-theme,
 .md-subheader {
   background: transparent !important;
+  text-transform: uppercase;
+}
+.submenu {
+  font-size: 15px !important;
+  font-weight: 100;
 }
 .md-button.hide-hover:not([disabled]):hover,
 .md-button.md-failed-toast-theme:not([disabled]):hover,

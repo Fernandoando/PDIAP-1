@@ -11,7 +11,22 @@
 				templateUrl: '/views/login.html',
 				parent: angular.element(document.body),
 				targetEvent: ev,
-				clickOutsideToClose:true
+				clickOutsideToClose: true
+			})
+			.then(function(answer) {
+				console.log(answer);
+			}, function() {
+				console.log('fechou');
+			});
+		};
+
+		$scope.showNewPasswordDialog = function(ev) {
+			$mdDialog.show({
+				// controller: () => this,
+				templateUrl: '/views/nova-senha-dialog.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose: false
 			})
 			.then(function(answer) {
 				console.log(answer);

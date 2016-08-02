@@ -28,8 +28,6 @@
 				$scope.toast('Alteração feita com sucesso!','success-toast');
 				// maskCEP();
 				// $scope.carregarProjeto();
-				// ver com ricardo se quando atualiza volta o projeto p body
-				// and dizer p não excluir os campos que não existem quando atualiza
 			})
 			.error(function(status){
 				console.log('update error: '+status);
@@ -49,7 +47,7 @@
 				$scope.toast('Falha na alteração','failed-toast');
 			});
 		};
-
+		$scope.orientadoresUpdate = [];
 		$scope.updateOrientadores = function() {
 			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
 			for (var i = 1; i <= $scope.dynamicFields11.length; i++) {
@@ -63,7 +61,8 @@
 						tamCamiseta: $scope.projeto3.tamCamisetaOrientador1,
 						integrantes_id: $scope.projeto3.idOrientador1
 					});
-					updateIntegrante(pacote);
+					$scope.orientadoresUpdate.push(pacote);
+					// updateIntegrante(pacote);
 				}
 				if (i == 2) {
 					var pacote = ({
@@ -75,11 +74,12 @@
 						tamCamiseta: $scope.projeto3.tamCamisetaOrientador2,
 						integrantes_id: $scope.projeto3.idOrientador2
 					});
-					updateIntegrante(pacote);
+					$scope.orientadoresUpdate.push(pacote);
+					// updateIntegrante(pacote);
 				}
 			}
 		};
-
+		$scope.alunosUpdate = [];
 		$scope.updateAlunos = function() {
 			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
 			console.log($scope.dynamicFields22.length);
@@ -92,9 +92,10 @@
 						cpf: $scope.projeto4.cpfAluno1,
 						telefone: $scope.projeto4.telefoneAluno1,
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno1,
-						integrantes_id: $scope.projeto4.idAluno1
+						_id: $scope.projeto4.idAluno1
 					});
-					updateIntegrante(pacote);
+					$scope.alunosUpdate.push(pacote);
+					// updateIntegrante(pacote);
 				}
 				if (i == 2) {
 					var pacote = ({
@@ -104,9 +105,10 @@
 						cpf: $scope.projeto4.cpfAluno2,
 						telefone: $scope.projeto4.telefoneAluno2,
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno2,
-						integrantes_id: $scope.projeto4.idAluno2
+						_id: $scope.projeto4.idAluno2
 					});
-					updateIntegrante(pacote);
+					$scope.alunosUpdate.push(pacote);
+					// updateIntegrante(pacote);
 				}
 				if (i == 3) {
 					var pacote = ({
@@ -116,11 +118,34 @@
 						cpf: $scope.projeto4.cpfAluno3,
 						telefone: $scope.projeto4.telefoneAluno3,
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno3,
-						integrantes_id: $scope.projeto4.idAluno3
+						_id: $scope.projeto4.idAluno3
 					});
-					updateIntegrante(pacote);
+					$scope.alunosUpdate.push(pacote);
+					// updateIntegrante(pacote);
 				}
 			}
+			for (var i in $scope.projeto5.hospedagem) {
+				angular.forEach($scope.orientadores, function (value, key){
+					if ($scope.projeto5.hospedagem[i] === value.nome) {
+						$scope.projeto5.hospedagem.splice(i, 1);
+					}
+				});
+			}
+			var dados = JSON.stringify({ integrantes: $scope.alunosUpdate});
+			console.log(dados);
+			projetosAPI.putProjeto(dados)
+			.success(function(projeto){
+				console.log(projeto);
+				$scope.alterado = true;
+				$scope.toast('Alteração feita com sucesso!','success-toast');
+				// maskCEP();
+				// $scope.carregarProjeto();
+			})
+			.error(function(status){
+				console.log('update error: '+status);
+				$scope.toast('Falha na alteração','failed-toast');
+			});
+			console.log($scope.alunosUpdate);
 		};
 
 		projetosAPI.getProjeto()

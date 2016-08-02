@@ -8,10 +8,10 @@
 		$scope.registro = false;
 		$scope.msg = 'msg';
 		$scope.loginHabilitado = false;
-		$scope.emailDuplicado = false;
+		$scope.usernameDuplicado = false;
 		$scope.eixos = [];
 		$scope.cidades = [];
-		$scope.emails = [];
+		$scope.usernames = [];
 		$scope.escolas = [];
 
 		$scope.registrar = function(projeto) {
@@ -20,9 +20,9 @@
 			.success(function(projeto, status) {
 				console.log(projeto);
 				if (status === 202) {
-					$scope.emailDuplicado = true;
-					$scope.projetoForm.email.$setValidity('duplicado',false);
-					console.log('email duplicado: '+$scope.emailDuplicado);
+					$scope.usernameDuplicado = true;
+					$scope.projetoForm.username.$setValidity('duplicado',false);
+					console.log('user duplicado: '+$scope.usernameDuplicado);
 				} else if (projeto !== 'error') {
 					$scope.registro = true;
 					$scope.msg = 'Registrado com sucesso!';
@@ -140,27 +140,36 @@
 			console.log($scope.dynamicFields2.length);
 		};
 
-		projetosAPI.getEmails()
+		projetosAPI.getUsersEscolas()
 		.success(function(data) {
 			angular.forEach(data, function (value) {
-				if (value.email !== undefined) {
-					$scope.emails.push(value.email);
+				if (value.username !== undefined) {
+					$scope.usernames.push(value.username);
 				}
 				if (value.nomeEscola !== undefined) {
-					$scope.escolas.push(value.nomeEscola);
+					let escolaIdem = false;
+					for (var i in $scope.escolas) {
+						if (value.nomeEscola === $scope.escolas[i]) {
+							escolaIdem = true;
+							break;
+						}
+					}
+					if (escolaIdem === false) {
+						$scope.escolas.push(value.nomeEscola);
+					}
 				}
 			});
-			console.log($scope.emails);
+			console.log($scope.usernames);
 			console.log($scope.escolas);
 		});
 
-		$scope.verificaEmail = function(email) {
-			for (var i in $scope.emails) {
-				if ($scope.emails[i] == email) {
-					$scope.projetoForm.email.$setValidity('duplicado',false);
+		$scope.verificaUsername = function(username) {
+			for (var i in $scope.usernames) {
+				if ($scope.usernames[i] == username) {
+					$scope.projetoForm.username.$setValidity('duplicado',false);
 					break; // importante parar caso email seja igual, senão não funciona
 				} else {
-					$scope.projetoForm.email.$setValidity('duplicado',true);
+					$scope.projetoForm.username.$setValidity('duplicado',true);
 				}
 			}
 		};
@@ -234,6 +243,7 @@
 		let resetForm = function() {
 			delete $scope.projeto;
 			$scope.projetoForm.$setPristine();
+			$scope.hospedagemVerify = '';
 			$scope.btnAdd1 = true;
 			$scope.btnAdd2 = true;
 			$scope.count1 = 1;

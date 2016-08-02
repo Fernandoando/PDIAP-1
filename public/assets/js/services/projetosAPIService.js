@@ -13,12 +13,12 @@
 			return $http(request);
 		};
 
-		let _postLogin = function(email,password) {
+		let _postLogin = function(username,password) {
 			const request = {
 				url: '/projetos/login',
 				method: 'POST',
 				data: {
-					email: email,
+					username: username,
 					password: password
 				}
 			}
@@ -57,7 +57,7 @@
 			return $http(request);
 		};
 
-		let _getEmails = function() {
+		let _getUsersEscolas = function() {
 			const request = {
 				url: '/projetos/registro',
 				method: 'GET',
@@ -83,11 +83,11 @@
 			return $http(request);
 		};
 
-		let _postEmail = function(email) {
+		let _postRedefinir = function(username) {
 			const request = {
 				url: '/projetos/redefinir-senha',
 				method: 'POST',
-				data: email
+				data: username
 			}
 			return $http(request);
 		};
@@ -99,10 +99,10 @@
 			getTodosProjetos: _getTodosProjetos,
 			getCategorias: _getCategorias,
 			getEstados: _getEstados,
-			getEmails: _getEmails,
+			getUsersEscolas: _getUsersEscolas,
 			putProjeto: _putProjeto,
 			putIntegrante: _putIntegrante,
-			postEmail: _postEmail
+			postRedefinir: _postRedefinir
 		};
 	});
 })();

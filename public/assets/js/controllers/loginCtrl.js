@@ -6,10 +6,10 @@
 	.controller('loginCtrl', function($scope, $rootScope, $location, $mdDialog, projetosAPI) {
 
 		$scope.login = function() {
-			const email = $scope.user.email;
+			const username = $scope.user.username;
 			const password = $scope.user.password;
 
-			projetosAPI.postLogin(email,password)
+			projetosAPI.postLogin(username,password)
 			.success(function(projeto) { // authentication OK
 				$rootScope.logado = true;
 				$scope.message = 'Sucesso';
@@ -27,8 +27,8 @@
 			});
 		};
 
-		let enviarEmail = function(email) {
-			projetosAPI.postEmail(email)
+		let enviarEmail = function(username) {
+			projetosAPI.postRedefinir(username)
 			.success(function(data) {
 				console.log('EMAIL ENVIADO');
 			})
@@ -40,14 +40,18 @@
 		$scope.showPrompt = function(ev) {
 			var confirm = $mdDialog.prompt()
 			.title('RECUPERAR SENHA')
-			.placeholder('E-mail')
-			.ariaLabel('E-mail')
+			.placeholder('Username')
+			.ariaLabel('Username')
 			.targetEvent(ev)
 			.ok('Enviar >')
 			.cancel('Fechar');
 			$mdDialog.show(confirm).then(function(result) {
-				console.log(result);
-				enviarEmail(result);
+				// console.log(result);
+				let username = ({
+					username: result
+				});
+				enviarEmail(username);
+				console.log(username);
 			}, function() {
 				console.log('fechou');
 			});

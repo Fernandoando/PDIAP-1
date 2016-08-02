@@ -85,18 +85,18 @@
 						icon: 'account-settings-variant',
 						link: 'home.conta'
 					}]
-				}, {
-					name: 'Programação',
-					expand: false,
-					link: 'home.update'
-				}, {
-					name: 'Regulamentos',
-					expand: false,
-					link: 'home.update'
-				}, {
-					name: 'Modelos',
-					expand: false,
-					link: ''
+				// }, {
+				// 	name: 'Programação',
+				// 	expand: false,
+				// 	link: 'home.update'
+				// }, {
+				// 	name: 'Regulamentos',
+				// 	expand: false,
+				// 	link: 'home.update'
+				// }, {
+				// 	name: 'Modelos',
+				// 	expand: false,
+				// 	link: ''
 				}]
 			}
 		};

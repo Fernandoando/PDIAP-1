@@ -1,6 +1,8 @@
-$(document).keypress(function(e) {
-    if(e.which == 13) $('#btn-login').click();
-});
+// $(document).keypress(function(e) {
+//     if(e.which == 13) $('#btn-login').click();
+// });
+
+
 // plugins: [
 //     new webpack.ProvidePlugin({
 //       'window.jQuery': 'jquery'
