@@ -273,56 +273,80 @@ router.get('/update', (req, res) => {
 });
 
 router.put('/update', ensureAuthenticated, (req, res) => {
-
-
   if (req.body.cep !== undefined){
     req.body.cep = splita(req.body.cep);
   }
   let newProject = req.body;
   console.log(newProject);
-  /*let newProject = ({
-    nomeProjeto: req.body.nomeProjeto,
-    categoria: req.body.categoria,
-    eixo: req.body.eixo,
-    nomeEscola: req.body.nomeEscola,
-    cep: splita(req.body.cep),
-    cidade: req.body.cidade,
-    estado: req.body.estado,
-    hospedagem: req.body.hospedagem,
-    resumo: req.body.resumo
-  });*/
 
   ProjetoSchema.update({_id:req.user.id}, {$set:newProject, updatedAt: Date.now()}, {upsert:true,new: true}, (err,docs) => {
     if (err) throw err;
     res.status(200).json(docs);
   });
-
 });
 
-router.put('/updateIntegrante', ensureAuthenticated, (req, res) => {
-
-let id2 = req.body.integrantes_id;
+router.put('/updateOrientador', ensureAuthenticated, (req, res) => {
 let id = req.user.id;
 
-console.log(id2+"     "+id);
+  if(req.body.nomeOrientador1 !== undefined && req.body.emailOrientador1 !== undefined && req.body.cpfOrientador1 !== undefined && req.body.telefoneOrientador1 !== undefined && req.body.tamCamisetaOrientador1 !== undefined){
+    let id_subdoc_1 = req.body.integrantes_id;
+    let newIntegrante = ({
+      tipo: "Orientador",
+      nome: req.body.nomeOrientador1,
+      email: req.body.emailOrientador1,
+      cpf: splita(req.body.cpfOrientador1),
+      telefone: splita(req.body.telefoneOrientador1),
+      tamCamiseta: req.body.tamCamisetaOrientador1,
+      _id: id_subdoc_1
+    });
 
-  let newIntegrante = ({
-    tipo: req.body.tipo,
-    nome: req.body.nome,
-    email: req.body.email,
-    cpf: splita(req.body.cpf),
-    telefone: splita(req.body.telefone),
-    tamCamiseta: req.body.tamCamiseta,
-    _id: id2
-  });
-
-  ProjetoSchema.findOneAndUpdate({"_id": id,"integrantes._id": id2},
-    {"$set": {"integrantes.$": newIntegrante, updatedAt: Date.now()}}, {new:true},
-    (err,doc) => {
+    ProjetoSchema.findOneAndUpdate({"_id": id,"integrantes._id": id_subdoc_1},
+      {"$set": {"integrantes.$": newIntegrante, updatedAt: Date.now()}}, {new:true},
+      (err,doc) => {
+        if (err) throw err;
+        //res.status(200).send('OK');
+      }
+    );
+  } else if (req.body.nomeOrientador1 == undefined && req.body.emailOrientador1 == undefined && req.body.integrantes_id !== undefined) {
+    ProjetoSchema.findOne({"_id": id,"integrantes._id": req.body.integrantes_id}, (err, usr) => {
       if (err) throw err;
-      res.send(doc);
-    }
-  );
+      usr.integrantes.id(req.body.integrantes_id).remove();
+      usr.save((err, usr) => {
+        if (err) throw err;
+        res.status(200).send('OK');;
+      });
+    });
+  } else res.status(200).send('ultima af coisa deu');
+
+  if (req.body.nomeOrientador2 !== undefined && req.body.emailOrientador2 !== undefined && req.body.cpfOrientador2 !== undefined && req.body.telefoneOrientador2 !== undefined && req.body.tamCamisetaOrientador2 !== undefined){
+    let id_subdoc_2 = req.body.integrantes_id2;
+    let newIntegrante2 = ({
+      tipo: "Orientador",
+      nome: req.body.nomeOrientador2,
+      email: req.body.emailOrientador2,
+      cpf: splita(req.body.cpfOrientador2),
+      telefone: splita(req.body.telefoneOrientador2),
+      tamCamiseta: req.body.tamCamisetaOrientador2,
+      _id: id_subdoc_2
+    });
+
+    ProjetoSchema.findOneAndUpdate({"_id": id,"integrantes._id": id_subdoc_2},
+      {"$set": {"integrantes.$": newIntegrante2, updatedAt: Date.now()}}, {new:true},
+      (err,doc) => {
+        if (err) throw err;
+        //res.status(200).send('OK');;
+      }
+    );
+  } else if (req.body.nomeOrientador2 == undefined && req.body.emailOrientador2 == undefined && req.body.integrantes_id2 !== undefined) {
+    ProjetoSchema.findOne({"_id": id,"integrantes._id": req.body.integrantes_id2}, (err, usr) => {
+      if (err) throw err;
+      usr.integrantes.id(req.body.integrantes_id2).remove();
+      usr.save((err, usr) => {
+        if (err) throw err;
+        res.status(200).send('OK');;
+      });
+    });
+  } else res.status(200).send('ultima af coisa deu');
 });
 
 router.put('/novoIntegrante', ensureAuthenticated, (req, res) => {
