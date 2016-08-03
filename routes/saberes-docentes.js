@@ -23,7 +23,6 @@ router.post('/registro', (req, res) => {
 
 	let newSaberes = SaberesSchema({
 		nome: req.body.nome,
-		sobrenome: req.body.sobrenome,
 		email: req.body.email,
 		cpf: splita(req.body.cpf),
 		telefone: splita(req.body.telefone),

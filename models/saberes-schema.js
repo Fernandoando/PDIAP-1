@@ -7,9 +7,6 @@ const SaberesSchema = new Schema({
 	nome: {
 		type: String
 	},
-	sobrenome: {
-		type: String
-	},
 	email: {
 		type: String
 	},
