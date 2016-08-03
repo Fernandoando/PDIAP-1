@@ -15,13 +15,12 @@ function splita(arg){
   }
 }
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.send('Saberes Docentes mt loucos nóis');
 });
-
 router.post('/registro', (req, res) => {
 
-	let newSaberes = SaberesSchema({
+	let newSaberes = new SaberesSchema({
 		nome: req.body.nome,
 		email: req.body.email,
 		cpf: splita(req.body.cpf),
@@ -30,7 +29,7 @@ router.post('/registro', (req, res) => {
 	});
 
 	Saberes.createSaberes(newSaberes, (callback) => {});
-	res.redirect('/saberes-docentes');
+	res.send('success');
 });
 
 module.exports = router;
