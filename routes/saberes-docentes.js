@@ -15,9 +15,17 @@ function splita(arg){
   }
 }
 
-router.get('/', function(req, res) {
-  res.send('Saberes Docentes mt loucos nóis');
-});
+function testaEscola(req, res) {
+  SaberesSchema.find('escola','escola -_id', (error, escolas) => {
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    } else
+      return res.status(200).send(escolas);
+  });
+}
+
+router.get('/registro', testaEscola, (req, res) => {});
+
 router.post('/registro', (req, res) => {
 
 	let newSaberes = new SaberesSchema({
