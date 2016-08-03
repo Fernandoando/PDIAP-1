@@ -13,35 +13,6 @@
 		$scope.usernames = [];
 		$scope.escolas = [];
 
-		$scope.showConfirmDialog = function(ev) {
-			if ($scope.registro === true) {
-				var confirm = $mdDialog.confirm()
-				.title('Parabéns!')
-				.textContent('Inscrição realizada com sucesso!')
-				.ariaLabel('Inscrição realizada com sucesso!')
-				.targetEvent(ev)
-				.ok('OK, Voltar')
-				.cancel('Nova Inscrição');
-				$mdDialog.show(confirm).then(function() {
-					console.log(confirm);
-					$location.url('/');
-				}, function() {});
-			} else {
-				var confirm = $mdDialog.confirm()
-				.title('Ops...')
-				.textContent('A inscrição não foi realizada. Tente novamente ou então, entre em contato conosco.')
-				.ariaLabel('A inscrição não foi realizada.')
-				.targetEvent(ev)
-				.theme('error')
-				.ok('Continuar')
-				.cancel('Entrar em contato');
-				$mdDialog.show(confirm).then(function() {}
-				, function() {
-					$location.url('/');
-				});
-			}
-		};
-
 		$scope.registrarProjeto = function(projeto) {
 			projetosAPI.saveProjeto(projeto)
 			.success(function(projeto, status) {
@@ -52,20 +23,58 @@
 					console.log('user duplicado: '+$scope.usernameDuplicado);
 				} else if (projeto !== 'error') {
 					$scope.registro = true;
-					$scope.msg = 'Registrado com sucesso!';
-					//$location.url('/inscricao');
+					let showConfirmDialog = function(ev) {
+						var confirm = $mdDialog.confirm()
+						.title('Parabéns!')
+						.textContent('Inscrição realizada com sucesso!')
+						.ariaLabel('Inscrição realizada com sucesso!')
+						.targetEvent(ev)
+						.ok('OK, Voltar')
+						.cancel('Nova Inscrição');
+						$mdDialog.show(confirm).then(function() {
+							console.log(confirm);
+							$location.url('/');
+						}, function() {});
+					};
+					showConfirmDialog();
 					resetForm();
 				} else {
 					$scope.registro = false;
-					$scope.msg = 'Erro ao registrar projeto.';
-					//$location.url('/inscricao');
+					let showConfirmDialog = function(ev) {
+						var confirm = $mdDialog.confirm()
+						.title('Ops...')
+						.textContent('A inscrição não foi realizada. Tente novamente ou então, entre em contato conosco.')
+						.ariaLabel('A inscrição não foi realizada.')
+						.targetEvent(ev)
+						.theme('error')
+						.ok('Continuar')
+						.cancel('Entrar em contato');
+						$mdDialog.show(confirm).then(function() {}
+						, function() {
+							$location.url('/');
+						});
+					};
+					showConfirmDialog();
 				}
 			})
 			.error(function(status) {
 				$scope.registro = false;
-				$scope.msg = 'Erro ao registrar projeto.';
 				console.log(status);
-				//$location.url('/inscricao');
+				let showConfirmDialog = function(ev) {
+					var confirm = $mdDialog.confirm()
+					.title('Ops...')
+					.textContent('A inscrição não foi realizada. Tente novamente ou então, entre em contato conosco.')
+					.ariaLabel('A inscrição não foi realizada.')
+					.targetEvent(ev)
+					.theme('error')
+					.ok('Continuar')
+					.cancel('Entrar em contato');
+					$mdDialog.show(confirm).then(function() {}
+					, function() {
+						$location.url('/');
+					});
+				};
+				showConfirmDialog();
 			});
 			console.log(projeto);
 		};
