@@ -1,7 +1,7 @@
 {
   "categorias": [
     {
-      "categoria": "Fundamental I (1º ao 5º ano)",
+      "categoria": "Fundamental I (1º ao 5º anos)",
       "eixos": [
         "Ciências da Natureza e suas tecnologias",
         "Ciências Humanas e suas tecnologias",
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "categoria": "Fundamental II (6º ao 9º ano)",
+      "categoria": "Fundamental II (6º ao 9º anos)",
       "eixos": [
         "Ciências da Natureza e suas tecnologias",
         "Ciências Humanas e suas tecnologias",
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "categoria": "Ensino Médio, Técnico, Tecnológico e Superior",
+      "categoria": "Ensino Médio, Técnico e Superior",
       "eixos": [
         "Ciências Agrárias, Exatas e da Terra",
         "Ciências Ambientais, Biológicas e da Saúde",

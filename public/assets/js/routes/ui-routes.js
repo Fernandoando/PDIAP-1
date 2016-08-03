@@ -23,6 +23,7 @@
 			return deferred.promise;
 		};
 
+		// $locationProvider.html5Mode(true);
 		//$urlRouterProvider.otherwise("/state1");
 		$stateProvider
 		.state('index', {
@@ -40,17 +41,17 @@
 		// 	controller: "loginCtrl"
 		// })
 		.state('inscricao', {
-			url: "/inscricao",
+			url: "/projeto/inscricao",
 			templateUrl: "/views/inscricao.html",
 			controller: "registroCtrl"
 		})
-		.state('inscricao-saberes', {
-			url: "/inscricao-saberes",
+		.state('saberes-docentes', {
+			url: "/saberes-docentes/inscricao",
 			templateUrl: "/views/saberes.html",
 			controller: "saberesCtrl"
 		})
-		.state('inscricao-avaliadores', {
-			url: "/inscricao-avaliadores",
+		.state('avaliadores', {
+			url: "/avaliadores/inscricao",
 			templateUrl: "/views/avaliadores.html",
 			controller: "avaliadoresCtrl"
 		})
@@ -78,9 +79,9 @@
 			controller: "updateCtrl"
 		})
 		.state('nova-senha', {
-			url: "/nova-senha",
+			url: "/nova-senha/:username",
 			templateUrl: "/views/nova-senha.html",
-			controller: "homeCtrl"
+			controller: "redefinirCtrl"
 		});
 	});
 })();

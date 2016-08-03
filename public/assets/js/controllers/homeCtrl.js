@@ -7,7 +7,7 @@
 
 		$scope.showLoginDialog = function(ev) {
 			$mdDialog.show({
-				controller: () => this,
+				// controller: () => this,
 				templateUrl: '/views/login.html',
 				parent: angular.element(document.body),
 				targetEvent: ev,
@@ -30,6 +30,7 @@
 			})
 			.then(function(answer) {
 				console.log(answer);
+				$rootScope.username = answer;
 			}, function() {
 				console.log('fechou');
 			});

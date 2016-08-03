@@ -3,10 +3,9 @@
 
 	angular
 	.module('PDIAP')
-	.controller('registroCtrl', function($scope, $q, $location, projetosAPI) {
+	.controller('registroCtrl', function($scope, $rootScope, $mdDialog, $q, $location, projetosAPI) {
 
 		$scope.registro = false;
-		$scope.msg = 'msg';
 		$scope.loginHabilitado = false;
 		$scope.usernameDuplicado = false;
 		$scope.eixos = [];
@@ -14,8 +13,36 @@
 		$scope.usernames = [];
 		$scope.escolas = [];
 
-		$scope.registrar = function(projeto) {
+		$scope.showConfirmDialog = function(ev) {
+			if ($scope.registro === true) {
+				var confirm = $mdDialog.confirm()
+				.title('Parabéns!')
+				.textContent('Inscrição realizada com sucesso!')
+				.ariaLabel('Inscrição realizada com sucesso!')
+				.targetEvent(ev)
+				.ok('OK, Voltar')
+				.cancel('Nova Inscrição');
+				$mdDialog.show(confirm).then(function() {
+					console.log(confirm);
+					$location.url('/');
+				}, function() {});
+			} else {
+				var confirm = $mdDialog.confirm()
+				.title('Ops...')
+				.textContent('A inscrição não foi realizada. Tente novamente ou então, entre em contato conosco.')
+				.ariaLabel('A inscrição não foi realizada.')
+				.targetEvent(ev)
+				.theme('error')
+				.ok('Continuar')
+				.cancel('Entrar em contato');
+				$mdDialog.show(confirm).then(function() {}
+				, function() {
+					$location.url('/');
+				});
+			}
+		};
 
+		$scope.registrarProjeto = function(projeto) {
 			projetosAPI.saveProjeto(projeto)
 			.success(function(projeto, status) {
 				console.log(projeto);
@@ -212,20 +239,20 @@
 			});
 		}
 
-		$scope.orientadoresArray = [];
+		// $scope.orientadoresArray = [];
 		$scope.alunosArray = [];
 
 		$scope.montarIntegrantes = function(projeto) {
-			$scope.orientadoresArray = [];
+			// $scope.orientadoresArray = [];
 			$scope.alunosArray = [];
-			for (var i = 1; i <= $scope.dynamicFields1.length; i++) {
-				if (i === 1) {
-					$scope.orientadoresArray.push(projeto.nomeOrientador1);
-				}
-				if (i === 2) {
-					$scope.orientadoresArray.push(projeto.nomeOrientador2);
-				}
-			}
+			// for (var i = 1; i <= $scope.dynamicFields1.length; i++) {
+			// 	if (i === 1) {
+			// 		$scope.orientadoresArray.push(projeto.nomeOrientador1);
+			// 	}
+			// 	if (i === 2) {
+			// 		$scope.orientadoresArray.push(projeto.nomeOrientador2);
+			// 	}
+			// }
 			for (var i = 1; i <= $scope.dynamicFields2.length; i++) {
 				if (i === 1) {
 					$scope.alunosArray.push(projeto.nomeAluno1);
@@ -236,7 +263,7 @@
 				if (i === 3) {
 					$scope.alunosArray.push(projeto.nomeAluno3);
 				}
-				console.log(projeto.nomeAluno2);
+				// console.log(projeto.nomeAluno2);
 			}
 		};
 

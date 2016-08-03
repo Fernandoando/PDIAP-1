@@ -2,9 +2,11 @@
 	'use strict';
 
 	angular
-		.module('PDIAP')
-		.config(function($mdIconProvider) {
-  			$mdIconProvider
-    			.defaultIconSet('assets/mdi.svg')
-		});
+	.module('PDIAP')
+	.config(function($mdIconProvider, $mdThemingProvider) {
+		$mdThemingProvider.theme('error')
+		.primaryPalette('red');
+		$mdIconProvider
+		.defaultIconSet('assets/mdi.svg')
+	});
 })();

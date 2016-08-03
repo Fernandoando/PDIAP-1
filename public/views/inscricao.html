@@ -16,7 +16,7 @@
   <div  class="inscricao-header">
 
   </div>
-  <div style="position:absolute;width:100%;height:20px;z-index:99;top:160px;">
+  <div style="position:absolute;width:100%;height:20px;z-index:20;top:160px;">
     <svg
     width="100%"
     height="100%"
@@ -338,13 +338,13 @@
     <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" flex-gt-sm>
       <label>Quais?</label>
       <md-select name="hospedagem" data-ng-model="projeto.hospedagem" multiple data-ng-focus="montarIntegrantes(projeto)" required>
-        <md-optgroup label="Orientador(es)" data-ng-if="projeto.nomeOrientador1 !== undefined">
+        <!-- <md-optgroup label="Orientador(es)" data-ng-if="projeto.nomeOrientador1 !== undefined">
           <md-option ng-value="eae" ng-repeat="eae in orientadoresArray">{{eae}}</md-option>
-        </md-optgroup>
+        </md-optgroup> -->
         <md-optgroup label="Aluno(s)" data-ng-if="projeto.nomeAluno1 !== undefined">
           <md-option ng-value="dae" ng-repeat="dae in alunosArray">{{dae}}</md-option>
         </md-optgroup>
-        <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto.nomeAluno1 === undefined && projeto.nomeOrientador1 === undefined" disabled></md-optgroup>
+        <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto.nomeAluno1 === undefined" disabled></md-optgroup>
       </md-select>
       <div class="md-errors-spacer">
         <div data-ng-if="projetoForm.hospedagem.$touched">
@@ -376,14 +376,14 @@
 </div>
 
 <div class="row finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-  <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="projetoForm.$valid" data-ng-click="habilitarLogin()" data-ng-if="!loginHabilitado">
+  <md-button class="md-raised md-primary green lighten-1" data-ng-disabled="projetoForm.$valid" data-ng-click="habilitarLogin()" data-ng-if="!loginHabilitado">
     <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Avançar
   </md-button>
 </div>
 
 <!-- Cadastrar dados p/ login -->
 <div data-ng-if="loginHabilitado">
-  <p style="font-weight:bold;text-align:center;color:rgba(0,0,0,0.73);">Os dados informados serão usados para a criação de um login único do projeto.</p>
+  <p style="text-align:center;color:rgba(0,0,0,0.73);">Os dados informados serão usados para a criação de um <b>login único</b> do projeto.</p>
   <div layout="row">
     <div class="bloco-left" flex="25" hide-xs style="padding-left:20px;background:#81c784;">
       <span>Cadastro Login</span>
@@ -440,7 +440,7 @@
   </div>
   <!-- Finalizar inscrição -->
   <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-    <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm.$valid || projetoForm.password2.$error.pwmatch" data-ng-click="registrar(projeto)">
+    <md-button class="md-raised md-primary green lighten-1" data-ng-disabled="!projetoForm.$valid || projetoForm.password2.$error.pwmatch" data-ng-click="registrarProjeto(projeto);showConfirmDialog($event)">
       <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
     </md-button>
   </div>

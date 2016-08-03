@@ -13,6 +13,15 @@
 			return $http(request);
 		};
 
+		let _saveSaberesDocentes = function(saberes) {
+			const request = {
+				url: '/saberes-docentes/registro',
+				method: 'POST',
+				data: saberes
+			}
+			return $http(request);
+		};
+
 		let _postLogin = function(username,password) {
 			const request = {
 				url: '/projetos/login',
@@ -65,6 +74,14 @@
 			return $http(request);
 		};
 
+		let _getEscolasSaberes = function() {
+			const request = {
+				url: '/saberes-docentes/registro',
+				method: 'GET',
+			}
+			return $http(request);
+		};
+
 		let _putProjeto = function(projeto) {
 			const request = {
 				url: '/projetos/update',
@@ -76,7 +93,7 @@
 
 		let _putIntegrante = function(integrante) {
 			const request = {
-				url: '/projetos/updateIntegrante',
+				url: '/projetos/updateOrientador',
 				method: 'PUT',
 				data: integrante
 			}
@@ -94,15 +111,17 @@
 
 		return {
 			saveProjeto: _saveProjeto,
+			saveSaberesDocentes: _saveSaberesDocentes,
 			postLogin: _postLogin,
 			getProjeto: _getProjeto,
 			getTodosProjetos: _getTodosProjetos,
 			getCategorias: _getCategorias,
 			getEstados: _getEstados,
 			getUsersEscolas: _getUsersEscolas,
+			getEscolasSaberes: _getEscolasSaberes,
 			putProjeto: _putProjeto,
 			putIntegrante: _putIntegrante,
-			postRedefinir: _postRedefinir
+			postRedefinir: _postRedefinir,
 		};
 	});
 })();

@@ -48,8 +48,19 @@
 			});
 		};
 		$scope.orientadoresUpdate = [];
-		$scope.updateOrientadores = function() {
+		$scope.updateOrientadores = function(pacote1) {
 			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
+			projetosAPI.putIntegrante(pacote1)
+			.success(function(data){
+				console.log(data);
+				$scope.alterado = true;
+				$scope.toast('Alteração feita com sucesso!','success-toast');
+			})
+			.error(function(status){
+				console.log('update error: '+status);
+				$scope.toast('Falha na alteração','failed-toast');
+			});
+			console.log(pacote1);
 			for (var i = 1; i <= $scope.dynamicFields11.length; i++) {
 				if (i == 1) {
 					var pacote = ({
@@ -131,21 +142,21 @@
 					}
 				});
 			}
-			var dados = JSON.stringify({ integrantes: $scope.alunosUpdate});
-			console.log(dados);
-			projetosAPI.putProjeto(dados)
-			.success(function(projeto){
-				console.log(projeto);
-				$scope.alterado = true;
-				$scope.toast('Alteração feita com sucesso!','success-toast');
-				// maskCEP();
-				// $scope.carregarProjeto();
-			})
-			.error(function(status){
-				console.log('update error: '+status);
-				$scope.toast('Falha na alteração','failed-toast');
-			});
-			console.log($scope.alunosUpdate);
+			// var dados = JSON.stringify({ integrantes: $scope.alunosUpdate});
+			// console.log(dados);
+			// projetosAPI.putProjeto(dados)
+			// .success(function(projeto){
+			// 	console.log(projeto);
+			// 	$scope.alterado = true;
+			// 	$scope.toast('Alteração feita com sucesso!','success-toast');
+			// 	// maskCEP();
+			// 	// $scope.carregarProjeto();
+			// })
+			// .error(function(status){
+			// 	console.log('update error: '+status);
+			// 	$scope.toast('Falha na alteração','failed-toast');
+			// });
+			// console.log($scope.alunosUpdate);
 		};
 
 		projetosAPI.getProjeto()
@@ -177,7 +188,7 @@
 
 					value.telefone = "(" + value.telefone.substring(0);
 					value.telefone = value.telefone.substring(0,3) + ")" + value.telefone.substring(3);
-					// value.telefone = value.telefone.substring(0,4) + " " + value.telefone.substring(4);
+					value.telefone = value.telefone.substring(0,4) + " " + value.telefone.substring(4);
 					value.telefone = value.telefone.substring(0,9) + "-" + value.telefone.substring(9);
 
 					model0.assign($scope, value._id);
@@ -208,7 +219,7 @@
 
 					value.telefone = "(" + value.telefone.substring(0);
 					value.telefone = value.telefone.substring(0,3) + ")" + value.telefone.substring(3);
-					// value.telefone = value.telefone.substring(0,4) + " " + value.telefone.substring(4);
+					value.telefone = value.telefone.substring(0,4) + " " + value.telefone.substring(4);
 					value.telefone = value.telefone.substring(0,9) + "-" + value.telefone.substring(9);
 
 					model0.assign($scope, value._id);
@@ -315,29 +326,29 @@
 		};
 		// =========================================================================
 
-		$scope.orientadoresArray1 = [];
+		// $scope.orientadoresArray1 = [];
 		$scope.alunosArray1 = [];
 
-		$scope.montarIntegrantes1 = function(proj1,proj2) {
-			$scope.orientadoresArray1 = [];
+		$scope.montarIntegrantes1 = function(proj) {
+			// $scope.orientadoresArray1 = [];
 			$scope.alunosArray1 = [];
-			for (var i = 1; i <= $scope.dynamicFields11.length; i++) {
-				if (i === 1) {
-					$scope.orientadoresArray1.push(proj1.nomeOrientador1);
-				}
-				if (i === 2) {
-					$scope.orientadoresArray1.push(proj1.nomeOrientador2);
-				}
-			}
+			// for (var i = 1; i <= $scope.dynamicFields11.length; i++) {
+			// 	if (i === 1) {
+			// 		$scope.orientadoresArray1.push(proj1.nomeOrientador1);
+			// 	}
+			// 	if (i === 2) {
+			// 		$scope.orientadoresArray1.push(proj1.nomeOrientador2);
+			// 	}
+			// }
 			for (var i = 1; i <= $scope.dynamicFields22.length; i++) {
 				if (i === 1) {
-					$scope.alunosArray1.push(proj2.nomeAluno1);
+					$scope.alunosArray1.push(proj.nomeAluno1);
 				}
 				if (i === 2) {
-					$scope.alunosArray1.push(proj2.nomeAluno2);
+					$scope.alunosArray1.push(proj.nomeAluno2);
 				}
 				if (i === 3) {
-					$scope.alunosArray1.push(proj2.nomeAluno3);
+					$scope.alunosArray1.push(proj.nomeAluno3);
 				}
 			}
 		};

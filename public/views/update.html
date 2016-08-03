@@ -249,7 +249,7 @@
       </div>
     </div>
     <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-      <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm3.$valid" data-ng-click="updateOrientadores()">
+      <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm3.$valid" data-ng-click="updateOrientadores(projeto3)">
         <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon>
         Salvar
       </md-button>
@@ -367,14 +367,14 @@
             </div>
             <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" data-ng-init="editing19=false" flex-gt-sm>
               <label>Quais?</label>
-              <md-select name="hospedagem" data-ng-model="projeto5.hospedagem" multiple data-ng-class="{'input-disabled': !editing19}" data-ng-focus="editing19=true;montarIntegrantes1(projeto3,projeto4)" data-ng-blur="editing19=false" required>
-                <md-optgroup label="Orientador(es)" data-ng-if="projeto3.nomeOrientador1 !== undefined">
+              <md-select name="hospedagem" data-ng-model="projeto5.hospedagem" multiple data-ng-class="{'input-disabled': !editing19}" data-ng-focus="editing19=true;montarIntegrantes1(projeto4)" data-ng-blur="editing19=false" required>
+                <!-- <md-optgroup label="Orientador(es)" data-ng-if="projeto3.nomeOrientador1 !== undefined">
                   <md-option ng-value="eae.nome" ng-repeat="eae in orientadores">{{eae.nome}}</md-option>
-                </md-optgroup>
+                </md-optgroup> -->
                 <md-optgroup label="Aluno(s)" data-ng-if="projeto4.nomeAluno1 !== undefined">
                   <md-option ng-value="dae.nome" ng-repeat="dae in alunos">{{dae.nome}}</md-option>
                 </md-optgroup>
-                <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto4.nomeAluno1 === undefined && projeto3.nomeOrientador1 === undefined" disabled></md-optgroup>
+                <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto4.nomeAluno1 === undefined" disabled></md-optgroup>
               </md-select>
               <div class="md-errors-spacer">
                 <div data-ng-if="projetoForm5.hospedagem.$touched">

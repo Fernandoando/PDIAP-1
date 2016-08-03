@@ -87,9 +87,14 @@ md-input-container label {
 }
 md-dialog {
   width: 400px;
-  background: #4caf50 !important;
   top: -20% !important;
   margin-top: 30px !important;
+}
+md-dialog.login-content {
+  background: #4caf50 !important;
+}
+md-dialog-content {
+  background: #4caf50 !important;
 }
 md-sidenav {
   width: 260px !important;
@@ -242,6 +247,10 @@ md-dialog-actions button {
   width: 50%;
   color: #1b5e20 !important;
   font-size: 13px !important;
+}
+md-dialog-content p {
+  text-align: center;
+  color: rgba(255,255,255,0.87);
 }
 .login-content {
   width: 310px !important;
@@ -469,7 +478,8 @@ md-grid-tile {
 .icon-integrantes {
   width: 19px;
   height: 19px;
-  vertical-align: bottom;
+  vertical-align: text-bottom !important;
+  margin-bottom: -1px !important;
 }
 md-tabs-wrapper {
   border: none !important;
@@ -588,6 +598,9 @@ md-toast {
 .teal.lighten-1 {
   background-color: #26a69a !important;
 }
+.green.lighten-1 {
+  background-color: #66bb6a !important;
+}
 .grey-text.darken-1 {
   color: #757575 !important;
 }
@@ -629,6 +642,34 @@ md-icon {
 .toolbar-admin {
   background: #5a5a5a !important;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+.avaliadores-content p {
+  text-align: center;
+  color: #424242;
+}
+md-dialog.md-error-theme md-dialog-content {
+  background: #f44336 !important;
+}
+md-dialog md-dialog-actions button.md-error-theme {
+  color: #616161 !important;
+}
+.btn-github {
+  width: auto !important;
+  height: auto  !important;
+  line-height: 23px !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+}
+.btn-github:hover {
+  color: #f5f5f5 !important;
+  transition: 1s;
+}
+.btn-github:hover md-icon {
+  color: #f5f5f5 !important;
+  transition: 1s;
+}
+footer {
+  color: gray;
 }
 
 @media only screen and (max-width: 959px) and (min-width: 0) and (orientation: landscape) {

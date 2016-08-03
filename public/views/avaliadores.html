@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="inscricao-header"></div>
-  <div style="position:absolute;width:100%;height:20px;z-index:99;top:160px;">
+  <div style="position:absolute;width:100%;height:20px;z-index:20;top:160px;">
     <svg
     width="100%"
     height="100%"
@@ -30,7 +30,7 @@
 </div>
 
 <!-- Formulário -->
-<md-content flex layout="column" layout-align="center center" class="inscricao-content">
+<md-content flex layout="column" layout-align="center center" class="inscricao-content avaliadores-content">
   <form name="avaliadoresForm" novalidate>
     <div layout-gt-xs="row">
       <md-input-container class="md-block" flex-gt-xs>
@@ -68,15 +68,116 @@
       </md-input-container>
       <div flex="5" hide-xs></div>
       <md-input-container class="md-block" flex-gt-xs>
-        <label>Telefone</label>
-        <input type="text" name="telefone" data-ng-model="avaliadores.telefone" required minlength="14" maxlength="14" fone-mask/>
+        <label>RG</label>
+        <input type="text" name="rg" data-ng-model="avaliadores.rg" required minlength="10" maxlength="10" rg-mask/>
         <div class="md-errors-spacer">
-          <div data-ng-show="avaliadoresForm.telefone.$dirty">
-            <div class="message-error" data-ng-show="avaliadoresForm.telefone.$error.required">Preencha esse campo.</div>
-            <div class="message-error" data-ng-show="avaliadoresForm.telefone.$error.minlength && avaliadoresForm.telefone.$touched">Telefone inválido.</div>
+          <div data-ng-show="avaliadoresForm.rg.$dirty">
+            <div class="message-error" data-ng-show="avaliadoresForm.rg.$error.required">Preencha esse campo.</div>
+            <div class="message-error" data-ng-show="avaliadoresForm.rg.$error.minlength && avaliadoresForm.rg.$touched">RG inválido.</div>
           </div>
         </div>
       </md-input-container>
+    </div>
+    <div layout-gt-xs="row">
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>Data de nascimento</label>
+        <input type="text" name="dtNasc" data-ng-model="avaliadores.dtNasc" minlength="8" maxlength="10" required nasc-mask/>
+        <div class="md-errors-spacer">
+          <div data-ng-show="avaliadoresForm.dtNasc.$dirty">
+            <div class="message-error" data-ng-show="avaliadoresForm.dtNasc.$error.required">Preencha esse campo.</div>
+            <div class="message-error" data-ng-show="avaliadoresForm.dtNasc.$error.minlength && avaliadoresForm.dtNasc.$touched">Data inválida.</div>
+          </div>
+        </div>
+      </md-input-container>
+      <div flex="5" hide-xs></div>
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>Nível Acadêmico</label>
+        <md-select name="nivelAcademico" data-ng-model="avaliadores.nivelAcademico" required style="width:100%!important;">
+          <md-option value="Graduação">Graduação</md-option>
+          <md-option value="Especialização">Especialização</md-option>
+          <md-option value="Mestrado">Mestrado</md-option>
+          <md-option value="Doutorado">Doutorado</md-option>
+        </md-select>
+        <div class="md-errors-spacer"></div>
+      </md-input-container>
+    </div>
+    <md-input-container class="md-block" flex="100">
+      <label>Atuação profissional</label>
+      <textarea style="height:130px!important;" name="atuacaoProfissional" data-ng-model="avaliadores.atuacaoProfissional" rows="1" md-select-on-focus required></textarea>
+      <div class="md-errors-spacer">
+        <div data-ng-if="avaliadoresForm.atuacaoProfissional.$dirty">
+          <div class="message-error" data-ng-show="avaliadoresForm.atuacaoProfissional.$error.required">Obrigatório.</div>
+        </div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block" flex-gt-xs>
+      <label>Tempo de atuação na área (em anos)</label>
+      <input type="number" name="tempoAtuacao" data-ng-model="avaliadores.tempoAtuacao" required/>
+      <div class="md-errors-spacer">
+        <div data-ng-show="avaliadoresForm.tempoAtuacao.$dirty">
+          <div class="message-error" data-ng-show="avaliadoresForm.tempoAtuacao.$error.required">Preencha esse campo.</div>
+        </div>
+      </div>
+    </md-input-container>
+    <div layout="row" style="margin-bottom:35px;margin-top:25px;height:18px!important;">
+      <span style="margin-right:30px;color:#616161;">Possui CV Lattes?</span>
+      <md-radio-group layout="row" data-ng-model="lattesVerify" name="lattesVerify" ng-required="true">
+        <md-radio-button value="Sim">Sim</md-radio-button>
+        <md-radio-button value="Não">Não</md-radio-button>
+      </md-radio-group>
+      <div class="md-errors-spacer"></div>
+    </div>
+    <md-input-container class="md-block" data-ng-if="lattesVerify == 'Sim'" flex-gt-xs>
+      <label>Link</label>
+      <input type="url" name="link" data-ng-model="avaliadores.link" required/>
+      <div class="md-errors-spacer">
+        <div data-ng-show="avaliadoresForm.link.$dirty">
+          <div class="message-error" data-ng-show="avaliadoresForm.link.$error.required">Preencha esse campo.</div>
+          <div class="message-error" data-ng-show="avaliadoresForm.link.$error.url && avaliadoresForm.link.$touched">Link inválido.</div>
+        </div>
+      </div>
+    </md-input-container>
+    <div data-ng-if="lattesVerify == 'Não'">
+      <p style="margin-bottom:26px;">Informe um breve resumo das suas atividades na sua área de formação.</p>
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>Atividades na área de formação</label>
+        <textarea style="height:200px!important;" name="resumoAtividades" data-ng-model="avaliadores.resumoAtividades" rows="1" md-select-on-focus required></textarea>
+        <div class="md-errors-spacer">
+          <div data-ng-if="avaliadoresForm.resumoAtividades.$dirty">
+            <div class="message-error" data-ng-show="avaliadoresForm.resumoAtividades.$error.required">Obrigatório.</div>
+          </div>
+        </div>
+      </md-input-container>
+    </div>
+    <p style="position:relative;top:20px;margin-bottom:40px;">Informe a categoria e o eixo que deseja avaliar.</p></p></p>
+    <div layout="row">
+      <md-input-container class="md-block" flex-xs="100" flex="80">
+        <label>Categoria</label>
+        <md-select name="categoria" data-ng-model="avaliadores.categoria" required style="width:100%!important;">
+          <md-optgroup label="Categorias">
+            <md-option data-ng-value="x.categoria" data-ng-repeat="x in listaCategorias" data-ng-click="selectEixos(x.categoria)">{{x.categoria}}</md-option>
+          </md-optgroup>
+        </md-select>
+        <div class="md-errors-spacer"></div>
+      </md-input-container>
+      <div flex layout="column" layout-align="center center" hide-xs>
+        <md-button md-no-ink style="min-height:30px;height:30px;font-size:12px;line-height:30px;margin-bottom:15px;">Saiba mais</md-button>
+      </div>
+    </div>
+    <div layout="row">
+      <md-input-container class="md-block" flex-xs="100" flex="80">
+        <label>Eixo Temático...</label>
+        <md-select name="eixo" data-ng-model="avaliadores.eixo" required style="width:100%!important;">
+          <md-optgroup label="Eixos Temáticos" data-ng-if="avaliadores.categoria !== undefined">
+            <md-option data-ng-value="y" data-ng-repeat="y in eixos">{{y}}</md-option>
+          </md-optgroup>
+          <md-option value="" disabled data-ng-if="avaliadores.categoria === undefined">Selecione uma Categoria</md-option>
+        </md-select>
+        <div class="md-errors-spacer"></div>
+      </md-input-container>
+      <div flex layout="column" layout-align="center center" hide-xs>
+        <md-button md-no-ink style="min-height:30px;height:30px;font-size:12px;line-height:30px;margin-bottom:15px;">Saiba mais</md-button>
+      </div>
     </div>
 
     <!-- Finalizar inscrição -->
