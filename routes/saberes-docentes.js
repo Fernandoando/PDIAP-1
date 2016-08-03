@@ -27,7 +27,6 @@ router.post('/registro', (req, res) => {
 		email: req.body.email,
 		cpf: splita(req.body.cpf),
 		telefone: splita(req.body.telefone),
-		tamCamiseta: req.body.tamCamiseta,
 		escola: req.body.escola
 	});
 

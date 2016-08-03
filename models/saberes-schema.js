@@ -19,9 +19,6 @@ const SaberesSchema = new Schema({
 	telefone: {
 		type: String
 	},
-	tamCamiseta: {
-		type: String
-	},
 	escola: {
 		type: String
 	}
