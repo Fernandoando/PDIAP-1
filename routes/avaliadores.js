@@ -8,28 +8,31 @@ const express = require('express')
 , session = require('express-session')
 , AvaliadorSchema = require('../models/avaliador-schema');
 
+function splita(arg){
+  if (arg !== undefined) {
+    let data = arg.replace(/([-.() ])/g,'');
+    return data;
+  }
+}
+
 router.get('/', function(req, res, next) {
   res.send('Avaliadores mt loucos nóis');
 });
 
 router.post('/registro', (req, res) => {
-
-	let nome = req.body.nome
-	,   sobrenome = req.body.sobrenome
-  	,   email = req.body.email
-  	,   cpf = req.body.cpf
-  	,   telefone = req.body.telefone
-  	,   tamCamiseta = req.body.tamCamiseta
-  	,   outros = req.body.outros
-
 	let newAvaliador = AvaliadorSchema({
-		nome: nome,
-		sobrenome: sobrenome,
-		email: email,
-		cpf: cpf,
-		telefone: telefone,
-		tamCamiseta: tamCamiseta,
-		outros: outros
+		nome: req.body.nome,
+		email: req.body.email,
+		cpf: splita(req.body.cpf),
+		rg: splita(req.body.rg),
+		dtNasc: req.body.dtNasc,
+		nivelAcademico: req.body.nivelAcademico,
+		categoria: req.body.categoria,
+		eixo: req.body.eixo,
+		atuacaoProfissional: req.body.atuacaoProfissional,
+		tempoAtuacao: req.body.tempoAtuacao,
+		telefone: splita(req.body.telefone),
+		outros: req.body.outros
 	});
 
 	Avaliador.createAvaliador(newAvaliador, (callback) => {});

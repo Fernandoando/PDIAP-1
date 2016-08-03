@@ -7,19 +7,34 @@ const AvaliadorSchema = new Schema({
 	nome: {
 		type: String
 	},
-	sobrenome: {
-		type: String
-	},
 	email: {
 		type: String
 	},
 	cpf: {
 		type: String
 	},
-	telefone: {
+	rg: {
 		type: String
 	},
-	tamCamiseta: {
+	dtNasc: {
+		type: String
+	},
+	nivelAcademico: {
+		type: String
+	},
+	categoria: {
+		type: String
+	},
+	eixo: {
+		type: String
+	},
+	atuacaoProfissional: {
+		type: String
+	},
+	tempoAtuacao: {
+		type: String
+	},
+	telefone: {
 		type: String
 	},
 	outros: {

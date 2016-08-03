@@ -29,6 +29,7 @@ router.get('/registro', testaEscola, (req, res) => {});
 router.post('/registro', (req, res) => {
 
 	let newSaberes = new SaberesSchema({
+    tipo: req.body.tipo,
 		nome: req.body.nome,
 		email: req.body.email,
 		cpf: splita(req.body.cpf),

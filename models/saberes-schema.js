@@ -4,6 +4,9 @@ const mongoose = require('mongoose')
 ,	Schema = mongoose.Schema;
 
 const SaberesSchema = new Schema({
+	tipo: {
+		type: String
+	},
 	nome: {
 		type: String
 	},
