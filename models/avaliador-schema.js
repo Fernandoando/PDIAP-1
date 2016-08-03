@@ -14,10 +14,10 @@ const AvaliadorSchema = new Schema({
 		type: String
 	},
 	cpf: {
-		type: Number
+		type: String
 	},
 	telefone: {
-		type: Number
+		type: String
 	},
 	tamCamiseta: {
 		type: String

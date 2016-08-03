@@ -82,9 +82,9 @@ function ensureAuthenticated(req, res, next) {
 
 function splita(arg){
   if (arg !== undefined) {
-    let data = arg.replace(/([-.()])/g,'');
+    let data = arg.replace(/([-.() ])/g,'');
     return data;
-  }
+  } 
 }
 
 router.get('/', (req, res, next) => {

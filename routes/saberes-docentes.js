@@ -8,28 +8,27 @@ const express = require('express')
 , session = require('express-session')
 , SaberesSchema = require('../models/saberes-schema');
 
+function splita(arg){
+  if (arg !== undefined) {
+    let data = arg.replace(/([-.() ])/g,'');
+    return data;
+  }
+}
+
 router.get('/', function(req, res, next) {
   res.send('Saberes Docentes mt loucos nóis');
 });
 
 router.post('/registro', (req, res) => {
 
-	let nome = req.body.nome
-	,   sobrenome = req.body.sobrenome
-  	,   email = req.body.email
-  	,   cpf = req.body.cpf
-  	,   telefone = req.body.telefone
-  	,   tamCamiseta = req.body.tamCamiseta
-  	,   escola = req.body.escola
-
 	let newSaberes = SaberesSchema({
-		nome: nome,
-		sobrenome: sobrenome,
-		email: email,
-		cpf: cpf,
-		telefone: telefone,
-		tamCamiseta: tamCamiseta,
-		escola: escola
+		nome: req.body.nome,
+		sobrenome: req.body.sobrenome,
+		email: req.body.email,
+		cpf: splita(req.body.cpf),
+		telefone: splita(req.body.telefone),
+		tamCamiseta: req.body.tamCamiseta,
+		escola: req.body.escola
 	});
 
 	Saberes.createSaberes(newSaberes, (callback) => {});
