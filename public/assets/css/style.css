@@ -296,6 +296,21 @@ md-dialog-content p {
   box-shadow: none !important;
   background: transparent !important;
 }
+md-dialog.md-error-theme md-dialog-content {
+  background: #f44336 !important;
+}
+md-dialog md-dialog-actions button.md-error-theme {
+  color: #616161 !important;
+}
+.md-alert-theme button {
+  width: 100%;
+}
+md-dialog.md-alert-theme md-dialog-actions {
+  padding-left: 8px;
+}
+md-dialog.md-alert-theme md-dialog-actions .md-button {
+  margin-right: 8px;
+}
 md-input-container.md-default-theme .md-input,
 md-input-container .md-input {
   border-color: rgba(0,0,0,0.3);
@@ -660,12 +675,6 @@ md-icon {
 .avaliadores-content p {
   text-align: center;
   color: #616161;
-}
-md-dialog.md-error-theme md-dialog-content {
-  background: #f44336 !important;
-}
-md-dialog md-dialog-actions button.md-error-theme {
-  color: #616161 !important;
 }
 .link-regulamento {
   color: #212121;

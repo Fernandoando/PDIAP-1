@@ -20,21 +20,6 @@
 			});
 		};
 
-		$scope.showNewPasswordDialog = function(ev) {
-			$mdDialog.show({
-				// controller: () => this,
-				templateUrl: '/views/nova-senha-dialog.html',
-				parent: angular.element(document.body),
-				targetEvent: ev,
-				clickOutsideToClose: false
-			})
-			.then(function(answer) {
-				console.log(answer);
-				$rootScope.username = answer;
-			}, function() {
-				console.log('fechou');
-			});
-		};
 	});
 	// ==========================================================
 	function DialogController($scope, $mdDialog) {

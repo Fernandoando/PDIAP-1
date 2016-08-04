@@ -17,16 +17,16 @@ function testaEmail(req, res) {
     if(error) {
       return res.status(400).send({msg:"error occurred"});
     } else
-      return res.status(200).send(emails);
+    return res.status(200).send(emails);
   });
 }
 
 function testaEmailEEscola(req, res) {
-    ProjetoSchema.find('email nomeEscola','email nomeEscola -_id', (error, escolas) => {
+  ProjetoSchema.find('email nomeEscola','email nomeEscola -_id', (error, escolas) => {
     if(error) {
       return res.status(400).send({msg:"error occurred"});
     } else
-      return res.status(200).send(escolas);
+    return res.status(200).send(escolas);
   });
 }
 
@@ -43,15 +43,15 @@ function testaEmail2(req, res, next) {
       res.status(200).send("show");
       return next();
     }
-    });
+  });
 }
 
 function testaUsernameEEscola(req, res) {
-    ProjetoSchema.find('username nomeEscola','username nomeEscola -_id', (error, escolas) => {
+  ProjetoSchema.find('username nomeEscola','username nomeEscola -_id', (error, escolas) => {
     if(error) {
       return res.status(400).send({msg:"error occurred"});
     } else
-      return res.status(200).send(escolas);
+    return res.status(200).send(escolas);
   });
 }
 
@@ -68,15 +68,14 @@ function testaUsername2(req, res, next) {
       res.status(200).send("show");
       return next();
     }
-    });
+  });
 }
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated())
-    return next();
+  return next();
   else{
     res.send('0');
-    //res.redirect('/#/');
   }
 }
 
@@ -84,7 +83,7 @@ function splita(arg){
   if (arg !== undefined) {
     let data = arg.replace(/([-.() ])/g,'');
     return data;
-  } 
+  }
 }
 
 router.get('/', (req, res, next) => {
@@ -94,7 +93,7 @@ router.get('/', (req, res, next) => {
 router.get('/registro', testaUsernameEEscola, (req, res) => {});
 
 router.get('/login', (req, res) => {
-	res.send('página de login');
+  res.send('página de login');
 });
 
 router.post('/registro', testaUsername2, (req, res) => {
@@ -105,12 +104,12 @@ router.post('/registro', testaUsername2, (req, res) => {
   req.checkBody('username', 'Username is required').notEmpty();
   req.checkBody('password', 'Password is required').notEmpty();
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-	let errors = req.validationErrors();
+  let errors = req.validationErrors();
 
-	if(errors){
-		//res.status(501).send('error');
+  if(errors){
+    //res.status(501).send('error');
     console.log("Errors: "+errors);
-	} else {
+  } else {
 
     let newIntegrante = ({
       tipo: "Orientador",
@@ -157,7 +156,7 @@ router.post('/registro', testaUsername2, (req, res) => {
       tamCamiseta: req.body.tamCamisetaAluno3
     });
 
-		let newProject = new ProjetoSchema({
+    let newProject = new ProjetoSchema({
       nomeProjeto: req.body.nomeProjeto,
       categoria: req.body.categoria,
       eixo: req.body.eixo,
@@ -171,12 +170,12 @@ router.post('/registro', testaUsername2, (req, res) => {
       password: req.body.password,
       createdAt: Date.now(),
       resumo: req.body.resumo,
-		});
+    });
 
     newProject.integrantes.push(newIntegrante);
 
     if(req.body.nomeOrientador2 && req.body.emailOrientador2 && req.body.cpfOrientador2 && req.body.telefoneOrientador2 && req.body.tamCamisetaOrientador2){
-          newProject.integrantes.push(newIntegrante2);
+      newProject.integrantes.push(newIntegrante2);
     }
 
     newProject.integrantes.push(newIntegrante3);
@@ -189,7 +188,7 @@ router.post('/registro', testaUsername2, (req, res) => {
       newProject.integrantes.push(newIntegrante5);
     }
 
-		Projeto.createProject(newProject);
+    Projeto.createProject(newProject);
 
     let para = req.body.email
     ,   titulo = "MOVACI 2016 - Inscrição realizada com sucessowowowo!"
@@ -197,9 +196,9 @@ router.post('/registro', testaUsername2, (req, res) => {
     ,   html = '<h3>E aí pessoal do projeto</h3>' +req.body.nomeProjeto+ '<h3> , tudo certo? Inscrição confirmada! </h3> <img src="apps.timwhitlock.info/static/images/emoji/emoji-apple/1f604.png" alt="Smiley face" width="50%"> <br>';
 
     const transporter = nodemailer.createTransport(smtpTransport({
-    host: 'smtp.zoho.com',
-    port: 587,
-    auth: {
+      host: 'smtp.zoho.com',
+      port: 587,
+      auth: {
         user: 'contato@movaci.com.br',
         pass: '*mo12va45ci78!'
       }
@@ -213,31 +212,31 @@ router.post('/registro', testaUsername2, (req, res) => {
       html: html
     };
 
-    /*transporter.sendMail(mensagem, (err) => {
-     if (err) throw err;
-     console.log("enviou a msg");
-    });*/
+    transporter.sendMail(mensagem, (err) => {
+      if (err) throw err;
+      console.log("enviou a msg");
+    });
 
-		res.redirect('/projetos/login');
-	}
+    // res.redirect('/projetos/login');
+  }
   //res.send('OK');
 });
 
 // Setando a estatégia do Passport
 passport.use(new LocalStrategy((username, password, done) => {
-	Projeto.getProjectByUsername(username, (err, user) => {
-	  	if(err) throw err;
-	   	if(!user){
-	   		return done(null, false, {message: 'Unknown User'});
-	   	}
-   	Projeto.comparePassword(password, user.password, (err, isMatch) => {
-   		if(err) throw err;
-   		if(isMatch){
-   			return done(null, user);
-   		} else {
-   			return done(null, false, {message: 'Invalid password'});
-   		}
-   	});
+  Projeto.getProjectByUsername(username, (err, user) => {
+    if(err) throw err;
+    if(!user){
+      return done(null, false, {message: 'Unknown User'});
+    }
+    Projeto.comparePassword(password, user.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch){
+        return done(null, user);
+      } else {
+        return done(null, false, {message: 'Invalid password'});
+      }
+    });
   });
 }));
 
@@ -286,10 +285,10 @@ router.put('/update', ensureAuthenticated, (req, res) => {
 });
 
 router.put('/updateOrientador', ensureAuthenticated, (req, res) => {
-let id = req.user.id;
+  let id = req.user.id;
 
   if(req.body.nomeOrientador1 !== undefined && req.body.emailOrientador1 !== undefined && req.body.cpfOrientador1 !== undefined && req.body.telefoneOrientador1 !== undefined && req.body.tamCamisetaOrientador1 !== undefined){
-    let id_subdoc_1 = req.body.integrantes_id;
+    let id_subdoc_1 = req.body.idOrientador1;
     let newIntegrante = ({
       tipo: "Orientador",
       nome: req.body.nomeOrientador1,
@@ -301,57 +300,57 @@ let id = req.user.id;
     });
 
     ProjetoSchema.findOneAndUpdate({"_id": id,"integrantes._id": id_subdoc_1},
-      {"$set": {"integrantes.$": newIntegrante, updatedAt: Date.now()}}, {new:true},
-      (err,doc) => {
-        if (err) throw err;
-        //res.status(200).send('OK');
-      }
-    );
-  } else if (req.body.nomeOrientador1 == undefined && req.body.emailOrientador1 == undefined && req.body.integrantes_id !== undefined) {
-    ProjetoSchema.findOne({"_id": id,"integrantes._id": req.body.integrantes_id}, (err, usr) => {
+    {"$set": {"integrantes.$": newIntegrante, updatedAt: Date.now()}}, {new:true},
+    (err,doc) => {
       if (err) throw err;
-      usr.integrantes.id(req.body.integrantes_id).remove();
-      usr.save((err, usr) => {
-        if (err) throw err;
-        res.status(200).send('OK');;
-      });
-    });
-  } else res.status(200).send('ultima af coisa deu');
-
-  if (req.body.nomeOrientador2 !== undefined && req.body.emailOrientador2 !== undefined && req.body.cpfOrientador2 !== undefined && req.body.telefoneOrientador2 !== undefined && req.body.tamCamisetaOrientador2 !== undefined){
-    let id_subdoc_2 = req.body.integrantes_id2;
-    let newIntegrante2 = ({
-      tipo: "Orientador",
-      nome: req.body.nomeOrientador2,
-      email: req.body.emailOrientador2,
-      cpf: splita(req.body.cpfOrientador2),
-      telefone: splita(req.body.telefoneOrientador2),
-      tamCamiseta: req.body.tamCamisetaOrientador2,
-      _id: id_subdoc_2
-    });
-
-    ProjetoSchema.findOneAndUpdate({"_id": id,"integrantes._id": id_subdoc_2},
-      {"$set": {"integrantes.$": newIntegrante2, updatedAt: Date.now()}}, {new:true},
-      (err,doc) => {
-        if (err) throw err;
-        //res.status(200).send('OK');;
-      }
-    );
-  } else if (req.body.nomeOrientador2 == undefined && req.body.emailOrientador2 == undefined && req.body.integrantes_id2 !== undefined) {
-    ProjetoSchema.findOne({"_id": id,"integrantes._id": req.body.integrantes_id2}, (err, usr) => {
+      res.status(200).send('OK');
+    }
+  );
+} else if (req.body.nomeOrientador1 == undefined && req.body.emailOrientador1 == undefined && req.body.idOrientador1 !== undefined) {
+  ProjetoSchema.findOne({"_id": id,"integrantes._id": req.body.idOrientador1}, (err, usr) => {
+    if (err) throw err;
+    usr.integrantes.id(req.body.idOrientador1).remove();
+    usr.save((err, usr) => {
       if (err) throw err;
-      usr.integrantes.id(req.body.integrantes_id2).remove();
-      usr.save((err, usr) => {
-        if (err) throw err;
-        res.status(200).send('OK');;
-      });
+      res.status(200).send('OK');
     });
-  } else res.status(200).send('ultima af coisa deu');
+  });
+} else res.status(200).send('ultima af coisa deu');
+
+if (req.body.nomeOrientador2 !== undefined && req.body.emailOrientador2 !== undefined && req.body.cpfOrientador2 !== undefined && req.body.telefoneOrientador2 !== undefined && req.body.tamCamisetaOrientador2 !== undefined){
+  let id_subdoc_2 = req.body.idOrientador2;
+  let newIntegrante2 = ({
+    tipo: "Orientador",
+    nome: req.body.nomeOrientador2,
+    email: req.body.emailOrientador2,
+    cpf: splita(req.body.cpfOrientador2),
+    telefone: splita(req.body.telefoneOrientador2),
+    tamCamiseta: req.body.tamCamisetaOrientador2,
+    _id: id_subdoc_2
+  });
+
+  ProjetoSchema.findOneAndUpdate({"_id": id,"integrantes._id": id_subdoc_2},
+  {"$set": {"integrantes.$": newIntegrante2, updatedAt: Date.now()}}, {new:true},
+  (err,doc) => {
+    if (err) throw err;
+    res.status(200).send('OK');
+  }
+);
+} else if (req.body.nomeOrientador2 == undefined && req.body.emailOrientador2 == undefined && req.body.idOrientador2 !== undefined) {
+  ProjetoSchema.findOne({"_id": id,"integrantes._id": req.body.idOrientador2}, (err, usr) => {
+    if (err) throw err;
+    usr.integrantes.id(req.body.idOrientador2).remove();
+    usr.save((err, usr) => {
+      if (err) throw err;
+      res.status(200).send('OK');;
+    });
+  });
+} else res.status(200).send('ultima af coisa deu');
 });
 
 router.put('/novoIntegrante', ensureAuthenticated, (req, res) => {
 
-let newIntegrante = ({
+  let newIntegrante = ({
     tipo: req.body.tipo,
     nome: req.body.nome,
     email: req.body.email,
@@ -360,19 +359,19 @@ let newIntegrante = ({
     tamCamiseta: req.body.tamCamiseta
   });
 
-    ProjetoSchema.findOne({_id: req.user.id}, (err, usr) => {
+  ProjetoSchema.findOne({_id: req.user.id}, (err, usr) => {
+    if (err) throw err;
+    usr.integrantes.push(newIntegrante);
+    usr.save((err, usr) => {
       if (err) throw err;
-      usr.integrantes.push(newIntegrante);
-      usr.save((err, usr) => {
-        if (err) throw err;
-      });
     });
+  });
 
 
-    ProjetoSchema.update({_id:req.user.id}, {$set: {updatedAt: Date.now()}}, {upsert:true,new: true}, (err,docs) => {
-      if (err) throw err;
-      res.status(200).json(docs);
-    });
+  ProjetoSchema.update({_id:req.user.id}, {$set: {updatedAt: Date.now()}}, {upsert:true,new: true}, (err,docs) => {
+    if (err) throw err;
+    res.status(200).json(docs);
+  });
 
 });
 
@@ -383,15 +382,15 @@ router.put('/removerIntegrante', ensureAuthenticated, (req, res) => {
     if (err) throw err;
     usr.integrantes.id(id).remove()
     usr.save((err, usr) => {
-    if (err) throw err;
+      if (err) throw err;
     });
   });
 
 
-    ProjetoSchema.update({_id:req.user.id}, {$set: {updatedAt: Date.now()}}, {upsert:true,new: true}, (err,docs) => {
-      if (err) throw err;
-      res.status(200).json(docs);
-    });
+  ProjetoSchema.update({_id:req.user.id}, {$set: {updatedAt: Date.now()}}, {upsert:true,new: true}, (err,docs) => {
+    if (err) throw err;
+    res.status(200).json(docs);
+  });
 
 
 
@@ -409,16 +408,16 @@ router.post('/redefinir-senha', (req, res) => {
       } else{
         let email = doc.email;
         let nome_projeto = doc.nomeProjeto;
-        let url = "url: http://localhost/projetos/nova-senha/"+username+"/"+token;
+        let url = "url: http://localhost/nova-senha/"+username+"/"+token;
 
         let titulo = "MOVACI 2016 - Redefinição de senha"
         ,   texto = " "
         ,   html = "<h1>Blablab "+nome_projeto+" labalabla  "+url+"</h1>";
 
         const transporter = nodemailer.createTransport(smtpTransport({
-        host: 'smtp.zoho.com',
-        port: 587,
-        auth: {
+          host: 'smtp.zoho.com',
+          port: 587,
+          auth: {
             user: 'contato@movaci.com.br',
             pass: '*mo12va45ci78!'
           }
@@ -432,16 +431,30 @@ router.post('/redefinir-senha', (req, res) => {
           html: html
         };
         //FALTA ENVIAR O EMAIL COM O LINK PRA TROCAR A SENHA
-        res.status(200).send("url: http://localhost/projetos/nova-senha/"+username+"/"+token);
+        // res.status(200).send("url: http://localhost/nova-senha/"+username+"/"+token);
+        let pacote = ({
+          token: token,
+          email: email
+        });
+        res.send(pacote);
         console.log(doc);
-    /*transporter.sendMail(mensagem, (err) => {
-    if (err) throw err;
-    console.log("enviou a msg");
-    })*/
+        transporter.sendMail(mensagem, (err) => {
+          if (err) throw err;
+          console.log("enviou a msg");
+        })
       }
     });
   });
 });
+
+// router.get('/nova-senha/:username/:token', (req, res) => {
+//   if(req.params.token === '') {
+//     res.status(400).send("erro");
+//     //console.log('err');
+//   } else {
+//     res.send(req.params.token);
+//   }
+// });
 
 router.post('/nova-senha/:username/:token', (req, res) => {
   if(req.params.token === '') {
@@ -483,28 +496,28 @@ router.post('/nova-senha/:username/:token', (req, res) => {
 
 router.get('/testekrl', function(req, res) {
 
-let cep = "95.800-000"
-,   cpf = "017.733.430-41"
-,   telefone = "(51) 3741-5039"
+  let cep = "95.800-000"
+  ,   cpf = "017.733.430-41"
+  ,   telefone = "(51) 3741-5039"
 
 
-if (cep !== undefined && cep.length==10) {
-  cep = cep.replace(/([-.])/g,'');
-  console.log(cep);
-}
+  if (cep !== undefined && cep.length==10) {
+    cep = cep.replace(/([-.])/g,'');
+    console.log(cep);
+  }
 
-if (cpf !== undefined && cpf.length==14) {
-  cpf = cpf.replace(/([-.])/g,'');
-  console.log(cpf);
-}
+  if (cpf !== undefined && cpf.length==14) {
+    cpf = cpf.replace(/([-.])/g,'');
+    console.log(cpf);
+  }
 
-if (telefone !== undefined && telefone.length==14) {
-  telefone = telefone.replace(/([-.() ])/g,'');
-  console.log(telefone);
-}
+  if (telefone !== undefined && telefone.length==14) {
+    telefone = telefone.replace(/([-.() ])/g,'');
+    console.log(telefone);
+  }
 
 
-res.send(cep+" "+cpf+" "+telefone);
+  res.send(cep+" "+cpf+" "+telefone);
 });
 
 
@@ -512,22 +525,22 @@ res.send(cep+" "+cpf+" "+telefone);
 
 // GET na rota todos para mostrar TODOS os projetos cadastrados (projetos/todos)
 router.get('/todos', ensureAuthenticated, (req, res) => {
-	//res.set({ 'Content-Type' : 'text/json; charset=utf-8'})
+  //res.set({ 'Content-Type' : 'text/json; charset=utf-8'})
   Projeto.findAll((err, docs) => {
-   	res.send(docs);
+    res.send(docs);
   })
 });
 
 /*router.put("/:id",function (req,res) {
-          var newUser = req.body;
-          UserModel.update({_id:newUser._id},{$set:newUser},function (err,docs) {
-            if(err){
-              console.log("some error occurred in update");
-            }else{
-              console.log("update user",docs);
-              res.status(200).json(newUser);
-            }
-          });
-        });﻿*/
+var newUser = req.body;
+UserModel.update({_id:newUser._id},{$set:newUser},function (err,docs) {
+if(err){
+console.log("some error occurred in update");
+}else{
+console.log("update user",docs);
+res.status(200).json(newUser);
+}
+});
+});﻿*/
 
 module.exports = router;

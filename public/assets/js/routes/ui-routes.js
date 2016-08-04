@@ -46,7 +46,7 @@
 		// 	controller: "loginCtrl"
 		// })
 		.state('inscricao', {
-			url: "/projeto/inscricao",
+			url: "/projetos/inscricao",
 			templateUrl: "/views/inscricao.html",
 			controller: "registroCtrl"
 		})
@@ -84,7 +84,7 @@
 			controller: "updateCtrl"
 		})
 		.state('nova-senha', {
-			url: "/nova-senha/:username",
+			url: "/nova-senha/:username/:token",
 			templateUrl: "/views/nova-senha.html",
 			controller: "redefinirCtrl"
 		});

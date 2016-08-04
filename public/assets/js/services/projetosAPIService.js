@@ -118,6 +118,24 @@
 			return $http(request);
 		};
 
+		let _postNewPassword = function(password) {
+			const request = {
+				url: '/projetos/nova-senha/:username/:token',
+				method: 'POST',
+				data: password,
+				params: {username: $stateParams.username, token: $stateParams.token}
+			}
+			return $http(request);
+		};
+
+		// let _getNewPassword = function() {
+		// 	const request = {
+		// 		url: '/projetos/nova-senha/:username/:token',
+		// 		method: 'GET'
+		// 	}
+		// 	return $http(request);
+		// };
+
 		return {
 			saveProjeto: _saveProjeto,
 			saveSaberesDocentes: _saveSaberesDocentes,
@@ -132,6 +150,8 @@
 			putProjeto: _putProjeto,
 			putIntegrante: _putIntegrante,
 			postRedefinir: _postRedefinir,
+			postNewPassword: _postNewPassword
+			// getNewPassword: _getNewPassword
 		};
 	});
 })();

@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('loginCtrl', function($scope, $rootScope, $location, $mdDialog, projetosAPI) {
+	.controller('loginCtrl', function($scope, $rootScope, $location, $state, $stateParams, $mdDialog, projetosAPI) {
 
 		$scope.login = function() {
 			const username = $scope.user.username;
@@ -30,10 +30,42 @@
 		let enviarEmail = function(username) {
 			projetosAPI.postRedefinir(username)
 			.success(function(data) {
+				$scope.email = data.email;
+				$scope.token = data.token;
+				// $scope.token = $stateParams.token;
+				console.log($scope.token);
 				console.log('EMAIL ENVIADO');
+				let showAlert = function(ev) {
+					$mdDialog.show(
+						$mdDialog.alert()
+						.parent(angular.element(document.querySelector('#popupContainer')))
+						.clickOutsideToClose(false)
+						.theme('alert')
+						.title('Quase lá...')
+						.textContent('Foi enviado um email para '+$scope.email+', onde seguem as instruções para a alteração da senha.')
+						.ariaLabel('Alert Dialog Demo')
+						.ok('OK')
+						.targetEvent(ev)
+					);
+				};
+				showAlert();
 			})
-			.error(function() {
+			.error(function(status) {
 				console.log('EMAIL NÃO FOI ENVIADO AF TIO');
+				let showAlert = function(ev) {
+					$mdDialog.show(
+						$mdDialog.alert()
+						.parent(angular.element(document.querySelector('#popupContainer')))
+						.clickOutsideToClose(false)
+						.theme('alert')
+						.title('Deu ruim')
+						.textContent('You can specify some description text in here.')
+						.ariaLabel('Alert Dialog Demo')
+						.ok('OK')
+						.targetEvent(ev)
+					);
+				};
+				showAlert();
 			});
 		};
 
