@@ -302,13 +302,13 @@ md-dialog.md-error-theme md-dialog-content {
 md-dialog md-dialog-actions button.md-error-theme {
   color: #616161 !important;
 }
-.md-alert-theme button {
+.alert-theme button {
   width: 100%;
 }
-md-dialog.md-alert-theme md-dialog-actions {
+.alert-theme md-dialog md-dialog-actions {
   padding-left: 8px;
 }
-md-dialog.md-alert-theme md-dialog-actions .md-button {
+.alert-theme md-dialog md-dialog-actions .md-button {
   margin-right: 8px;
 }
 md-input-container.md-default-theme .md-input,
@@ -633,6 +633,9 @@ md-toast {
 .grey-text.darken-1 {
   color: #757575 !important;
 }
+.grey-text.darken-3 {
+  color: #424242 !important;
+}
 .white-text {
   color: rgba(255,255,255,0.87) !important;
 }
@@ -680,7 +683,7 @@ md-icon {
   color: #212121;
   background: #f4f4f4;
   border: 1px solid gray;
-  padding: 1px 4px;
+  padding: 0 4px;
   border-radius: 3px;
 }
 .btn-github {

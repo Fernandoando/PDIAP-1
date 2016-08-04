@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('registroCtrl', function($scope, $rootScope, $mdDialog, $q, $location, projetosAPI) {
+	.controller('registroCtrl', function($scope, $rootScope, $mdDialog, $q, $location, $timeout, projetosAPI) {
 
 		$scope.registro = false;
 		$scope.loginHabilitado = false;
@@ -81,6 +81,32 @@
 
 		$scope.habilitarLogin = function() {
 			return $scope.loginHabilitado = true;
+		};
+
+		$scope.emails = [];
+		$scope.loadEmails = function() {
+			$scope.emails = [];
+			return $timeout(function() {
+				for (var i = 1; i <= $scope.dynamicFields1.length; i++) {
+					if (i === 1) {
+						$scope.emails.push($scope.projeto.emailOrientador1);
+					}
+					if (i === 2) {
+						$scope.emails.push($scope.projeto.emailOrientador2);
+					}
+				}
+				for (var i = 1; i <= $scope.dynamicFields2.length; i++) {
+					if (i === 1) {
+						$scope.emails.push($scope.projeto.emailAluno1);
+					}
+					if (i === 2) {
+						$scope.emails.push($scope.projeto.emailAluno1);
+					}
+					if (i === 3) {
+						$scope.emails.push($scope.projeto.emailAluno1);
+					}
+				}
+			}, 650);
 		};
 
 		projetosAPI.getCategorias()

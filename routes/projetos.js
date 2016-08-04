@@ -432,11 +432,8 @@ router.post('/redefinir-senha', (req, res) => {
         };
         //FALTA ENVIAR O EMAIL COM O LINK PRA TROCAR A SENHA
         // res.status(200).send("url: http://localhost/nova-senha/"+username+"/"+token);
-        let pacote = ({
-          token: token,
-          email: email
-        });
-        res.send(pacote);
+        // deixar esse email pq preciso nois
+        res.status(200).send(email);
         console.log(doc);
         transporter.sendMail(mensagem, (err) => {
           if (err) throw err;
