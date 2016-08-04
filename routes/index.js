@@ -3,7 +3,7 @@ const express = require('express')
 
 //GET na homepage (/).
 router.all('/', function(req, res) {
-  res.render('layout.ejs');
+  res.render('layout');
 });
 
 module.exports = router;

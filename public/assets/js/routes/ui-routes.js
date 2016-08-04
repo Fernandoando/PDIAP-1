@@ -24,7 +24,12 @@
 		};
 
 		$locationProvider.html5Mode(true);
-		//$urlRouterProvider.otherwise("/state1");
+		// $locationProvider.html5Mode({
+		// 	enabled: true,
+		// 	requireBase: false,
+		// 	rewriteLinks: false
+		// });
+		// $urlRouterProvider.otherwise("/");
 		$stateProvider
 		.state('index', {
 			url: "/",

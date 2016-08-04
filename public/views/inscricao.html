@@ -34,7 +34,7 @@
       </div>
       <div class="bloco-right" flex-xs="100" flex="75">
         <md-input-container class="md-block" flex-gt-sm>
-          <label>Nome do Projeto</label>
+          <label>Nome do projeto</label>
           <input type="text" name="nomeProjeto" data-ng-model="projeto.nomeProjeto" required />
           <div class="md-errors-spacer">
             <div data-ng-if="projetoForm.nomeProjeto.$dirty">
@@ -339,20 +339,20 @@
       <label>Quais?</label>
       <md-select name="hospedagem" data-ng-model="projeto.hospedagem" multiple data-ng-focus="montarIntegrantes(projeto)" required>
         <!-- <md-optgroup label="Orientador(es)" data-ng-if="projeto.nomeOrientador1 !== undefined">
-          <md-option ng-value="eae" ng-repeat="eae in orientadoresArray">{{eae}}</md-option>
-        </md-optgroup> -->
-        <md-optgroup label="Aluno(s)" data-ng-if="projeto.nomeAluno1 !== undefined">
-          <md-option ng-value="dae" ng-repeat="dae in alunosArray">{{dae}}</md-option>
-        </md-optgroup>
-        <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto.nomeAluno1 === undefined" disabled></md-optgroup>
-      </md-select>
-      <div class="md-errors-spacer">
-        <div data-ng-if="projetoForm.hospedagem.$touched">
-          <div class="message-error" data-ng-if="projetoForm.hospedagem.$error.required">Selecione uma opção</div>
-        </div>
+        <md-option ng-value="eae" ng-repeat="eae in orientadoresArray">{{eae}}</md-option>
+      </md-optgroup> -->
+      <md-optgroup label="Aluno(s)" data-ng-if="projeto.nomeAluno1 !== undefined">
+        <md-option ng-value="dae" ng-repeat="dae in alunosArray">{{dae}}</md-option>
+      </md-optgroup>
+      <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto.nomeAluno1 === undefined" disabled></md-optgroup>
+    </md-select>
+    <div class="md-errors-spacer">
+      <div data-ng-if="projetoForm.hospedagem.$touched">
+        <div class="message-error" data-ng-if="projetoForm.hospedagem.$error.required">Selecione uma opção</div>
       </div>
-    </md-input-container>
-  </div>
+    </div>
+  </md-input-container>
+</div>
 </div>
 <hr size="3">
 <div layout="row">
@@ -390,26 +390,26 @@
     </div>
     <div class="bloco-right" flex-xs="100" flex="75" style="border:1.5px solid #81c784;padding:20px;">
       <!-- <div layout-gt-sm="row"> -->
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>E-mail principal</label>
-          <input type="email" name="email" data-ng-model="projeto.email" required data-ng-pattern="/^.+@.+\..+$/" />
-          <div class="md-errors-spacer">
-            <div data-ng-if="projetoForm.email.$dirty">
-              <div class="message-error" data-ng-if="projetoForm.email.$error.required">Obrigatório</div>
-              <div class="message-error" data-ng-if="projetoForm.email.$error.pattern && projetoForm.email.$touched">Email inválido.</div>
-            </div>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>E-mail principal</label>
+        <input type="email" name="email" data-ng-model="projeto.email" required data-ng-pattern="/^.+@.+\..+$/" />
+        <div class="md-errors-spacer">
+          <div data-ng-if="projetoForm.email.$dirty">
+            <div class="message-error" data-ng-if="projetoForm.email.$error.required">Obrigatório</div>
+            <div class="message-error" data-ng-if="projetoForm.email.$error.pattern && projetoForm.email.$touched">Email inválido.</div>
           </div>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Username do projeto</label>
-          <input type="text" name="username" data-ng-model="projeto.username" data-ng-change="verificaUsername(projeto.username)" required/>
-          <div class="md-errors-spacer">
-            <div data-ng-if="projetoForm.username.$dirty">
-              <div class="message-error" data-ng-if="projetoForm.username.$error.required">Obrigatório.</div>
-            </div>
-            <div class="message-error" data-ng-if="projetoForm.username.$error.duplicado">Username já está sendo utilizado.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Username do projeto</label>
+        <input type="text" name="username" data-ng-model="projeto.username" data-ng-change="verificaUsername(projeto.username)" required/>
+        <div class="md-errors-spacer">
+          <div data-ng-if="projetoForm.username.$dirty">
+            <div class="message-error" data-ng-if="projetoForm.username.$error.required">Obrigatório.</div>
           </div>
-        </md-input-container>
+          <div class="message-error" data-ng-if="projetoForm.username.$error.duplicado">Username já está sendo utilizado.</div>
+        </div>
+      </md-input-container>
       <!-- </div> -->
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
@@ -438,6 +438,13 @@
       </div>
     </div>
   </div>
+  <div layout="row" layout-align="center center" layout-padding>
+    <md-checkbox md-no-ink ng-model="aceitaRegulamento" required>
+      Para finalizar a inscrição você precisa aceitar os termos estabelecidos no <a href="#" class="link-regulamento">regulamento</a> da feira.
+    </md-checkbox>
+  </div>
+  {{aceitaRegulamento}}
+
   <!-- Finalizar inscrição -->
   <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
     <md-button class="md-raised md-primary green lighten-1" data-ng-disabled="!projetoForm.$valid || projetoForm.password2.$error.pwmatch" data-ng-click="registrarProjeto(projeto);showConfirmDialog($event)">

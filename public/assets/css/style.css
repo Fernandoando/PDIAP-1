@@ -32,6 +32,9 @@
   border-radius: 5px;
 }
 ui-view { height: inherit !important; }
+a {
+  text-decoration: none !important;
+}
 hr {
   background: rgba(0,0,0,0.12);
   border: none!important;
@@ -54,6 +57,7 @@ select:-webkit-autofill:focus,
 select:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: inherit !important;
+  background-color: transparent !important;
 }
 input:not([type]),
 input[type=text],
@@ -140,6 +144,16 @@ md-select[multiple] .md-container {
   color: #e0e0e0 !important;
   background-color: gray !important;
   cursor: not-allowed !important;
+}
+md-checkbox {
+  color: rgba(0,0,0,0.73);
+}
+md-checkbox.md-checked {
+  color: #757575;
+}
+md-checkbox.md-default-theme.md-checked .md-icon,
+md-checkbox.md-checked .md-icon {
+  background-color: #43a047 !important;
 }
 footer {
   background: url('/assets/images/bg-dark-texture.png');
@@ -645,13 +659,20 @@ md-icon {
 }
 .avaliadores-content p {
   text-align: center;
-  color: #424242;
+  color: #616161;
 }
 md-dialog.md-error-theme md-dialog-content {
   background: #f44336 !important;
 }
 md-dialog md-dialog-actions button.md-error-theme {
   color: #616161 !important;
+}
+.link-regulamento {
+  color: #212121;
+  background: #f4f4f4;
+  border: 1px solid gray;
+  padding: 1px 4px;
+  border-radius: 3px;
 }
 .btn-github {
   width: auto !important;

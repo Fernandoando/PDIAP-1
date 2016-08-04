@@ -25,18 +25,18 @@ router.post('/registro', (req, res) => {
 		email: req.body.email,
 		cpf: splita(req.body.cpf),
 		rg: splita(req.body.rg),
-		dtNasc: req.body.dtNasc,
+		dtNascimento: req.body.dtNascimento,
 		nivelAcademico: req.body.nivelAcademico,
 		categoria: req.body.categoria,
 		eixo: req.body.eixo,
 		atuacaoProfissional: req.body.atuacaoProfissional,
 		tempoAtuacao: req.body.tempoAtuacao,
 		telefone: splita(req.body.telefone),
-		outros: req.body.outros
+		curriculo: req.body.curriculo
 	});
 
 	Avaliador.createAvaliador(newAvaliador, (callback) => {});
-	res.redirect('/avaliadores');
+	res.send('success');
 });
 
 module.exports = router;

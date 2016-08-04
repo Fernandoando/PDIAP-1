@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('avaliadoresCtrl', function($scope, $location, projetosAPI) {
+	.controller('avaliadoresCtrl', function($scope, $location, $mdDialog, projetosAPI) {
 
 		$scope.eixos = [];
 
@@ -29,32 +29,88 @@
 			});
 		};
 
-		$scope.registrarAvaliadores = function(avaliador) {
-			projetosAPI.saveProjeto(avaliador)
-			.success(function(avaliador, status) {
-				console.log(projeto);
-				if (status === 202) {
-					$scope.emailDuplicado = true;
-					$scope.projetoForm.email.$setValidity('duplicado',false);
-					console.log('email duplicado: '+$scope.emailDuplicado);
-				} else if (projeto !== 'error') {
-					$scope.registro = true;
-					$scope.msg = 'Registrado com sucesso!';
-					//$location.url('/inscricao');
+		$scope.registrarAvaliador = function(avaliador) {
+			let curriculo1 = '';
+			if ($scope.lattesVerify === 'Sim') {
+				curriculo1 = avaliador.link;
+			} else if ($scope.lattesVerify === 'Não') {
+				curriculo1 = avaliador.resumoAtividades;
+			}
+			let pacote = ({
+				nome: avaliador.nome,
+				email: avaliador.email,
+				telefone: avaliador.telefone,
+				cpf: avaliador.cpf,
+				rg: avaliador.rg,
+				dtNascimento: avaliador.dtNascimento,
+				nivelAcademico: avaliador.nivelAcademico,
+				atuacaoProfissional: avaliador.atuacaoProfissional,
+				tempoAtuacao: avaliador.tempoAtuacao,
+				categoria: avaliador.categoria,
+				eixo: avaliador.eixo,
+				curriculo: curriculo1
+			});
+			console.log(pacote);
+			projetosAPI.saveAvaliador(pacote)
+			.success(function(data, status) {
+				if (data === 'success') {
+					let showConfirmDialog = function(ev) {
+						var confirm = $mdDialog.confirm()
+						.title('Parabéns!')
+						.textContent('Inscrição realizada com sucesso!')
+						.ariaLabel('Inscrição realizada com sucesso!')
+						.targetEvent(ev)
+						.ok('OK, Voltar')
+						.cancel('Nova Inscrição');
+						$mdDialog.show(confirm).then(function() {
+							console.log(confirm);
+							$location.url('/');
+						}, function() {});
+					};
+					showConfirmDialog();
 					resetForm();
 				} else {
-					$scope.registro = false;
-					$scope.msg = 'Erro ao registrar projeto.';
-					//$location.url('/inscricao');
+					let showConfirmDialog = function(ev) {
+						var confirm = $mdDialog.confirm()
+						.title('Ops...')
+						.textContent('A inscrição não foi realizada. Tente novamente ou então, entre em contato conosco.')
+						.ariaLabel('A inscrição não foi realizada.')
+						.targetEvent(ev)
+						.theme('error')
+						.ok('Continuar')
+						.cancel('Entrar em contato');
+						$mdDialog.show(confirm).then(function() {}
+						, function() {
+							$location.url('/');
+						});
+					};
+					showConfirmDialog();
 				}
 			})
 			.error(function(status) {
-				$scope.registro = false;
-				$scope.msg = 'Erro ao registrar projeto.';
+				let showConfirmDialog = function(ev) {
+					var confirm = $mdDialog.confirm()
+					.title('Ops...')
+					.textContent('A inscrição não foi realizada. Tente novamente ou então, entre em contato conosco.')
+					.ariaLabel('A inscrição não foi realizada.')
+					.targetEvent(ev)
+					.theme('error')
+					.ok('Continuar')
+					.cancel('Entrar em contato');
+					$mdDialog.show(confirm).then(function() {}
+					, function() {
+						$location.url('/');
+					});
+				};
+				showConfirmDialog();
 				console.log(status);
-				//$location.url('/inscricao');
 			});
-			console.log(projeto);
+		};
+
+		let resetForm = function() {
+			delete $scope.avaliadores;
+			$scope.avaliadoresForm.$setPristine();
+			$scope.lattesVerify = '';
 		};
 	});
 })();

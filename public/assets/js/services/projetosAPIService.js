@@ -22,6 +22,15 @@
 			return $http(request);
 		};
 
+		let _saveAvaliador = function(avaliador) {
+			const request = {
+				url: '/avaliadores/registro',
+				method: 'POST',
+				data: avaliador
+			}
+			return $http(request);
+		};
+
 		let _postLogin = function(username,password) {
 			const request = {
 				url: '/projetos/login',
@@ -112,6 +121,7 @@
 		return {
 			saveProjeto: _saveProjeto,
 			saveSaberesDocentes: _saveSaberesDocentes,
+			saveAvaliador: _saveAvaliador,
 			postLogin: _postLogin,
 			getProjeto: _getProjeto,
 			getTodosProjetos: _getTodosProjetos,

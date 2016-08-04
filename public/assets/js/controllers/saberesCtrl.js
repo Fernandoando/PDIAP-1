@@ -48,7 +48,6 @@
 					};
 					showConfirmDialog();
 					resetForm();
-					console.log("foi krai");
 				} else {
 					let showConfirmDialog = function(ev) {
 						var confirm = $mdDialog.confirm()

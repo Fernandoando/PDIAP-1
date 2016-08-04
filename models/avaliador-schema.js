@@ -16,7 +16,7 @@ const AvaliadorSchema = new Schema({
 	rg: {
 		type: String
 	},
-	dtNasc: {
+	dtNascimento: {
 		type: String
 	},
 	nivelAcademico: {
@@ -37,7 +37,7 @@ const AvaliadorSchema = new Schema({
 	telefone: {
 		type: String
 	},
-	outros: {
+	curriculo: {
 		type: String
 	}
 }, { collection: 'avaliadorCollection' });
