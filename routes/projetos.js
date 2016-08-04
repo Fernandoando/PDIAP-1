@@ -76,7 +76,7 @@ function ensureAuthenticated(req, res, next) {
     return next();
   else{
     res.send('0');
-    res.redirect('/#/');
+    //res.redirect('/#/');
   }
 }
 
@@ -193,15 +193,15 @@ router.post('/registro', testaUsername2, (req, res) => {
 
     let para = req.body.email
     ,   titulo = "MOVACI 2016 - Inscrição realizada com sucessowowowo!"
-    ,   texto = "E aí pessoal do projeto" +req.body.nomeProjeto+ ", tudo certo? Inscrição confirmada!"
-    ,   html = "<h1>Eae gata vc cadastrou um proujeto.</h1>";
+    ,   texto = " "
+    ,   html = '<h3>E aí pessoal do projeto</h3>' +req.body.nomeProjeto+ '<h3> , tudo certo? Inscrição confirmada! </h3> <img src="apps.timwhitlock.info/static/images/emoji/emoji-apple/1f604.png" alt="Smiley face" width="50%"> <br>';
 
     const transporter = nodemailer.createTransport(smtpTransport({
     host: 'smtp.zoho.com',
     port: 587,
     auth: {
         user: 'contato@movaci.com.br',
-        pass: 'chola viadinho'
+        pass: '*mo12va45ci78!'
       }
     }));
 
@@ -253,7 +253,7 @@ passport.deserializeUser((id, done) => {
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
     res.send(req.user);
-    //res.redirect('/projetos/dados');
+    res.redirect('/projetos/home');
     //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
 });
 
@@ -265,7 +265,7 @@ router.post('/logout', (req, res) => {
   req.logout();
   res.send(200);
   //res.clearCookie('userid');
-  res.redirect('/#/');
+  res.redirect('/');
 });
 
 router.get('/update', (req, res) => {
@@ -420,7 +420,7 @@ router.post('/redefinir-senha', (req, res) => {
         port: 587,
         auth: {
             user: 'contato@movaci.com.br',
-            pass: 'mya collins nossa gata'
+            pass: '*mo12va45ci78!'
           }
         }));
 
