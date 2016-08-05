@@ -39,6 +39,9 @@ const AvaliadorSchema = new Schema({
 	},
 	curriculo: {
 		type: String
+	},
+	turnos: {
+		type: String
 	}
 }, { collection: 'avaliadorCollection' });
 

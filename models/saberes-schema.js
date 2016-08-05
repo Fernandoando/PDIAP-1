@@ -21,6 +21,9 @@ const SaberesSchema = new Schema({
 	},
 	escola: {
 		type: String
+	},
+	resumo: {
+		type: String
 	}
 }, { collection: 'saberesCollection' });
 

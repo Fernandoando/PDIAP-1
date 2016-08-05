@@ -34,7 +34,8 @@ router.post('/registro', (req, res) => {
 		email: req.body.email,
 		cpf: splita(req.body.cpf),
 		telefone: splita(req.body.telefone),
-		escola: req.body.escola
+		escola: req.body.escola,
+    resumo: req.body.resumo
 	});
 
 	Saberes.createSaberes(newSaberes, (callback) => {});

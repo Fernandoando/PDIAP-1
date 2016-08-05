@@ -32,7 +32,8 @@ router.post('/registro', (req, res) => {
 		atuacaoProfissional: req.body.atuacaoProfissional,
 		tempoAtuacao: req.body.tempoAtuacao,
 		telefone: splita(req.body.telefone),
-		curriculo: req.body.curriculo
+		curriculo: req.body.curriculo,
+		turnos: req.body.turnos
 	});
 
 	Avaliador.createAvaliador(newAvaliador, (callback) => {});
