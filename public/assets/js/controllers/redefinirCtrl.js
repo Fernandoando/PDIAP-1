@@ -55,21 +55,19 @@
 					})
 					.error(function(status) {
 						console.log(status);
-						let showAlert1 = function(ev) {
-							$mdDialog.show(
-								$mdDialog.alert()
-								.parent(angular.element(document.querySelector('#popupContainer2')))
-								.clickOutsideToClose(false)
-								.theme('error')
-								.textContent('deu erro!')
-								.ariaLabel('Alert Dialog Demo')
-								.ok('OK')
-								.targetEvent(ev)
-							).then(function(result) {
+						let showConfirmDialog = function(ev) {
+							var confirm = $mdDialog.confirm()
+							.title('Oxe...')
+							.textContent('Erro ao atualizar a senha. A validade para cada redefinição dura uma hora, tente solicitar novamente.')
+							.targetEvent(ev)
+							.theme('error')
+							.ok('Voltar')
+							$mdDialog.show(confirm).then(function() {
 								$location.url('/');
-							}, function() {});
+							}
+							, function() {});
 						};
-						showAlert1();
+						showConfirmDialog();
 					});
 				};
 			};

@@ -88,22 +88,22 @@
 			$scope.emails = [];
 			return $timeout(function() {
 				for (var i = 1; i <= $scope.dynamicFields1.length; i++) {
-					if (i === 1) {
+					if (i === 1 && $scope.projeto.emailOrientador1 !== undefined) {
 						$scope.emails.push($scope.projeto.emailOrientador1);
 					}
-					if (i === 2) {
+					if (i === 2 && $scope.projeto.emailOrientador2 !== undefined) {
 						$scope.emails.push($scope.projeto.emailOrientador2);
 					}
 				}
 				for (var i = 1; i <= $scope.dynamicFields2.length; i++) {
-					if (i === 1) {
+					if (i === 1 && $scope.projeto.emailAluno1 !== undefined) {
 						$scope.emails.push($scope.projeto.emailAluno1);
 					}
-					if (i === 2) {
-						$scope.emails.push($scope.projeto.emailAluno1);
+					if (i === 2 && $scope.projeto.emailAluno2 !== undefined) {
+						$scope.emails.push($scope.projeto.emailAluno2);
 					}
-					if (i === 3) {
-						$scope.emails.push($scope.projeto.emailAluno1);
+					if (i === 3 && $scope.projeto.emailAluno3 !== undefined) {
+						$scope.emails.push($scope.projeto.emailAluno3);
 					}
 				}
 			}, 650);

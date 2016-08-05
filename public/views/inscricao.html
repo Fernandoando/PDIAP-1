@@ -1,14 +1,26 @@
-<!-- <header>
-<md-toolbar md-scroll-shrink ng-if="true" style="background:#424242!important;height:80px;">
-<div class="md-toolbar-tools">
-<h3 style="color:black;">Logo</h3>
-</div>
-</md-toolbar>
-</header> -->
-<section  class="wrapper-registro" style="background:#66bb6a;" layout="column" layout-align="center center" data-ng-cloak>
+<header>
+  <md-toolbar md-scroll-shrink style="background:rgba(26,151,30,0.75)!important;min-height:60px!important;height:60px;">
+    <div class="md-toolbar-tools" flex>
+      <span flex="5"></span>
+      <img src="assets/images/logo3.png" width="12%"></img>
+      <span flex></span>
+      <nav>
+        <ul>
+          <li><a href="#">PROGRAMAÇÃO</a></li>
+          <li><a href="#">LOCAL</a></li>
+          <li><a href="#">SABERES DOCENTES</a></li>
+          <li><a href="#">AVALIADORES</a></li>
+          <li><a href="#">DOCUMENTOS</a></li>
+        </ul>
+      </nav>
+      <span flex="5"></span>
+    </div>
+  </md-toolbar>
+</header>
+<section  class="wrapper-registro" style="margin-top:-60px!important;" layout="column" layout-align="center center" data-ng-cloak>
 
-  <div layout="column" layout-align="center center" style="position:absolute;width:100%;height:180px;background:rgba(26,151,30,0.75);top:0;z-index:2;">
-    <md-icon md-svg-icon="menu" style="margin:15px auto 0 60px;color:#eee;"></md-icon>
+  <div layout="column" layout-align="center center" style="position:absolute;width:100%;height:150px;background:rgba(26,151,30,0.75);top:60px;z-index:2;">
+    <!-- <md-icon md-svg-icon="menu" style="margin:15px auto 0 60px;color:#eee;"></md-icon> -->
     <div layout="column" layout-align="center center" class="inscricao-header-content">
       <h1>Inscrição de Projetos</h1>
     </div>
@@ -16,7 +28,7 @@
   <div  class="inscricao-header">
 
   </div>
-  <div style="position:absolute;width:100%;height:20px;z-index:20;top:160px;">
+  <div style="position:absolute;width:100%;height:20px;z-index:20;top:190px;">
     <svg
     width="100%"
     height="100%"
@@ -27,7 +39,7 @@
 </div>
 
 <md-content flex layout="column" layout-align="center center" style="width:100%!important;background:#fdfdfd;padding:40px;">
-  <form name="projetoForm" novalidate style="width:85%;max-width:850px;padding:8px;">
+  <form name="projetoForm" novalidate style="width:85%;max-width:900px;padding:8px;">
     <div layout="row">
       <div class="bloco-left" flex="25" hide-xs>
         <span>Sobre o Projeto</span>
@@ -376,7 +388,7 @@
 </div>
 
 <div class="row finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-  <md-button class="md-raised md-primary green lighten-1" data-ng-disabled="projetoForm.$valid" data-ng-click="habilitarLogin()" data-ng-if="!loginHabilitado">
+  <md-button class="md-raised md-primary green lighten-1" data-ng-disabled="!projetoForm.$valid" data-ng-click="habilitarLogin()" data-ng-if="!loginHabilitado">
     <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Avançar
   </md-button>
 </div>
@@ -392,79 +404,86 @@
       <!-- <div layout-gt-sm="row"> -->
       <md-input-container class="md-block" flex-gt-sm>
         <label>E-mail principal</label>
-        <md-select name="email" data-ng-model="projeto.email" md-on-open="loadEmails()" style="min-width: 200px;" required>
-          <md-option ng-value="user" ng-repeat="user in emails">{{user}}</md-option>
+        <md-select name="email" data-ng-model="projeto.email" md-on-open="loadEmails()" required>
+          <md-option ng-value="email" ng-repeat="email in emails" data-ng-if="emails.length > 0">{{email}}</md-option>
+          <md-option value="" disabled data-ng-if="emails.length == 0">Nenhum email inserido</md-option>
         </md-select>
         <div class="md-errors-spacer">
           <div data-ng-if="projetoForm.email.$dirty">
-            <div class="message-error" data-ng-if="projetoForm.email.$error.required">Obrigatório</div>
+            <div class="message-error" data-ng-if="projetoForm.email.$error.required">Obrigatório.</div>
           </div>
         </div>
       </md-input-container>
       <!-- <md-input-container class="md-block" flex-gt-sm>
-        <label>E-mail principal</label>
-        <input type="email" name="email" data-ng-model="projeto.email" required data-ng-pattern="/^.+@.+\..+$/" />
-        <div class="md-errors-spacer">
-          <div data-ng-if="projetoForm.email.$dirty">
-            <div class="message-error" data-ng-if="projetoForm.email.$error.required">Obrigatório</div>
-            <div class="message-error" data-ng-if="projetoForm.email.$error.pattern && projetoForm.email.$touched">Email inválido.</div>
-          </div>
-        </div>
-      </md-input-container> -->
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Nome do usuário</label>
-        <input type="text" name="username" data-ng-model="projeto.username" data-ng-change="verificaUsername(projeto.username)" required/>
-        <div class="md-errors-spacer">
-          <div data-ng-if="projetoForm.username.$dirty">
-            <div class="message-error" data-ng-if="projetoForm.username.$error.required">Obrigatório.</div>
-          </div>
-          <div class="message-error" data-ng-if="projetoForm.username.$error.duplicado">Username já está sendo utilizado.</div>
-        </div>
-      </md-input-container>
-      <!-- </div> -->
-      <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Senha</label>
-          <input type="password" name="password" data-ng-model="projeto.password" required data-ng-minlength="5"/>
-          <div class="md-errors-spacer">
-            <div data-ng-if="projetoForm.password.$dirty">
-              <div class="message-error" data-ng-if="projetoForm.password.$error.required">Obrigatório</div>
-              <div class="message-error" data-ng-if="projetoForm.password.$error.minlength && projetoForm.password.$touched">Senha muito fraca</div>
-              <div class="message-error" id="senha-regular" data-ng-if="projeto.password.length > 4 && projeto.password.length < 12">Senha regular</div>
-              <div class="message-error" id="senha-forte" data-ng-if="projeto.password.length >= 12">Senha forte</div>
-            </div>
-          </div>
-        </md-input-container>
-        <div flex="5" hide-xs hide-sm></div>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Confirme a senha</label>
-          <input type="password" name="password2" data-ng-model="projeto.password2" required data-password-verify="projeto.password"/>
-          <div class="md-errors-spacer">
-            <div data-ng-if="projetoForm.password2.$dirty">
-              <div class="message-error" data-ng-if="projetoForm.password2.$error.required">Obrigatório</div>
-              <div class="message-error" data-ng-if="projetoForm.password2.$error.passwordVerify && !projetoForm.password2.$error.required">Senha não confere!</div>
-            </div>
-          </div>
-        </md-input-container>
-      </div>
+      <label>E-mail principal</label>
+      <input type="email" name="email" data-ng-model="projeto.email" required data-ng-pattern="/^.+@.+\..+$/" />
+      <div class="md-errors-spacer">
+      <div data-ng-if="projetoForm.email.$dirty">
+      <div class="message-error" data-ng-if="projetoForm.email.$error.required">Obrigatório</div>
+      <div class="message-error" data-ng-if="projetoForm.email.$error.pattern && projetoForm.email.$touched">Email inválido.</div>
     </div>
   </div>
-  <div layout="row" layout-align="center center" layout-padding>
-    <md-checkbox md-no-ink ng-model="aceitaRegulamento" required>
-      Para finalizar a inscrição você precisa aceitar os termos estabelecidos no <a href="#" class="link-regulamento">regulamento</a> da feira.
-    </md-checkbox>
+</md-input-container> -->
+<md-input-container class="md-block" flex-gt-sm>
+  <label>Nome do usuário</label>
+  <input type="text" name="username" data-ng-model="projeto.username" data-ng-change="verificaUsername(projeto.username)" required/>
+  <div class="md-errors-spacer">
+    <div data-ng-if="projetoForm.username.$dirty">
+      <div class="message-error" data-ng-if="projetoForm.username.$error.required">Obrigatório.</div>
+    </div>
+    <div class="message-error" data-ng-if="projetoForm.username.$error.duplicado">Username já está sendo utilizado.</div>
   </div>
-  <!-- Finalizar inscrição -->
-  <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-    <md-button class="md-raised md-primary green lighten-1" data-ng-disabled="!projetoForm.$valid || projetoForm.password2.$error.pwmatch" data-ng-click="registrarProjeto(projeto);showConfirmDialog($event)">
-      <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
-    </md-button>
-  </div>
+</md-input-container>
+<!-- </div> -->
+<div layout-gt-sm="row">
+  <md-input-container class="md-block" flex-gt-sm>
+    <label>Senha</label>
+    <input type="password" name="password" data-ng-model="projeto.password" required data-ng-minlength="5"/>
+    <div class="md-errors-spacer">
+      <div data-ng-if="projetoForm.password.$dirty">
+        <div class="message-error" data-ng-if="projetoForm.password.$error.required">Obrigatório</div>
+        <div class="message-error" data-ng-if="projetoForm.password.$error.minlength && projetoForm.password.$touched">Senha muito fraca</div>
+        <div class="message-error" id="senha-regular" data-ng-if="projeto.password.length > 4 && projeto.password.length < 12">Senha regular</div>
+        <div class="message-error" id="senha-forte" data-ng-if="projeto.password.length >= 12">Senha forte</div>
+      </div>
+    </div>
+  </md-input-container>
+  <div flex="5" hide-xs hide-sm></div>
+  <md-input-container class="md-block" flex-gt-sm>
+    <label>Confirme a senha</label>
+    <input type="password" name="password2" data-ng-model="projeto.password2" required data-password-verify="projeto.password"/>
+    <div class="md-errors-spacer">
+      <div data-ng-if="projetoForm.password2.$dirty">
+        <div class="message-error" data-ng-if="projetoForm.password2.$error.required">Obrigatório</div>
+        <div class="message-error" data-ng-if="projetoForm.password2.$error.passwordVerify && !projetoForm.password2.$error.required && !projetoForm.password.$error.minlength">Senha não confere!</div>
+      </div>
+    </div>
+  </md-input-container>
+</div>
+</div>
+</div>
+<div layout="row" layout-align="center center" layout-padding>
+  <md-checkbox md-no-ink ng-model="aceitaRegulamento" style="font-size:15px!important;" required>
+    Para finalizar a inscrição você precisa aceitar os termos estabelecidos no <a href="#" class="link-regulamento">regulamento</a> da feira.
+  </md-checkbox>
+</div>
+<!-- Finalizar inscrição -->
+<div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+  <md-button class="md-raised md-primary green lighten-1" data-ng-disabled="!projetoForm.$valid || projetoForm.password2.$error.pwmatch" data-ng-click="registrarProjeto(projeto);showConfirmDialog($event)">
+    <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
+  </md-button>
+</div>
 </div>
 </form>
 </md-content>
-
 </section>
 <footer>
-  <div layout="row" style="height:150px;"></div>
+  <div layout="row" layout-align="center center" style="height:50px;">
+    <span style="line-height:36px;font-size:14px;">&copy; MOVACI. Todos os direitos reservados. |
+      <md-button class="md-icon-button btn-github" aria-label="Github" data-ng-href="https://github.com/ricardosw/PDIAP" target="_blank">
+        <md-icon md-svg-src="github-circle" style="width:24px;height:24px;color:#9e9e9e;"></md-icon>
+        <!-- <span style="vertical-align:middle;"> PDIAP</span> -->
+      </md-button>
+    </span>
+  </div>
 </footer>

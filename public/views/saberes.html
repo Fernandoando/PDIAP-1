@@ -1,25 +1,35 @@
-<!-- <header>
-<md-toolbar md-scroll-shrink ng-if="true" style="background:#4caf50!important;height:30px;">
-<div class="md-toolbar-tools">
-<md-icon md-svg-icon="menu" style="margin-left:20px;"></md-icon>
-<span flex></span>
-</div>
-</md-toolbar>
-</header> -->
+<header>
+  <md-toolbar md-scroll-shrink style="background:rgba(0,131,143,0.8)!important;min-height:60px!important;height:60px;">
+    <div class="md-toolbar-tools" flex>
+      <span flex="5"></span>
+      <img src="assets/images/logo3.png" width="12%"></img>
+      <span flex></span>
+      <nav>
+        <ul>
+          <li><a href="#">PROGRAMAÇÃO</a></li>
+          <li><a href="#">LOCAL</a></li>
+          <li><a href="#">SABERES DOCENTES</a></li>
+          <li><a href="#">AVALIADORES</a></li>
+          <li><a href="#">DOCUMENTOS</a></li>
+        </ul>
+      </nav>
+      <span flex="5"></span>
+    </div>
+  </md-toolbar>
+</header>
 <!-- rgba(65,135,190,0.75) -->
 <!-- rgba(57,73,171,0.8) -->
 <!-- rgba(55,71,79,0.8) -->
 <!-- ver usar 0.8 alpha -->
-<section class="wrapper-registro" layout="column" layout-align="center center" data-ng-cloak>
-  <div layout="column" layout-align="center center" style="position:absolute;width:100%;height:180px;background:rgba(0,131,143,0.8);top:0;z-index:2;">
-    <md-icon md-svg-icon="menu" style="margin:15px auto 0 60px;color:#eee;"></md-icon>
+<section class="wrapper-registro" style="margin-top:-60px!important;" layout="column" layout-align="center center" data-ng-cloak>
+  <div layout="column" layout-align="center center" style="position:absolute;width:100%;height:150px;background:rgba(0,131,143,0.8);top:60px;z-index:2;">
+    <!-- <md-icon md-svg-icon="menu" style="margin:15px auto 0 60px;color:#eee;"></md-icon> -->
     <div layout="column" layout-align="center center" class="inscricao-header-content">
       <h1>Inscrição Saberes Docentes</h1>
-      <p>- Ouvinte -</p>
     </div>
   </div>
   <div class="inscricao-header"></div>
-  <div style="position:absolute;width:100%;height:20px;z-index:20;top:160px;">
+  <div style="position:absolute;width:100%;height:20px;z-index:20;top:190px;">
     <svg
     width="100%"
     height="100%"
@@ -31,6 +41,22 @@
 
 <md-content flex layout="column" layout-align="center center" class="inscricao-content">
   <form name="saberesForm" novalidate>
+    <div layout-gt-xs="row">
+      <p flex="50" style="text-align:center;color:#616161;">Tipo de Inscrição:</p>
+      <div flex="5" hide-xs></div>
+      <div flex="50">
+        <md-select placeholder="Opções" name="tipo" data-ng-model="saberes.tipo" required>
+          <md-option value="Apresentador">Apresentador</md-option>
+          <md-option value="Ouvinte">Ouvinte</md-option>
+          <md-option value="Apresentador e Ouvinte">Apresentador e Ouvinte</md-option>
+        </md-select>
+        <div class="md-errors-spacer">
+          <div data-ng-if="saberesForm.tipo.$touched">
+            <div class="message-error" data-ng-if="saberesForm.tipo.$error.required">Obrigatório.</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div layout-gt-xs="row">
       <!-- <div class="bloco-left" flex="25" hide-xs>
       <span>Sobre o Projeto</span>
@@ -105,6 +131,17 @@
     </md-autocomplete>
   </div>
 </div>
+
+<md-input-container class="md-block" data-ng-if="saberes.tipo == 'Apresentador' || saberes.tipo == 'Apresentador e Ouvinte'" flex="100">
+  <label>Resumo da apresentação</label>
+  <textarea style="height:230px!important;" name="resumo" data-ng-model="saberes.resumo" rows="1" md-select-on-focus required></textarea>
+  <div class="md-errors-spacer">
+    <div data-ng-if="saberesForm.resumo.$dirty">
+      <div class="message-error" data-ng-show="saberesForm.resumo.$error.required">Obrigatório.</div>
+    </div>
+  </div>
+</md-input-container>
+
 <!-- Finalizar inscrição -->
 <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
   <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!saberesForm.$valid" data-ng-click="registrarSaberes(saberes)">
@@ -113,9 +150,7 @@
 </div>
 </form>
 </md-content>
-
 </section>
-
 <footer>
   <div layout="row" layout-align="center center" style="height:50px;">
     <span style="line-height:36px;font-size:14px;">&copy; MOVACI. Todos os direitos reservados. |
