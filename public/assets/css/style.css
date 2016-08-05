@@ -466,8 +466,8 @@ md-grid-tile p {
 }
 .gray {
   background: #26a69a; } /*#3887be*/
-.green {
-  background: #b9f6ca; }
+.green.lighten-2 {
+  background: #81c784 !important; }
 .yellow {
   background: #ffff8d; }
 .blue {
@@ -480,7 +480,20 @@ md-grid-tile {
   transition: all 400ms ease-out 50ms;
 }
 
-
+.alert-theme h1 {
+  font-family: 'Roboto', helvetica, sans-serif;
+}
+.alert-theme .md-button span {
+  font-weight: 500;
+}
+/*.alert-theme::after {
+  background-image: url('assets/images/kk.jpg');
+  height:100%;
+  filter: -ms-grayscale(100%);
+  filter: -moz-grayscale(100%);
+  filter: -webkit-grayscale(100%);
+  filter: grayscale(100%);
+}*/
 
 .saiba-mais {
   min-height: 35px;
