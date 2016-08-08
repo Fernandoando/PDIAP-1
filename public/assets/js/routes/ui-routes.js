@@ -3,7 +3,11 @@
 
 	angular
 	.module('PDIAP')
-	.config(function($locationProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
+	.config(function($locationProvider, $httpProvider, $stateProvider, $urlMatcherFactoryProvider, $urlRouterProvider) {
+
+		$locationProvider.html5Mode(true);
+		$urlMatcherFactoryProvider.caseInsensitive(true);
+		$urlRouterProvider.otherwise("/404");
 
 		let checkLoggedin = function($q, $http, $location, $rootScope) {
 
@@ -23,19 +27,12 @@
 			return deferred.promise;
 		};
 
-		$locationProvider.html5Mode(true);
-		// $locationProvider.html5Mode({
-		// 	enabled: true,
-		// 	requireBase: false,
-		// 	rewriteLinks: false
-		// });
-		// $urlRouterProvider.otherwise("/");
 		$stateProvider
 		.state('index', {
 			url: "/",
 			views: {
 				'': {
-					templateUrl: '/views/index.html',
+					templateUrl: '/alpha/index.html',
 					controller: "homeCtrl"
 				}
 			}
@@ -49,6 +46,27 @@
 			url: "/projetos/inscricao",
 			templateUrl: "/views/inscricao.html",
 			controller: "registroCtrl"
+		})
+		.state('regulamento', {
+			url: "/regulamento",
+			templateUrl: "/alpha/regulamento.html"
+		})
+		.state('avaliacao-fundamental', {
+			url: "/avaliacao-fundamental",
+			templateUrl: "/alpha/avaliacao-fundamental.html"
+		})
+		.state('avaliacao-medio', {
+			url: "/avaliacao-medio",
+			templateUrl: "/alpha/avaliacao-medio.html"
+		})
+		.state('contato', {
+			url: "/contato",
+			templateUrl: "/alpha/contact.html",
+			controller: "contatoCtrl"
+		})
+		.state('categorias-eixos', {
+			url: "/categorias-eixos",
+			templateUrl: "/alpha/categorias-eixos.html"
 		})
 		.state('saberes-docentes', {
 			url: "/saberes-docentes/inscricao",
@@ -83,10 +101,30 @@
 			templateUrl: "/views/conta.html",
 			controller: "updateCtrl"
 		})
+		.state('home.regulamento', {
+			url: "/regulamento",
+			templateUrl: "/views/regulamento.html"
+		})
+		.state('home.categorias-eixos', {
+			url: "/categorias-eixos",
+			templateUrl: "/views/categorias-eixos.html"
+		})
+		.state('home.avaliacao-fundamental', {
+			url: "/avaliacao-fundamental",
+			templateUrl: "/views/avaliacao-fundamental.html"
+		})
+		.state('home.avaliacao-medio', {
+			url: "/avaliacao-medio",
+			templateUrl: "/views/avaliacao-medio.html"
+		})
 		.state('nova-senha', {
 			url: "/nova-senha/:username/:token",
 			templateUrl: "/views/nova-senha.html",
 			controller: "redefinirCtrl"
+		})
+		.state('404', {
+			url: "/404",
+			templateUrl: "/views/404.html"
 		});
 	});
 })();

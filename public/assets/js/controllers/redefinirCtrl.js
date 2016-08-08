@@ -7,8 +7,6 @@
 
 		$scope.username = $stateParams.username;
 		$scope.token = $stateParams.token;
-		console.log($stateParams.token);
-		console.log($stateParams.username);
 
 		$scope.newPasswordDialog = function(ev) {
 			$mdDialog.show({
@@ -22,7 +20,6 @@
 				$scope.redefinirSenha = function(password) {
 					projetosAPI.postNewPassword(password, $stateParams.username, $stateParams.token)
 					.success(function(data) {
-						console.log(data);
 						if (data === 'Senha alterada') {
 							let showAlert1 = function(ev) {
 								$mdDialog.show(
@@ -40,7 +37,7 @@
 						} else {
 							let showConfirmDialog = function(ev) {
 								var confirm = $mdDialog.confirm()
-								.title('Oxe...')
+								.title('Ops...')
 								.textContent('Erro ao atualizar a senha. A validade para cada redefinição dura uma hora, tente solicitar novamente.')
 								.targetEvent(ev)
 								.theme('error')
@@ -57,7 +54,7 @@
 						console.log(status);
 						let showConfirmDialog = function(ev) {
 							var confirm = $mdDialog.confirm()
-							.title('Oxe...')
+							.title('Ops...')
 							.textContent('Erro ao atualizar a senha. A validade para cada redefinição dura uma hora, tente solicitar novamente.')
 							.targetEvent(ev)
 							.theme('error')

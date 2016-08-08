@@ -1,0 +1,253 @@
+<div id="page-wrapper">
+
+	<!-- Header -->
+	<header id="header" class="alt">
+		<!-- <h1><a href="index.html">Alpha</a> by HTML5 UP</h1> -->
+		<nav id="nav">
+			<ul>
+				<li><a href="index.html">Programação</a></li>
+				<li><a href="index.html">Local</a></li>
+				<li>
+					<a href="#" class="icon fa-angle-down">Inscrições</a>
+					<ul>
+						<li><a href="generic.html">Avaliadores</a></li>
+						<li><a href="contact.html">Projetos</a></li>
+						<li><a href="elements.html">Saberes Docentes</a></li>
+						<!-- <li>
+						<a href="#">Inscrições</a>
+						<ul>
+						<li><a href="#">Avaliadores</a></li>
+						<li><a href="#">Projetos</a></li>
+						<li><a href="#">Saberes Docentes</a></li> -->
+					</ul>
+				</li>
+				<li>
+					<a href="#" class="icon fa-angle-down">Documentos</a>
+					<ul>
+						<li>
+							<a href="#">Avaliação</a>
+							<ul>
+								<li><a href="avaliacao-fundamental.html">Ensino Fundamental</a></li>
+								<li><a href="avaliacao-medio.html">Ensino Médio</a></li>
+							</ul>
+						</li>
+						<li><a href="/regulamento">Regulamento</a></li>
+					</ul>
+				</li>
+				<li><a href="index.html">Fale Conosco</a></li>
+				<!-- </ul> -->
+				<!-- </li> -->
+				<li><a href="#" class="button">Logar</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<!-- Banner -->
+	<section id="banner">
+		<!-- <div class="mtloko"></div> -->
+		<img src="alpha/images/logo3.png" alt="Logo MOVACI" width="320px"/>
+		<p>V Mostra Venâncio-airense de Cultura e Inovação</p>
+		<ul class="actions">
+			<li><a href="#" class="button special">Inscreva seu projeto</a></li>
+			<li><a href="#" class="button">Login</a></li>
+		</ul>
+		<!-- <p>28, 29 E 30 DE SETEMBRO</p> -->
+	</section>
+
+	<!-- Main -->
+	<section id="main" class="container">
+
+		<section class="box special">
+			<header class="major">
+				<h2>A FEIRA</h2>
+				<hr size="3">
+				<p>Promovida pelo IFSul Venâncio Aires, a V MOVACI tem com objetivo incentivar
+					a produção científica, tecnológica e cultural, tanto no câmpus Venâncio Aires,
+					quanto nas demais redes de ensino locais e regionais, com o estímulo aos
+					estudantes e seus professores na realização de projetos de iniciação científica,
+					inovação tecnológica, capacitação de projetos e promoção de momentos de
+					troca de experiências ou saberes entre alunos e docentes das diversas áreas
+					do conhecimento.</p>
+					<p>Em sua quinta edição, a inscrição de projetos será dividida em duas
+						modalidades: o ensino fundamental fará sua inscrição na modalidade
+						<b>exposição de trabalhos</b>. O ensino médio, técnico e superior fará sua inscrição
+						na modalidade <b>apresentação de trabalhos</b>.</p>
+						<p>A mostra integra a  3ª Semana da Inovação de Venâncio Aires, criada em
+							2014, com o objetivo de pensar e visualizar os negócios de forma diferenciada.
+							Com uma semana dedicada ao conhecimento, serão abordados conceitos
+							como pesquisa, ensino, extensão, inovação e empreendedorismo.
+							A V MOVACI objetiva mobilizar estudantes, professores e gestores em torno da
+							necessidade de se movimentar em busca da criatividade e inovação,
+							incentivando e divulgando os projetos culturais, científicos e tecnológicos mais
+							relevantes.</p>
+							<p>Além da apresentação e exposição de projetos, a V MOVACI contará com dois
+								dias (26 e 27/09) dedicados ao IV Seminário Saberes Docentes, com a
+								finalidade de refletir sobre a prática docente de ensino, pesquisa e extensão.
+								Nos demais três dias, será aberta a mostra de trabalhos.</p>
+							</header>
+							<span class="image featured" style="background:#43a047;height:5px;"></span>
+						</section>
+
+						<section class="box special features" style="padding:0!important;">
+							<div class="features-row" style="height:350px;">
+								<section>
+									<div id="map"></div>
+								</section>
+								<section style="float:right;height:100%;text-align:left;position:relative;top:50%;-webkit-transform: translateY( -50% );
+								-moz-transform: translateY( -50% );
+								transform: translateY( -50% );">
+								<h4>Avenida das Indústrias, 1865</h4>
+								<h4>Bairro Universitário</h4>
+								<h4>Venâncio Aires/RS - CEP 958000-000</h4>
+								<h4>(51) 3793-4200</h4>
+							</section>
+						</div>
+					</section>
+
+
+					<script>
+					L.mapbox.accessToken = 'pk.eyJ1IjoidGlhZ29wb3J0YWx1cHBpIiwiYSI6ImNpam0zdXhhdjAwOTZ1Mmtvd3RwZGx3MnEifQ.k4E8PzMGoP3ddQxpRoKZzA';
+
+					var map = L.mapbox.map('map', 'mapbox.streets', {
+						center: [-29.637398, -52.328350],
+						zoom: 11,
+						zoomControl: false
+					});
+
+					//L.marker([-29.619951, -52.208589]).bindLabel('<p style="text-align:center;">Matriz<br>Delicattê Fitness</p>').addTo(map);
+
+					var myLayer = L.mapbox.featureLayer().addTo(map);
+					var geoJson = [{
+						"type": "Feature",
+						"geometry": {
+							"type": "Point",
+							"coordinates": [-52.185350, -29.604398]
+						},
+						"properties": {
+							"title": "<center>Matriz </center><hr>Venâncio Aires/RS <br>Bairro Centro <br>R. Sete de Setembro, 1866 <br><br><center>Horários </center>Segunda à sábado: 7hs as 12hs e 14hs as 19:30hs <br>Domingos e feriados: horário especial",
+							"icon": {
+								"iconUrl": "images/local.png",
+								"iconSize": [50, 68], // size of the icon
+								"iconAnchor": [25, 68], // point of the icon which will correspond to marker's location
+								"popupAnchor": [0, -68], // point from which the popup should open relative to the iconAnchor
+								"className": "dot"
+							}
+						}
+					}];
+
+					// Set a custom icon on each marker based on feature properties.
+					myLayer.on('layeradd', function(e) {
+						var marker = e.layer,
+						feature = marker.feature;
+
+						marker.setIcon(L.icon(feature.properties.icon));
+					});
+
+					new L.Control.Zoom({ position: 'topright' }).addTo(map);
+
+					// Add features to the map.
+					myLayer.setGeoJSON(geoJson);
+
+					// Disable drag and zoom handlers.
+					//map.dragging.disable();
+					//map.doubleClickZoom.disable();
+					map.touchZoom.disable();
+					map.scrollWheelZoom.disable();
+					//map.keyboard.disable();
+
+					// Disable tap handler, if present.
+					if (map.tap) map.tap.disable();
+					</script>
+
+
+					<section class="box special features">
+						<div class="features-row">
+							<section>
+								<span class="icon major fa-bolt accent2"></span>
+								<h3>Inscrições</h3>
+								<p>As inscrições serão de Projetos, Avaliadores e para o IV Seminário Saberes Docentes. Vão até o dia 20 de agosto de 2016.</p>
+							</section>
+							<section>
+								<span class="icon major fa-area-chart accent3"></span>
+								<h3>Área administrativa</h3>
+								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+							</section>
+						</div>
+						<div class="features-row">
+							<section>
+								<span class="icon major fa-cloud accent4"></span>
+								<h3>Sed feugiat</h3>
+								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+							</section>
+							<section>
+								<span class="icon major fa-lock accent5"></span>
+								<h3>Enim phasellus</h3>
+								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+							</section>
+						</div>
+					</section>
+
+					<div class="row">
+						<div class="6u 12u(narrower)">
+
+							<section class="box special">
+								<span class="image featured"><img src="/alpha/images/pic02.jpg" alt="" /></span>
+								<h3>Sed lorem adipiscing</h3>
+								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<ul class="actions">
+									<li><a href="#" class="button alt">Learn More</a></li>
+								</ul>
+							</section>
+
+						</div>
+						<div class="6u 12u(narrower)">
+
+							<section class="box special">
+								<span class="image featured"><img src="/alpha/images/pic03.jpg" alt="" /></span>
+								<h3>Accumsan integer</h3>
+								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<ul class="actions">
+									<li><a href="#" class="button alt">Learn More</a></li>
+								</ul>
+							</section>
+
+						</div>
+					</div>
+
+				</section>
+
+				<!-- CTA -->
+				<section id="cta">
+
+					<h2>Sign up for beta access</h2>
+					<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc.</p>
+
+					<form>
+						<div class="row uniform 50%">
+							<div class="8u 12u(mobilep)">
+								<input type="email" name="email" id="email" placeholder="Email Address" />
+							</div>
+							<div class="4u 12u(mobilep)">
+								<input type="submit" value="Sign Up" class="fit" />
+							</div>
+						</div>
+					</form>
+
+				</section>
+
+				<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+
+			</div>

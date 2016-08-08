@@ -38,6 +38,7 @@
 				maskCEP();
 
 				$scope.conta.email = projeto.email;
+				$scope.conta.username = projeto.username;
 				$scope.projetoEmail = projeto.email;
 
 				$scope.projeto5.hospedagem = [];
@@ -49,8 +50,29 @@
 					$scope.hospedagemVerify = 'Não';
 				}
 
-				//$scope.projeto5.hospedagem = ['orientador 1'];
-
+				if (projeto.eixo === 'Ciências da Computação') {
+					$scope.badget = 'responsive';
+				} else if (projeto.eixo === 'Engenharias') {
+					$scope.badget = 'rocket';
+				} else if (projeto.eixo === 'Línguas e Artes') {
+					$scope.badget = 'library';
+				} else if (projeto.eixo === 'Ciências Agrárias, Exatas e da Terra') {
+					$scope.badget = 'chart-areaspline';
+				} else if (projeto.eixo === 'Ciências Ambientais, Biológicas e da Saúde') {
+					$scope.badget = 'leaf';
+				} else if (projeto.eixo === 'Ciências Humanas e Sociais Aplicadas') {
+					$scope.badget = 'account-multiple';
+				} else if (projeto.eixo === 'Extensão') {
+					$scope.badget = 'projector-screen';
+				} else if (projeto.eixo === 'Ciências da Natureza e suas tecnologias') {
+					$scope.badget = 'leaf';
+				} else if (projeto.eixo === 'Ciências Humanas e suas tecnologias') {
+					$scope.badget = 'library';
+				} else if (projeto.eixo === 'Linguagens, Códigos e suas tecnologias') {
+					$scope.badget = 'code-tags';
+				} else if (projeto.eixo === 'Matemática e suas tecnologias') {
+					$scope.badget = 'chart-bar';
+				}
 				// for (var i in projeto.integrantes){
 				// 	$scope.integrantes.push(projeto.integrantes[i]);
 				// }
@@ -85,18 +107,18 @@
 						icon: 'account-settings-variant',
 						link: 'home.conta'
 					}]
-				// }, {
-				// 	name: 'Programação',
-				// 	expand: false,
-				// 	link: 'home.update'
-				// }, {
-				// 	name: 'Regulamentos',
-				// 	expand: false,
-				// 	link: 'home.update'
-				// }, {
-				// 	name: 'Modelos',
-				// 	expand: false,
-				// 	link: ''
+				},{
+					name: 'Avaliação',
+					expand: false,
+					actions: [{
+						name: 'Ensino Fundamental',
+						icon: 'lead-pencil',
+						link: 'home.avaliacao-fundamental'
+					}, {
+						name: 'Ensino Médio',
+						icon: 'pen',
+						link: 'home.avaliacao-medio'
+					}]
 				}]
 			}
 		};

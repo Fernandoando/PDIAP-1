@@ -305,6 +305,7 @@
 		let resetForm = function() {
 			delete $scope.projeto;
 			$scope.projetoForm.$setPristine();
+			$scope.projetoForm.$setUntouched();
 			$scope.hospedagemVerify = '';
 			$scope.btnAdd1 = true;
 			$scope.btnAdd2 = true;

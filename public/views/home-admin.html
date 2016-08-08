@@ -2,11 +2,12 @@
   md-cols-xs="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="3"
   md-row-height-gt-md="150px" md-row-height="150px" md-row-height-xs="200px"
   md-gutter="12px" md-gutter-gt-sm="8px" >
-<md-grid-tile class="green lighten-2"
+<md-grid-tile class="green darken-1"
   md-rowspan="1" md-colspan="3" md-colspan-sm="3" md-colspan-xs="1">
 <span>A fase de inscrição dos projetos está em andamento. Em alguns dias após o término,
-  será divulgado a lista dos projetos selecionados para participarem da V MOVACI.</span>
-  <p>Att. Itamar Hammes, o famoso</p>
+  será divulgado a lista dos projetos selecionados para participarem da 5ª edição da
+  Mostra Venâncio-airense de Cultura e Inovação.</span>
+  <p>Att. Equipe Organizadora da V MOVACI.</p>
 </md-grid-tile>
 <!-- <md-grid-tile class="green">
 {{projeto.numInscricao}}
@@ -25,10 +26,10 @@ md-rowspan="2" >
 </md-grid-list>
 <section>
   <div layout="column" layout-align="center center" style="margin-top:20px;max-width:1280px!important;border:2px solid #43a047;border-radius:4px;">
-    <div style="width:100%;text-align:center!important;background:#43a047;padding:0 25px;">
-      <h4 style="font-size:20px!important;color:#fff;">{{projeto.nomeProjeto}}</h4>
+    <div class="home-title">
+      <h4>{{projeto.nomeProjeto}}</h4>
     </div>
-    <div style="padding:0 50px;text-align:justify;color:#212121;line-height:21px;font-size:16px;text-indent:30px;word-break:break-all;">
+    <div class="home-resumo">
       <p>{{projeto.resumo}}</p>
     </div>
   </div>

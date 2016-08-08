@@ -2,25 +2,20 @@
   <md-toolbar md-scroll-shrink style="background:rgba(55,71,79,0.8)!important;min-height:60px!important;height:60px;">
     <div class="md-toolbar-tools" flex>
       <span flex="5"></span>
-      <img src="assets/images/logo3-b.png" width="12%"></img>
+      <a href="http://movaci.com.br" flex>
+        <img src="assets/images/logo3-b.png" width="120px"></img>
+      </a>
       <span flex></span>
       <nav>
         <ul>
-          <li><a href="#">PROGRAMAÇÃO</a></li>
-          <li><a href="#">LOCAL</a></li>
-          <li><a href="#">SABERES DOCENTES</a></li>
-          <li><a href="#">AVALIADORES</a></li>
-          <li><a href="#">DOCUMENTOS</a></li>
+          <li><a href="/projetos/inscricao">PROJETOS</a></li>
+          <li><a href="/saberes-docentes/inscricao">SABERES DOCENTES</a></li>
         </ul>
       </nav>
       <span flex="5"></span>
     </div>
   </md-toolbar>
 </header>
-<!-- rgba(65,135,190,0.75) -->
-<!-- rgba(57,73,171,0.8) -->
-<!-- rgba(55,71,79,0.8) -->
-<!-- ver usar 0.8 alpha -->
 <section class="wrapper-registro" style="margin-top:-60px!important;" layout="column" layout-align="center center" data-ng-cloak>
   <!-- Header -->
   <div layout="column" layout-align="center center" style="position:absolute;width:100%;height:150px;background:rgba(55,71,79,0.8);top:60px;z-index:2;">
@@ -65,7 +60,6 @@
         </div>
       </md-input-container>
     </div>
-
     <div layout-gt-xs="row">
       <md-input-container class="md-block" flex-gt-xs>
         <label>RG</label>
@@ -120,7 +114,11 @@
           <md-option value="Mestrado">Mestrado</md-option>
           <md-option value="Doutorado">Doutorado</md-option>
         </md-select>
-        <div class="md-errors-spacer"></div>
+        <div class="md-errors-spacer">
+          <div data-ng-if="avaliadoresForm.nivelAcademico.$touched">
+            <div class="message-error" data-ng-if="avaliadoresForm.nivelAcademico.$error.required">Selecione uma opção.</div>
+          </div>
+        </div>
       </md-input-container>
     </div>
     <hr size="3" style="background:green!important;">
@@ -133,93 +131,93 @@
         </div>
       </div>
     </md-input-container>
-    <div layout="row" layout-align="center center" hide-xs>
-      <span style="margin-right:30px;color:#616161;padding-bottom:10px;">Tempo de atuação na área (em anos): </span>
-      <md-input-container class="md-block" flex="20" style="margin-top:10px!important;">
-        <input type="number" name="tempoAtuacao" data-ng-model="avaliadores.tempoAtuacao" required/>
+    <div layout="row" layout-align="center center" >
+      <span style="margin-right:30px;color:#616161;padding-bottom:10px;">Tempo de atuação na área:</span>
+      <md-input-container md-no-float class="md-block" style="min-width:95px!important;width:95px;margin-top:10px!important;">
+        <input type="number" placeholder="(em anos)" name="tempoAtuacao" data-ng-model="avaliadores.tempoAtuacao" required/>
         <div class="md-errors-spacer">
           <div data-ng-show="avaliadoresForm.tempoAtuacao.$dirty">
-            <div class="message-error" data-ng-show="avaliadoresForm.tempoAtuacao.$error.required">Obrigatório</div>
+            <div class="message-error" data-ng-show="avaliadoresForm.tempoAtuacao.$error.required">Obrigatório.</div>
           </div>
         </div>
       </md-input-container>
     </div>
-    <md-input-container class="md-block" flex="100" hide-gt-xs>
-      <label>Tempo de atuação na área (em anos)</label>
-      <input type="number" name="tempoAtuacao" data-ng-model="avaliadores.tempoAtuacao" required/>
+  </div>
+  <div layout="row" layout-align="center center" style="margin-bottom:35px;margin-top:25px;height:18px!important;">
+    <span style="margin-right:30px;color:#616161;">Possui CV Lattes?</span>
+    <md-radio-group layout="row" data-ng-model="lattesVerify" name="lattesVerify" ng-required="true">
+      <md-radio-button value="Sim">Sim</md-radio-button>
+      <md-radio-button value="Não">Não</md-radio-button>
+    </md-radio-group>
+    <div class="md-errors-spacer"></div>
+  </div>
+  <md-input-container class="md-block" data-ng-if="lattesVerify == 'Sim'" flex-gt-xs>
+    <label>Link</label>
+    <input type="url" name="link" data-ng-model="avaliadores.link" required/>
+    <div class="md-errors-spacer">
+      <div data-ng-show="avaliadoresForm.link.$dirty">
+        <div class="message-error" data-ng-show="avaliadoresForm.link.$error.required">Obrigatório.</div>
+        <div class="message-error" data-ng-show="avaliadoresForm.link.$error.url && avaliadoresForm.link.$touched">Link inválido.</div>
+      </div>
+    </div>
+  </md-input-container>
+  <div data-ng-if="lattesVerify == 'Não'">
+    <p style="margin-bottom:26px;">Informe um breve resumo das suas atividades na sua área de formação.</p>
+    <md-input-container class="md-block" flex-gt-xs>
+      <label>Atividades</label>
+      <textarea style="height:200px!important;" name="resumoAtividades" data-ng-model="avaliadores.resumoAtividades" rows="1" md-select-on-focus required></textarea>
       <div class="md-errors-spacer">
-        <div data-ng-show="avaliadoresForm.tempoAtuacao.$dirty">
-          <div class="message-error" data-ng-show="avaliadoresForm.tempoAtuacao.$error.required">Obrigatório.</div>
+        <div data-ng-if="avaliadoresForm.resumoAtividades.$dirty">
+          <div class="message-error" data-ng-show="avaliadoresForm.resumoAtividades.$error.required">Obrigatório.</div>
         </div>
       </div>
     </md-input-container>
-    <div layout="row" layout-align="center center" style="margin-bottom:35px;margin-top:25px;height:18px!important;">
-      <span style="margin-right:30px;color:#616161;">Possui CV Lattes?</span>
-      <md-radio-group layout="row" data-ng-model="lattesVerify" name="lattesVerify" ng-required="true">
-        <md-radio-button value="Sim">Sim</md-radio-button>
-        <md-radio-button value="Não">Não</md-radio-button>
-      </md-radio-group>
-      <div class="md-errors-spacer"></div>
-    </div>
-    <md-input-container class="md-block" data-ng-if="lattesVerify == 'Sim'" flex-gt-xs>
-      <label>Link</label>
-      <input type="url" name="link" data-ng-model="avaliadores.link" required/>
+  </div>
+  <hr size="3" style="background:green!important;margin-top:2.5em!important;">
+  <p style="position:relative;top:20px;margin-bottom:40px;">Informe a categoria e o eixo que deseja avaliar.</p></p></p>
+  <div layout="row">
+    <md-input-container class="md-block" flex-xs="100" flex="80">
+      <label>Categoria</label>
+      <md-select name="categoria" data-ng-model="avaliadores.categoria" required style="width:100%!important;">
+        <md-optgroup label="Categorias">
+          <md-option data-ng-value="x.categoria" data-ng-repeat="x in listaCategorias" data-ng-click="selectEixos(x.categoria)">{{x.categoria}}</md-option>
+        </md-optgroup>
+      </md-select>
       <div class="md-errors-spacer">
-        <div data-ng-show="avaliadoresForm.link.$dirty">
-          <div class="message-error" data-ng-show="avaliadoresForm.link.$error.required">Obrigatório.</div>
-          <div class="message-error" data-ng-show="avaliadoresForm.link.$error.url && avaliadoresForm.link.$touched">Link inválido.</div>
+        <div data-ng-if="avaliadoresForm.categoria.$touched">
+          <div class="message-error" data-ng-if="avaliadoresForm.categoria.$error.required">Selecione uma opção.</div>
         </div>
       </div>
     </md-input-container>
-    <div data-ng-if="lattesVerify == 'Não'">
-      <p style="margin-bottom:26px;">Informe um breve resumo das suas atividades na sua área de formação.</p>
-      <md-input-container class="md-block" flex-gt-xs>
-        <label>Atividades na área de formação</label>
-        <textarea style="height:200px!important;" name="resumoAtividades" data-ng-model="avaliadores.resumoAtividades" rows="1" md-select-on-focus required></textarea>
-        <div class="md-errors-spacer">
-          <div data-ng-if="avaliadoresForm.resumoAtividades.$dirty">
-            <div class="message-error" data-ng-show="avaliadoresForm.resumoAtividades.$error.required">Obrigatório.</div>
-          </div>
+    <div flex layout="column" layout-align="center center" hide-xs>
+      <md-button md-no-ink data-ng-href="/categorias-eixos" target="_blank" class="saiba-mais">Saiba mais</md-button>
+    </div>
+  </div>
+  <div layout="row">
+    <md-input-container class="md-block" flex-xs="100" flex="80">
+      <label>Eixo Temático...</label>
+      <md-select name="eixo" data-ng-model="avaliadores.eixo" required style="width:100%!important;">
+        <md-optgroup label="Eixos Temáticos" data-ng-if="avaliadores.categoria !== undefined">
+          <md-option data-ng-value="y" data-ng-repeat="y in eixos">{{y}}</md-option>
+        </md-optgroup>
+        <md-option value="" disabled data-ng-if="avaliadores.categoria === undefined">Selecione uma Categoria</md-option>
+      </md-select>
+      <div class="md-errors-spacer">
+        <div data-ng-if="avaliadoresForm.eixo.$touched">
+          <div class="message-error" data-ng-if="avaliadoresForm.eixo.$error.required">Selecione uma opção.</div>
         </div>
-      </md-input-container>
-    </div>
-    <hr size="3" style="background:green!important;margin-top:2.5em!important;">
-    <p style="position:relative;top:20px;margin-bottom:40px;">Informe a categoria e o eixo que deseja avaliar.</p></p></p>
-    <div layout="row">
-      <md-input-container class="md-block" flex-xs="100" flex="80">
-        <label>Categoria</label>
-        <md-select name="categoria" data-ng-model="avaliadores.categoria" required style="width:100%!important;">
-          <md-optgroup label="Categorias">
-            <md-option data-ng-value="x.categoria" data-ng-repeat="x in listaCategorias" data-ng-click="selectEixos(x.categoria)">{{x.categoria}}</md-option>
-          </md-optgroup>
-        </md-select>
-        <div class="md-errors-spacer"></div>
-      </md-input-container>
-      <div flex layout="column" layout-align="center center" hide-xs>
-        <md-button md-no-ink style="min-height:30px;height:30px;font-size:12px;line-height:30px;margin-bottom:15px;">Saiba mais</md-button>
       </div>
+    </md-input-container>
+    <div flex layout="column" layout-align="center center" hide-xs>
+      <md-button md-no-ink data-ng-href="/categorias-eixos" target="_blank" class="saiba-mais">Saiba mais</md-button>
     </div>
-    <div layout="row">
-      <md-input-container class="md-block" flex-xs="100" flex="80">
-        <label>Eixo Temático...</label>
-        <md-select name="eixo" data-ng-model="avaliadores.eixo" required style="width:100%!important;">
-          <md-optgroup label="Eixos Temáticos" data-ng-if="avaliadores.categoria !== undefined">
-            <md-option data-ng-value="y" data-ng-repeat="y in eixos">{{y}}</md-option>
-          </md-optgroup>
-          <md-option value="" disabled data-ng-if="avaliadores.categoria === undefined">Selecione uma Categoria</md-option>
-        </md-select>
-        <div class="md-errors-spacer"></div>
-      </md-input-container>
-      <div flex layout="column" layout-align="center center" hide-xs>
-        <md-button md-no-ink style="min-height:30px;height:30px;font-size:12px;line-height:30px;margin-bottom:15px;">Saiba mais</md-button>
-      </div>
-    </div>
-    <hr size="3" style="background:green!important;margin-top:2.5em!important;">
-    <p style="position:relative;top:20px;margin-bottom:40px;">Para a melhor organização, informe os turnos que estará disponível para realizar a avaliação.</p></p></p>
-    <md-input-container class="md-block turnos" flex-gt-sm>
-      <label>Turnos</label>
-      <md-select name="turnos" data-ng-model="avaliadores.turnos" multiple required>
-        <md-optgroup label="Quarta-feira, 28/09">
+  </div>
+  <hr size="3" style="background:green!important;margin-top:2.5em!important;">
+  <p style="position:relative;top:20px;margin-bottom:40px;">Para a melhor organização, informe os turnos que estará disponível para realizar a avaliação.</p></p></p>
+  <md-input-container class="md-block turnos" flex-gt-sm>
+    <label>Turnos</label>
+    <md-select name="turnos" data-ng-model="avaliadores.turnos" multiple required>
+      <md-optgroup label="Quarta-feira, 28/09">
         <md-option value="Quarta-feira, 28/09 - Manhã">Quarta-feira, 28/09 - Manhã</md-option>
         <md-option value="Quarta-feira, 28/09 - Tarde">Quarta-feira, 28/09 - Tarde</md-option>
         <md-option value="Quarta-feira, 28/09 - Noite">Quarta-feira, 28/09 - Noite</md-option>
@@ -240,13 +238,13 @@
     </div>
   </md-input-container>
 
-    <!-- Finalizar inscrição -->
-    <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-      <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!avaliadoresForm.$valid" data-ng-click="registrarAvaliador(avaliadores)">
-        <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
-      </md-button>
-    </div>
-  </form>
+  <!-- Finalizar inscrição -->
+  <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+    <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!avaliadoresForm.$valid" data-ng-click="registrarAvaliador(avaliadores)">
+      <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
+    </md-button>
+  </div>
+</form>
 </md-content>
 </section>
 <footer>

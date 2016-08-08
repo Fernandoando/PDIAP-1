@@ -123,7 +123,15 @@
 				url: '/projetos/nova-senha/'+username+'/'+token,
 				method: 'POST',
 				data: password
-				// params: {username: $stateParams.username, token: $stateParams.token}
+			}
+			return $http(request);
+		};
+
+		let _postContato = function(contato) {
+			const request = {
+				url: '/projetos/contato',
+				method: 'POST',
+				data: contato
 			}
 			return $http(request);
 		};
@@ -142,7 +150,8 @@
 			putProjeto: _putProjeto,
 			putIntegrante: _putIntegrante,
 			postRedefinir: _postRedefinir,
-			postNewPassword: _postNewPassword
+			postNewPassword: _postNewPassword,
+			postContato: _postContato
 		};
 	});
 })();

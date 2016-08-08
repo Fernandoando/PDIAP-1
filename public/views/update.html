@@ -36,7 +36,7 @@
                   </div> -->
                 </md-input-container>
                 <div flex layout="column" layout-align="center center" hide-xs>
-                  <md-button md-no-ink class="saiba-mais">Saiba mais</md-button>
+                  <md-button md-no-ink data-ng-href="/categorias-eixos" target="_blank" class="saiba-mais">Saiba mais</md-button>
                 </div>
               </div>
               <div layout="row">
@@ -56,7 +56,7 @@
               </div> -->
             </md-input-container>
             <div flex layout="column" layout-align="center center" hide-xs>
-              <md-button md-no-ink class="saiba-mais">Saiba mais</md-button>
+              <md-button md-no-ink data-ng-href="/categorias-eixos" target="_blank" class="saiba-mais">Saiba mais</md-button>
             </div>
           </div>
           <div layout-gt-sm="row">
@@ -249,7 +249,7 @@
       </div>
     </div>
     <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-      <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm3.$valid" data-ng-click="updateOrientadores(projeto3)">
+      <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm3.$valid" data-ng-click="updateOrientadores()">
         <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon>
         Salvar
       </md-button>

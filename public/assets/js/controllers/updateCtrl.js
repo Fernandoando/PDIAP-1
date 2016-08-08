@@ -3,31 +3,23 @@
 
 	angular
 	.module('PDIAP')
-	.controller('updateCtrl', function($scope, $rootScope, $parse, $location, $mdToast, projetosAPI) {
+	.controller('updateCtrl', function($scope, $rootScope, $parse, $location, $mdToast, $timeout, projetosAPI) {
 
-		$rootScope.header = 'Alterar projeto';
+		// $rootScope.header = 'Alterar projeto';
 		$scope.alterado = false;
 		$scope.orientadores = [];
 		$scope.alunos = [];
 		$scope.emails1 = [];
 
-		// alterar primeiro no array, ou criar novo array dps enviar esse array
 		$scope.update = function(projeto) {
-			// if (projeto.cep !== undefined) {
-			// 	if (projeto.cep.length == 10) {
-			// 		let cepArray = projeto.cep.split(/[.\/-]/);
-			// 		let model = cepArray[0]+cepArray[1]+cepArray[2];
-			// 		projeto.cep = model;
-			// 	}
-			// }
 			console.log(projeto);
 			projetosAPI.putProjeto(projeto)
 			.success(function(projeto){
 				console.log(projeto);
 				$scope.alterado = true;
-				$scope.toast('Alteração feita com sucesso!','success-toast');
+				$scope.toast('Alteração realizada com sucesso!','success-toast');
 				// maskCEP();
-				// $scope.carregarProjeto();
+				$scope.carregarProjeto();
 			})
 			.error(function(status){
 				console.log('update error: '+status);
@@ -40,7 +32,7 @@
 			.success(function(data){
 				console.log(data);
 				$scope.alterado = true;
-				$scope.toast('Alteração feita com sucesso!','success-toast');
+				$scope.toast('Alteração realizada com sucesso!','success-toast');
 			})
 			.error(function(status){
 				console.log('update error: '+status);
@@ -48,19 +40,7 @@
 			});
 		};
 		$scope.orientadoresUpdate = [];
-		$scope.updateOrientadores = function(pacote1) {
-			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
-			projetosAPI.putIntegrante(pacote1)
-			.success(function(data){
-				console.log(data);
-				$scope.alterado = true;
-				$scope.toast('Alteração feita com sucesso!','success-toast');
-			})
-			.error(function(status){
-				console.log('update error: '+status);
-				$scope.toast('Falha na alteração','failed-toast');
-			});
-			console.log(pacote1);
+		$scope.updateOrientadores = function() {
 			for (var i = 1; i <= $scope.dynamicFields11.length; i++) {
 				if (i == 1) {
 					var pacote = ({
@@ -72,8 +52,8 @@
 						tamCamiseta: $scope.projeto3.tamCamisetaOrientador1,
 						integrantes_id: $scope.projeto3.idOrientador1
 					});
-					$scope.orientadoresUpdate.push(pacote);
-					// updateIntegrante(pacote);
+					// $scope.orientadoresUpdate.push(pacote);
+					updateIntegrante(pacote);
 				}
 				if (i == 2) {
 					var pacote = ({
@@ -85,15 +65,15 @@
 						tamCamiseta: $scope.projeto3.tamCamisetaOrientador2,
 						integrantes_id: $scope.projeto3.idOrientador2
 					});
-					$scope.orientadoresUpdate.push(pacote);
-					// updateIntegrante(pacote);
+					// $scope.orientadoresUpdate.push(pacote);
+					updateIntegrante(pacote);
 				}
 			}
 		};
 		$scope.alunosUpdate = [];
 		$scope.updateAlunos = function() {
 			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
-			console.log($scope.dynamicFields22.length);
+			// console.log($scope.dynamicFields22.length);
 			for (var i = 1; i <= $scope.dynamicFields22.length; i++) {
 				if (i == 1) {
 					var pacote = ({
@@ -105,8 +85,8 @@
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno1,
 						_id: $scope.projeto4.idAluno1
 					});
-					$scope.alunosUpdate.push(pacote);
-					// updateIntegrante(pacote);
+					// $scope.alunosUpdate.push(pacote);
+					updateIntegrante(pacote);
 				}
 				if (i == 2) {
 					var pacote = ({
@@ -118,8 +98,8 @@
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno2,
 						_id: $scope.projeto4.idAluno2
 					});
-					$scope.alunosUpdate.push(pacote);
-					// updateIntegrante(pacote);
+					// $scope.alunosUpdate.push(pacote);
+					updateIntegrante(pacote);
 				}
 				if (i == 3) {
 					var pacote = ({
@@ -131,32 +111,17 @@
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno3,
 						_id: $scope.projeto4.idAluno3
 					});
-					$scope.alunosUpdate.push(pacote);
-					// updateIntegrante(pacote);
+					// $scope.alunosUpdate.push(pacote);
+					updateIntegrante(pacote);
 				}
 			}
 			for (var i in $scope.projeto5.hospedagem) {
-				angular.forEach($scope.orientadores, function (value, key){
+				angular.forEach($scope.alunos, function (value, key){
 					if ($scope.projeto5.hospedagem[i] === value.nome) {
 						$scope.projeto5.hospedagem.splice(i, 1);
 					}
 				});
 			}
-			// var dados = JSON.stringify({ integrantes: $scope.alunosUpdate});
-			// console.log(dados);
-			// projetosAPI.putProjeto(dados)
-			// .success(function(projeto){
-			// 	console.log(projeto);
-			// 	$scope.alterado = true;
-			// 	$scope.toast('Alteração feita com sucesso!','success-toast');
-			// 	// maskCEP();
-			// 	// $scope.carregarProjeto();
-			// })
-			// .error(function(status){
-			// 	console.log('update error: '+status);
-			// 	$scope.toast('Falha na alteração','failed-toast');
-			// });
-			// console.log($scope.alunosUpdate);
 		};
 
 		projetosAPI.getProjeto()
@@ -240,16 +205,30 @@
 			}
 		});
 
-		$scope.carregaEmails = function() {
-			projetosAPI.getEmails()
-			.success(function(data) {
-				angular.forEach(data, function (value) {
-					if (value.email !== undefined) {
-						$scope.emails1.push(value.email);
+		$scope.emails1 = [];
+		$scope.loadEmails1 = function() {
+			$scope.emails1 = [];
+			return $timeout(function() {
+				for (var i = 1; i <= $scope.dynamicFields11.length; i++) {
+					if (i === 1 && $scope.projeto3.emailOrientador1 !== undefined) {
+						$scope.emails1.push($scope.projeto3.emailOrientador1);
 					}
-				});
-				console.log($scope.emails1);
-			});
+					if (i === 2 && $scope.projeto3.emailOrientador2 !== undefined) {
+						$scope.emails1.push($scope.projeto3.emailOrientador2);
+					}
+				}
+				for (var i = 1; i <= $scope.dynamicFields22.length; i++) {
+					if (i === 1 && $scope.projeto4.emailAluno1 !== undefined) {
+						$scope.emails1.push($scope.projeto4.emailAluno1);
+					}
+					if (i === 2 && $scope.projeto4.emailAluno2 !== undefined) {
+						$scope.emails1.push($scope.projeto4.emailAluno2);
+					}
+					if (i === 3 && $scope.projeto4.emailAluno3 !== undefined) {
+						$scope.emails1.push($scope.projeto4.emailAluno3);
+					}
+				}
+			}, 650);
 		};
 
 		$scope.carregaIntegrantes = function() {
@@ -267,13 +246,13 @@
 			});
 		};
 
-		$scope.verificaEmail1 = function(email) {
-			for (var i in $scope.emails1) {
-				if ($scope.emails1[i] == email) {
-					$scope.contaForm.email.$setValidity('duplicado',false);
+		$scope.verificaUsername = function(username) {
+			for (var i in $scope.conta.usernames) {
+				if ($scope.conta.usernames[i] == username) {
+					$scope.contaForm.username.$setValidity('duplicado',false);
 					break; // importante parar caso email seja igual, senão não funciona
 				} else {
-					$scope.contaForm.email.$setValidity('duplicado',true);
+					$scope.contaForm.username.$setValidity('duplicado',true);
 				}
 			}
 		};
@@ -326,20 +305,10 @@
 		};
 		// =========================================================================
 
-		// $scope.orientadoresArray1 = [];
 		$scope.alunosArray1 = [];
 
 		$scope.montarIntegrantes1 = function(proj) {
-			// $scope.orientadoresArray1 = [];
 			$scope.alunosArray1 = [];
-			// for (var i = 1; i <= $scope.dynamicFields11.length; i++) {
-			// 	if (i === 1) {
-			// 		$scope.orientadoresArray1.push(proj1.nomeOrientador1);
-			// 	}
-			// 	if (i === 2) {
-			// 		$scope.orientadoresArray1.push(proj1.nomeOrientador2);
-			// 	}
-			// }
 			for (var i = 1; i <= $scope.dynamicFields22.length; i++) {
 				if (i === 1) {
 					$scope.alunosArray1.push(proj.nomeAluno1);

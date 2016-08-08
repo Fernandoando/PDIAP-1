@@ -4,7 +4,27 @@ const express = require('express')
 
 //GET na homepage (/).
 router.all('/', function(req, res, next) {
-  res.render('layout.ejs');
+  res.render('layout2.ejs');
+});
+
+router.get('/regulamento', function(req, res, next) {
+  res.render('layout3.ejs');
+});
+
+router.get('/avaliacao-fundamental', function(req, res, next) {
+  res.render('layout3.ejs');
+});
+
+router.get('/avaliacao-medio', function(req, res, next) {
+  res.render('layout3.ejs');
+});
+
+router.get('/contato', function(req, res, next) {
+  res.render('layout3.ejs');
+});
+
+router.get('/categorias-eixos', function(req, res, next) {
+  res.render('layout3.ejs');
 });
 
 router.all('/home/*', function(req, res, next) {
@@ -15,15 +35,19 @@ router.all('/home', function(req, res, next) {
   res.render('layout.ejs');
 });
 
+router.all('/404', function(req, res, next) {
+  res.render('layout.ejs');
+});
+
 router.get('/projetos/inscricao', function(req, res, next) {
   res.render('layout.ejs');
 });
 
-router.all('/saberes-docentes/*', function(req, res, next) {
+router.get('/saberes-docentes/inscricao', function(req, res, next) {
   res.render('layout.ejs');
 });
 
-router.all('/avaliadores/*', function(req, res, next) {
+router.get('/avaliadores/inscricao', function(req, res, next) {
   res.render('layout.ejs');
 });
 

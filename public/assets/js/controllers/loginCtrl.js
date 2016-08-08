@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('loginCtrl', function($scope, $rootScope, $location, $mdDialog, projetosAPI) {
+	.controller('loginCtrl', function($scope, $rootScope, $window, $location, $mdDialog, projetosAPI) {
 
 		$scope.login = function() {
 			const username = $scope.user.username;
@@ -17,13 +17,13 @@
 				localStorage.setItem('token','TOKEN_TESTE');
 				console.log("foiii");
 				$mdDialog.hide();
-				$location.url('/home');
+				$window.open('/home', '_blank');
 			})
 			.error(function() { // authentication failed
 				$rootScope.logado = false;
 				$scope.message = 'Os dados estão incorretos.';
 				$scope.erro = true;
-				console.log("deu merda");
+				console.log("Não autorizado");
 			});
 		};
 
@@ -31,7 +31,6 @@
 			projetosAPI.postRedefinir(username)
 			.success(function(data) {
 				$scope.email = data;
-				console.log('EMAIL ENVIADO');
 				let showAlert = function(ev) {
 					$mdDialog.show(
 						$mdDialog.alert()
@@ -46,7 +45,6 @@
 				showAlert();
 			})
 			.error(function(status) {
-				console.log('EMAIL NÃO FOI ENVIADO AF TIO');
 				let showConfirmDialog = function(ev) {
 					var confirm = $mdDialog.confirm()
 					.title('Oxe...')
@@ -57,7 +55,7 @@
 					.cancel('Entrar em contato');
 					$mdDialog.show(confirm).then(function() {}
 					, function() {
-						$location.url('/');
+						$location.url('/contato');
 					});
 				};
 				showConfirmDialog();
@@ -78,10 +76,7 @@
 					username: result
 				});
 				enviarEmail(username);
-				console.log(username);
-			}, function() {
-				console.log('fechou');
-			});
+			}, function() {});
 		};
 	});
 })();

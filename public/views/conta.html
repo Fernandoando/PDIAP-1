@@ -1,21 +1,32 @@
-<md-content data-ng-controller="contaCtrl" class="md-padding update-inputs" style="background:#fdfdfd;padding-top:25px;" ng-cloak>
+<md-content data-ng-controller="contaCtrl" data-ng-init="setHeader('Dados da conta')" class="md-padding update-inputs" style="background:#fdfdfd;padding-top:25px;" ng-cloak>
   <md-content flex layout="column" layout-align="center center" style="width:100%!important;background:#fdfdfd;">
     <form name="contaForm" novalidate style="width:85%;max-width:850px;padding:8px;">
       <div layout="row">
         <div class="bloco-right" flex>
           <md-input-container class="md-block" data-ng-init="editingE=false" flex-gt-sm>
-            <label>E-mail da conta</label>
-            <input type="email" name="email" data-ng-model="conta.email" data-ng-change="verificaEmail1(conta.email)" data-ng-class="{'input-disabled': !editingE}" data-ng-focus="editingE=true;carregaEmails()" data-ng-blur="editingE=false" required data-ng-pattern="/^.+@.+\..+$/" />
+            <label>E-mail principal</label>
+            <md-select name="email" data-ng-model="conta.email" data-ng-init="loadEmails1()" md-on-open="loadEmails1()" data-ng-class="{'input-disabled': !editingE}" data-ng-focus="editingE=true" data-ng-blur="editingE=false" required>
+              <md-option ng-value="email" ng-repeat="email in emails1" data-ng-if="emails1.length > 0">{{email}}</md-option>
+              <md-option value="" disabled data-ng-if="emails1.length == 0">Nenhum email inserido</md-option>
+            </md-select>
             <div class="md-errors-spacer">
               <div data-ng-if="contaForm.email.$dirty">
-                <div class="message-error" data-ng-if="contaForm.email.$error.required">Preencha esse campo.</div>
-                <div class="message-error" data-ng-if="contaForm.email.$error.pattern && contaForm.email.$touched">Email inválido.</div>
-                <div class="message-error" data-ng-if="contaForm.email.$error.duplicado">Email já está sendo utilizado.</div>
+                <div class="message-error" data-ng-if="contaForm.email.$error.required">Obrigatório.</div>
               </div>
             </div>
           </md-input-container>
+          <md-input-container class="md-block" data-ng-init="editingU=false" flex-gt-sm>
+            <label>Nome do usuário</label>
+            <input type="text" name="username" data-ng-model="conta.username" data-ng-change="verificaUsername(conta.username)" data-ng-class="{'input-disabled': !editingU}" data-ng-focus="editingU=true" data-ng-blur="editingU=false" required/>
+            <div class="md-errors-spacer">
+              <div data-ng-if="contaForm.username.$dirty">
+                <div class="message-error" data-ng-if="contaForm.username.$error.required">Obrigatório.</div>
+              </div>
+              <div class="message-error" data-ng-if="contaForm.username.$error.duplicado">Username já está sendo utilizado.</div>
+            </div>
+          </md-input-container>
           <div layout="row" layout-align="center center" class="senha" flex="100">
-            <md-button class="md-raised btn-outline grey-text darken-1" data-ng-click="" style="width:100%;">
+            <md-button class="md-raised btn-outline grey-text darken-1" data-ng-click="enviarEmail2()" style="width:100%;">
               <md-icon md-svg-icon="lock-outline" class="icon-btn-default grey-text darken-1"></md-icon>
               Redefinir a senha
             </md-button>

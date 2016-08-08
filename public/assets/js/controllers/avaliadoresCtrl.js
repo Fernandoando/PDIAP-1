@@ -10,7 +10,6 @@
 		projetosAPI.getCategorias()
 		.success(function(data) {
 			$scope.listaCategorias = data.categorias;
-			console.log($scope.listaCategorias);
 		})
 		.error(function(status) {
 			console.log(status);
@@ -48,9 +47,9 @@
 				tempoAtuacao: avaliador.tempoAtuacao,
 				categoria: avaliador.categoria,
 				eixo: avaliador.eixo,
-				curriculo: curriculo1
+				curriculo: curriculo1,
+				turnos: avaliador.turnos
 			});
-			console.log(pacote);
 			projetosAPI.saveAvaliador(pacote)
 			.success(function(data, status) {
 				if (data === 'success') {
@@ -63,7 +62,6 @@
 						.ok('OK, Voltar')
 						.cancel('Nova Inscrição');
 						$mdDialog.show(confirm).then(function() {
-							console.log(confirm);
 							$location.url('/');
 						}, function() {});
 					};
@@ -81,7 +79,7 @@
 						.cancel('Entrar em contato');
 						$mdDialog.show(confirm).then(function() {}
 						, function() {
-							$location.url('/');
+							$location.url('/contato');
 						});
 					};
 					showConfirmDialog();
@@ -99,7 +97,7 @@
 					.cancel('Entrar em contato');
 					$mdDialog.show(confirm).then(function() {}
 					, function() {
-						$location.url('/');
+						$location.url('/contato');
 					});
 				};
 				showConfirmDialog();
@@ -110,6 +108,8 @@
 		let resetForm = function() {
 			delete $scope.avaliadores;
 			$scope.avaliadoresForm.$setPristine();
+			$scope.avaliadoresForm.$setUntouched();
+			$scope.avaliadoresForm.turnos.$setUntouched();
 			$scope.lattesVerify = '';
 		};
 	});

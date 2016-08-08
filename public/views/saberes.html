@@ -2,15 +2,14 @@
   <md-toolbar md-scroll-shrink style="background:rgba(0,131,143,0.8)!important;min-height:60px!important;height:60px;">
     <div class="md-toolbar-tools" flex>
       <span flex="5"></span>
-      <img src="assets/images/logo3.png" width="12%"></img>
+      <a href="http://movaci.com.br" flex>
+        <img src="assets/images/logo3-b.png" width="120px"></img>
+      </a>
       <span flex></span>
-      <nav>
+      <nav class="nav-inscricao">
         <ul>
-          <li><a href="#">PROGRAMAÇÃO</a></li>
-          <li><a href="#">LOCAL</a></li>
-          <li><a href="#">SABERES DOCENTES</a></li>
-          <li><a href="#">AVALIADORES</a></li>
-          <li><a href="#">DOCUMENTOS</a></li>
+          <li><a href="/projetos/inscricao">PROJETOS</a></li>
+          <li><a href="/avaliadores/inscricao">AVALIADORES</a></li>
         </ul>
       </nav>
       <span flex="5"></span>
@@ -42,9 +41,9 @@
 <md-content flex layout="column" layout-align="center center" class="inscricao-content">
   <form name="saberesForm" novalidate>
     <div layout-gt-xs="row">
-      <p flex="50" style="text-align:center;color:#616161;">Tipo de Inscrição:</p>
+      <p flex-gt-xs="50" flex-xs="100" style="text-align:center;color:#616161;">Tipo de Inscrição:</p>
       <div flex="5" hide-xs></div>
-      <div flex="50">
+      <div flex-gt-xs="50" flex-xs="100" class="saberes-tipo">
         <md-select placeholder="Opções" name="tipo" data-ng-model="saberes.tipo" required>
           <md-option value="Apresentador">Apresentador</md-option>
           <md-option value="Ouvinte">Ouvinte</md-option>
@@ -58,96 +57,93 @@
       </div>
     </div>
     <div layout-gt-xs="row">
-      <!-- <div class="bloco-left" flex="25" hide-xs>
-      <span>Sobre o Projeto</span>
-    </div> -->
-    <!-- <div class="bloco-right" flex-xs="100" flex="75"> -->
-    <md-input-container class="md-block" flex-gt-xs>
-      <label>Nome completo</label>
-      <input type="text" name="nome" data-ng-model="saberes.nome" required />
-      <div class="md-errors-spacer">
-        <div data-ng-if="saberesForm.nome.$dirty">
-          <div class="message-error" data-ng-if="saberesForm.nome.$error.required">Obrigatório.</div>
-        </div>
-      </div>
-    </md-input-container>
-    <div flex="5" hide-xs></div>
-    <md-input-container class="md-block" flex-gt-xs>
-      <label>E-mail</label>
-      <input type="email" name="email" data-ng-model="saberes.email" required data-ng-pattern="/^.+@.+\..+$/" />
-      <div class="md-errors-spacer">
-        <div data-ng-show="saberesForm.email.$dirty">
-          <div class="message-error" data-ng-show="saberesForm.email.$error.required">Obrigatório.</div>
-          <div class="message-error" data-ng-show="saberesForm.email.$error.pattern && saberesForm.email.$touched">Email inválido.</div>
-        </div>
-      </div>
-    </md-input-container>
-  </div>
 
-  <div layout-gt-xs="row">
-    <md-input-container class="md-block" flex-gt-xs>
-      <label>CPF</label>
-      <input type="text" name="cpf" data-ng-model="saberes.cpf" required minlength="14" maxlength="14" cpf-mask/>
-      <div class="md-errors-spacer">
-        <div data-ng-show="saberesForm.cpf.$dirty">
-          <div class="message-error" data-ng-show="saberesForm.cpf.$error.required">Obrigatório.</div>
-          <div class="message-error" data-ng-show="saberesForm.cpf.$error.minlength && saberesForm.cpf.$touched">CPF inválido.</div>
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>Nome completo</label>
+        <input type="text" name="nome" data-ng-model="saberes.nome" required />
+        <div class="md-errors-spacer">
+          <div data-ng-if="saberesForm.nome.$dirty">
+            <div class="message-error" data-ng-if="saberesForm.nome.$error.required">Obrigatório.</div>
+          </div>
         </div>
-      </div>
-    </md-input-container>
-    <div flex="5" hide-xs></div>
-    <md-input-container class="md-block" flex-gt-xs>
-      <label>Telefone</label>
-      <input type="text" name="telefone" data-ng-model="saberes.telefone" required minlength="14" maxlength="14" fone-mask/>
-      <div class="md-errors-spacer">
-        <div data-ng-show="saberesForm.telefone.$dirty">
-          <div class="message-error" data-ng-show="saberesForm.telefone.$error.required">Obrigatório.</div>
-          <div class="message-error" data-ng-show="saberesForm.telefone.$error.minlength && saberesForm.telefone.$touched">Telefone inválido.</div>
+      </md-input-container>
+      <div flex="5" hide-xs></div>
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>E-mail</label>
+        <input type="email" name="email" data-ng-model="saberes.email" required data-ng-pattern="/^.+@.+\..+$/" />
+        <div class="md-errors-spacer">
+          <div data-ng-show="saberesForm.email.$dirty">
+            <div class="message-error" data-ng-show="saberesForm.email.$error.required">Obrigatório.</div>
+            <div class="message-error" data-ng-show="saberesForm.email.$error.pattern && saberesForm.email.$touched">Email inválido.</div>
+          </div>
         </div>
-      </div>
-    </md-input-container>
-  </div>
+      </md-input-container>
+    </div>
 
-  <div layout="row">
-    <div layout="row" flex="100">
-      <md-autocomplete flex="100"
-      md-no-cache="noCache"
-      md-selected-item="selectedItem"
-      md-search-text="saberes.escola"
-      md-items="item in escolas"
-      md-item-text="item"
-      md-min-length="1"
-      md-floating-label="Nome da instituição de ensino"
-      md-input-name="escola"
-      data-ng-required="true">
-      <md-item-template>
-        <span md-highlight-text="saberes.escola" md-highlight-flags="^i">{{item}}</span>
-      </md-item-template>
-      <div class="md-errors-spacer">
-        <div data-ng-if="saberesForm.escola.$dirty">
-          <div class="message-error" data-ng-if="saberesForm.escola.$error.required">Obrigatório.</div>
+    <div layout-gt-xs="row">
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>CPF</label>
+        <input type="text" name="cpf" data-ng-model="saberes.cpf" required minlength="14" maxlength="14" cpf-mask/>
+        <div class="md-errors-spacer">
+          <div data-ng-show="saberesForm.cpf.$dirty">
+            <div class="message-error" data-ng-show="saberesForm.cpf.$error.required">Obrigatório.</div>
+            <div class="message-error" data-ng-show="saberesForm.cpf.$error.minlength && saberesForm.cpf.$touched">CPF inválido.</div>
+          </div>
         </div>
-      </div>
-    </md-autocomplete>
-  </div>
-</div>
+      </md-input-container>
+      <div flex="5" hide-xs></div>
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>Telefone</label>
+        <input type="text" name="telefone" data-ng-model="saberes.telefone" required minlength="14" maxlength="14" fone-mask/>
+        <div class="md-errors-spacer">
+          <div data-ng-show="saberesForm.telefone.$dirty">
+            <div class="message-error" data-ng-show="saberesForm.telefone.$error.required">Obrigatório.</div>
+            <div class="message-error" data-ng-show="saberesForm.telefone.$error.minlength && saberesForm.telefone.$touched">Telefone inválido.</div>
+          </div>
+        </div>
+      </md-input-container>
+    </div>
 
-<md-input-container class="md-block" data-ng-if="saberes.tipo == 'Apresentador' || saberes.tipo == 'Apresentador e Ouvinte'" flex="100">
-  <label>Resumo da apresentação</label>
-  <textarea style="height:230px!important;" name="resumo" data-ng-model="saberes.resumo" rows="1" md-select-on-focus required></textarea>
-  <div class="md-errors-spacer">
-    <div data-ng-if="saberesForm.resumo.$dirty">
-      <div class="message-error" data-ng-show="saberesForm.resumo.$error.required">Obrigatório.</div>
+    <div layout="row">
+      <div layout="row" flex="100">
+        <md-autocomplete flex="100"
+        md-no-cache="noCache"
+        md-selected-item="selectedItem"
+        md-search-text="saberes.escola"
+        md-items="item in escolas"
+        md-item-text="item"
+        md-min-length="1"
+        md-floating-label="Nome da instituição de ensino"
+        md-input-name="escola"
+        data-ng-required="true">
+        <md-item-template>
+          <span md-highlight-text="saberes.escola" md-highlight-flags="^i">{{item}}</span>
+        </md-item-template>
+        <div class="md-errors-spacer">
+          <div data-ng-if="saberesForm.escola.$dirty">
+            <div class="message-error" data-ng-if="saberesForm.escola.$error.required">Obrigatório.</div>
+          </div>
+        </div>
+      </md-autocomplete>
     </div>
   </div>
-</md-input-container>
 
-<!-- Finalizar inscrição -->
-<div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-  <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!saberesForm.$valid" data-ng-click="registrarSaberes(saberes)">
-    <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
-  </md-button>
-</div>
+  <md-input-container class="md-block" data-ng-if="saberes.tipo == 'Apresentador' || saberes.tipo == 'Apresentador e Ouvinte'" flex="100">
+    <label>Resumo da apresentação</label>
+    <textarea style="height:180px!important;" name="resumo" data-ng-model="saberes.resumo" rows="1" md-select-on-focus required></textarea>
+    <div class="md-errors-spacer">
+      <div data-ng-if="saberesForm.resumo.$dirty">
+        <div class="message-error" data-ng-show="saberesForm.resumo.$error.required">Obrigatório.</div>
+      </div>
+    </div>
+  </md-input-container>
+
+  <!-- Finalizar inscrição -->
+  <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+    <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!saberesForm.$valid" data-ng-click="registrarSaberes(saberes)">
+      <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
+    </md-button>
+  </div>
 </form>
 </md-content>
 </section>

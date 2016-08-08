@@ -2,15 +2,14 @@
   <md-toolbar md-scroll-shrink style="background:rgba(26,151,30,0.75)!important;min-height:60px!important;height:60px;">
     <div class="md-toolbar-tools" flex>
       <span flex="5"></span>
-      <img src="assets/images/logo3.png" width="12%"></img>
+      <a href="http://movaci.com.br" flex>
+        <img src="assets/images/logo3-b.png" width="120px"></img>
+      </a>
       <span flex></span>
       <nav>
         <ul>
-          <li><a href="#">PROGRAMAÇÃO</a></li>
-          <li><a href="#">LOCAL</a></li>
-          <li><a href="#">SABERES DOCENTES</a></li>
-          <li><a href="#">AVALIADORES</a></li>
-          <li><a href="#">DOCUMENTOS</a></li>
+          <li><a href="/saberes-docentes/inscricao">SABERES DOCENTES</a></li>
+          <li><a href="/avaliadores/inscricao">AVALIADORES</a></li>
         </ul>
       </nav>
       <span flex="5"></span>
@@ -25,9 +24,7 @@
       <h1>Inscrição de Projetos</h1>
     </div>
   </div>
-  <div  class="inscricao-header">
-
-  </div>
+  <div  class="inscricao-header"></div>
   <div style="position:absolute;width:100%;height:20px;z-index:20;top:190px;">
     <svg
     width="100%"
@@ -38,7 +35,7 @@
   </svg>
 </div>
 
-<md-content flex layout="column" layout-align="center center" style="width:100%!important;background:#fdfdfd;padding:40px;">
+<md-content flex layout="column" layout-align="center center" class="inscricao-content">
   <form name="projetoForm" novalidate style="width:85%;max-width:900px;padding:8px;">
     <div layout="row">
       <div class="bloco-left" flex="25" hide-xs>
@@ -62,15 +59,14 @@
                 <md-option data-ng-value="x.categoria" data-ng-repeat="x in listaCategorias" data-ng-click="selectEixos(x.categoria)">{{x.categoria}}</md-option>
               </md-optgroup>
             </md-select>
-            <div class="md-errors-spacer"></div>
-            <!-- <div class="md-errors-spacer">
+            <div class="md-errors-spacer">
             <div data-ng-if="projetoForm.categoria.$touched">
-            <div class="message-error" data-ng-if="projetoForm.categoria.$error.required">Selecione uma opção.</div>
+            <div class="message-error" data-ng-if="projetoForm.categoria.$error.required">Obrigatório.</div>
           </div>
-        </div> -->
+        </div>
       </md-input-container>
       <div flex layout="column" layout-align="center center" hide-xs>
-        <md-button md-no-ink style="min-height:30px;height:30px;font-size:12px;line-height:30px;margin-bottom:15px;">Saiba mais</md-button>
+        <md-button md-no-ink data-ng-href="/categorias-eixos" target="_blank" class="saiba-mais">Saiba mais</md-button>
       </div>
     </div>
     <div layout="row">
@@ -82,15 +78,14 @@
           </md-optgroup>
           <md-option value="" disabled data-ng-if="projeto.categoria === undefined">Selecione uma Categoria</md-option>
         </md-select>
-        <div class="md-errors-spacer"></div>
-        <!-- <div class="md-errors-spacer">
+        <div class="md-errors-spacer">
         <div data-ng-if="projetoForm.eixo.$touched">
-        <div class="message-error" data-ng-if="projetoForm.eixo.$error.required && projeto.categoria !== undefined">Selecione uma opção.</div>
+        <div class="message-error" data-ng-if="projetoForm.eixo.$error.required && projeto.categoria !== undefined">Obrigatório.</div>
       </div>
-    </div> -->
+    </div>
   </md-input-container>
   <div flex layout="column" layout-align="center center" hide-xs>
-    <md-button md-no-ink style="min-height:30px;height:30px;font-size:12px;line-height:30px;margin-bottom:15px;">Saiba mais</md-button>
+    <md-button md-no-ink data-ng-href="/categorias-eixos" target="_blank" class="saiba-mais">Saiba mais</md-button>
   </div>
 </div>
 </div>
@@ -128,12 +123,11 @@
       <md-select name="estado" data-ng-model="projeto.estado" required>
         <md-option data-ng-value="z.nome" data-ng-repeat="z in listaEstados" data-ng-click="selectCidades(z.nome)">{{z.sigla}}</md-option>
       </md-select>
-      <div class="md-errors-spacer"></div>
-      <!-- <div class="md-errors-spacer">
+      <div class="md-errors-spacer">
       <div data-ng-if="projetoForm.estado.$touched">
-      <div class="message-error" data-ng-if="projetoForm.estado.$error.required">Selecione uma opção.</div>
+      <div class="message-error" data-ng-if="projetoForm.estado.$error.required">Obrigatório.</div>
     </div>
-  </div> -->
+  </div>
 </md-input-container>
 <div flex="5" hide-xs hide-sm></div>
 <md-input-container class="md-block" flex-gt-sm>
@@ -142,12 +136,11 @@
     <md-option value="" disabled data-ng-if="projeto.estado === undefined">Selecione um Estado</md-option>
     <md-option data-ng-value="c" data-ng-repeat="c in cidades">{{c}}</md-option>
   </md-select>
-  <div class="md-errors-spacer"></div>
-  <!-- <div class="md-errors-spacer">
+  <div class="md-errors-spacer">
   <div data-ng-if="projetoForm.cidade.$touched">
-  <div class="message-error" data-ng-if="projetoForm.cidade.$error.required">Selecione uma opção.</div>
+  <div class="message-error" data-ng-if="projetoForm.cidade.$error.required">Obrigatório.</div>
 </div>
-</div> -->
+</div>
 </md-input-container>
 <div flex="5" hide-xs hide-sm></div>
 <md-input-container class="md-block" flex-gt-sm="20">
@@ -229,12 +222,11 @@
             <md-option value="M">M - Média</md-option>
             <md-option value="G">G - Grande</md-option>
           </md-select>
-          <div class="md-errors-spacer"></div>
-          <!--                      <div class="md-errors-spacer">
-          <div data-ng-if="projetoForm.{{item1.camiseta}}.$touched">
-          <div class="message-error" data-ng-if="projetoForm.{{item1.camiseta}}.$error.required">Selecione uma opção.</div>
+                               <div class="md-errors-spacer">
+          <div data-ng-show="projetoForm.{{item1.camiseta}}.$touched">
+          <div class="message-error" data-ng-show="projetoForm.{{item1.camiseta}}.$error.required">Obrigatório.</div>
         </div>
-      </div> -->
+      </div>
     </md-input-container>
   </div>
 </div>
@@ -244,10 +236,6 @@
     <md-icon md-svg-src="plus" style="color:#fdfdfd!important;"></md-icon>
   </md-button>
 </div>
-<!-- <div ng-repeat="item in dynamicFields" ng-form="projetoForm">
-<integrantes-block model-var="nomeOrientador2"></integrantes-block>
-</div> -->
-
 </div>
 </div>
 <hr size="3">
@@ -316,12 +304,11 @@
             <md-option value="M">M - Média</md-option>
             <md-option value="G">G - Grande</md-option>
           </md-select>
-          <div class="md-errors-spacer"></div>
-          <!-- <div class="md-errors-spacer">
-          <div data-ng-if="projetoForm.{{item2.camiseta}}.$touched">
-          <div class="message-error" data-ng-if="projetoForm.{{item2.camiseta}}.$error.required">Selecione uma opção.</div>
+          <div class="md-errors-spacer">
+          <div data-ng-show="projetoForm.{{item2.camiseta}}.$touched">
+          <div class="message-error" data-ng-show="projetoForm.{{item2.camiseta}}.$error.required">Obrigatório.</div>
         </div>
-      </div> -->
+      </div>
     </md-input-container>
   </div>
 </div>
@@ -339,7 +326,7 @@
     <span>Informações Adicionais</span>
   </div>
   <div class="bloco-right" flex-xs="100" flex="75">
-    <div layout="row" style="margin-bottom:35px;margin-top:25px;height:18px!important;">
+    <div layout-gt-xs="row" class="hospedagem-inputs" style="margin-bottom:35px;margin-top:25px;">
       <span style="margin-right:30px;color:#616161;">Algum integrante necessita de hospedagem?</span>
       <md-radio-group layout="row" data-ng-model="hospedagemVerify" name="hospedagemVerify" ng-required="true">
         <md-radio-button value="Sim">Sim</md-radio-button>
@@ -377,6 +364,7 @@
         <label>Resumo do Projeto</label>
         <textarea style="height:200px!important;" name="resumo" data-ng-model="projeto.resumo" md-maxlength="2000" rows="1" md-select-on-focus required></textarea>
         <div class="md-errors-spacer">
+          <div class="message-error" style="color:rgba(0,0,0,0.87)!important;" data-ng-show="!projetoForm.resumo.$invalid || projetoForm.resumo.$untouched">Máximo 2000 caracteres |</div>
           <div data-ng-if="projetoForm.resumo.$dirty">
             <div class="message-error" data-ng-show="projetoForm.resumo.$error.required">Obrigatório |</div>
             <div class="message-error" data-ng-show="projetoForm.resumo.$invalid && !projetoForm.resumo.$error.required">Resumo excedeu o número de caracteres |</div>
@@ -409,7 +397,7 @@
           <md-option value="" disabled data-ng-if="emails.length == 0">Nenhum email inserido</md-option>
         </md-select>
         <div class="md-errors-spacer">
-          <div data-ng-if="projetoForm.email.$dirty">
+          <div data-ng-if="projetoForm.email.$touched">
             <div class="message-error" data-ng-if="projetoForm.email.$error.required">Obrigatório.</div>
           </div>
         </div>

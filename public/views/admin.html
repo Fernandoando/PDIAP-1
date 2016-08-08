@@ -1,99 +1,130 @@
-<div layout="row" layout-fill ng-cloak class="admin-page" data-ng-init="carregarProjeto()">
+<div layout="row" layout-fill ng-cloak class="admin-page alert-theme" id="popupContainer3" data-ng-init="carregarProjeto()">
 
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" role="sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" style="background:#43a047;">
     <!-- toolbar da sidenav -->
     <md-toolbar class="md-tall md-hue-2" layout-align="center center" style="background:#43a047;">
       <div layout="column" layout-align="center center" style="width:100%;margin-top:20px;">
-        <div style="width:65px;height:65px;border-radius:50%;background:white;text-align:center">
-          <span style="color:#424242;font-size:22px;line-height:65px;">A</span>
+        <div style="width:65px;height:65px;border-radius:50%;background:white;text-align:center;display:flex;">
+          <!-- <span style="color:#424242;font-size:22px;line-height:65px;">A</span> -->
+          <md-icon md-svg-src="{{badget}}" class="grey-text darken-3"></md-icon>
         </div>
         <span class="md-body-2" style="padding-top:10px;">Inscrição: {{projeto.numInscricao}}</span>
       </div>
-      <!-- <div class="md-toolbar-tools" layout style="padding:8px;">
-        <md-icon md-svg-src="rocket" style="margin: 0 8px;"></md-icon>
-        <div layout="column">
-          <span class="md-body-2">{{nomeDoProjeto | limitTo:20}}...</span>
-          <span class="md-caption">Inscrição: {{projeto.numInscricao}}</span>
-        </div>
-        <span flex></span>
-    </div> -->
-  </md-toolbar>
-  <!-- menu da sidenav -->
-  <hr size="3" style="background:#2e7d32;width:80%;">
-  <md-content role="navigation" style="background:#43a047;">
-    <md-list data-ng-repeat="section in data.sidenav.sections">
-      <!-- não botar data no ng-click abaixo -->
-      <md-list-item ng-click="section.expand = !section.expand">
-        <p class="md-subheader" style="color:#f5f5f5;">{{section.name}}</p>
-        <span flex></span>
-        <!-- <md-icon class="md-primary md-icon-button"></md-icon> -->
-        <md-icon md-svg-src="{{section.expand ? 'chevron-up' : 'chevron-down'}}" style="color:#f5f5f5;"></md-icon>
-      </md-list-item>
-      <md-list-item data-ng-show="section.expand" data-ng-repeat="action in section.actions" ui-sref="{{action.link}}">
-        <md-icon md-svg-src="{{action.icon}}" style="color:#f5f5f5;"></md-icon>
-        <p class="md-body-2 submenu" style="color:#f5f5f5;">{{action.name}}</p>
-        <!-- <span flex></span> -->
-      </md-list-item>
-      <md-list-item ui-sref="home.update">
-        <p class="md-subheader" style="color:#f5f5f5;">Programação</p>
-        <span flex></span>
-      </md-list-item>
-      <md-list-item ui-sref="home.update">
-        <p class="md-subheader" style="color:#f5f5f5;">Regulamentos</p>
-        <span flex></span>
-      </md-list-item>
-      <md-list-item ui-sref="home.update">
-        <p class="md-subheader" style="color:#f5f5f5;">Modelos</p>
-        <span flex></span>
-      </md-list-item>
-    </md-list>
-  </md-content>
-</md-sidenav>
+    </md-toolbar>
+    <!-- menu da sidenav -->
+    <hr size="3" style="background:#2e7d32;width:80%;">
+    <md-content role="navigation" style="background:#43a047;">
+      <!-- <md-list data-ng-repeat="section in data.sidenav.sections">
+        <md-list-item ng-click="section.expand = !section.expand">
+          <p class="md-subheader" style="color:#f5f5f5;">{{section.name}}</p>
+          <span flex></span>
+          <md-icon md-svg-src="{{section.expand ? 'chevron-up' : 'chevron-down'}}" style="color:#f5f5f5;"></md-icon>
+        </md-list-item>
+        <md-list-item data-ng-show="section.expand" data-ng-repeat="action in section.actions" ui-sref="{{action.link}}">
+          <md-icon md-svg-src="{{action.icon}}" style="color:#f5f5f5;"></md-icon>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">{{action.name}}</p>
+        </md-list-item>
+      </md-list> -->
+      <md-list>
+        <!-- não botar data no ng-click abaixo -->
+        <md-list-item ng-click="section.expand = !section.expand">
+          <p class="md-subheader" style="color:#f5f5f5;">Dashboard</p>
+          <span flex></span>
+          <!-- <md-icon class="md-primary md-icon-button"></md-icon> -->
+          <md-icon md-svg-src="{{section.expand ? 'chevron-up' : 'chevron-down'}}" style="color:#f5f5f5;"></md-icon>
+        </md-list-item>
+        <md-list-item data-ng-show="section.expand" ui-sref="home">
+          <md-icon md-svg-src="view-dashboard" style="color:#f5f5f5;"></md-icon>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">Dashboard</p>
+          <!-- <span flex></span> -->
+        </md-list-item>
+        <md-list-item data-ng-show="section.expand">
+          <md-tooltip md-direction="right">Em breve</md-tooltip>
+          <md-icon md-svg-src="flask" style="color:#f5f5f5;"></md-icon>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">Alterar projeto</p>
+          <!-- <span flex></span> -->
+        </md-list-item>
+        <md-list-item data-ng-show="section.expand">
+          <md-tooltip md-direction="right">Em breve</md-tooltip>
+          <md-icon md-svg-src="account-settings-variant" style="color:#f5f5f5;"></md-icon>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">Dados da conta</p>
+          <!-- <span flex></span> -->
+        </md-list-item>
+        <md-list-item ng-click="section.expand1 = !section.expand1">
+          <p class="md-subheader" style="color:#f5f5f5;">Avaliação</p>
+          <span flex></span>
+          <!-- <md-icon class="md-primary md-icon-button"></md-icon> -->
+          <md-icon md-svg-src="{{section.expand1 ? 'chevron-up' : 'chevron-down'}}" style="color:#f5f5f5;"></md-icon>
+        </md-list-item>
+        <md-list-item data-ng-show="section.expand1" ui-sref="home.avaliacao-fundamental">
+          <md-icon md-svg-src="lead-pencil" style="color:#f5f5f5;"></md-icon>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">Ensino Fundamental</p>
+          <!-- <span flex></span> -->
+        </md-list-item>
+        <md-list-item data-ng-show="section.expand1" ui-sref="home.avaliacao-medio">
+          <md-icon md-svg-src="pen" style="color:#f5f5f5;"></md-icon>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">Ensino Médio</p>
+          <!-- <span flex></span> -->
+        </md-list-item>
+      </md-list>
+      <md-list>
+        <md-list-item ui-sref="home.categorias-eixos">
+          <p class="md-subheader" style="color:#f5f5f5;">Categorias e Eixos</p>
+          <span flex></span>
+        </md-list-item>
+        <md-list-item ui-sref="home.regulamento">
+          <p class="md-subheader" style="color:#f5f5f5;">Regulamento</p>
+          <span flex></span>
+        </md-list-item>
+      </md-list>
+    </md-content>
+  </md-sidenav>
 
-<!-- conteúdo da página -->
-<section layout="column" role="main" flex>
-  <md-toolbar role="toolbar" class="toolbar-admin">
-    <div class="md-toolbar-tools">
-      <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-sm aria-label="Menu">
-        <md-icon md-svg-src="menu"></md-icon>
-      </md-button>
-      <h4 class="md-title" style="color:#424242;">{{header}}</h4>
-      <span flex></span>
-      <md-menu>
-        <md-button aria-label="Open demo menu" layout="row" class="hide-hover" style="height:45px;" ng-click="$mdOpenMenu($event)">
-          <div style="width:45px;height:45px;border-radius:50%;background:white;">
-            <span style="color:#424242;font-size:17px;line-height:45px;">A</span>
-          </div>
-          <md-icon md-svg-src="menu-down" style="color:#424242;"></md-icon>
+  <!-- conteúdo da página -->
+  <section layout="column" role="main" flex>
+    <md-toolbar role="toolbar" class="toolbar-admin md-whiteframe-2dp">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-sm aria-label="Menu">
+          <md-icon md-svg-src="menu" style="color:#424242;"></md-icon>
         </md-button>
-        <md-menu-content width="3">
-          <md-menu-item>
-            <md-button ui-sref="home.update" class="grey-text darken-3">
-              <md-icon md-svg-src="flask" class="grey-text darken-3"></md-icon>
-              Alterar projeto
-            </md-button>
-          </md-menu-item>
-          <md-menu-item>
-            <md-button ui-sref="home.conta" class="grey-text darken-3">
-              <md-icon md-svg-src="account-settings-variant" class="grey-text darken-3"></md-icon>
-              Dados da conta
-            </md-button>
-          </md-menu-item>
-          <md-menu-divider></md-menu-divider>
-          <md-menu-item>
-            <md-button data-ng-click="logout()" class="grey-text darken-3">
-              <md-icon md-svg-src="exit-to-app" class="grey-text darken-3"></md-icon>
-              Sair
-            </md-button>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    </div>
-  </md-toolbar>
+        <h4 class="md-title" style="color:#424242;margin:0!important;">{{header}}</h4>
+        <span flex></span>
+        <md-menu>
+          <md-button aria-label="Open demo menu" layout="row" class="hide-hover" style="height:45px;" ng-click="$mdOpenMenu($event)">
+            <div style="width:45px;height:45px;border-radius:50%;background:white;display:flex;">
+              <!-- <span style="color:#424242;font-size:17px;line-height:45px;">A</span> -->
+              <md-icon md-svg-src="{{badget}}" class="grey-text darken-3"></md-icon>
+            </div>
+            <md-icon md-svg-src="menu-down" style="color:#424242;"></md-icon>
+          </md-button>
+          <md-menu-content width="3">
+            <!-- <md-menu-item>
+              <md-button ui-sref="home.update" class="grey-text darken-3">
+                <md-icon md-svg-src="flask" class="grey-text darken-3"></md-icon>
+                Alterar projeto
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ui-sref="home.conta" class="grey-text darken-3">
+                <md-icon md-svg-src="account-settings-variant" class="grey-text darken-3"></md-icon>
+                Dados da conta
+              </md-button>
+            </md-menu-item>
+            <md-menu-divider></md-menu-divider> -->
+            <md-menu-item>
+              <md-button data-ng-click="logout()" class="grey-text darken-3">
+                <md-icon md-svg-src="exit-to-app" class="grey-text darken-3"></md-icon>
+                Sair
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
+    </md-toolbar>
 
-  <!-- conteúdo dinâmico -->
-  <section id="content" role="content" layout="column" layout-padding style="overflow:auto!important;background:#fdfdfd;height:100%;">
-    <div ui-view style="background:#fdfdfd;"></div>
+    <!-- conteúdo dinâmico -->
+    <section id="content" role="content" layout="column" layout-padding style="overflow:auto!important;background:#fdfdfd;height:100%;">
+      <div ui-view style="background:#fdfdfd;"></div>
+    </section>
   </section>
-</section>
 </div>

@@ -1,19 +1,17 @@
 /* IMPORT FONTS */
-/*@import url(https://fonts.googleapis.com/css?family=Great+Vibes);*/
 @font-face {
   font-family: 'Baron';
-  src: local('Baron Neue'), url(/Baron_Neue.otf) format('opentype');
+  src: local('Baron Neue'), url(/assets/fonts/Baron_Neue.otf) format('opentype');
 }
 @font-face {
   font-family: 'Brandon';
-  src: local('Brandon'), url(/Brandon_blk.otf) format('opentype');
-}
-@font-face {
-  font-family: 'Brandon-med';
-  src: local('Brandon'), url(/Brandon_med.otf) format('opentype');
+  src: local('Brandon'), url(/assets/fonts/Brandon_blk.otf) format('opentype');
 }
 /* ========================================================================== */
 /* GERAIS */
+body {
+  min-width: 315px !important;
+}
 ::selection {
   background: #eee;
   color: #000;
@@ -38,7 +36,8 @@ a {
 hr {
   background: rgba(0,0,0,0.12);
   border: none!important;
-  margin-top: 1.4em;
+  margin: auto !important;
+  margin-top: 1.4em !important;
   margin-bottom: 2em !important;
 }
 ::-webkit-input-placeholder { color: rgba(0,0,0,0.4); }
@@ -81,6 +80,8 @@ input[type=search] {
 }
 md-input-container textarea {
   overflow: auto !important;
+  max-width: 100% !important;
+  resize: vertical !important;
 }
 md-input-container:not(.md-input-has-value):not(.md-input-focused) label,
 md-input-container .md-placeholder {
@@ -92,7 +93,7 @@ md-input-container label {
 md-dialog {
   width: 400px;
   top: -20% !important;
-  margin-top: 30px !important;
+  margin-top: 100px !important;
 }
 md-dialog.login-content {
   background: #4caf50 !important;
@@ -155,6 +156,8 @@ md-checkbox.md-default-theme.md-checked .md-icon,
 md-checkbox.md-checked .md-icon {
   background-color: #43a047 !important;
 }
+md-radio-group.md-default-theme.md-focused:not(:empty) .md-checked .md-container:before,
+md-radio-group.md-focused:not(:empty) .md-checked .md-container:before,
 md-checkbox.md-default-theme.md-checked.md-focused .md-container:before,
 md-checkbox.md-checked.md-focused .md-container:before {
   background-color: transparent !important;
@@ -233,10 +236,13 @@ body .admin-page { overflow: hidden !important; }
 .login-content .md-dialog-container {
   top: -20% !important;
 }
+
+md-dialog h1,
 md-dialog-content h2 {
   text-align: center;
   font-size: 27px !important;
   font-family: 'Brandon', 'Roboto', helvetica;
+  margin-top: 25px;
   color: rgba(255,255,255,0.87);
 }
 .md-prompt-input-container {
@@ -306,8 +312,8 @@ md-dialog.md-error-theme md-dialog-content {
 md-dialog md-dialog-actions button.md-error-theme {
   color: #616161 !important;
 }
-.alert-theme button {
-  width: 100%;
+.alert-theme md-dialog-actions button {
+  width: 100% !important;
 }
 .alert-theme md-dialog md-dialog-actions {
   padding-left: 8px;
@@ -419,7 +425,7 @@ md-radio-button .md-label {
 .inscricao-header {
   z-index: 1;
   width: 100%;
-  height: 200px;
+  height: 210px;
   background: url('/assets/images/mapa5.jpg') no-repeat;
   background-size: cover;
   background-position: center center;
@@ -436,6 +442,7 @@ md-radio-button .md-label {
   font-family: 'Baron', 'Roboto', helvetica;
   font-size: 38px;
   letter-spacing: 1px;
+  text-align: center;
 }
 .inscricao-content {
   width: 100% !important;
@@ -467,7 +474,11 @@ md-grid-tile p {
 .gray {
   background: #26a69a; } /*#3887be*/
 .green.lighten-2 {
-  background: #81c784 !important; }
+  background: #81c784 !important;
+}
+.green.darken-1 {
+  background: #43a047 !important;
+}
 .yellow {
   background: #ffff8d; }
 .blue {
@@ -486,15 +497,6 @@ md-grid-tile {
 .alert-theme .md-button span {
   font-weight: 500;
 }
-/*.alert-theme::after {
-  background-image: url('assets/images/kk.jpg');
-  height:100%;
-  filter: -ms-grayscale(100%);
-  filter: -moz-grayscale(100%);
-  filter: -webkit-grayscale(100%);
-  filter: grayscale(100%);
-}*/
-
 .saiba-mais {
   min-height: 35px;
   height: 35px;
@@ -603,7 +605,7 @@ md-list-item .md-list-item-inner > md-icon.md-secondary:not(.md-avatar-icon) {
 }
 md-list-item > md-icon:first-child:not(.md-avatar-icon),
 md-list-item .md-list-item-inner > md-icon:first-child:not(.md-avatar-icon) {
-  margin-right: 28px !important;
+  margin-right: 20px !important;
   margin-left: 20px !important;
 }
 md-list-item .md-button {
@@ -690,7 +692,6 @@ md-icon {
 }
 .toolbar-admin {
   background: #e9e9e9 !important;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 .avaliadores-content p {
   text-align: center;
@@ -712,6 +713,25 @@ md-icon {
 #select_container_72 {
   margin-top: 65px;
 }
+.home-resumo {
+  padding: 0 50px;
+  text-align: justify;
+  color: #212121;
+  line-height: 21px;
+  font-size: 16px;
+  text-indent: 30px;
+  word-break: break-all;
+}
+.home-title {
+  width: 100%;
+  text-align: center !important;
+  background: #43a047;
+  padding: 0 25px;
+}
+.home-title h4 {
+  font-size: 20px !important;
+  color: #fff;
+}
 .md-toolbar-tools nav ul li {
   display: inline-block;
   list-style: none;
@@ -723,6 +743,9 @@ md-icon {
 .md-toolbar-tools nav ul li:hover {
   border-bottom: 1px solid rgba(255,255,255,0.87);
   transition: width 2s !important;
+}
+md-radio-group {
+  align-items: center !important;
 }
 .btn-github {
   width: auto !important;
@@ -743,7 +766,81 @@ footer {
   color: gray;
 }
 
+/* 404 */
+.balao {
+  background-image:url('/assets/images/g4149.png');
+  width: 220px;
+  height: 215.76px;
+  margin-bottom: 80px;
+}
+.hominho {
+  background-image:url('/assets/images/g5453.png');
+  width: 250.38px;
+  height: 320px;
+  margin-top: 80px;
+}
+.balao, .hominho {
+  display: inline-block;
+}
+.button-error {
+  border: none;
+  background-color: #66bb6a;
+  color: rgba(255, 255, 255, 0.87);
+  border-radius: 70px;
+  padding: 20px 50px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-decoration: none;
+}
+/* ========================================================================== */
+
 @media only screen and (max-width: 959px) and (min-width: 0) and (orientation: landscape) {
   md-toolbar { min-height: 64px !important; }
   .md-toolbar-tools { height: 64px !important; max-height: 64px !important; }
+}
+@media (max-width: 760px) {
+  md-content.inscricao-content {
+    padding: 40px 10px !important;
+  }
+}
+@media (max-width: 599px) {
+  .hospedagem-inputs {
+    margin-bottom: 25px !important;
+    text-align: center;
+  }
+  .hospedagem-inputs span {
+    margin-right: 0 !important;
+  }
+  .hospedagem-inputs md-radio-group {
+    justify-content: center !important;
+    margin-top: 20px;
+  }
+  .saberes-tipo {
+    height: 63px !important;
+  }
+  .home-resumo {
+    padding: 0 30px !important;
+  }
+}
+@media (max-width: 450px) {
+  .nav-inscricao {
+    display: none !important;
+  }
+}
+@media (max-width: 401px) {
+  md-content.inscricao-content {
+    padding: 40px 0 !important;
+  }
+  footer span {
+    font-size: 12px !important;
+  }
+  md-grid-list, md-grid-tile {
+    height: 280px !important;
+  }
+}
+@media (max-width: 330px) {
+  md-grid-list, md-grid-tile {
+    height: 320px !important;
+  }
 }
