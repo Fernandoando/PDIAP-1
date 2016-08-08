@@ -196,9 +196,8 @@ router.post('/registro', testaUsername2, (req, res) => {
 
     let email = req.body.email
     let nomeProjeto = req.body.nomeProjeto;
-    var templatesDir = path.resolve(__dirname, '..', 'templates')
-    var template = new EmailTemplate(path.join(templatesDir, 'inscricao'))
-    // Prepare nodemailer transport object
+    var templatesDir = path.resolve(__dirname, '..', 'templates');
+    var template = new EmailTemplate(path.join(templatesDir, 'inscricao'));
     const transport = nodemailer.createTransport(smtpTransport({
       host: 'smtp.zoho.com',
       port: 587,
@@ -208,13 +207,11 @@ router.post('/registro', testaUsername2, (req, res) => {
       }
     }));
 
-    // An example users object with formatted email function
     var locals = {
       email: email,
       projeto: nomeProjeto
     }
 
-    // Send a single email
     template.render(locals, function (err, results) {
       if (err) {
         return console.error(err)
@@ -435,18 +432,16 @@ router.post('/redefinir-senha', (req, res) => {
           port: 587,
           auth: {
             user: "contato@movaci.com.br",
-            pass: "mvc2016"
+            pass: "*mo12va45ci78!"
           }
         }));
 
-        // An example users object with formatted email function
         var locals = {
           email: email,
           projeto: nome_projeto,
           url: url,
         }
 
-        // Send a single email
         template.render(locals, function (err, results) {
           if (err) {
             return console.error(err)
@@ -469,15 +464,6 @@ router.post('/redefinir-senha', (req, res) => {
     });
   });
 });
-
-// router.get('/nova-senha/:username/:token', (req, res) => {
-//   if(req.params.token === '') {
-//     res.status(400).send("erro");
-//     //console.log('err');
-//   } else {
-//     res.send(req.params.token);
-//   }
-// });
 
 router.post('/nova-senha/:username/:token', (req, res) => {
   if(req.params.token === '') {
@@ -509,7 +495,7 @@ router.post('/nova-senha/:username/:token', (req, res) => {
   };
 });
 
-router.post('/contato'), (req, res) => {
+router.post('/contato', (req, res) => {
   let email = req.body.email
   ,   nome = req.body.nome
   ,   assunto = req.body.assunto
@@ -540,63 +526,6 @@ router.post('/contato'), (req, res) => {
     }
     console.log('Message sent: ' + info.response);
   });
-}
-
-
-
-//=====================================================================
-
-
-
-//método ligeiro
-
-router.get('/testekrl', function(req, res) {
-
-  let cep = "95.800-000"
-  ,   cpf = "017.733.430-41"
-  ,   telefone = "(51) 3741-5039"
-
-
-  if (cep !== undefined && cep.length==10) {
-    cep = cep.replace(/([-.])/g,'');
-    console.log(cep);
-  }
-
-  if (cpf !== undefined && cpf.length==14) {
-    cpf = cpf.replace(/([-.])/g,'');
-    console.log(cpf);
-  }
-
-  if (telefone !== undefined && telefone.length==14) {
-    telefone = telefone.replace(/([-.() ])/g,'');
-    console.log(telefone);
-  }
-
-
-  res.send(cep+" "+cpf+" "+telefone);
 });
-
-
-
-
-// GET na rota todos para mostrar TODOS os projetos cadastrados (projetos/todos)
-router.get('/todos', ensureAuthenticated, (req, res) => {
-  //res.set({ 'Content-Type' : 'text/json; charset=utf-8'})
-  Projeto.findAll((err, docs) => {
-    res.send(docs);
-  })
-});
-
-/*router.put("/:id",function (req,res) {
-var newUser = req.body;
-UserModel.update({_id:newUser._id},{$set:newUser},function (err,docs) {
-if(err){
-console.log("some error occurred in update");
-}else{
-console.log("update user",docs);
-res.status(200).json(newUser);
-}
-});
-});﻿*/
 
 module.exports = router;

@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 ,	Schema = mongoose.Schema;
 
 var connection = mongoose.createConnection("mongodb://localhost:27017/loginapp");
-// var connection = mongoose.createConnection("mongodb://localhost:27017/loginapp");
 //var connection = mongoose.createConnection("mongodb://172.17.0.2:27017/loginapp");
 
 autoIncrement.initialize(connection);
