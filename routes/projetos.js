@@ -203,7 +203,7 @@ router.post('/registro', testaUsername2, (req, res) => {
       port: 587,
       auth: {
         user: "contato@movaci.com.br",
-        pass: "*mvc2016"
+        pass: "mvc2016"
       }
     }));
 
@@ -220,7 +220,7 @@ router.post('/registro', testaUsername2, (req, res) => {
       transport.sendMail({
         from: 'V MOVACI <contato@movaci.com.br>',
         to: locals.email,
-        subject: 'V MOVACI - Confirmacao de inscrição',
+        subject: 'V MOVACI - Confirmação de inscrição',
         html: results.html,
         text: results.text
       }, function (err, responseStatus) {
@@ -419,7 +419,7 @@ router.post('/redefinir-senha', (req, res) => {
       } else{
         let email = doc.email;
         let nome_projeto = doc.nomeProjeto;
-        let url = "http://localhost/nova-senha/"+username+"/"+token;
+        let url = "http://movaci.com.br/nova-senha/"+username+"/"+token;
 
         // res.sendStatus(200);
         res.send(email);
@@ -432,7 +432,7 @@ router.post('/redefinir-senha', (req, res) => {
           port: 587,
           auth: {
             user: "contato@movaci.com.br",
-            pass: "*mo12va45ci78!"
+            pass: "mvc2016"
           }
         }));
 
