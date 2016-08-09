@@ -174,6 +174,7 @@ router.post('/registro', testaUsername2, (req, res) => {
       password: req.body.password,
       createdAt: Date.now(),
       resumo: req.body.resumo,
+      palavraChave: req.body.palavraChave
     });
 
     newProject.integrantes.push(newIntegrante);

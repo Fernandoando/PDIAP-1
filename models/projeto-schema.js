@@ -46,6 +46,7 @@ const ProjetoSchema = new Schema({
 	integrantes: [IntegranteSchema],
 
 	resumo: {type: String},
+	palavraChave: {type: String}
 
 }, { collection: 'betaPorcaoAPI' });
 
