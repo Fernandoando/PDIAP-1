@@ -79,7 +79,7 @@
 						.cancel('Entrar em contato');
 						$mdDialog.show(confirm).then(function() {}
 						, function() {
-							$location.url('/contato');
+							$window.location.href="http://movaci.com.br/contato";
 						});
 					};
 					showConfirmDialog();
@@ -97,7 +97,7 @@
 					.cancel('Entrar em contato');
 					$mdDialog.show(confirm).then(function() {}
 					, function() {
-						$location.url('/contato');
+						$window.location.href="http://movaci.com.br/contato";
 					});
 				};
 				showConfirmDialog();

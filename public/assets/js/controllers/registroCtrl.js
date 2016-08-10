@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('registroCtrl', function($scope, $rootScope, $mdDialog, $q, $location, $timeout, projetosAPI) {
+	.controller('registroCtrl', function($scope, $rootScope, $mdDialog, $mdConstant, $q, $location, $timeout, projetosAPI) {
 
 		$scope.registro = false;
 		$scope.loginHabilitado = false;
@@ -14,9 +14,9 @@
 		$scope.escolas = [];
 
 		$scope.registrarProjeto = function(projeto) {
+			projeto.palavrasChave = $scope.palavrasChave;
 			projetosAPI.saveProjeto(projeto)
 			.success(function(projeto, status) {
-				console.log(projeto);
 				if (status === 202) {
 					$scope.usernameDuplicado = true;
 					$scope.projetoForm.username.$setValidity('duplicado',false);
@@ -76,35 +76,33 @@
 				};
 				showConfirmDialog();
 			});
-			console.log(projeto);
 		};
 
 		$scope.habilitarLogin = function() {
 			return $scope.loginHabilitado = true;
 		};
 
+		$scope.keys = [$mdConstant.KEY_CODE.ENTER, $mdConstant.KEY_CODE.COMMA];
+		$scope.palavrasChave = [];
+
 		$scope.emails = [];
 		$scope.loadEmails = function() {
 			$scope.emails = [];
 			return $timeout(function() {
-				for (var i = 1; i <= $scope.dynamicFields1.length; i++) {
-					if (i === 1 && $scope.projeto.emailOrientador1 !== undefined) {
-						$scope.emails.push($scope.projeto.emailOrientador1);
-					}
-					if (i === 2 && $scope.projeto.emailOrientador2 !== undefined) {
-						$scope.emails.push($scope.projeto.emailOrientador2);
-					}
+				if ($scope.projeto.emailOrientador1 !== undefined && $scope.emails.indexOf($scope.projeto.emailOrientador1) === -1) {
+					$scope.emails.push($scope.projeto.emailOrientador1);
 				}
-				for (var i = 1; i <= $scope.dynamicFields2.length; i++) {
-					if (i === 1 && $scope.projeto.emailAluno1 !== undefined) {
-						$scope.emails.push($scope.projeto.emailAluno1);
-					}
-					if (i === 2 && $scope.projeto.emailAluno2 !== undefined) {
-						$scope.emails.push($scope.projeto.emailAluno2);
-					}
-					if (i === 3 && $scope.projeto.emailAluno3 !== undefined) {
-						$scope.emails.push($scope.projeto.emailAluno3);
-					}
+				if ($scope.projeto.emailOrientador2 !== undefined && $scope.emails.indexOf($scope.projeto.emailOrientador2) === -1) {
+					$scope.emails.push($scope.projeto.emailOrientador2);
+				}
+				if ($scope.projeto.emailAluno1 !== undefined && $scope.emails.indexOf($scope.projeto.emailAluno1) === -1) {
+					$scope.emails.push($scope.projeto.emailAluno1);
+				}
+				if ($scope.projeto.emailAluno2 !== undefined && $scope.emails.indexOf($scope.projeto.emailAluno2) === -1) {
+					$scope.emails.push($scope.projeto.emailAluno2);
+				}
+				if ($scope.projeto.emailAluno3 !== undefined && $scope.emails.indexOf($scope.projeto.emailAluno3) === -1) {
+					$scope.emails.push($scope.projeto.emailAluno3);
 				}
 			}, 650);
 		};

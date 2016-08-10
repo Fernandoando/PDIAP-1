@@ -8,6 +8,7 @@
 		$scope.enviarContato = function(contato) {
 			projetosAPI.postContato(contato)
 			.success(function(data) {
+				console.log(data);
 				if (data === 'success') {
 					let showAlert2 = function(ev) {
 						$mdDialog.show(

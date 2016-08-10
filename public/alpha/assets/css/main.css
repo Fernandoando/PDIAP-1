@@ -2828,7 +2828,7 @@ body.landing #page-wrapper {
   list-style: none;
   margin: calc(-0.5em + 1px) 0 0 1px;
   padding: 0.5em 0;
-  width: 11em;
+  width: auto;
 }
 
 .dropotron li {
@@ -3185,12 +3185,24 @@ body.landing #main {
 
   /* Header */
 
+  .baixar {
+    box-shadow: inset 0 0 0 2px #616161 !important;
+    color: #424242 !important;
+  }
+
+  #header:not(.alt) nav > ul > li .button.baixar:hover {
+    color: #424242 !important;
+  }
+
   #page-wrapper {
     padding-top: 0;
   }
 
-  #header {
+  .homepage #header {
     display: none;
+  }
+  #header {
+    background: rgba(232,232,232,0.5) !important;
   }
 
   /* Banner */
@@ -3219,7 +3231,7 @@ body.landing #main {
     padding-bottom: 1px;
   }
 
-  #navButton {
+  .homepage #navButton {
     -moz-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     -ms-backface-visibility: hidden;
@@ -3237,7 +3249,7 @@ body.landing #main {
     z-index: 10001;
   }
 
-  #navButton .toggle {
+  .homepage #navButton .toggle {
     text-decoration: none;
     height: 100%;
     left: 0;
@@ -3248,7 +3260,7 @@ body.landing #main {
     outline: 0;
   }
 
-  #navButton .toggle:before {
+  .homepage #navButton .toggle:before {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-family: FontAwesome;
@@ -3257,7 +3269,7 @@ body.landing #main {
     text-transform: none !important;
   }
 
-  #navButton .toggle:before {
+  .homepage #navButton .toggle:before {
     background: #107a49;
     border-radius: 6px;
     color: #fff;
@@ -3273,7 +3285,7 @@ body.landing #main {
     width: 3.5em;
   }
 
-  #navPanel {
+  .homepage #navPanel {
     -moz-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     -ms-backface-visibility: hidden;
@@ -3298,7 +3310,7 @@ body.landing #main {
     color: #bbb;
   }
 
-  #navPanel .link {
+  .homepage #navPanel .link {
     border-bottom: 0;
     color: #bbb;
     display: block;
@@ -3308,40 +3320,40 @@ body.landing #main {
     text-decoration: none;
   }
 
-  #navPanel .link:hover {
+  .homepage #navPanel .link:hover {
     background: #f5f5f5 !important;
     color: #424242 !important;
   }
 
-  #navPanel .link:first-child {
+  .homepage #navPanel .link:first-child {
     border-top: 0;
   }
 
-  #navPanel .link.depth-0 {
+  .homepage #navPanel .link.depth-0 {
     color: #fff;
   }
 
-  #navPanel .link .indent-1 {
+  .homepage #navPanel .link .indent-1 {
     display: inline-block;
     width: 1em;
   }
 
-  #navPanel .link .indent-2 {
+  .homepage #navPanel .link .indent-2 {
     display: inline-block;
     width: 2em;
   }
 
-  #navPanel .link .indent-3 {
+  .homepage #navPanel .link .indent-3 {
     display: inline-block;
     width: 3em;
   }
 
-  #navPanel .link .indent-4 {
+  .homepage #navPanel .link .indent-4 {
     display: inline-block;
     width: 4em;
   }
 
-  #navPanel .link .indent-5 {
+  .homepage #navPanel .link .indent-5 {
     display: inline-block;
     width: 5em;
   }
@@ -3490,7 +3502,7 @@ body.landing #main {
   }
 
   #main > header {
-    margin: 0 2em 1.5em 2em;
+    margin: 1.1em 2em 1.5em 2em;
   }
 
   #main > header h2 {

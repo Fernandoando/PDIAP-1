@@ -17,7 +17,7 @@
 				localStorage.setItem('token','TOKEN_TESTE');
 				console.log("foiii");
 				$mdDialog.hide();
-				$window.open('/home', '_blank');
+				$window.location.href="http://movaci.com.br/home";
 			})
 			.error(function() { // authentication failed
 				$rootScope.logado = false;
@@ -55,7 +55,7 @@
 					.cancel('Entrar em contato');
 					$mdDialog.show(confirm).then(function() {}
 					, function() {
-						$location.url('/contato');
+						$window.location.href="http://movaci.com.br/contato";
 					});
 				};
 				showConfirmDialog();
