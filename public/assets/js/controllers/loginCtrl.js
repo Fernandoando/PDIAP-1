@@ -14,8 +14,7 @@
 				$rootScope.logado = true;
 				$scope.message = 'Sucesso';
 				$scope.erro = false;
-				localStorage.setItem('token','TOKEN_TESTE');
-				console.log("foiii");
+				// localStorage.setItem('token','TOKEN_TESTE');
 				$mdDialog.hide();
 				$window.location.href="http://movaci.com.br/home";
 			})
@@ -23,7 +22,6 @@
 				$rootScope.logado = false;
 				$scope.message = 'Os dados estão incorretos.';
 				$scope.erro = true;
-				console.log("Não autorizado");
 			});
 		};
 

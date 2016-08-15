@@ -9,7 +9,7 @@
 		$urlMatcherFactoryProvider.caseInsensitive(true);
 		$urlRouterProvider.otherwise("/404");
 
-		let checkLoggedin = function($q, $http, $location, $rootScope) {
+		let checkLoggedin = function($q, $rootScope, $http, $location, $state) {
 
 			var deferred = $q.defer(); // Inicializa nova promissa
 			$rootScope.logado = false;
@@ -20,8 +20,8 @@
 					deferred.resolve();
 				} else { // Not Authenticated
 					$rootScope.logado = false;
+					$state.go('index');
 					deferred.reject();
-					$location.url('/');
 				}
 			});
 			return deferred.promise;
@@ -37,11 +37,6 @@
 				}
 			}
 		})
-		// .state('login', {
-		// 	url: "/login",
-		// 	templateUrl: "/views/login.html",
-		// 	controller: "loginCtrl"
-		// })
 		.state('inscricao', {
 			url: "/projetos/inscricao",
 			templateUrl: "/views/inscricao.html",

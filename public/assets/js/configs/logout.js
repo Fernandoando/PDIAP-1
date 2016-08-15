@@ -3,12 +3,12 @@
 
 	angular
 		.module('PDIAP')
-		.run(function($rootScope, $http, $window, $location) {
+		.run(function($rootScope, $http, $window) {
 		   	// Função logout está disponível em todas as páginas
 		   	$rootScope.logout = function() {
 		   		$http.post('/projetos/logout');
-		   		localStorage.removeItem('token');
 		   		$rootScope.logado = false;
+					// localStorage.removeItem('token');
 		  		// $location.url('/');
 					$window.location.href="http://movaci.com.br";
 		   	};
