@@ -26,7 +26,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 body {
   line-height: 1;
-  /*height: initial !important;*/
 }
 
 ol, ul {
@@ -1956,6 +1955,9 @@ code {
 .space-t {
   padding-left: 27px;
 }
+.space-t2 {
+  padding-left: 54px;
+}
 .regulamento h4 {
   line-height: 2em !important;
 }
@@ -1979,7 +1981,12 @@ code {
   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7) !important;
   color: rgba(255, 255, 255, 0.7) !important;
 }
-
+.baixar2 {
+  box-shadow: inset 0 0 0 2px #616161 !important;
+  color: #424242 !important;
+  height: 2.5em !important;
+  line-height: 2.5em !important;
+}
 .categorias-eixos tbody td {
   border-left: solid 1px #e5e5e5 !important;
   border-right: solid 1px #e5e5e5 !important;

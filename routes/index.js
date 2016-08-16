@@ -19,6 +19,10 @@ router.get('/avaliacao-medio', function(req, res, next) {
   res.render('layout3.ejs');
 });
 
+router.get('/avaliacao-medio-extensao', function(req, res, next) {
+  res.render('layout3.ejs');
+});
+
 router.get('/contato', function(req, res, next) {
   res.render('layout3.ejs');
 });
@@ -54,7 +58,6 @@ router.get('/avaliadores/inscricao', function(req, res, next) {
 router.all('/nova-senha/*', function(req, res, next) {
   res.render('layout.ejs');
 });
-
 
 // router.all('/redefinir-senha', function(req, res, next) {
 //   res.render('layout.ejs');

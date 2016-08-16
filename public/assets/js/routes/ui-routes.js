@@ -54,6 +54,10 @@
 			url: "/avaliacao-medio",
 			templateUrl: "/alpha/avaliacao-medio.html"
 		})
+		.state('avaliacao-medio-extensao', {
+			url: "/avaliacao-medio-extensao",
+			templateUrl: "/alpha/avaliacao-medio-ext.html"
+		})
 		.state('contato', {
 			url: "/contato",
 			templateUrl: "/alpha/contact.html",
@@ -111,6 +115,10 @@
 		.state('home.avaliacao-medio', {
 			url: "/avaliacao-medio",
 			templateUrl: "/views/avaliacao-medio.html"
+		})
+		.state('home.avaliacao-medio-extensao', {
+			url: "/avaliacao-medio-extensao",
+			templateUrl: "/views/avaliacao-medio-ext.html"
 		})
 		.state('nova-senha', {
 			url: "/nova-senha/:username/:token",
