@@ -14,7 +14,7 @@
 		$scope.escolas = [];
 
 		$scope.registrarProjeto = function(projeto) {
-			projeto.palavrasChave = $scope.palavrasChave;
+			projeto.palavraChave = $scope.palavrasChave;
 			projetosAPI.saveProjeto(projeto)
 			.success(function(projeto, status) {
 				if (status === 202) {

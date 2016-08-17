@@ -90,6 +90,14 @@ function splita(arg){
   }
 }
 
+router.get('/qtd', (req, res) => {
+  ProjetoSchema.count({}, function(err, count) {
+    console.log(count);
+    res.json("Projetos cadastrados: "+count);
+    //res.send(count);
+  });
+});
+
 router.get('/', (req, res, next) => {
   res.send('Projetos po');
 });
