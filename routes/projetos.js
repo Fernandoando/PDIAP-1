@@ -92,9 +92,7 @@ function splita(arg){
 
 router.get('/qtd', (req, res) => {
   ProjetoSchema.count({}, function(err, count) {
-    console.log(count);
     res.json("Projetos cadastrados: "+count);
-    //res.send(count);
   });
 });
 
@@ -272,7 +270,7 @@ passport.deserializeUser((id, done) => {
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
   res.send(req.user);
-  res.redirect('/projetos/home');
+  //res.redirect('/projetos/home');
   //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
 });
 
@@ -524,7 +522,7 @@ router.post('/contato', (req, res) => {
     to: 'contato@movaci.com.br',
     subject: assunto,
     text: '',
-    html: '<b> Contato via site:</b><br><b>De: </b>'+nome+'<br><b>Assunto: </b>'+assunto+'<br><b>Mensagem: </b>'+mensagem
+    html: '<b> Contato via site:</b><br><b>De: </b>'+nome+' '+email+'<br><b>Assunto: </b>'+assunto+'<br><b>Mensagem: </b>'+mensagem
   };
 
   transporter.sendMail(mailOptions, function(error, info){
