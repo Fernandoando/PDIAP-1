@@ -302,7 +302,58 @@ router.put('/update', ensureAuthenticated, (req, res) => {
   });
 });
 
-router.put('/updateOrientador', ensureAuthenticated, (req, res) => {
+router.put('/upgreice', ensureAuthenticated, (req, res) => {
+
+  let myArray = req.body
+  ,   id = req.user.id;
+
+  myArray.forEach(function (value, i) {
+    console.log('%d: %s', i);
+
+    if (value._id !== undefined) {
+      let id_subdoc = value._id
+      ,   newIntegrante = ({
+        _id: id_subdoc,
+        tipo: value.tipo,
+        nome: value.nome,
+        email: value.email,
+        cpf: splita(value.cpf),
+        telefone: splita(value.telefone),
+        tamCamiseta: value.tamCamiseta
+      });
+
+      ProjetoSchema.findOneAndUpdate({"_id": id,"integrantes._id": id_subdoc},
+      {"$set": {"integrantes.$": newIntegrante, updatedAt: Date.now()}}, {new:true},
+      (err, doc) => {
+        if (err) throw err;
+      }
+      );
+    } else if (value._id === undefined) {
+      let newIntegrante = ({
+        tipo: value.tipo,
+        nome: value.nome,
+        email: value.email,
+        cpf: splita(value.cpf),
+        telefone: splita(value.telefone),
+        tamCamiseta: value.tamCamiseta
+      });
+
+      ProjetoSchema.findOne({_id: id}, (err, usr) => {
+        if (err) throw err;
+        usr.integrantes.push(newIntegrante);
+        usr.save((err, usr) => {
+          if (err) throw err;
+        });
+      });
+
+      ProjetoSchema.update({_id: id}, {$set: {updatedAt: Date.now()}}, {upsert:true,new: true}, (err, docs) => {
+        if (err) throw err;
+      });
+    }
+  });
+});
+
+/*router.put('/updateOrientador', ensureAuthenticated, (req, res) => {
   let id = req.user.id;
 
   if(req.body.nomeOrientador1 !== undefined && req.body.emailOrientador1 !== undefined && req.body.cpfOrientador1 !== undefined && req.body.telefoneOrientador1 !== undefined && req.body.tamCamisetaOrientador1 !== undefined){
@@ -391,7 +442,7 @@ router.put('/novoIntegrante', ensureAuthenticated, (req, res) => {
     res.status(200).json(docs);
   });
 
-});
+});*/
 
 router.put('/removerIntegrante', ensureAuthenticated, (req, res) => {
   let id = req.body.integrantes_id;
@@ -404,14 +455,10 @@ router.put('/removerIntegrante', ensureAuthenticated, (req, res) => {
     });
   });
 
-
   ProjetoSchema.update({_id:req.user.id}, {$set: {updatedAt: Date.now()}}, {upsert:true,new: true}, (err,docs) => {
     if (err) throw err;
     res.status(200).json(docs);
   });
-
-
-
 });
 
 router.post('/redefinir-senha', (req, res) => {
