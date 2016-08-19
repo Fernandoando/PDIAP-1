@@ -306,9 +306,8 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
 
   let myArray = req.body
   ,   id = req.user.id;
-
   myArray.forEach(function (value, i) {
-    console.log('%d: %s', i);
+    //console.log('%d: %s', i);
 
     if (value._id !== undefined) {
       let id_subdoc = value._id
@@ -351,6 +350,7 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
       });
     }
   });
+  res.redirect('/home/update');
 });
 
 /*router.put('/updateOrientador', ensureAuthenticated, (req, res) => {
