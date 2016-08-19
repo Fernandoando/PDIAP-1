@@ -269,8 +269,8 @@ passport.deserializeUser((id, done) => {
 });
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-  res.send(req.user);
-  //res.redirect('/projetos/home');
+  //res.send(req.user);
+  res.redirect('/home');
   //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
 });
 
@@ -280,7 +280,7 @@ router.get('/home', ensureAuthenticated, (req, res) => {
 
 router.post('/logout', (req, res) => {
   req.logout();
-  res.send(200);
+  //res.sendStatus(200);
   //res.clearCookie('userid');
   res.redirect('/');
 });
