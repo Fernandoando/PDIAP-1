@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('saberesCtrl', function($scope, $rootScope, $location, $mdDialog, projetosAPI) {
+	.controller('saberesCtrl', function($scope, $rootScope, $window, $location, $mdDialog, projetosAPI) {
 
 		// $rootScope.inscrito = 0;
 		$scope.escolas = [];

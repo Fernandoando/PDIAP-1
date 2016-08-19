@@ -102,7 +102,7 @@
 
 		let _putIntegrante = function(integrante) {
 			const request = {
-				url: '/projetos/updateOrientador',
+				url: '/projetos/upgreice',
 				method: 'PUT',
 				data: integrante
 			}

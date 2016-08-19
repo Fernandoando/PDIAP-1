@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('registroCtrl', function($scope, $rootScope, $mdDialog, $mdConstant, $q, $location, $timeout, projetosAPI) {
+	.controller('registroCtrl', function($scope, $rootScope, $mdDialog, $mdConstant, $q, $window, $location, $timeout, projetosAPI) {
 
 		$scope.registro = false;
 		$scope.loginHabilitado = false;
@@ -50,7 +50,7 @@
 						.cancel('Entrar em contato');
 						$mdDialog.show(confirm).then(function() {}
 						, function() {
-							$location.url('/');
+							$window.location.href="http://movaci.com.br/contato";
 						});
 					};
 					showConfirmDialog();
@@ -70,7 +70,7 @@
 					.cancel('Entrar em contato');
 					$mdDialog.show(confirm).then(function() {}
 					, function() {
-						$location.url('/');
+						$window.location.href="http://movaci.com.br/contato";
 					});
 				};
 				showConfirmDialog();

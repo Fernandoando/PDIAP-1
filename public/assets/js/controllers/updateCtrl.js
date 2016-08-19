@@ -74,6 +74,8 @@
 		$scope.updateAlunos = function() {
 			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
 			// console.log($scope.dynamicFields22.length);
+			$scope.alunosUpdate = [];
+			console.log($scope.dynamicFields22.length);
 			for (var i = 1; i <= $scope.dynamicFields22.length; i++) {
 				if (i == 1) {
 					var pacote = ({
@@ -85,8 +87,8 @@
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno1,
 						_id: $scope.projeto4.idAluno1
 					});
-					// $scope.alunosUpdate.push(pacote);
-					updateIntegrante(pacote);
+					$scope.alunosUpdate.push(pacote);
+					// updateIntegrante(pacote);
 				}
 				if (i == 2) {
 					var pacote = ({
@@ -98,8 +100,8 @@
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno2,
 						_id: $scope.projeto4.idAluno2
 					});
-					// $scope.alunosUpdate.push(pacote);
-					updateIntegrante(pacote);
+					$scope.alunosUpdate.push(pacote);
+					// updateIntegrante(pacote);
 				}
 				if (i == 3) {
 					var pacote = ({
@@ -111,8 +113,8 @@
 						tamCamiseta: $scope.projeto4.tamCamisetaAluno3,
 						_id: $scope.projeto4.idAluno3
 					});
-					// $scope.alunosUpdate.push(pacote);
-					updateIntegrante(pacote);
+					$scope.alunosUpdate.push(pacote);
+					// updateIntegrante(pacote);
 				}
 			}
 			for (var i in $scope.projeto5.hospedagem) {
@@ -122,6 +124,8 @@
 					}
 				});
 			}
+			// console.log($scope.alunosUpdate);
+			updateIntegrante($scope.alunosUpdate);
 		};
 
 		projetosAPI.getProjeto()

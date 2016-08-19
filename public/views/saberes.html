@@ -140,6 +140,16 @@
       <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
     </md-button>
   </div>
+  
+  <span us-spinner>
+    <div layout="row" layout-sm="column" layout-align="space-around">
+      <md-progress-circular md-mode="indeterminate" md-diameter="40" class="loading-login"></md-progress-circular>
+    </div>
+  </span>
+  <p>
+    <b>Spinner Active: </b>
+    {{spinnerActive}}
+  </p>
 </form>
 </md-content>
 </section>

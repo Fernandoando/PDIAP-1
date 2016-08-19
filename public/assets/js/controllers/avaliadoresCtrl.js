@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('avaliadoresCtrl', function($scope, $location, $mdDialog, projetosAPI) {
+	.controller('avaliadoresCtrl', function($scope, $window, $location, $mdDialog, projetosAPI) {
 
 		$scope.eixos = [];
 
