@@ -2907,14 +2907,17 @@ body.landing #page-wrapper {
   margin-right: 20%;
   margin-top: -30px;
 }
-
 #dias2 {
   margin-top: 80px;
   line-height: 1.1em;
   font-weight: bold;
   display: none;
 }
-
+#prorrog {
+  color: #ed3237 !important;
+  margin-top: 55px;
+  font-weight: 500;
+}
 #banner {
   background-attachment: scroll,							fixed;
   background-color: #666;
@@ -3234,6 +3237,9 @@ body.landing #main {
   }
   #banner img {
     width: 280px !important;
+  }
+  #prorrog {
+    margin-top: 0 !important;
   }
 
   /* Off-Canvas Navigation */
