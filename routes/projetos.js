@@ -202,7 +202,8 @@ router.post('/registro', testaUsername2, (req, res) => {
     Projeto.createProject(newProject);
 
     let email = req.body.email
-    let nomeProjeto = req.body.nomeProjeto;
+    let nomeProjeto = req.body.nomeProjeto
+    let username = req.body.username
     var templatesDir = path.resolve(__dirname, '..', 'templates');
     var template = new EmailTemplate(path.join(templatesDir, 'inscricao'));
     const transport = nodemailer.createTransport(smtpTransport({
@@ -216,7 +217,8 @@ router.post('/registro', testaUsername2, (req, res) => {
 
     var locals = {
       email: email,
-      projeto: nomeProjeto
+      projeto: nomeProjeto,
+      username: username
     }
 
     template.render(locals, function (err, results) {
