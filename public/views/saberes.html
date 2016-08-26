@@ -135,21 +135,18 @@
   </md-input-container>
 
   <!-- Finalizar inscrição -->
-  <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+  <div class="finalizar" layout="row" layout-align="center center" data-ng-if="!spinnerActive" style="margin:40px 0;">
     <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!saberesForm.$valid" data-ng-click="registrarSaberes(saberes)">
       <md-icon md-svg-icon="check" ng-style="{width:'20px', height:'20px', color:'rgba(255,255,255,0.87)'}"></md-icon> Finalizar
     </md-button>
   </div>
-  
+
   <span us-spinner>
     <div layout="row" layout-sm="column" layout-align="space-around">
-      <md-progress-circular md-mode="indeterminate" md-diameter="40" class="loading-login"></md-progress-circular>
+      <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
     </div>
   </span>
-  <p>
-    <b>Spinner Active: </b>
-    {{spinnerActive}}
-  </p>
+
 </form>
 </md-content>
 </section>

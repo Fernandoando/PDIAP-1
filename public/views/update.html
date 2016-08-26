@@ -20,6 +20,29 @@
                       </div>
                     </div>
                   </md-input-container>
+                  <div class="md-block palavras-chave" data-ng-init="editingAF=false" style="margin-bottom:27px!important;padding-left:2px!important;">
+                    <label style="color:#43a047;padding-left:3px;font-size:12px;vertical-align:top;">Palavras-chave</label>
+                    <md-chips
+                    data-ng-required="true"
+                    ng-class="{'input-disabled3': !editingAF}"
+                    md-focus="editingAF=true"
+                    md-blur="editingAF=false"
+                    name="palavraChave"
+                    data-ng-model="palavraChave"
+                    md-separator-keys="keys"
+                    md-max-chips="6"
+                    placeholder="Palavras-chave (máximo 5)"
+                    secondary-placeholder=""></md-chips>
+                    <div class="md-errors-spacer" style="padding-top:3px!important;">
+                      <div class="message-error" style="padding-bottom:4px!important;color:rgba(0,0,0,0.87)!important;" data-ng-if="palavraChave.length !== 0 && palavraChave.length <= 5 || (projetoForm1.palavraChave.$untouched && !projetoForm1.palavraChave.$dirty)">Utilize ENTER após cada palavra chave.</div>
+                    </div>
+                    <div class="md-errors-spacer" style="padding-top:3px!important;">
+                      <div data-ng-if="projetoForm1.palavraChave.$dirty">
+                        <div class="message-error" style="padding-bottom:4px!important;float:right!important;" data-ng-show="palavraChave.length === 0">Obrigatório.</div>
+                        <div class="message-error" style="padding-bottom:4px!important;float:right!important;" data-ng-show="palavraChave.length > 5">Excedeu o número de palavras chave.</div>
+                      </div>
+                    </div>
+                  </div>
                   <div layout="row">
                     <md-input-container class="md-block" data-ng-init="editing2=false" style="width:100%!important;" flex-xs="100" flex="80">
                       <label>Categoria...</label>
@@ -62,11 +85,11 @@
           <div layout-gt-sm="row">
             <md-input-container class="md-block" data-ng-init="editing4=false" flex="100">
               <label>Resumo do Projeto</label>
-              <textarea style="height:200px!important;" name="resumo" data-ng-model="projeto1.resumo" data-ng-class="{'input-disabled': !editing4}" data-ng-focus="editing4=true" data-ng-blur="editing4=false" md-maxlength="2000" rows="1" md-select-on-focus></textarea>
+              <textarea style="height:200px!important;" name="resumo" data-ng-model="projeto1.resumo" data-ng-class="{'input-disabled': !editing4}" data-ng-focus="editing4=true" data-ng-blur="editing4=false" md-maxlength="2000" rows="1" md-select-on-focus required></textarea>
               <div class="md-errors-spacer">
                 <div data-ng-if="projetoForm1.resumo.$dirty">
-                  <div class="message-error" data-ng-if="projetoForm1.resumo.$error.required">Preencha esse campo.</div>
-                  <div class="message-error" data-ng-if="projetoForm1.resumo.$invalid">Resumo excedeu o número de caracteres |</div>
+                  <div class="message-error" data-ng-if="projetoForm1.resumo.$error.required">Obrigatório |</div>
+                  <div class="message-error" data-ng-if="projetoForm1.resumo.$invalid && !projetoForm1.resumo.$error.required">Resumo excedeu o número de caracteres |</div>
                 </div>
               </div>
             </md-input-container>
@@ -74,7 +97,7 @@
         </div>
       </div>
       <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-        <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm1.$valid" data-ng-click="update(projeto1)">
+        <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm1.$valid || palavraChave.length === 0" data-ng-click="update(projeto1)">
           <md-icon md-svg-icon="check" class="icon-btn-default"></md-icon>
           Salvar
         </md-button>
@@ -173,8 +196,8 @@
           <div class="bloco-right" flex>
             <div ng-repeat="item1 in dynamicFields11" ng-form="projetoForm3">
               <h5 class="h5-2">
-                <md-icon md-svg-icon="account-box-outline" ng-style="{width:'19px', height:'19px'}"></md-icon> Orientador {{$index+1}}:
-                <md-button data-ng-if="!$first" class="md-fab md-mini md-warn" aria-label="Remover orientador" data-ng-click="removeOrientadorUpdate($index)">
+                <md-icon md-svg-icon="account-box-outline" class="icon-integrantes"></md-icon> Orientador {{$index+1}}:
+                <md-button data-ng-if="!$first" class="md-fab md-mini md-warn" aria-label="Remover orientador" data-ng-click="removeOrientadorUpdate($index,item1.id)">
                   <md-tooltip md-direction="right">Remover orientador</md-tooltip>
                   <md-icon md-svg-src="close" style="color:#fdfdfd!important;width:19px;height:19px;"></md-icon>
                 </md-button>
@@ -266,8 +289,8 @@
           <div class="bloco-right" flex>
             <div ng-repeat="item2 in dynamicFields22" ng-form="projetoForm4">
               <h5 class="h5-2">
-                <md-icon md-svg-icon="account-multiple" ng-style="{width:'19px', height:'19px'}"></md-icon> Aluno {{$index+1}}:
-                <md-button data-ng-if="!$first" class="md-fab md-mini md-warn" aria-label="Remover aluno" data-ng-click="removeAlunoUpdate($index)">
+                <md-icon md-svg-icon="account-multiple" class="icon-integrantes"></md-icon> Aluno {{$index+1}}:
+                <md-button data-ng-if="!$first" class="md-fab md-mini md-warn" aria-label="Remover aluno" data-ng-click="removeAlunoUpdate($index,item2.id)">
                   <md-tooltip md-direction="right">Remover aluno</md-tooltip>
                   <md-icon md-svg-src="close" style="color:#fdfdfd!important;width:19px;height:19px;"></md-icon>
                 </md-button>
@@ -361,7 +384,7 @@
               <span style="margin-right:30px;color:#616161;">Algum integrante necessita de hospedagem?</span>
               <md-radio-group layout="row" data-ng-model="hospedagemVerify" name="hospedagemVerify" ng-required="true">
                 <md-radio-button value="Sim">Sim</md-radio-button>
-                <md-radio-button value="Não">Não</md-radio-button>
+                <md-radio-button value="Não" data-ng-click="limpaHospedagem()">Não</md-radio-button>
               </md-radio-group>
               <div class="md-errors-spacer"></div>
             </div>
@@ -369,52 +392,29 @@
               <label>Quais?</label>
               <md-select name="hospedagem" data-ng-model="projeto5.hospedagem" multiple data-ng-class="{'input-disabled': !editing19}" data-ng-focus="editing19=true;montarIntegrantes1(projeto4)" data-ng-blur="editing19=false" required>
                 <!-- <md-optgroup label="Orientador(es)" data-ng-if="projeto3.nomeOrientador1 !== undefined">
-                  <md-option ng-value="eae.nome" ng-repeat="eae in orientadores">{{eae.nome}}</md-option>
-                </md-optgroup> -->
-                <md-optgroup label="Aluno(s)" data-ng-if="projeto4.nomeAluno1 !== undefined">
-                  <md-option ng-value="dae.nome" ng-repeat="dae in alunos">{{dae.nome}}</md-option>
-                </md-optgroup>
-                <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto4.nomeAluno1 === undefined" disabled></md-optgroup>
-              </md-select>
-              <div class="md-errors-spacer">
-                <div data-ng-if="projetoForm5.hospedagem.$touched">
-                  <div class="message-error" data-ng-if="projetoForm5.hospedagem.$error.required">Selecione uma opção</div>
-                </div>
+                <md-option ng-value="eae.nome" ng-repeat="eae in orientadores">{{eae.nome}}</md-option>
+              </md-optgroup> -->
+              <md-optgroup label="Aluno(s)" data-ng-if="projeto4.nomeAluno1 !== undefined">
+                <md-option ng-value="dae.nome" ng-repeat="dae in alunos">{{dae.nome}}</md-option>
+              </md-optgroup>
+              <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto4.nomeAluno1 === undefined" disabled></md-optgroup>
+            </md-select>
+            <div class="md-errors-spacer">
+              <div data-ng-if="projetoForm5.hospedagem.$touched">
+                <div class="message-error" data-ng-if="projetoForm5.hospedagem.$error.required">Selecione uma opção</div>
               </div>
-            </md-input-container>
-            {{projeto5.hospedagem}}
-            {{projeto5.hospedagem[1]}}
-            <!-- <md-input-container class="md-block" data-ng-if="hospedagemVerify == 'Sim'" flex-gt-sm>
-            <label>Quais?</label>
-            <md-select name="hospedagem" data-ng-model="projeto5.hospedagem" multiple required>
-            <md-optgroup label="Orientador(es)" data-ng-if="projeto3.nomeOrientador1 !== undefined">
-            <md-option ng-value="projeto3.nomeOrientador1">{{projeto3.nomeOrientador1}}</md-option>
-            <md-option ng-value="projeto3.nomeOrientador2" data-ng-if="projeto3.nomeOrientador2 !== undefined">{{projeto3.nomeOrientador2}}</md-option>
-          </md-optgroup>
-          <md-optgroup label="Aluno(s)" data-ng-if="projeto4.nomeAluno1 !== undefined">
-          <md-option ng-value="projeto4.nomeAluno1">{{projeto4.nomeAluno1}}</md-option>
-          <md-option ng-value="projeto4.nomeAluno2" data-ng-if="projeto4.nomeAluno2 !== undefined">{{projeto4.nomeAluno2}}</md-option>
-          <md-option ng-value="projeto4.nomeAluno3" data-ng-if="projeto4.nomeAluno3 !== undefined">{{projeto4.nomeAluno3}}</md-option>
-        </md-optgroup>
-        <md-optgroup label="Nenhum integrante na lista :(" data-ng-if="projeto4.nomeAluno1 === undefined && projeto3.nomeOrientador1 === undefined" disabled></md-optgroup>
-      </md-select>
-      {{projeto5.hospedagem}}
-      <div class="md-errors-spacer">
-      <div data-ng-if="projetoForm5.hospedagem.$touched">
-      <div class="message-error" data-ng-if="projetoForm5.hospedagem.$error.required">Selecione uma opção</div>
-    </div>
-  </div>
-</md-input-container> -->
-</div>
-</div>
-<div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
-  <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm5.$valid" data-ng-click="update(projeto5)">
-    <md-icon md-svg-icon="check" class="icon-btn-default"></md-icon>
-    Salvar
-  </md-button>
-</div>
-</form>
-</md-content>
+            </div>
+          </md-input-container>
+        </div>
+      </div>
+      <div class="finalizar" layout="row" layout-align="center center" style="margin:40px 0;">
+        <md-button class="md-raised md-primary teal lighten-1" data-ng-disabled="!projetoForm5.$valid" data-ng-click="update(projeto5)">
+          <md-icon md-svg-icon="check" class="icon-btn-default"></md-icon>
+          Salvar
+        </md-button>
+      </div>
+    </form>
+  </md-content>
 </md-content>
 </md-tab>
 </md-tabs>

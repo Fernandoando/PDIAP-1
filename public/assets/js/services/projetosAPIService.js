@@ -109,6 +109,15 @@
 			return $http(request);
 		};
 
+		let _removeIntegrante = function(integrante) {
+			const request = {
+				url: '/projetos/removerIntegrante',
+				method: 'PUT',
+				data: integrante
+			}
+			return $http(request);
+		};
+
 		let _postRedefinir = function(username) {
 			const request = {
 				url: '/projetos/redefinir-senha',
@@ -151,7 +160,8 @@
 			putIntegrante: _putIntegrante,
 			postRedefinir: _postRedefinir,
 			postNewPassword: _postNewPassword,
-			postContato: _postContato
+			postContato: _postContato,
+			removeIntegrante: _removeIntegrante
 		};
 	});
 })();

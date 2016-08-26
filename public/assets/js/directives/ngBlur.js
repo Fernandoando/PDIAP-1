@@ -16,7 +16,6 @@
         },0);
       }
     };
-
     return directive;
   })
   .directive('mdFocus', function($timeout) {
@@ -32,7 +31,6 @@
         },0);
       }
     };
-
     return directive;
   });
 

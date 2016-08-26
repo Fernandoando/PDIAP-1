@@ -55,11 +55,16 @@
 						</div>
 					</div>
 				</md-input-container>
-				<div style="display:flex;justify-content:center;">
+				<div style="display:flex;justify-content:center;" data-ng-if="!spinnerActive">
 				  <md-button class="md-raised green lighten-1 button special" style="width:10em;" data-ng-disabled="!contatoForm.$valid" data-ng-click="enviarContato(contato)">
 				    <span class="icon fa-paper-plane" style="margin-right:5px;"></span> Enviar
 				  </md-button>
 				</div>
+        <span us-spinner>
+          <div layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular md-mode="indeterminate" md-diameter="40" class="loading-login"></md-progress-circular>
+          </div>
+        </span>
 			</form>
 		</div>
 	</section>

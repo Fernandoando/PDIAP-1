@@ -5,6 +5,29 @@
 	.module('PDIAP')
 	.controller('contaCtrl', function($scope, $mdDialog, $location, projetosAPI) {
 
+		$scope.usernames = [];
+
+		projetosAPI.getUsersEscolas()
+		.success(function(data) {
+			console.log(data);
+			angular.forEach(data, function (value) {
+				if (value.username !== undefined) {
+					$scope.usernames.push(value.username);
+				}
+			});
+		});
+
+		$scope.verificaUsername = function(username) {
+			for (var i in $scope.usernames) {
+				if ($scope.usernames[i] == username) {
+					$scope.contaForm.username.$setValidity('duplicado',false);
+					break; // importante parar caso username seja igual, senão não funciona
+				} else {
+					$scope.contaForm.username.$setValidity('duplicado',true);
+				}
+			}
+		};
+
 		$scope.enviarEmail2 = function() {
 			let pacote = ({
 				username: $scope.conta.username

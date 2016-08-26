@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('adminCtrl', function($scope, $rootScope, $location, $mdSidenav, $mdToast, projetosAPI) {
+	.controller('adminCtrl', function($scope, $rootScope, $window, $location, $mdSidenav, $mdToast, projetosAPI) {
 
 		$scope.projeto = {};
 		$scope.projeto1 = {};
@@ -15,6 +15,13 @@
 		$scope.projetoEmail = '';
 		$scope.integrantes = [];
 		$rootScope.header = 'Dashboard';
+
+		$scope.mostraResumo = function() {
+    	$window.open('http://www.movaci.com.br/alpha/documentos/Modelo_Resumo_MOVACI.pdf', '_blank');
+		}
+		$scope.mostraRelatorio = function() {
+    	$window.open('http://www.movaci.com.br/alpha/documentos/Modelo_Relatorio_MOVACI.pdf', '_blank');
+		}
 
 		let maskCEP = function() {
 			$scope.projeto2.cep = $scope.projeto2.cep.substring(0,2) + "." + $scope.projeto2.cep.substring(2);
@@ -30,6 +37,7 @@
 				$scope.projeto1.categoria = projeto.categoria;
 				$scope.projeto1.eixo = projeto.eixo;
 				$scope.projeto1.resumo = projeto.resumo;
+				$scope.palavraChave = projeto.palavraChave.split(",");
 
 				$scope.projeto2.nomeEscola = projeto.nomeEscola;
 				$scope.projeto2.estado = projeto.estado;
@@ -42,7 +50,7 @@
 				$scope.projetoEmail = projeto.email;
 
 				$scope.projeto5.hospedagem = [];
-				if (projeto.hospedagem !== undefined) {
+				if (projeto.hospedagem !== undefined && projeto.hospedagem !== "") {
 					$scope.projeto5.hospedagem = projeto.hospedagem.split(",");
 					// console.log($scope.projeto5.hospedagem);
 					$scope.hospedagemVerify = 'Sim';
@@ -118,6 +126,10 @@
 						name: 'Ensino Médio',
 						icon: 'pen',
 						link: 'home.avaliacao-medio'
+					}, {
+						name: 'Ensino Médio - Ext',
+						icon: 'pen',
+						link: 'home.avaliacao-medio-extensao'
 					}]
 				}]
 			}

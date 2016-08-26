@@ -101,6 +101,9 @@ md-dialog.login-content {
 md-dialog-content {
   background: #4caf50 !important;
 }
+md-dialog .md-actions, md-dialog md-dialog-actions {
+  padding-left: 0 !important;
+}
 md-sidenav {
   width: 260px !important;
 }
@@ -323,6 +326,12 @@ md-dialog-content p {
 }
 md-dialog.md-error-theme md-dialog-content {
   background: #f44336 !important;
+}
+md-dialog.md-padrao-theme md-dialog-content {
+  background: #616161 !important;
+}
+md-dialog.md-padrao-theme md-dialog-actions button {
+  color: #616161 !important;
 }
 md-dialog md-dialog-actions button.md-error-theme {
   color: #616161 !important;
@@ -555,6 +564,7 @@ md-tabs md-ink-bar {
   width: 0 !important;
   height: 0 !important;
 }
+md-chips-wrap { margin-top: -2px !important; }
 .input-disabled {
   background-color: #eee !important;
   border-radius: 4px !important;
@@ -568,6 +578,19 @@ md-autocomplete.input-disabled2 input {
   border-bottom: none !important;
   color: #757575 !important;
   padding-left: 10px !important;
+}
+.input-disabled3 md-chips-wrap.md-chips {
+  background-color: #eee !important;
+  border-radius: 4px !important;
+  border-bottom: none !important;
+  color: #757575 !important;
+  box-shadow: none !important;
+}
+.palavras-chave md-chips-wrap.md-chips .md-chip-input-container input.ng-empty {
+  padding-left: 10px !important;
+}
+.input-disabled3 md-chips-wrap.md-chips md-chip, .md-chip-remove-container button md-icon {
+  color: #757575 !important;
 }
 .md-errors-spacer {
   float: right;
@@ -662,7 +685,19 @@ md-toast {
 .white-text {
   color: rgba(255,255,255,0.87) !important;
 }
-/*md-progress-circular.md-default-theme.loading-login .md-inner .md-left .md-half-circle,
+/* padrão */
+md-progress-circular.md-default-theme .md-inner .md-left .md-half-circle,
+md-progress-circular .md-inner .md-left .md-half-circle {
+  border-left-color: #43a047 !important;
+  border-top-color: #43a047 !important;
+}
+md-progress-circular.md-default-theme .md-inner .md-right .md-half-circle,
+md-progress-circular .md-inner .md-right .md-half-circle {
+  border-right-color: #43a047 !important;
+  border-top-color: #43a047 !important;
+}
+/* login */
+md-progress-circular.md-default-theme.loading-login .md-inner .md-left .md-half-circle,
 md-progress-circular.loading-login .md-inner .md-left .md-half-circle {
   border-left-color: rgba(255,255,255,0.87) !important;
   border-top-color: rgba(255,255,255,0.87) !important;
@@ -671,7 +706,7 @@ md-progress-circular.md-default-theme.loading-login .md-inner .md-right .md-half
 md-progress-circular.loading-login .md-inner .md-right .md-half-circle {
   border-right-color: rgba(255,255,255,0.87) !important;
   border-top-color: rgba(255,255,255,0.87) !important;
-}*/
+}
 md-card {
   margin: 0;
   font-size: 15px !important;
@@ -725,7 +760,6 @@ md-icon {
 }
 .home-container2 {
   margin-top: 20px;
-  max-width: 1280px !important;
   border: 2px solid #43a047;
   border-radius: 4px;
 }
@@ -736,7 +770,6 @@ md-icon {
   line-height: 21px;
   font-size: 16px;
   text-indent: 30px;
-  word-break: break-all;
 }
 .home-title {
   width: 100%;

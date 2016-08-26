@@ -84,6 +84,13 @@
 		$scope.keys = [$mdConstant.KEY_CODE.ENTER, $mdConstant.KEY_CODE.COMMA];
 		$scope.palavrasChave = [];
 
+		$scope.checkValidate = function(palavra) {
+			if (palavra.length === 5) {
+				$scope.palavrasChave.splice(6, 1);
+				$scope.msg = 'aaa';
+			}
+		}
+
 		$scope.emails = [];
 		$scope.loadEmails = function() {
 			$scope.emails = [];
@@ -192,6 +199,10 @@
 		};
 		$scope.removeAluno = function(index) {
 			$scope.dynamicFields2.splice(index, 1);
+			// refatorar: tirar count2--
+			//  if ($scope.dynamicFields2.length !== 3) {
+				// $scope.btnAdd2 = true;
+			// }
 			$scope.count2--;
 			if ($scope.count2 !== 3) {
 				$scope.btnAdd2 = true;
@@ -263,6 +274,7 @@
 			$scope.dynamicFields2 = [
 				{nome:'nomeAluno1', email:'emailAluno1', cpf:'cpfAluno1', telefone:'telefoneAluno1', camiseta:'tamCamisetaAluno1'}
 			];
+			$scope.palavrasChave = [];
 			$scope.eixos = [];
 			$scope.cidades = [];
 			$scope.loginHabilitado = false;

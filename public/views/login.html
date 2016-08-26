@@ -20,16 +20,16 @@
       <div layout="row" layout-align="center center" class="redefinir">
         Esqueceu sua senha?<a class="btn-redefinir" data-ng-click="showPrompt($event)">Redefinir</a>
       </div>
-      <div layout="row" layout-align="center center" style="margin-bottom:10px;">
+      <div layout="row" layout-align="center center" data-ng-if="!spinnerActive" style="margin-bottom:10px;">
         <md-button id="btn-login" aria-label="Login" class="md-raised md-primary white teal lighten-1 btnEntrar" data-ng-disabled="!userLogin.$valid" data-ng-click="login()">
-          <span data-ng-if="loading && userLogin.$valid">
-            <div layout="row" layout-sm="column" layout-align="space-around">
-              <md-progress-circular md-mode="indeterminate" md-diameter="40" class="loading-login"></md-progress-circular>
-            </div>
-          </span>
-          <span data-ng-if="!loading">Entrar</span>
+          <span>Entrar</span>
         </md-button>
       </div>
+      <span us-spinner>
+        <div layout="row" layout-sm="column" layout-align="space-around">
+          <md-progress-circular md-mode="indeterminate" md-diameter="40" class="loading-login"></md-progress-circular>
+        </div>
+      </span>
     </form>
     <!-- </md-content> -->
   </div>

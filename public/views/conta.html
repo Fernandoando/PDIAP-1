@@ -3,18 +3,6 @@
     <form name="contaForm" novalidate style="width:85%;max-width:850px;padding:8px;">
       <div layout="row">
         <div class="bloco-right" flex>
-          <md-input-container class="md-block" data-ng-init="editingE=false" flex-gt-sm>
-            <label>E-mail principal</label>
-            <md-select name="email" data-ng-model="conta.email" data-ng-init="loadEmails1()" md-on-open="loadEmails1()" data-ng-class="{'input-disabled': !editingE}" data-ng-focus="editingE=true" data-ng-blur="editingE=false" required>
-              <md-option ng-value="email" ng-repeat="email in emails1" data-ng-if="emails1.length > 0">{{email}}</md-option>
-              <md-option value="" disabled data-ng-if="emails1.length == 0">Nenhum email inserido</md-option>
-            </md-select>
-            <div class="md-errors-spacer">
-              <div data-ng-if="contaForm.email.$dirty">
-                <div class="message-error" data-ng-if="contaForm.email.$error.required">Obrigatório.</div>
-              </div>
-            </div>
-          </md-input-container>
           <md-input-container class="md-block" data-ng-init="editingU=false" flex-gt-sm>
             <label>Nome do usuário</label>
             <input type="text" name="username" data-ng-model="conta.username" data-ng-change="verificaUsername(conta.username)" data-ng-class="{'input-disabled': !editingU}" data-ng-focus="editingU=true" data-ng-blur="editingU=false" required/>
