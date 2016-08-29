@@ -35,7 +35,7 @@ const ProjetoSchema = new Schema({
 	username: {type: String, required: true, unique: true, uniqueCaseInsensitive:true},
 	email: {type: String, required: true},
 	password: {type: String, required: true},
-	aprovado: {type: String},
+	aprovado: {type: Boolean},
 
 	createdAt: {type: Date},
 	updatedAt: {type: Date},

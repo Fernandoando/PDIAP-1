@@ -567,7 +567,7 @@ router.post('/contato', (req, res) => {
   }));
 
   var mailOptions = {
-    from: req.body.email,
+    from: 'contato@movaci.com.br',
     to: 'contato@movaci.com.br',
     subject: assunto,
     text: '',
