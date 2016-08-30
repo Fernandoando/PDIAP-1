@@ -37,7 +37,12 @@
 				$scope.projeto1.categoria = projeto.categoria;
 				$scope.projeto1.eixo = projeto.eixo;
 				$scope.projeto1.resumo = projeto.resumo;
-				$scope.palavraChave = projeto.palavraChave.split(",");
+
+				if (projeto.palavraChave === undefined) {
+					$scope.palavraChave = [];
+				} else {
+					$scope.palavraChave = projeto.palavraChave.split(",");
+				}
 
 				$scope.projeto2.nomeEscola = projeto.nomeEscola;
 				$scope.projeto2.estado = projeto.estado;
