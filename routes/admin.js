@@ -107,13 +107,12 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
   res.redirect('/home/update');
 });
 
-module.exports = router;
 /*router.get('/pdf', (req, res) =>{
 	
 	var pdf = require('pdfkit');
 	var fs = require('fs');
 	
-	projetoSchema.find((err, users) => {
+	projetoSchema.find().sort({"categoria":1, "eixo":1, "numInscricao":1}).exec(function(err, users) {
   	if (err) throw err;
   	//res.send(usr);
   	var myDoc = new pdf;
