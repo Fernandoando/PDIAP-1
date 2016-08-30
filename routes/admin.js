@@ -108,3 +108,45 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
 });
 
 module.exports = router;
+/*router.get('/pdf', (req, res) =>{
+	
+	var pdf = require('pdfkit');
+	var fs = require('fs');
+	
+	projetoSchema.find((err, users) => {
+  	if (err) throw err;
+  	//res.send(usr);
+  	var myDoc = new pdf;
+  	myDoc.pipe(fs.createWriteStream('output.pdf'));
+  	users.forEach(function(usr){
+
+  		myDoc.addPage()
+  		.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+  		.fontSize(12)
+  		.text("Num. inscrição: "+usr.numInscricao, 410, 70)
+  		.fontSize(18)
+  		.text("Projeto",70,110)
+  		.fontSize(12)
+  		.text("Nome do projeto: "+usr.nomeProjeto,70,140)
+  		.text("Categoria: "+usr.categoria,70,170)
+  		.text("Eixo: "+usr.eixo,70,190)
+  		.fontSize(18)
+  		.text("Escola",70,220)
+  		.fontSize(12)
+  		.text("Nome: "+usr.nomeEscola,70,250)
+  		.text("Cidade: "+usr.cidade+"     Estado: "+usr.estado,70,270)
+  		.fontSize(18)
+  		.text("Resumo",70,300)
+  		.fontSize(12)
+  		.text("Palavras-chave: "+usr.palavraChave,70,320)
+  		.text(usr.resumo,70,350, {align: 'justify'})
+  		
+  		console.log(usr.numInscricao);
+
+	});
+	res.sendStatus(200);
+	myDoc.end();
+  });
+});*/
+
+module.exports = router;
