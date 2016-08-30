@@ -51,14 +51,6 @@
 			return $http(request);
 		};
 
-		let _getTodosProjetos = function() {
-			const request = {
-				url: '/projetos/todos',
-				method: 'GET',
-			}
-			return $http(request);
-		};
-
 		let _getCategorias = function() {
 			const request = {
 				url: 'assets/js/categorias-eixos.json',
@@ -91,14 +83,14 @@
 			return $http(request);
 		};
 
-		let _putProjeto = function(projeto) {
-			const request = {
-				url: '/projetos/update',
-				method: 'PUT',
-				data: projeto
-			}
-			return $http(request);
-		};
+		// let _putProjeto = function(projeto) {
+		// 	const request = {
+		// 		url: '/projetos/update',
+		// 		method: 'PUT',
+		// 		data: projeto
+		// 	}
+		// 	return $http(request);
+		// };
 
 		let _putIntegrante = function(integrante) {
 			const request = {
@@ -151,12 +143,11 @@
 			saveAvaliador: _saveAvaliador,
 			postLogin: _postLogin,
 			getProjeto: _getProjeto,
-			getTodosProjetos: _getTodosProjetos,
 			getCategorias: _getCategorias,
 			getEstados: _getEstados,
 			getUsersEscolas: _getUsersEscolas,
 			getEscolasSaberes: _getEscolasSaberes,
-			putProjeto: _putProjeto,
+			// putProjeto: _putProjeto,
 			putIntegrante: _putIntegrante,
 			postRedefinir: _postRedefinir,
 			postNewPassword: _postNewPassword,

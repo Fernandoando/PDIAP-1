@@ -25,6 +25,10 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
+router.get('/', function(req, res, next) {
+  res.render('layout_admin.ejs');
+});
+
 router.post('/registro', (req, res) => {
 	let newAdmin = new adminSchema({
       username: req.body.username,
@@ -86,7 +90,7 @@ router.post('/logout', (req, res) => {
 router.put('/upgreice', ensureAuthenticated, (req, res) => {
 
   let myArray = req.body
-  
+
   myArray.forEach(function (value, i) {
     //console.log('%d: %s', i);
 

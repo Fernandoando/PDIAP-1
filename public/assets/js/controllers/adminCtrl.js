@@ -111,11 +111,13 @@
 						name: 'Dashboard',
 						icon: 'view-dashboard',
 						link: 'home'
-					}, {
-						name: 'Alterar projeto',
-						icon: 'flask',
-						link: 'home.update'
-					}, {
+					},
+					// {
+					// 	name: 'Alterar projeto',
+					// 	icon: 'flask',
+					// 	link: 'home.update'
+					// },
+					{
 						name: 'Dados da conta',
 						icon: 'account-settings-variant',
 						link: 'home.conta'

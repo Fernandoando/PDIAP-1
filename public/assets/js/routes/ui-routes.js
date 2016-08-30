@@ -90,11 +90,11 @@
 				loggedin: checkLoggedin
 			}
 		})
-		.state('home.update', {
-			url: "/update",
-			templateUrl: "/views/update.html",
-			controller: "updateCtrl"
-		})
+		// .state('home.update', {
+		// 	url: "/update",
+		// 	templateUrl: "/views/update.html",
+		// 	controller: "updateCtrl"
+		// })
 		.state('home.conta', {
 			url: "/update-conta",
 			templateUrl: "/views/conta.html",
