@@ -15,6 +15,8 @@ const express = require('express')
 , path = require('path')
 , EmailTemplate = require('email-templates').EmailTemplate
 , wellknown = require('nodemailer-wellknown')
+, avaliadorSchema = require('../models/avaliador-schema')
+, saberesSchema = require('../models/saberes-schema')
 , async = require('async');
 
 function ensureAuthenticated(req, res, next) {
@@ -77,6 +79,20 @@ router.get('/home', ensureAuthenticated, (req, res) => {
   projetoSchema.find((err, usr) => {
   	if (err) throw err;
   	res.send(usr);
+  });
+});
+
+router.get('/avaliador', ensureAuthenticated, (req, res) => {
+  avaliadorSchema.find((err, usr) => {
+    if (err) throw err;
+    res.send(usr);
+  });
+});
+
+router.get('/saberes', ensureAuthenticated, (req, res) => {
+  saberesSchema.find((err, usr) => {
+    if (err) throw err;
+    res.send(usr);
   });
 });
 
