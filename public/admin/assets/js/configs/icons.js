@@ -2,13 +2,13 @@
 	'use strict';
 
 	angular
-	.module('PDIAP')
+	.module('PDIAPa')
 	.config(function($mdIconProvider, $mdThemingProvider) {
 		$mdThemingProvider.theme('error')
 		.primaryPalette('red');
 		$mdThemingProvider.theme('padrao')
 		.primaryPalette('grey');
 		$mdIconProvider
-		.defaultIconSet('admin-interno/assets/mdi.svg')
+		.defaultIconSet('admin/assets/mdi.svg')
 	});
 })();

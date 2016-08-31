@@ -4,14 +4,14 @@
 	angular
 	.module('PDIAP')
 	.factory("projetosAPI", function($http) {
-		let _saveProjeto = function(projeto) {
-			const request = {
-				url: '/projetos/registro',
-				method: 'POST',
-				data: projeto
-			}
-			return $http(request);
-		};
+		// let _saveProjeto = function(projeto) {
+		// 	const request = {
+		// 		url: '/projetos/registro',
+		// 		method: 'POST',
+		// 		data: projeto
+		// 	}
+		// 	return $http(request);
+		// };
 
 		let _saveSaberesDocentes = function(saberes) {
 			const request = {
@@ -138,7 +138,7 @@
 		};
 
 		return {
-			saveProjeto: _saveProjeto,
+			// saveProjeto: _saveProjeto,
 			saveSaberesDocentes: _saveSaberesDocentes,
 			saveAvaliador: _saveAvaliador,
 			postLogin: _postLogin,

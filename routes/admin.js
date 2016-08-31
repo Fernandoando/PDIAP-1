@@ -91,27 +91,23 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
 
   let myArray = req.body
 
-  myArray.forEach(function (value, i) {
-    //console.log('%d: %s', i);
-
-    if (value._id !== undefined) {
-      let id_doc = value._id
-      ProjetoSchema.findOneAndUpdate({"_id": id_doc},
-      {"$set": {"aprovado": true, updatedAt: Date.now()}}, {new:true},
-      (err, doc) => {
-        if (err) throw err;
-      }
-      );
+  for (var i = 0; i < myArray.length; i++) {
+    let id_doc = myArray[i];
+    projetoSchema.findOneAndUpdate({"_id": id_doc},
+    {"$set": {"aprovado": true}}, {new:true},
+    (err, doc) => {
+      if (err) throw err;
     }
-  });
-  res.redirect('/home/update');
+    );
+  }
+  res.send('success');
 });
 
 /*router.get('/pdf', (req, res) =>{
-	
+
 	var pdf = require('pdfkit');
 	var fs = require('fs');
-	
+
 	projetoSchema.find().sort({"categoria":1, "eixo":1, "numInscricao":1}).exec(function(err, users) {
   	if (err) throw err;
   	//res.send(usr);
@@ -139,7 +135,7 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
   		.fontSize(12)
   		.text("Palavras-chave: "+usr.palavraChave,70,320)
   		.text(usr.resumo,70,350, {align: 'justify'})
-  		
+
   		console.log(usr.numInscricao);
 
 	});

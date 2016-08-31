@@ -2,8 +2,8 @@
 	'use strict';
 
 	angular
-	.module('krl')
-	.controller('loginCtrl', function($scope, $rootScope, $state, $mdDialog, adminAPI) {
+	.module('PDIAPa')
+	.controller('loginCtrl', function($scope, $rootScope, $window, $state, $mdDialog, adminAPI) {
 
 		$scope.login = function() {
 			const username = $scope.user.username;
@@ -15,7 +15,8 @@
 				$scope.message = 'Sucesso';
 				$scope.erro = false;
 				$mdDialog.hide();
-				$state.go('home');
+				// $state.go('home');
+				$window.location.href="http://localhost/admin/home";
 			})
 			.error(function() { // authentication failed
 				$rootScope.logado = false;

@@ -7,6 +7,14 @@ router.all('/', function(req, res, next) {
   res.render('layout2.ejs');
 });
 
+router.get('/admin', function(req, res, next) {
+  res.render('layout_admin.ejs');
+});
+
+router.get('/admin/*', function(req, res, next) {
+  res.render('layout_admin2.ejs');
+});
+
 router.get('/regulamento', function(req, res, next) {
   res.render('layout3.ejs');
 });

@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-	.module('PDIAP')
+	.module('PDIAPa')
 	.directive('usSpinner', ['$http', '$rootScope', '$timeout' ,function ($http, $rootScope, $timeout){
 		return {
 			link: function (scope, elm, attrs)

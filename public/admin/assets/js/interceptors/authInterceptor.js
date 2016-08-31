@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-	.module('krl')
+	.module('PDIAPa')
 	.factory("authInterceptor", function ($q, $location, $rootScope, $timeout) {
 		return {
 			request: function(config) {
