@@ -9,7 +9,9 @@ const express = require('express')
 , ProjetoSchema = require('../models/projeto-schema')
 , crypto = require('crypto')
 , bcrypt = require('bcryptjs')
+, Admin = require('../controllers/admin-controller')
 , nodemailer = require('nodemailer')
+, adminSchema = require('../models/admin-schema')
 , smtpTransport = require('nodemailer-smtp-transport')
 , path = require('path')
 , EmailTemplate = require('email-templates').EmailTemplate
@@ -242,8 +244,75 @@ router.post('/registro', testaUsername2, (req, res) => {
   //res.send('OK');
 });
 
+
+
+
+
+
+
+
+passport.use('user', new LocalStrategy( function(username, password, done) {
+    Projeto.getProjectByUsername(username, (err, user) => {
+    if(err) throw err;
+    if(!user){
+      return done(null, false, {message: 'Unknown User'});
+    }
+    Projeto.comparePassword(password, user.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch){
+        return done(null, user);
+      } else {
+        return done(null, false, {message: 'Invalid password'});
+      }
+    });
+  });
+}));
+
+passport.use('admin', new LocalStrategy( function(username, password, done) {
+    Admin.getAdminByUsername(username, (err, admin) => {
+    if(err) throw err;
+    if(!admin){
+      return done(null, false, {message: 'Unknown admin'});
+    }
+    Admin.comparePassword(password, admin.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch){
+        return done(null, admin);
+      } else {
+        return done(null, false, {message: 'Invalid password'});
+      }
+    });
+  });
+}));
+
+passport.serializeUser(function(user, done){
+     done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done){
+   adminSchema.findById(id, function(err, user){
+     if(err) done(err);
+       if(user){
+         done(null, user);
+       } else {
+          ProjetoSchema.findById(id, function(err, user){
+          if(err) done(err);
+          done(null, user);
+       })
+      }
+    });
+ });
+
+
+
+
+
+
+
+
+
 // Setando a estatégia do Passport
-passport.use(new LocalStrategy((username, password, done) => {
+/*passport.use(new LocalStrategy((username, password, done) => {
   Projeto.getProjectByUsername(username, (err, user) => {
     if(err) throw err;
     if(!user){
@@ -268,17 +337,23 @@ passport.deserializeUser((id, done) => {
   Projeto.getProjectById(id, (err, user) => {
     done(err, user);
   });
-});
+});*/
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
-  //res.send(req.user);
-  res.redirect('/home');
+router.post('/login', passport.authenticate('user'), (req, res) => {
+  res.send(req.user);
+  //res.redirect('/home');
   //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
 });
 
 router.get('/home', ensureAuthenticated, (req, res) => {
   res.send(req.user);
 });
+
+/*router.post('/login/admin', passport.authenticate('admin'), (req, res) => {
+  res.send(req.user);
+  //res.redirect('/home');
+  //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
+});*/
 
 router.post('/logout', (req, res) => {
   req.logout();

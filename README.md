@@ -1,7 +1,7 @@
 # PDIAP
 Plataforma Digital de Inscrição e Administração de Projetos
 
-[![Refatoração: um dia vai ter](https://img.shields.io/badge/refatora%C3%A7%C3%A3o-um%20dia%20vai%20ter-blue.svg)]() [![Acesse: movaci.com.br](https://img.shields.io/badge/acesse-movaci.com.br-brightgreen.svg)]()
+[![Refatoração: um dia vai ter](https://img.shields.io/badge/refatora%C3%A7%C3%A3o-um%20dia%20vai%20ter-blue.svg)]() [![Acesse: movaci.com.br](https://img.shields.io/badge/acesse-movaci.com.br-brightgreen.svg)](www.movaci.com.br)
 
 
 ## O que é?!
@@ -22,4 +22,4 @@ Plataforma Digital de Inscrição e Administração de Projetos
 | Produção de relatórios parciais e final |**X**|**X**|**X**|**X**|**X**|**X**|**X**|**X**
 
 ## Instituição parceira
-<img src="/public/assets/images/logo-ifsul-horizontal-1.png" width="250">
+<a href="http://www.ifsul.edu.br"><img src="/public/assets/images/logo-ifsul-horizontal-1.png" width="250"></a>

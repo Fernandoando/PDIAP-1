@@ -39,16 +39,16 @@ router.post('/registro', (req, res) => {
 	res.send('OK');
 });
 
-passport.use(new LocalStrategy((username, password, done) => {
-  Admin.getAdminByUsername(username, (err, user) => {
+/*passport.use('admin',new LocalStrategy((username, password, done) => {
+  Admin.getAdminByUsername(username, (err, admin) => {
     if(err) throw err;
-    if(!user){
-      return done(null, false, {message: 'Unknown User'});
+    if(!admin){
+      return done(null, false, {message: 'Unknown admin'});
     }
-    Admin.comparePassword(password, user.password, (err, isMatch) => {
+    Admin.comparePassword(password, admin.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-        return done(null, user);
+        return done(null, admin);
       } else {
         return done(null, false, {message: 'Invalid password'});
       }
@@ -56,23 +56,23 @@ passport.use(new LocalStrategy((username, password, done) => {
   });
 }));
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
+passport.serializeUser((sponsor, done) => {
+  done(null, sponsor.id);
 });
 
 passport.deserializeUser((id, done) => {
-  Admin.getAdminById(id, (err, user) => {
-    done(err, user);
+  Admin.getAdminById(id, (err, sponsor) => {
+    done(err, sponsor);
   });
 });
-
-router.post('/login', passport.authenticate('local'), (req, res) => {
+*/
+router.post('/login', passport.authenticate('admin'), (req, res) => {
   res.send(req.user);
   //res.redirect('/home');
   //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
 });
 
-router.get('/home', (req, res) => {
+router.get('/home', ensureAuthenticated, (req, res) => {
   //res.send(req.user);
   projetoSchema.find((err, usr) => {
   	if (err) throw err;
