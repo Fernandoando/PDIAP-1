@@ -82,14 +82,14 @@ router.get('/home', ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get('/avaliador', ensureAuthenticated, (req, res) => {
+router.post('/avaliador', ensureAuthenticated, (req, res) => {
   avaliadorSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
   });
 });
 
-router.get('/saberes', ensureAuthenticated, (req, res) => {
+router.post('/saberes', ensureAuthenticated, (req, res) => {
   saberesSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
@@ -118,6 +118,46 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
   }
   res.send('success');
 });
+
+/*router.post('/aprovados', (req, res) => {
+  console.log(req.body.username);
+  const transporter = nodemailer.createTransport(smtpTransport({
+    host: 'smtp.zoho.com',
+    port: 587,
+    auth: {
+      user: "contato@movaci.com.br",
+      pass: "*mvc2016"
+    }
+  }));
+
+  let maillist = [];
+
+  projetoSchema.find({"aprovado": true}).exec(function(err, users) {
+    if (err) throw err;
+    users.forEach(function(usr) {
+      maillist.push(usr.email);
+      console.log(maillist);
+    });
+  });
+
+  maillist.toString();
+
+  /*var mailOptions = {
+    from: 'contato@movaci.com.br',
+    to: maillist,
+    subject: 'Teste aprovados',
+    text: '',
+    html: '<b> Teste:</b><br><b>De: </b>'
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      return console.log(error);
+    } else {
+      res.send('success');
+    }
+    console.log('Message sent: ' + info.response);
+  });*/
+
 
 /*router.get('/pdf', (req, res) =>{
 
