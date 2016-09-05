@@ -11,7 +11,7 @@ router.get('/admin', function(req, res, next) {
   res.render('layout_admin.ejs');
 });
 
-router.get('/admin/*', function(req, res, next) {
+router.get('/admin/home', function(req, res, next) {
   res.render('layout_admin2.ejs');
 });
 

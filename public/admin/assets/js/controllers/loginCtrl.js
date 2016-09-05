@@ -16,6 +16,16 @@
 				$scope.erro = false;
 				$mdDialog.hide();
 				// $state.go('home');
+				// let showOptionsDialog = function(ev) {
+				// 	$mdDialog.show({
+				// 		// controller: () => this,
+				// 		templateUrl: 'admin/views/options.html',
+				// 		parent: angular.element(document.body),
+				// 		targetEvent: ev,
+				// 		clickOutsideToClose: false
+				// 	});
+				// };
+				// showOptionsDialog();
 				$window.location.href="http://localhost/admin/home";
 			})
 			.error(function() { // authentication failed
@@ -24,5 +34,9 @@
 				$scope.erro = true;
 			});
 		};
+
+		$scope.ir = function(url) {
+			$window.location.href="http://localhost/"+url;
+		}
 	});
 })();

@@ -24,6 +24,22 @@
 			return $http(request);
 		};
 
+		let _getTodosSaberes = function() {
+			const request = {
+				url: '/admin/saberes',
+				method: 'POST',
+			}
+			return $http(request);
+		};
+
+		let _getTodosAvaliadores = function() {
+			const request = {
+				url: '/admin/avaliador',
+				method: 'POST',
+			}
+			return $http(request);
+		};
+
 		let _putTodosProjetos = function(projeto) {
 			const request = {
 				url: '/admin/upgreice',
@@ -36,6 +52,8 @@
 		return {
 			postLoginAdmin: _postLoginAdmin,
 			getTodosProjetos: _getTodosProjetos,
+			getTodosSaberes: _getTodosSaberes,
+			getTodosAvaliadores: _getTodosAvaliadores,
 			putTodosProjetos: _putTodosProjetos
 		};
 	});

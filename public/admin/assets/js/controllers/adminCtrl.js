@@ -5,25 +5,60 @@
 	.module('PDIAPa')
 	.controller('adminCtrl', function($scope, $q, $mdSidenav, $mdToast, adminAPI) {
 
-    $scope.projetos = [];
+		$scope.projetos = [];
 		$scope.searchProject = "";
 		$scope.idAprovados = [];
 
+		let countTotal = 0;
+		$scope.hosp = [];
 		let carregarProjetos = function() {
 			adminAPI.getTodosProjetos()
 			.success(function(projetos) {
-      	$scope.projetos = projetos;
+				angular.forEach(projetos, function (value, key) {
+					let obj = ({
+						_id: value._id.$oid,
+						numInscricao: value.numInscricao,
+						nomeProjeto: value.nomeProjeto,
+						nomeEscola: value.nomeEscola,
+						categoria: value.categoria,
+						eixo: value.eixo
+					});
+					$scope.projetos.push(obj);
+				});
+
+				// angular.forEach($scope.projetos, function (value, key){
+				// if(value.categoria === 'Ensino Médio, Técnico e Superior'){
+				// 	if (value.eixo !== 'Ciências Agrárias, Exatas e da Terra'
+				// 	&& value.eixo !== 'Ciências Ambientais, Biológicas e da Saúde'
+				// 	&& value.eixo !== 'Ciências Humanas e Sociais Aplicadas'
+				// 	&& value.eixo !== 'Extensão'
+				// 	&& value.eixo !== 'Línguas e Artes'
+				// 	&& value.eixo !== 'Ciências da Computação'
+				// 	&& value.eixo !== 'Engenharias') {
+				// 		console.log(value.eixo);
+				// 	}
+				//
+				//
+				// }
+				// if (value.hospedagem !== undefined && value.hospedagem !== "") {
+				// 	console.log(value.hospedagem);
+				// 	$scope.hosp.push(value.hospedagem);
+				// }
+				// countTotal++;
+				// console.log(value.eixo);
+				// });
+				// console.log(countTotal);
 			})
-      .error(function(status) {
-        console.log(status);
-      });
+			.error(function(status) {
+				console.log(status);
+			});
 		};
 		$scope.carregarProjetos = carregarProjetos;
 
 		$scope.querySearch = function querySearch (query) {
 			let deferred = $q.defer();
-      return deferred;
-    }
+			return deferred;
+		}
 
 		$scope.count = 0;
 		$scope.contador = function(check,idProj) {
@@ -51,6 +86,15 @@
 			});
 		}
 
+		$scope.ordenacao = ['categoria','eixo'];
+		$scope.ordenarPor = function(campo) {
+			$scope.ordenacao = campo;
+		}
+
+		$scope.query = 'nomeProjeto';
+		$scope.setBusca = function(campo) {
+			$scope.query = campo;
+		}
 		carregarProjetos();
 
 		// $scope.toggleSidenav = function(menu) {
