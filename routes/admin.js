@@ -119,6 +119,97 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
   res.send('success');
 });
 
+router.put('/upgreice2', ensureAuthenticated, (req, res) => {
+
+  let myArray = req.body
+
+  for (var i = 0; i < myArray.length; i++) {
+    let id_doc = myArray[i];
+    projetoSchema.findOneAndUpdate({"_id": id_doc},
+    {"$unset": {"aprovado": true}}, {new:true},
+    (err, doc) => {
+      if (err) throw err;
+    }
+    );
+  }
+  res.send('success');
+});
+
+router.post('/aprovadosemail', (req, res) => {
+  var templatesDir = path.resolve(__dirname, '..', 'templates');
+  var emailTemplates = require('email-templates');
+  //var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));  //--------------------------------------------------------
+  // Prepare nodemailer transport object
+  
+  emailTemplates(templatesDir, function(err, template) {
+
+    if (err) {
+      console.log(err);
+    } else {
+
+      var users = [];
+
+      projetoSchema.find({ 'aprovado': true }, function (err, docs) {
+        if (err) throw err;
+        //console.log(docs);
+        docs.forEach(function(usr) {
+          let url = "http://movaci.com.br/projetos/confirma/"+usr._id+"/2456";
+          let url2 = "http://movaci.com.br/projetos/confirma/"+usr._id+"/9877";
+          users.push({'email': 'rswarovsky@gmail.com', 'projeto': usr.nomeProjeto, 'url': url});
+        });
+        for (var i = 0; i < users.length; i++) {
+          console.log(users[i]);
+        }
+
+      const transporter = nodemailer.createTransport(smtpTransport({
+        host: 'smtp.zoho.com',
+        port: 587,
+        auth: {
+          user: "contato@movaci.com.br",
+      pass: "mvc2016" //--------------------------------------------------------//--------------------------------------------------------
+    }
+  }));
+
+      var Render = function(locals) {
+        this.locals = locals;
+        this.send = function(err, html, text) {
+          if (err) {
+            console.log(err);
+          } else {
+            transporter.sendMail({
+              from: 'contato@movaci.com.br',
+            to: locals.email,
+            subject: 'Mangia gli spaghetti con polpette!',
+            html: html,
+            // generateTextFromHTML: true,
+            text: text
+          }, function(err, responseStatus) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(responseStatus.message);
+            }
+          });
+          }
+        };
+        this.batch = function(batch) {
+          batch(this.locals, templatesDir, this.send);
+        };
+      };
+
+    // Load the template and send the emails
+    template('redefinicao', true, function(err, batch) {
+        for(var user in users) {
+          var render = new Render(users[user]);
+          render.batch(batch);
+        };
+      });
+      res.send('ok');  
+    });
+};
+});
+});
+
 /*router.post('/aprovados', (req, res) => {
   console.log(req.body.username);
   const transporter = nodemailer.createTransport(smtpTransport({
