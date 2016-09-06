@@ -129,8 +129,7 @@ router.put('/upgreice2', ensureAuthenticated, (req, res) => {
     {"$unset": {"aprovado": true}}, {new:true},
     (err, doc) => {
       if (err) throw err;
-    }
-    );
+    });
   }
   res.send('success');
 });
