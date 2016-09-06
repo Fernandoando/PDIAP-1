@@ -74,7 +74,7 @@ router.get('/loggedin', ensureAuthenticated, (req, res) => {
   res.send('success');
 });
 
-router.get('/home', ensureAuthenticated, (req, res) => {
+router.get('/projetos', ensureAuthenticated, (req, res) => {
   projetoSchema.find((err, usr) => {
   	if (err) throw err;
   	res.send(usr);
@@ -138,7 +138,7 @@ router.post('/aprovadosemail', (req, res) => {
   var emailTemplates = require('email-templates');
   //var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));  //--------------------------------------------------------
   // Prepare nodemailer transport object
-  
+
   emailTemplates(templatesDir, function(err, template) {
 
     if (err) {
@@ -202,7 +202,7 @@ router.post('/aprovadosemail', (req, res) => {
           render.batch(batch);
         };
       });
-      res.send('ok');  
+      res.send('ok');
     });
 };
 });

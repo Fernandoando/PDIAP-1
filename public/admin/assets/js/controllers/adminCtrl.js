@@ -14,9 +14,10 @@
 		let carregarProjetos = function() {
 			adminAPI.getTodosProjetos()
 			.success(function(projetos) {
+				console.log(projetos);
 				angular.forEach(projetos, function (value, key) {
 					let obj = ({
-						_id: value._id.$oid,
+						_id: value._id,
 						numInscricao: value.numInscricao,
 						nomeProjeto: value.nomeProjeto,
 						nomeEscola: value.nomeEscola,
@@ -25,6 +26,7 @@
 						aprovado: value.aprovado
 					});
 					$scope.projetos.push(obj);
+					console.log(obj);
 				});
 
 				// angular.forEach($scope.projetos, function (value, key){

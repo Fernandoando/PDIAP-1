@@ -16,9 +16,17 @@
 			return $http(request);
 		};
 
+		// let _getTodosProjetos = function() {
+		// 	const request = {
+		// 		url: '/dados/projetos300816.json',
+		// 		method: 'GET',
+		// 	}
+		// 	return $http(request);
+		// };
+
 		let _getTodosProjetos = function() {
 			const request = {
-				url: '/dados/projetos300816.json',
+				url: '/admin/projetos',
 				method: 'GET',
 			}
 			return $http(request);

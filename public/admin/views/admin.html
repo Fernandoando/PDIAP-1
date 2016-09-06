@@ -76,9 +76,10 @@
 
 <md-content>
   <div layout="row" style="justify-content:center;padding:30px 0;background:rgba(128,128,128,0.07);">
-    <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#3f51b5;border-radius:50%;margin-right:8px;"></div>Fundamental I</div>
+    <!-- <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#3f51b5;border-radius:50%;margin-right:8px;"></div>Fundamental I</div>
     <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#9c27b0;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Fundamental II</div>
-    <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#4caf50;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Ensino Médio, Técnico e Superior</div>
+    <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#4caf50;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Ensino Médio, Técnico e Superior</div> -->
+    <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#4caf50;border-radius:50%;margin-right:8px;"></div>Aprovado</div>
   </div>
   <div layout="row" style="justify-content:center;padding-bottom:20px;background:rgba(128,128,128,0.07);">
     TOTAL: {{projetos.length}}
@@ -89,7 +90,7 @@
         <p>Nº</p>
       </div>
       <div class="md-list-item-text" flex="80" layout="column" style="text-align:center;">
-        <p>Nome e instituição de origem do projeto</p>
+        <p>Projetos</p>
       </div>
       <md-divider></md-divider>
     </md-list-item>
@@ -104,12 +105,14 @@
         <p data-ng-if="ordenacao == 'nomeEscola'">{{::proj.nomeEscola}}</p>
         <p data-ng-if="ordenacao != 'nomeEscola'">{{::proj.eixo}}</p>
       </div>
-      <!-- <md-icon flex="5" class="md-secondary" md-svg-src="plus"></md-icon> -->
-      <div layout flex="5" layout-align="center center" style="align-self:center;">
+      <!-- <div layout flex="5" layout-align="center center" style="align-self:center;">
         <div style="width:15px;height:15px;border-radius:50%;"
         data-ng-class="{azul:proj.categoria == 'Fundamental I (1º ao 5º anos)',
         roxo:proj.categoria == 'Fundamental II (6º ao 9º anos)',
         green1:proj.categoria == 'Ensino Médio, Técnico e Superior'}">
+      </div> -->
+      <div layout flex="5" layout-align="center center" style="align-self:center;">
+        <div style="width:15px;height:15px;border-radius:50%;" class="green1" data-ng-if="proj.aprovado === true">
       </div>
     </div>
     <md-divider></md-divider>

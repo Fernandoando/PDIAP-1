@@ -15,10 +15,10 @@
 				$scope.message = 'Sucesso';
 				$scope.erro = false;
 				$mdDialog.hide();
-				if (data.username === 'admin') {
-					$window.location.href="http://localhost/admin/master/home";
+				if (data.username === 'admin2') {
+					$window.location.href="http://www.movaci.com.br/admin/master/home";
 				} else {
-					$window.location.href="http://localhost/admin/home";
+					$window.location.href="http://www.movaci.com.br/admin/home";
 				}
 			})
 			.error(function() { // authentication failed
@@ -29,7 +29,7 @@
 		};
 
 		$scope.ir = function(url) {
-			$window.location.href="http://movaci.com.br/"+url;
+			$window.location.href="http://www.movaci.com.br/"+url;
 		}
 	});
 })();
