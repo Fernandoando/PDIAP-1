@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAPa')
-	.controller('adminCtrl', function($scope, $q, $mdSidenav, $mdToast, adminAPI) {
+	.controller('adminCtrl', function($scope, $q, $window, $mdDialog, adminAPI) {
 
 		$scope.projetos = [];
 		$scope.searchProject = "";
@@ -21,7 +21,8 @@
 						nomeProjeto: value.nomeProjeto,
 						nomeEscola: value.nomeEscola,
 						categoria: value.categoria,
-						eixo: value.eixo
+						eixo: value.eixo,
+						aprovado: value.aprovado
 					});
 					$scope.projetos.push(obj);
 				});
@@ -76,8 +77,48 @@
 
 		$scope.update = function() {
 			let ids = $scope.idAprovados;
-			adminAPI.putTodosProjetos(ids)
+			adminAPI.putSetAprovados(ids)
 			.success(function(data, status) {
+				$scope.selectedo = false;
+				let showAlert = function(ev) {
+					$mdDialog.show(
+						$mdDialog.alert()
+						.parent(angular.element(document.querySelector('#popupContainer')))
+						.clickOutsideToClose(false)
+						.textContent('Projeto(s) atualizado(s) com sucesso!')
+						.ok('OK')
+						.targetEvent(ev)
+					).then(function(result) {
+						$window.location.reload();
+					}, function() {});
+				};
+				showAlert();
+				console.log(status);
+				console.log(data);
+			})
+			.error(function(status) {
+				console.log('Error: '+status);
+			});
+		}
+
+		$scope.remove = function() {
+			let ids = $scope.idAprovados;
+			adminAPI.putUnsetAprovados(ids)
+			.success(function(data, status) {
+				$scope.selectedo = false;
+				let showAlert = function(ev) {
+					$mdDialog.show(
+						$mdDialog.alert()
+						.parent(angular.element(document.querySelector('#popupContainer')))
+						.clickOutsideToClose(false)
+						.textContent('Projeto(s) atualizado(s) com sucesso!')
+						.ok('OK')
+						.targetEvent(ev)
+					).then(function(result) {
+						$window.location.reload();
+					}, function() {});
+				};
+				showAlert();
 				console.log(status);
 				console.log(data);
 			})
@@ -96,14 +137,6 @@
 			$scope.query = campo;
 		}
 		carregarProjetos();
-
-		// $scope.toggleSidenav = function(menu) {
-		// 	$mdSidenav(menu).toggle();
-		// };
-		// $scope.toast = function(message,tema) {
-		// 	var toast = $mdToast.simple().textContent(message).action('✖').position('top right').theme(tema).hideDelay(10000);
-		// 	$mdToast.show(toast);
-		// };
 
 	});
 })();

@@ -27,10 +27,6 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
-router.get('/', function(req, res, next) {
-  res.render('layout_admin.ejs');
-});
-
 router.post('/registro', (req, res) => {
 	let newAdmin = new adminSchema({
       username: req.body.username,
@@ -74,8 +70,11 @@ router.post('/login', passport.authenticate('admin'), (req, res) => {
   //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
 });
 
+router.get('/loggedin', ensureAuthenticated, (req, res) => {
+  res.send('success');
+});
+
 router.get('/home', ensureAuthenticated, (req, res) => {
-  //res.send(req.user);
   projetoSchema.find((err, usr) => {
   	if (err) throw err;
   	res.send(usr);

@@ -14,7 +14,7 @@
 			var deferred = $q.defer(); // Inicializa nova promissa
 			$rootScope.logado = false;
 
-			$http.get('/admin/home').success(function(projetos) {
+			$http.get('/admin/loggedin').success(function(projetos) {
 				if (projetos !== '0') { // Authenticated
 					$rootScope.logado = true;
 					deferred.resolve();
@@ -52,14 +52,14 @@
 				loggedin: checkLoggedin
 			}
 		})
-		// .state('home-master', {
-		// 	url: "/admin/home-master",
-		// 	templateUrl: 'admin/views/admin.html',
-		// 	controller: 'adminCtrl',
-		// 	resolve: {
-		// 		loggedin: checkLoggedin
-		// 	}
-		// })
+		.state('master', {
+			url: "/admin/master/home",
+			templateUrl: 'admin/views/admin.html',
+			controller: 'adminCtrl',
+			resolve: {
+				loggedin: checkLoggedin
+			}
+		})
 		.state('404', {
 			url: "/404",
 			templateUrl: 'admin/views/404.html'

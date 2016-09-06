@@ -45,6 +45,14 @@
 			adminAPI.getTodosProjetos()
 			.success(function(projetos) {
 				angular.forEach(projetos, function (value, key) {
+					let orientadores = [];
+					// console.log(projetos);
+					angular.forEach(value.integrantes, function (value, key) {
+						console.log(value.tipo);
+						if (value.tipo === 'Orientador') {
+							orientadores.push(value.nome);
+						}
+					});
 					let obj = ({
 						_id: value._id.$oid,
 						numInscricao: value.numInscricao,
@@ -52,6 +60,7 @@
 						nomeEscola: value.nomeEscola,
 						categoria: value.categoria,
 						eixo: value.eixo,
+						orientadores: orientadores,
 						resumo: value.resumo
 					});
 					$scope.projetos.push(obj);
@@ -116,7 +125,8 @@
 				{text:'Nome do projeto',action:'nomeProjeto'},
 				{text:'Escola',action:'nomeEscola'},
 				{text:'Categoria',action:'categoria'},
-				{text:'Eixo',action:'eixo'}
+				{text:'Eixo',action:'eixo'},
+				{text:'Orientador',action:'orientadores'}
 			];
 		}
 		$scope.setarSaberes = function() {
@@ -154,8 +164,8 @@
 		}
 
 		$scope.visualizarDetalhes = function(projeto,ev) {
-	    $mdDialog.show({
-	      controller: function dialogController($scope, $mdDialog) {
+			$mdDialog.show({
+				controller: function dialogController($scope, $mdDialog) {
 					$scope.details = projeto;
 					$scope.hide = function() {
 						$mdDialog.hide();
@@ -164,17 +174,17 @@
 						$mdDialog.cancel();
 					};
 				},
-	      templateUrl: 'admin/views/details.projetos.html',
-	      parent: angular.element(document.body),
-	      targetEvent: ev,
-	      clickOutsideToClose: false,
-	      fullscreen: true // Only for -xs, -sm breakpoints.
-	    });
-	  };
+				templateUrl: 'admin/views/details.projetos.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose: false,
+				fullscreen: true // Only for -xs, -sm breakpoints.
+			});
+		};
 
 		$scope.visualizarDetalhes1 = function(saberes,ev) {
-	    $mdDialog.show({
-	      controller: function dialogController($scope, $mdDialog) {
+			$mdDialog.show({
+				controller: function dialogController($scope, $mdDialog) {
 					$scope.details = saberes;
 					$scope.hide = function() {
 						$mdDialog.hide();
@@ -183,17 +193,17 @@
 						$mdDialog.cancel();
 					};
 				},
-	      templateUrl: 'admin/views/details.saberes.html',
-	      parent: angular.element(document.body),
-	      targetEvent: ev,
-	      clickOutsideToClose: false,
-	      fullscreen: true // Only for -xs, -sm breakpoints.
-	    });
-	  };
+				templateUrl: 'admin/views/details.saberes.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose: false,
+				fullscreen: true // Only for -xs, -sm breakpoints.
+			});
+		};
 
 		$scope.visualizarDetalhes2 = function(avaliadores,ev) {
-	    $mdDialog.show({
-	      controller: function dialogController($scope, $mdDialog) {
+			$mdDialog.show({
+				controller: function dialogController($scope, $mdDialog) {
 					$scope.details = avaliadores;
 					$scope.hide = function() {
 						$mdDialog.hide();
@@ -202,13 +212,13 @@
 						$mdDialog.cancel();
 					};
 				},
-	      templateUrl: 'admin/views/details.avaliadores.html',
-	      parent: angular.element(document.body),
-	      targetEvent: ev,
-	      clickOutsideToClose: false,
-	      fullscreen: true // Only for -xs, -sm breakpoints.
-	    });
-	  };
+				templateUrl: 'admin/views/details.avaliadores.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose: false,
+				fullscreen: true // Only for -xs, -sm breakpoints.
+			});
+		};
 
 		$scope.carregarSaberes();
 		$scope.carregarAvaliadores();

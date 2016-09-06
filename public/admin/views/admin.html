@@ -80,6 +80,9 @@
     <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#9c27b0;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Fundamental II</div>
     <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#4caf50;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Ensino Médio, Técnico e Superior</div>
   </div>
+  <div layout="row" style="justify-content:center;padding-bottom:20px;background:rgba(128,128,128,0.07);">
+    TOTAL: {{projetos.length}}
+  </div>
   <md-list flex style="margin-bottom:50px;">
     <md-list-item class="list-header">
       <div class="md-list-item-text" flex="10" style="margin-left:29px;margin-right:5px;text-align:center;">
@@ -114,14 +117,19 @@
 </md-list>
 </md-content>
 
-<div layout="row" class="footer-admin" style="position:fixed;width:100%;height:50px;background:#424242;bottom:0!important;color:#f5f5f5;letter-spacing:0.5px;" align="center">
+<div layout="row" class="footer-admin" style="position:fixed;width:100%;height:50px;background:#424242;bottom:0!important;color:#f5f5f5;" align="center">
   <div flex="50">
     <p>Selecionados: {{count}}</p>
   </div>
   <span flex></span>
-  <div flex="30">
-    <md-button flex="50" aria-label="Login" class="md-raised md-primary white green darken-1 btnEntrar" data-ng-disabled="count == 0" data-ng-click="update()">
-      <span>Salvar</span>
+  <div flex="35">
+    <md-button flex="100" aria-label="Salvar Aprovados" class="md-raised md-primary white green darken-1 btnEntrar" data-ng-disabled="count == 0" data-ng-click="update()">
+      <span>Salvar Aprovado(s)</span>
+    </md-button>
+  </div>
+  <div flex="35">
+    <md-button flex="100" aria-label="Remover Aprovados" class="md-raised md-primary white green darken-1 btnEntrar" data-ng-disabled="count == 0" data-ng-click="remove()">
+      <span>Remover Aprovado(s)</span>
     </md-button>
   </div>
 </div>

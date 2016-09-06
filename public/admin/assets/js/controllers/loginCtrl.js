@@ -15,18 +15,11 @@
 				$scope.message = 'Sucesso';
 				$scope.erro = false;
 				$mdDialog.hide();
-				// $state.go('home');
-				// let showOptionsDialog = function(ev) {
-				// 	$mdDialog.show({
-				// 		// controller: () => this,
-				// 		templateUrl: 'admin/views/options.html',
-				// 		parent: angular.element(document.body),
-				// 		targetEvent: ev,
-				// 		clickOutsideToClose: false
-				// 	});
-				// };
-				// showOptionsDialog();
-				$window.location.href="http://movaci.com.br/admin/home";
+				if (data.username === 'admin') {
+					$window.location.href="http://localhost/admin/master/home";
+				} else {
+					$window.location.href="http://localhost/admin/home";
+				}
 			})
 			.error(function() { // authentication failed
 				$rootScope.logado = false;

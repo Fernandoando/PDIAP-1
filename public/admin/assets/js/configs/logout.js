@@ -8,7 +8,7 @@
 		   	$rootScope.logout = function() {
 		   		$http.post('/admin/logout');
 		   		$rootScope.logado = false;
-					$window.location.href="http://movaci.com.br/admin";
+					$window.location.href="http://localhost/admin";
 				};
 		});
 })();

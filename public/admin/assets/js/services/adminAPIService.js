@@ -40,9 +40,18 @@
 			return $http(request);
 		};
 
-		let _putTodosProjetos = function(projeto) {
+		let _putSetAprovados = function(projeto) {
 			const request = {
 				url: '/admin/upgreice',
+				method: 'PUT',
+				data: projeto
+			}
+			return $http(request);
+		};
+
+		let _putUnsetAprovados = function(projeto) {
+			const request = {
+				url: '/admin/upgreice2',
 				method: 'PUT',
 				data: projeto
 			}
@@ -54,7 +63,8 @@
 			getTodosProjetos: _getTodosProjetos,
 			getTodosSaberes: _getTodosSaberes,
 			getTodosAvaliadores: _getTodosAvaliadores,
-			putTodosProjetos: _putTodosProjetos
+			putSetAprovados: _putSetAprovados,
+			putUnsetAprovados: _putUnsetAprovados
 		};
 	});
 })();

@@ -157,6 +157,18 @@ md-dialog-content h2 {
   margin-top: 25px;
   color: rgba(255,255,255,0.87);
 }
+md-dialog-actions {
+  background: rgba(255,255,255,0.87) !important;
+}
+md-dialog-actions button {
+  width: 100%;
+  color: #1b5e20 !important;
+  font-size: 13px !important;
+}
+md-dialog-content p {
+  text-align: center;
+  color: rgba(255,255,255,0.87);
+}
 .md-prompt-input-container {
   display: flex !important;
 }
@@ -334,7 +346,7 @@ md-list-item.list-header .md-no-style {
   overflow: hidden !important;
 }
 .btn-close:focus {
-  outline-color: transparent !important;
+  outline-color: transparent !im;
 }
 .md-ripple-container {
   width: 0 !important;
