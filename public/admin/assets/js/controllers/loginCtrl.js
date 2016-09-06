@@ -26,7 +26,7 @@
 				// 	});
 				// };
 				// showOptionsDialog();
-				$window.location.href="http://localhost/admin/home";
+				$window.location.href="http://movaci.com.br/admin/home";
 			})
 			.error(function() { // authentication failed
 				$rootScope.logado = false;
@@ -36,7 +36,7 @@
 		};
 
 		$scope.ir = function(url) {
-			$window.location.href="http://localhost/"+url;
+			$window.location.href="http://movaci.com.br/"+url;
 		}
 	});
 })();
