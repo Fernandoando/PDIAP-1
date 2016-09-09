@@ -98,7 +98,7 @@ router.get('/confirma/:id/:situacao', (req, res) => {
       if(err){
         console.log("Something wrong when updating data!");
       } else {
-        if (usr.aprovado === true) {
+        if (usr.aprovado === true && usr.participa_updated === false) {
           // var templatesDir = path.resolve(__dirname, '..', 'templates');
           // var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));
           // Prepare nodemailer transport object
@@ -113,7 +113,7 @@ router.get('/confirma/:id/:situacao', (req, res) => {
 
           if(req.params.situacao === '2456') { //------------------------------------------------------------------2456 cod participa
 
-            ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':true}}, {upsert:true,new: true}, (err,docs) => {
+            ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':true, 'participa_updated':true}}, {upsert:true,new: true}, (err,docs) => {
               if (err) throw err;
               //console.log('ok');
               res.redirect('/DEUCERTO');
@@ -145,7 +145,7 @@ router.get('/confirma/:id/:situacao', (req, res) => {
 
           if(req.params.situacao === '9877') { //------------------------------------------------------------------9877 cod não participa
 
-            ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':false}}, {upsert:true,new: true}, (err,docs) => {
+            ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':false, 'participa_updated':true}}, {upsert:true,new: true}, (err,docs) => {
               if (err) throw err;
               //console.log('ok');
               res.redirect('/DEUCERTO2');
@@ -174,6 +174,8 @@ router.get('/confirma/:id/:situacao', (req, res) => {
             //     });
             // });
           }
+        } else {
+          res.sendStatus(401);
         }
       }
     })

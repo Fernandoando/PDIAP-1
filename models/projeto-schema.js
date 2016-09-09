@@ -37,6 +37,7 @@ const ProjetoSchema = new Schema({
 	password: {type: String, required: true},
 	aprovado: {type: Boolean},
 	participa: {type: Boolean},
+	participa_updated: {type: Boolean},
 
 	createdAt: {type: Date},
 	updatedAt: {type: Date},
