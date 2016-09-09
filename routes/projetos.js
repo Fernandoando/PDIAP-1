@@ -92,6 +92,91 @@ function splita(arg){
   }
 }
 
+router.post('/confirma/:id/:situacao', (req, res) => {
+  if(req.params.id !== '') {
+    ProjetoSchema.findOne({'_id': req.params.id}, (err, usr) => {
+      if(err){
+        console.log("Something wrong when updating data!");
+      } else {
+        if (usr.aprovado === true) {
+          var templatesDir = path.resolve(__dirname, '..', 'templates');
+          var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));
+          // Prepare nodemailer transport object
+          const transport = nodemailer.createTransport(smtpTransport({
+            host: 'smtp.zoho.com',
+            port: 587,
+            auth: {
+              user: "contato@movaci.com.br",
+              pass: "mvc2016"
+            }
+          }));
+
+          if(req.params.situacao === '2456') { //------------------------------------------------------------------2456 cod participa
+
+            ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':true}}, {upsert:true,new: true}, (err,docs) => {
+              if (err) throw err;
+            });
+
+            var locals = {
+              email: usr.email,
+              projeto: usr.nomeProjeto,
+              url: 'urlTESTE'
+            }
+            template.render(locals, function (err, results) {
+              if (err) {
+                return console.error(err)
+              }
+              transport.sendMail({
+                from: 'V MOVACI <contato@movaci.com.br>',
+                  to: 'rswarovsky@gmail.com',//locals.email,
+                  subject: 'V MOVACI - Confirmação de presença',
+                  html: results.html,
+                  text: results.text
+                }, function (err, responseStatus) {
+                  if (err) {
+                    return console.error(err)
+                  }
+                  console.log(responseStatus.message)
+                });
+            });
+          }
+
+          if(req.params.situacao === '9877') { //------------------------------------------------------------------9877 cod não participa
+
+            ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':false}}, {upsert:true,new: true}, (err,docs) => {
+              if (err) throw err;
+            });
+
+            var locals = {
+              email: usr.email,
+              projeto: usr.nomeProjeto,
+              url: 'urlTESTE'
+            }
+            template.render(locals, function (err, results) {
+              if (err) {
+                return console.error(err)
+              }
+              transport.sendMail({
+                from: 'V MOVACI <contato@movaci.com.br>',
+                  to: 'rswarovsky@gmail.com',//locals.email,
+                  subject: 'V MOVACI - Confirmação de presença',
+                  html: results.html,
+                  text: results.text
+                }, function (err, responseStatus) {
+                  if (err) {
+                    return console.error(err)
+                  }
+                  console.log(responseStatus.message)
+                });
+            });
+          }
+        }
+      }
+      res.redirect('/');
+    })
+  }
+});
+
 router.get('/qtd', (req, res) => {
   ProjetoSchema.count({}, function(err, count) {
     res.json("Projetos cadastrados: "+count);
@@ -550,7 +635,7 @@ router.post('/redefinir-senha', (req, res) => {
       } else{
         let email = doc.email;
         let nome_projeto = doc.nomeProjeto;
-        let url = "http://movaci.com.br/nova-senha/"+username+"/"+token;
+        let url = "http://www.movaci.com.br/nova-senha/"+username+"/"+token;
 
         // res.sendStatus(200);
         res.send(email);
