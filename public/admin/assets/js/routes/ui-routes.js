@@ -60,6 +60,16 @@
 				loggedin: checkLoggedin
 			}
 		})
+		.state('confirmando', {
+			url: "/projetos/confirma/:idProjeto/:situacao",
+			templateUrl: 'admin/views/confirmando.html',
+			controller: 'confirmacaoCtrl'
+		})
+		.state('confirmado', {
+			url: "/projetos/confirmacao",
+			templateUrl: 'admin/views/confirmado.html'
+			// controller: 'confirmacaoCtrl'
+		})
 		.state('404', {
 			url: "/404",
 			templateUrl: 'admin/views/404.html'

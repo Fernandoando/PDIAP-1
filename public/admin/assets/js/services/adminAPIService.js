@@ -66,13 +66,22 @@
 			return $http(request);
 		};
 
+		let _postConfirmacao = function(idProjeto,situacao) {
+			const request = {
+				url: '/projetos/confirma/'+idProjeto+'/'+situacao,
+				method: 'GET'
+			}
+			return $http(request);
+		};
+
 		return {
 			postLoginAdmin: _postLoginAdmin,
 			getTodosProjetos: _getTodosProjetos,
 			getTodosSaberes: _getTodosSaberes,
 			getTodosAvaliadores: _getTodosAvaliadores,
 			putSetAprovados: _putSetAprovados,
-			putUnsetAprovados: _putUnsetAprovados
+			putUnsetAprovados: _putUnsetAprovados,
+			postConfirmacao: _postConfirmacao
 		};
 	});
 })();

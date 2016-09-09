@@ -36,6 +36,7 @@ const ProjetoSchema = new Schema({
 	email: {type: String, required: true},
 	password: {type: String, required: true},
 	aprovado: {type: Boolean},
+	participa: {type: Boolean},
 
 	createdAt: {type: Date},
 	updatedAt: {type: Date},
