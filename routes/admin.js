@@ -136,7 +136,7 @@ router.put('/upgreice2', ensureAuthenticated, (req, res) => {
 router.post('/aprovadosemail', (req, res) => {
   var templatesDir = path.resolve(__dirname, '..', 'templates');
   var emailTemplates = require('email-templates');
-  //var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));  //--------------------------------------------------------
+  //var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));
   // Prepare nodemailer transport object
 
   emailTemplates(templatesDir, function(err, template) {
@@ -153,7 +153,7 @@ router.post('/aprovadosemail', (req, res) => {
         docs.forEach(function(usr) {
           let url = "http://movaci.com.br/projetos/confirma/"+usr._id+"/2456";
           let url2 = "http://movaci.com.br/projetos/confirma/"+usr._id+"/9877";
-          users.push({'email': 'rswarovsky@gmail.com', 'projeto': usr.nomeProjeto, 'url': url});
+          users.push({'email': 'rswarovsky@gmail.com', 'projeto': usr.nomeProjeto, 'url': url, 'url2': url2});
         });
         for (var i = 0; i < users.length; i++) {
           console.log(users[i]);
@@ -164,7 +164,7 @@ router.post('/aprovadosemail', (req, res) => {
         port: 587,
         auth: {
           user: "contato@movaci.com.br",
-      pass: "mvc2016" //--------------------------------------------------------//--------------------------------------------------------
+        pass: "mvc2016"
     }
   }));
 
@@ -176,8 +176,8 @@ router.post('/aprovadosemail', (req, res) => {
           } else {
             transporter.sendMail({
               from: 'contato@movaci.com.br',
-            to: locals.email,
-            subject: 'Mangia gli spaghetti con polpette!',
+            to: 'rswarovsky@gmail.com',//locals.email,
+            subject: 'MOVACI 2016 - Projeto aprovado!',
             html: html,
             // generateTextFromHTML: true,
             text: text
@@ -196,7 +196,7 @@ router.post('/aprovadosemail', (req, res) => {
       };
 
     // Load the template and send the emails
-    template('redefinicao', true, function(err, batch) {
+    template('confirmacao_sim', true, function(err, batch) {
         for(var user in users) {
           var render = new Render(users[user]);
           render.batch(batch);
