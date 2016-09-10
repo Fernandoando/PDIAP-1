@@ -151,9 +151,9 @@ router.post('/aprovadosemail', (req, res) => {
         if (err) throw err;
         //console.log(docs);
         docs.forEach(function(usr) {
-          let url = "http://movaci.com.br/projetos/confirma/"+usr._id+"/2456";
-          let url2 = "http://movaci.com.br/projetos/confirma/"+usr._id+"/9877";
-          users.push({'email': 'rswarovsky@gmail.com', 'projeto': usr.nomeProjeto, 'url': url, 'url2': url2});
+          let url = "https://movaci.com.br/projetos/confirma/"+usr._id+"/2456";
+          let url2 = "https://movaci.com.br/projetos/confirma/"+usr._id+"/9877";
+          users.push({'email': usr.email, 'projeto': usr.nomeProjeto, 'url': url, 'url2': url2});
         });
         for (var i = 0; i < users.length; i++) {
           console.log(users[i]);
@@ -164,7 +164,7 @@ router.post('/aprovadosemail', (req, res) => {
         port: 587,
         auth: {
           user: "contato@movaci.com.br",
-        pass: "mvc2016"
+          pass: "mvc2016"
     }
   }));
 
@@ -175,8 +175,8 @@ router.post('/aprovadosemail', (req, res) => {
             console.log(err);
           } else {
             transporter.sendMail({
-              from: 'contato@movaci.com.br',
-            to: 'rswarovsky@gmail.com',//locals.email,
+            from: 'contato@movaci.com.br',
+            to: locals.email,
             subject: 'MOVACI 2016 - Projeto aprovado!',
             html: html,
             // generateTextFromHTML: true,
@@ -286,6 +286,151 @@ router.post('/aprovadosemail', (req, res) => {
 	});
 	res.sendStatus(200);
 	myDoc.end();
+  });
+});*/
+
+/*router.post('/pdf2', (req, res) =>{
+
+  var pdf = require('pdfkit');
+  var fs = require('fs');
+  var myDoc = new pdf;
+  
+  myDoc.pipe(fs.createWriteStream('aprovados.pdf'));
+
+  // myDoc
+  //     .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+  //     .fontSize(20)
+  //     .moveDown(5)
+  //     .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
+  //     .fontSize(16)
+  //     .moveDown(5)
+  //     .text("Projetos selecionados", {align: 'center'})
+  //     .fontSize(12)
+  //     .moveDown(2.5)
+  //     .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
+
+  projetoSchema.find({"aprovado":true,"categoria":"Fundamental I (1º ao 5º anos)"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
+    if (err) throw err;
+    myDoc
+    .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+    .fontSize(20)
+    .moveDown(5)
+    .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
+    .fontSize(16)
+    .moveDown(5)
+    .text("Projetos selecionados", {align: 'center'})
+    .fontSize(14)
+    .moveDown(2.5)
+    .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
+    .moveDown(1)
+
+    var echu = "";
+
+    users.forEach(function(usr){
+
+      myDoc.moveDown(1)
+      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+
+      if (usr.eixo !== echu) {
+        echu = usr.eixo;
+        myDoc.fontSize(14)
+        .text("Eixo: "+usr.eixo, {align: 'center'})
+      }
+
+      myDoc.fontSize(12)
+      .moveDown(1)
+      .text("Projeto: "+usr.nomeProjeto)
+      .moveDown(0.5)
+      // .text("Orientador(es): ");
+      
+      if (usr.integrantes[0].tipo === "Orientador"){
+        myDoc.text("Orientador: "+usr.integrantes[0].nome);
+      }
+      if (usr.integrantes[1].tipo === "Orientador"){
+        myDoc.moveDown(0.5)
+        .text("Orientador: "+usr.integrantes[1].nome);
+      }     
+    });
+
+    projetoSchema.find({"aprovado":true,"categoria":"Fundamental II (6º ao 9º anos)"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
+      if (err) throw err;
+      myDoc.addPage()
+      .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+      .moveDown(5)
+      .text("FUNDAMENTAL II (6° ao 9° ano)", {align: 'center'})
+      .moveDown(1)
+
+      users.forEach(function(usr){
+
+      myDoc.moveDown(1.5)
+      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+
+      if (usr.eixo !== echu) {
+        echu = usr.eixo;
+        myDoc.fontSize(14)
+        .text("Eixo: "+usr.eixo, {align: 'center'})
+      }
+
+    
+      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+      myDoc.fontSize(12)
+      .moveDown(1)
+      .text("Projeto: "+usr.nomeProjeto)
+      .moveDown(0.5)
+      // .text("Eixo: "+usr.eixo)
+      // .moveDown(0.5)
+      // .text("Orientador(es): ");
+      
+      if (usr.integrantes[0].tipo === "Orientador"){
+        myDoc.text("Orientador: "+usr.integrantes[0].nome);
+      }
+      if (usr.integrantes[1].tipo === "Orientador"){
+        myDoc.moveDown(0.5)
+        .text("Orientador: "+usr.integrantes[1].nome);
+      }     
+    });
+
+      projetoSchema.find({"aprovado":true, "categoria":"Ensino Médio, Técnico e Superior"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
+        if (err) throw err;
+        myDoc.addPage()
+        .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+        .moveDown(5)
+        .text("ENSINO MÉDIO, TÉNICO E SUPERIOR", {align: 'center'})
+        .moveDown(1)
+
+        users.forEach(function(usr){
+
+      myDoc.moveDown(1.5)
+      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+
+      if (usr.eixo !== echu) {
+        echu = usr.eixo;
+        myDoc.fontSize(14)
+        .text("Eixo: "+usr.eixo, {align: 'center'})
+      }
+
+        
+      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+      myDoc.fontSize(12)
+      .moveDown(1)
+      .text("Projeto: "+usr.nomeProjeto)
+      .moveDown(0.5)
+      // .text("Eixo: "+usr.eixo)
+      // .moveDown(0.5)
+      // .text("Orientador(es): ");
+      
+      if (usr.integrantes[0].tipo === "Orientador"){
+        myDoc.text("Orientador: "+usr.integrantes[0].nome);
+      }
+      if (usr.integrantes[1].tipo === "Orientador"){
+        myDoc.moveDown(0.5)
+        .text("Orientador: "+usr.integrantes[1].nome);
+      }     
+    });
+        res.sendStatus(200);
+        myDoc.end();
+      }); 
+    });
   });
 });*/
 

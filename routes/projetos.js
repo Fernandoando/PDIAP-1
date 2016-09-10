@@ -92,13 +92,13 @@ function splita(arg){
   }
 }
 
-router.get('/confirma/:id/:situacao', (req, res) => {
+router.post('/confirma/:id/:situacao', (req, res) => {
   if(req.params.id !== '') {
     ProjetoSchema.findOne({'_id': req.params.id}, (err, usr) => {
       if(err){
         console.log("Something wrong when updating data!");
       } else {
-        if (usr.aprovado === true && usr.participa_updated === false) {
+        if (usr.aprovado === true && usr.participa_updated === undefined) {
           // var templatesDir = path.resolve(__dirname, '..', 'templates');
           // var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));
           // Prepare nodemailer transport object
@@ -116,7 +116,8 @@ router.get('/confirma/:id/:situacao', (req, res) => {
             ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':true, 'participa_updated':true}}, {upsert:true,new: true}, (err,docs) => {
               if (err) throw err;
               //console.log('ok');
-              res.redirect('/DEUCERTO');
+              // res.redirect('/DEUCERTO');
+              res.send(docs.nomeProjeto);
             });
 
             // var locals = {
@@ -148,7 +149,8 @@ router.get('/confirma/:id/:situacao', (req, res) => {
             ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':false, 'participa_updated':true}}, {upsert:true,new: true}, (err,docs) => {
               if (err) throw err;
               //console.log('ok');
-              res.redirect('/DEUCERTO2');
+              // res.redirect('/DEUCERTO2');
+              res.send(docs.nomeProjeto);
             });
 
             // var locals = {
