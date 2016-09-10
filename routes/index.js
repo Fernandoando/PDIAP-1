@@ -23,11 +23,7 @@ router.get('/admin/master/home', function(req, res, next) {
   res.render('layout_admin2.ejs');
 });
 
-router.all('/projetos/confirma/*', function(req, res, next) {
-  res.render('layout_admin2.ejs');
-});
-
-router.get('/projetos/confirmacao', function(req, res, next) {
+router.get('/projetos/confirma/*', function(req, res, next) {
   res.render('layout_admin2.ejs');
 });
 

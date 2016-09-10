@@ -758,6 +758,10 @@ md-icon {
   color: #fff;
   transition: all 400ms ease-out 50ms;
 }
+.home-container1 a {
+  color: #fff;
+  text-decoration: underline !important;
+}
 .home-container2 {
   margin-top: 20px;
   border: 2px solid #43a047;

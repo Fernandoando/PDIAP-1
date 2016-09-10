@@ -69,7 +69,7 @@
 		let _postConfirmacao = function(idProjeto,situacao) {
 			const request = {
 				url: '/projetos/confirma/'+idProjeto+'/'+situacao,
-				method: 'GET'
+				method: 'POST'
 			}
 			return $http(request);
 		};
