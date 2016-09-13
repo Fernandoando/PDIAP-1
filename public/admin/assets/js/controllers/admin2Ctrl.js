@@ -7,27 +7,6 @@
 
 		// $scope.projetos = new Projetos();
 
-		// $scope.searchProject = "";
-		// $scope.idAprovados = [];
-
-		// $scope.querySearch = function querySearch (query) {
-		// 	let deferred = $q.defer();
-		// 	return deferred;
-		// }
-
-		// $scope.count = 0;
-		// $scope.contador = function(check,idProj) {
-		// 	if (check) {
-		// 		$scope.count--;
-		// 		let index = $scope.idAprovados.indexOf(idProj);
-		// 		$scope.idAprovados.splice(index, 1);
-		// 	}
-		// 	else {
-		// 		$scope.count++;
-		// 		$scope.idAprovados.push(idProj);
-		// 	}
-		// 	console.log($scope.idAprovados);
-		// }
 		$scope.projetos = [];
 		$scope.saberes = [];
 		$scope.avaliadores = [];
@@ -43,7 +22,7 @@
 					// console.log(projetos);
 					angular.forEach(value.integrantes, function (value, key) {
 						if (value.tipo === 'Orientador') {
-							orientadores.push(value.nome);
+							orientadores.push(value.nome+' ('+value.telefone+')');
 						}
 					});
 					let obj = ({
