@@ -4,6 +4,14 @@
     <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#9c27b0;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Fundamental II</div>
     <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#4caf50;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Ensino Médio, Técnico e Superior</div>
   </div>
+  <!-- <hr size="3" style="margin:0!important;"> -->
+  <div layout="row" style="justify-content:center;padding-bottom:30px;background:rgba(128,128,128,0.07);">
+    <div layout style="align-items:center;margin-right:8px;font-weight:bold;">Aprovados:</div>
+    <div layout style="align-items:center;"><div class="green1" style="width:15px;height:15px;border-radius:50%;margin-right:8px;"></div>Confirmado!</div>
+    <div layout style="align-items:center;"><div class="red" style="width:15px;height:15px;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Cancelado</div>
+    <div layout style="align-items:center;"><div class="grey" style="width:15px;height:15px;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Pendente</div>
+  </div>
+  <!-- <hr size="3" style="margin:0!important;"> -->
   <div layout="row" style="justify-content:center;padding-bottom:20px;background:rgba(128,128,128,0.07);">
     TOTAL: {{projetos.length}}
   </div>
@@ -24,7 +32,7 @@
       </md-button>
     </div>
     <!-- <div infinite-scroll='projetos.nextPage()' infinite-scroll-disabled='projetos.busy' infinite-scroll-distance='1'> -->
-    <md-list-item class="md-3-line"
+    <md-list-item class="md-3-line" aria-label="Visualizar detalhes"
     data-ng-repeat="proj in projetos | filter:search | orderBy:ordenacao track by proj.numInscricao"
     ng-click="visualizarDetalhes(proj,$event)">
     <div layout flex="5" layout-align="center center" style="align-self:center;">
@@ -42,8 +50,12 @@
     <p data-ng-if="ordenacao == 'nomeEscola'">{{::proj.nomeEscola}}</p>
     <p data-ng-if="ordenacao != 'nomeEscola'">{{::proj.eixo}}</p>
   </div>
-  <md-icon flex="5" class="md-secondary" md-svg-src="plus"></md-icon>
-
+  <div flex="15" layout="row" layout-align="end center">
+    <div data-ng-if="proj.aprovado === true" layout="row" layout-align="center center" class="md-whiteframe-1dp" data-ng-class="{grey:proj.aprovado === true && proj.participa === undefined,green1:proj.participa === true,red:proj.participa === false}" style="width:58px;height:20px;border-radius:4px;font-size:10px;color:#f5f5f5;">
+      <span style="font-weight:500;">Aprovado</span>
+    </div>
+    <md-icon class="md-secondary btn-plus" md-svg-src="plus"></md-icon>
+  </div>
   <md-divider></md-divider>
 </md-list-item>
 <!-- <div data-ng-show='projetos.busy'>Loading data...</div> -->

@@ -30,13 +30,21 @@
           <span flex></span>
           <md-icon md-svg-src="{{section.expand ? 'chevron-up' : 'chevron-down'}}" style="color:#f5f5f5;"></md-icon>
         </md-list-item>
+        <md-list-item data-ng-show="section.expand" ng-click="mostraResumoPDF()">
+          <md-icon md-svg-src="file-pdf-box" style="color:#f5f5f5;"></md-icon>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">M. de resumo (pdf)</p>
+        </md-list-item>
         <md-list-item data-ng-show="section.expand" ng-click="mostraResumo()">
           <md-icon md-svg-src="file-document-box" style="color:#f5f5f5;"></md-icon>
-          <p class="md-body-2 submenu" style="color:#f5f5f5;">Modelo de resumo</p>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">M. de resumo (doc)</p>
+        </md-list-item>
+        <md-list-item data-ng-show="section.expand" ng-click="mostraRelatorioPDF()">
+          <md-icon md-svg-src="file-pdf-box" style="color:#f5f5f5;"></md-icon>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">M. de relatório (pdf)</p>
         </md-list-item>
         <md-list-item data-ng-show="section.expand" ng-click="mostraRelatorio()">
           <md-icon md-svg-src="file-document-box" style="color:#f5f5f5;"></md-icon>
-          <p class="md-body-2 submenu" style="color:#f5f5f5;">Modelo de relatório</p>
+          <p class="md-body-2 submenu" style="color:#f5f5f5;">M. de relatório (doc)</p>
         </md-list-item>
       </md-list>
       <md-list>

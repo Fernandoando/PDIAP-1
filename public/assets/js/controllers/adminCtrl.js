@@ -17,9 +17,15 @@
 		$rootScope.header = 'Dashboard';
 
 		$scope.mostraResumo = function() {
-			$window.open('http://www.movaci.com.br/alpha/documentos/Modelo_Resumo_MOVACI.pdf', '_blank');
+			$window.open('http://www.movaci.com.br/alpha/documentos/Modelo_Resumo_MOVACI.doc', '_blank');
 		}
 		$scope.mostraRelatorio = function() {
+			$window.open('http://www.movaci.com.br/alpha/documentos/Modelo_Relatorio_MOVACI.docx', '_blank');
+		}
+		$scope.mostraResumoPDF = function() {
+			$window.open('http://www.movaci.com.br/alpha/documentos/Modelo_Resumo_MOVACI.pdf', '_blank');
+		}
+		$scope.mostraRelatorioPDF = function() {
 			$window.open('http://www.movaci.com.br/alpha/documentos/Modelo_Relatorio_MOVACI.pdf', '_blank');
 		}
 		$scope.mostraAprovados = function() {

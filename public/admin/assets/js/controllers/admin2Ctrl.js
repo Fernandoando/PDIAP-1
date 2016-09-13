@@ -32,14 +32,8 @@
 		$scope.saberes = [];
 		$scope.avaliadores = [];
 
-		$scope.ordenacao = ['categoria','eixo'];
+		$scope.ordenacao = 'aprovado';
 		$scope.query = 'nomeProjeto';
-		$scope.textOrdenacao = [
-			{text:'Categoria/eixo',selected:true},
-			{text:'Nº de Inscrição'},
-			{text:'Nome do projeto'},
-			{text:'Escola'}
-		]
 
 		$scope.carregarProjetos = function() {
 			adminAPI.getTodosProjetos()
@@ -48,7 +42,6 @@
 					let orientadores = [];
 					// console.log(projetos);
 					angular.forEach(value.integrantes, function (value, key) {
-						console.log(value.tipo);
 						if (value.tipo === 'Orientador') {
 							orientadores.push(value.nome);
 						}
@@ -61,7 +54,9 @@
 						categoria: value.categoria,
 						eixo: value.eixo,
 						orientadores: orientadores,
-						resumo: value.resumo
+						resumo: value.resumo,
+						aprovado: value.aprovado,
+						participa: value.participa
 					});
 					$scope.projetos.push(obj);
 				});
@@ -113,10 +108,11 @@
 		}
 
 		$scope.setarProjetos = function() {
-			$scope.ordenacao = ['categoria','eixo'];
+			$scope.ordenacao = 'aprovado';
 			$scope.query = 'nomeProjeto';
 			$scope.textOrdenacao = [
-				{text:'Categoria/eixo',action:['categoria','eixo'],selected:true},
+				{text:'Aprovados',action:'aprovado',selected:true},
+				{text:'Categoria/eixo',action:['categoria','eixo']},
 				{text:'Nº de Inscrição',action:'numInscricao'},
 				{text:'Nome do projeto',action:'nomeProjeto'},
 				{text:'Escola',action:'nomeEscola'}
