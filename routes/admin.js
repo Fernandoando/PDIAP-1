@@ -151,8 +151,8 @@ router.post('/aprovadosemail', (req, res) => {
         if (err) throw err;
         //console.log(docs);
         docs.forEach(function(usr) {
-          let url = "https://movaci.com.br/projetos/confirma/"+usr._id+"/2456";
-          let url2 = "https://movaci.com.br/projetos/confirma/"+usr._id+"/9877";
+          let url = "https://www.movaci.com.br/projetos/confirma/"+usr._id+"/2456";
+          let url2 = "https://www.movaci.com.br/projetos/confirma/"+usr._id+"/9877";
           users.push({'email': usr.email, 'projeto': usr.nomeProjeto, 'url': url, 'url2': url2});
         });
         for (var i = 0; i < users.length; i++) {
@@ -294,7 +294,7 @@ router.post('/aprovadosemail', (req, res) => {
   var pdf = require('pdfkit');
   var fs = require('fs');
   var myDoc = new pdf;
-  
+
   myDoc.pipe(fs.createWriteStream('aprovados.pdf'));
 
   // myDoc
@@ -342,14 +342,14 @@ router.post('/aprovadosemail', (req, res) => {
       .text("Projeto: "+usr.nomeProjeto)
       .moveDown(0.5)
       // .text("Orientador(es): ");
-      
+
       if (usr.integrantes[0].tipo === "Orientador"){
         myDoc.text("Orientador: "+usr.integrantes[0].nome);
       }
       if (usr.integrantes[1].tipo === "Orientador"){
         myDoc.moveDown(0.5)
         .text("Orientador: "+usr.integrantes[1].nome);
-      }     
+      }
     });
 
     projetoSchema.find({"aprovado":true,"categoria":"Fundamental II (6º ao 9º anos)"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
@@ -371,7 +371,7 @@ router.post('/aprovadosemail', (req, res) => {
         .text("Eixo: "+usr.eixo, {align: 'center'})
       }
 
-    
+
       //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
       myDoc.fontSize(12)
       .moveDown(1)
@@ -380,14 +380,14 @@ router.post('/aprovadosemail', (req, res) => {
       // .text("Eixo: "+usr.eixo)
       // .moveDown(0.5)
       // .text("Orientador(es): ");
-      
+
       if (usr.integrantes[0].tipo === "Orientador"){
         myDoc.text("Orientador: "+usr.integrantes[0].nome);
       }
       if (usr.integrantes[1].tipo === "Orientador"){
         myDoc.moveDown(0.5)
         .text("Orientador: "+usr.integrantes[1].nome);
-      }     
+      }
     });
 
       projetoSchema.find({"aprovado":true, "categoria":"Ensino Médio, Técnico e Superior"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
@@ -409,7 +409,7 @@ router.post('/aprovadosemail', (req, res) => {
         .text("Eixo: "+usr.eixo, {align: 'center'})
       }
 
-        
+
       //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
       myDoc.fontSize(12)
       .moveDown(1)
@@ -418,18 +418,18 @@ router.post('/aprovadosemail', (req, res) => {
       // .text("Eixo: "+usr.eixo)
       // .moveDown(0.5)
       // .text("Orientador(es): ");
-      
+
       if (usr.integrantes[0].tipo === "Orientador"){
         myDoc.text("Orientador: "+usr.integrantes[0].nome);
       }
       if (usr.integrantes[1].tipo === "Orientador"){
         myDoc.moveDown(0.5)
         .text("Orientador: "+usr.integrantes[1].nome);
-      }     
+      }
     });
         res.sendStatus(200);
         myDoc.end();
-      }); 
+      });
     });
   });
 });*/

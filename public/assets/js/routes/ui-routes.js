@@ -100,6 +100,11 @@
 			templateUrl: "/views/conta.html",
 			controller: "updateCtrl"
 		})
+		.state('home.fileUpload', {
+			url: "/upload-relatorio",
+			templateUrl: "/views/fileUpload.html",
+			controller: "fileUploadCtrl"
+		})
 		.state('home.regulamento', {
 			url: "/regulamento",
 			templateUrl: "/views/regulamento.html"

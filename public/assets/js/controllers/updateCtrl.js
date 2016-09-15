@@ -12,13 +12,11 @@
 		$scope.emails1 = [];
 
 		$scope.update = function(projeto) {
-			console.log(projeto);
 			if (projeto.nomeProjeto !== undefined) {
 				projeto.palavraChave = $scope.palavraChave;
 			}
 			projetosAPI.putProjeto(projeto)
 			.success(function(projeto){
-				console.log(projeto);
 				$scope.alterado = true;
 				$scope.toast('Alteração realizada com sucesso!','success-toast');
 				$scope.carregarProjeto();
@@ -84,7 +82,6 @@
 		$scope.updateAlunos = function() {
 			//var dados = JSON.stringify({ integrantes: {nome: 'jailson' }});
 			$scope.alunosUpdate = [];
-			console.log($scope.dynamicFields22.length);
 			for (var i = 1; i <= $scope.dynamicFields22.length; i++) {
 				if (i == 1) {
 					var pacote = ({
@@ -130,10 +127,8 @@
 					if ($scope.projeto5.hospedagem[i] === value.nome) {
 						idem = true;
 					}
-					console.log(idem);
 				});
 				if (idem === false) {
-					console.log(i);
 					$scope.projeto5.hospedagem.splice(i, 1);
 				}
 			}
@@ -143,7 +138,6 @@
 			});
 			projetosAPI.putProjeto(hosp)
 			.success(function(data){
-				console.log(data);
 				// $scope.carregarProjeto();
 			})
 			.error(function(status){
@@ -171,7 +165,6 @@
 		let getIntegrantes = function() {
 			projetosAPI.getProjeto()
 			.success(function(data) {
-				console.log(data);
 				var x = 0;
 				var y = 0;
 				$scope.orientadores = [];

@@ -1,0 +1,38 @@
+<md-content data-ng-cloak style="background:#fdfdfd;" class="finalizar">
+  <h4>O upload do relatório estará disponível até o meio-dia de 26 de setembro, sendo este item a ser considerado na avaliação.</h4>
+  <div layout="row" layout-align="center center">
+  <md-button class="md-raised teal lighten-1 white-text" type="file"
+  ngf-select="uploadFiles($file, $invalidFiles)" accept="application/pdf">
+  Selecione o Arquivo</md-button></div>
+  <br><br>
+  <table data-ng-if="f !== undefined" class="table-upload" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Tamanho</th>
+        <th>Progresso</th>
+      </tr>
+    </thead>
+    <tbody style="font-weight:normal!important;">
+      <tr>
+        <td>{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}</td>
+        <td>{{calcSize}} kB</td>
+        <td>
+          <span class="progress" ng-show="f.progress >= 0" style="background-color:#eee;">
+            <div style="width:{{f.progress}}%;background-color:#d0d0d0;border-radius:4px;font-size:12px;padding:2.5px;" ng-bind="f.progress + '%'"></div>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <br><br><br>
+  File:
+  <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+  <span class="progress" ng-show="f.progress >= 0">
+  <div style="width:{{f.progress}}%"
+  ng-bind="f.progress + '%'"></div>
+</span>
+</div>
+{{errorMsg}} -->
+</md-content>

@@ -33,6 +33,17 @@ ui-view { height: inherit !important; }
 a {
   text-decoration: none !important;
 }
+.table-upload {
+  width: 100%;
+  text-align: left;
+}
+.table-upload tr th {
+  font-weight: normal;
+  border-bottom: 2px solid #424242;
+}
+.table-upload tr th, .table-upload tr td {
+  padding: 8px;
+}
 hr {
   background: rgba(0,0,0,0.12);
   border: none!important;

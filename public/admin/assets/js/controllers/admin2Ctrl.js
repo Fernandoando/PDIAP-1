@@ -11,8 +11,8 @@
 		$scope.saberes = [];
 		$scope.avaliadores = [];
 
-		$scope.ordenacao = 'aprovado';
-		$scope.query = 'nomeProjeto';
+		// $scope.ordenacao = ['aprovado','participa'];
+		// $scope.query = 'nomeProjeto';
 
 		$scope.carregarProjetos = function() {
 			adminAPI.getTodosProjetos()
@@ -87,10 +87,10 @@
 		}
 
 		$scope.setarProjetos = function() {
-			$scope.ordenacao = 'aprovado';
+			$scope.ordenacao = ['aprovado','participa'];
 			$scope.query = 'nomeProjeto';
 			$scope.textOrdenacao = [
-				{text:'Aprovados',action:'aprovado',selected:true},
+				{text:'Aprovados',action:['aprovado','participa'],selected:true},
 				{text:'Categoria/eixo',action:['categoria','eixo']},
 				{text:'Nº de Inscrição',action:'numInscricao'},
 				{text:'Nome do projeto',action:'nomeProjeto'},

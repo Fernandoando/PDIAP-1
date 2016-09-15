@@ -9,7 +9,6 @@
 
 		projetosAPI.getUsersEscolas()
 		.success(function(data) {
-			console.log(data);
 			angular.forEach(data, function (value) {
 				if (value.username !== undefined) {
 					$scope.usernames.push(value.username);

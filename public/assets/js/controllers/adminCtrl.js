@@ -118,7 +118,92 @@
 				// for (var i in projeto.integrantes){
 				// 	$scope.integrantes.push(projeto.integrantes[i]);
 				// }
-				// console.log($scope.integrantes);
+				if ($scope.projeto1.categoria === 'Ensino Médio, Técnico e Superior') {
+					$scope.data = {
+						sidenav: {
+							sections: [{
+								name: 'Dashboard',
+								expand: false,
+								actions: [{
+									name: 'Dashboard',
+									icon: 'view-dashboard',
+									link: 'home'
+								},
+								// {
+								// 	name: 'Alterar projeto',
+								// 	icon: 'flask',
+								// 	link: 'home.update'
+								// },
+								{
+									name: 'Upload',
+									icon: 'upload',
+									link: 'home.fileUpload'
+								},
+								{
+									name: 'Dados da conta',
+									icon: 'account-settings-variant',
+									link: 'home.conta'
+								}]
+							},{
+								name: 'Avaliação',
+								expand: false,
+								actions: [{
+									name: 'Ensino Fundamental',
+									icon: 'lead-pencil',
+									link: 'home.avaliacao-fundamental'
+								}, {
+									name: 'Ensino Médio',
+									icon: 'pen',
+									link: 'home.avaliacao-medio'
+								}, {
+									name: 'Ensino Médio - Ext',
+									icon: 'pen',
+									link: 'home.avaliacao-medio-extensao'
+								}]
+							}]
+						}
+					};
+				} else {
+					$scope.data = {
+						sidenav: {
+							sections: [{
+								name: 'Dashboard',
+								expand: false,
+								actions: [{
+									name: 'Dashboard',
+									icon: 'view-dashboard',
+									link: 'home'
+								},
+								// {
+								// 	name: 'Alterar projeto',
+								// 	icon: 'flask',
+								// 	link: 'home.update'
+								// },
+								{
+									name: 'Dados da conta',
+									icon: 'account-settings-variant',
+									link: 'home.conta'
+								}]
+							},{
+								name: 'Avaliação',
+								expand: false,
+								actions: [{
+									name: 'Ensino Fundamental',
+									icon: 'lead-pencil',
+									link: 'home.avaliacao-fundamental'
+								}, {
+									name: 'Ensino Médio',
+									icon: 'pen',
+									link: 'home.avaliacao-medio'
+								}, {
+									name: 'Ensino Médio - Ext',
+									icon: 'pen',
+									link: 'home.avaliacao-medio-extensao'
+								}]
+							}]
+						}
+					};
+				}
 			});
 		};
 		$scope.carregarProjeto = carregarProjeto;
@@ -131,44 +216,5 @@
 			$mdToast.show(toast);
 		};
 
-		$scope.data = {
-			sidenav: {
-				sections: [{
-					name: 'Dashboard',
-					expand: false,
-					actions: [{
-						name: 'Dashboard',
-						icon: 'view-dashboard',
-						link: 'home'
-					},
-					// {
-					// 	name: 'Alterar projeto',
-					// 	icon: 'flask',
-					// 	link: 'home.update'
-					// },
-					{
-						name: 'Dados da conta',
-						icon: 'account-settings-variant',
-						link: 'home.conta'
-					}]
-				},{
-					name: 'Avaliação',
-					expand: false,
-					actions: [{
-						name: 'Ensino Fundamental',
-						icon: 'lead-pencil',
-						link: 'home.avaliacao-fundamental'
-					}, {
-						name: 'Ensino Médio',
-						icon: 'pen',
-						link: 'home.avaliacao-medio'
-					}, {
-						name: 'Ensino Médio - Ext',
-						icon: 'pen',
-						link: 'home.avaliacao-medio-extensao'
-					}]
-				}]
-			}
-		};
 	});
 })();
