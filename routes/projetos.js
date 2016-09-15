@@ -92,13 +92,73 @@ function splita(arg){
   }
 }
 
-const multer = require('multer');
-      // upload = multer({ dest: '../../uploads/'});
+const formidable = require('formidable'),
+      fs = require('fs');
+// ensureAuthenticated
 
-router.post('/upload', ensureAuthenticated, multer({ dest: '../../uploads/'}).single('upl'), (req, res) => {
-  console.log(req.file);
-  res.status(204).end();
+// function home(res){  
+//     res.end("<html><body><form action='/upload' method='post' enctype='multipart/form-data'><input name='image' type='file'/><input type='submit'></form></body></html>");
+// }
+
+router.get('/upload', function(req, res, next) {
+  res.render('view-teste.ejs');
+})
+
+router.post('/upload', ensureAuthenticated, function(req, res){
+  var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    res.writeHead(200, {'content-type': 'text/plain'});
+    res.write('received upload:\n\n');
+    var image = files.image
+      , image_upload_path_old = image.path
+      , image_upload_path_new = '../relatorios/'
+      , image_upload_name = user.id
+      , image_upload_path_name = image_upload_path_new + image_upload_name
+      ;
+
+    if (fs.existsSync(image_upload_path_new)) {
+      fs.rename(
+        image_upload_path_old,
+        image_upload_path_name,
+        function (err) {
+        if (err) {
+          console.log('Err: ', err);
+          res.end('Deu merda na hora de mover a imagem!');
+        }
+        var msg = 'Relatório ' + image_upload_name + ' salv0 em: ' + image_upload_path_new;
+        console.log(msg);
+        res.end(msg);
+      });
+    }
+    else {
+      fs.mkdir(image_upload_path_new, function (err) {
+        if (err) {
+          console.log('Err: ', err);
+          res.end('Deu merda na hora de criar o diretório!');
+        }
+        fs.rename(
+          image_upload_path_old,
+          image_upload_path_name,
+          function(err) {
+          var msg = 'Relatório ' + image_upload_name + ' salv0 em: ' + image_upload_path_new;
+          console.log(msg);
+          res.end(msg);
+        });
+      });
+    }
+  });
 });
+
+
+
+
+
+
+
+
+
+
+
 
 router.post('/confirma/:id/:situacao', (req, res) => {
   if(req.params.id !== '') {
