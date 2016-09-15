@@ -92,6 +92,14 @@ function splita(arg){
   }
 }
 
+const multer = require('multer');
+      // upload = multer({ dest: '../../uploads/'});
+
+router.post('/upload', ensureAuthenticated, multer({ dest: '../../uploads/'}).single('upl'), (req, res) => {
+  console.log(req.file);
+  res.status(204).end();
+});
+
 router.post('/confirma/:id/:situacao', (req, res) => {
   if(req.params.id !== '') {
     ProjetoSchema.findOne({'_id': req.params.id}, (err, usr) => {
