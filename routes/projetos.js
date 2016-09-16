@@ -105,6 +105,13 @@ router.get('/upload', function(req, res, next) {
 })
 
 router.post('/upload', ensureAuthenticated, function(req, res){
+  if (err) throw err;
+  ProjetoSchema.findOne({'_id': req.user.id}, (err, usr) => {
+    let dadosRelatorio = req.body.fileData;
+    usr.relatorio.push(dadosRelatorio);  
+  }
+  
+
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     res.writeHead(200, {'content-type': 'text/plain'});

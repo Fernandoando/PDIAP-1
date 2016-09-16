@@ -19,6 +19,12 @@ const IntegranteSchema = new Schema({
 	tamCamiseta: {type: String}
 });
 
+const uploadSchema = new Schema({
+	name: {type: String},
+	size: {type: Number},
+	uploadAt: {type: Date}
+});
+
 const ProjetoSchema = new Schema({
 	numInscricao: {type: Schema.Types.ObjectId},
 	nomeProjeto: {type: String},
@@ -46,6 +52,7 @@ const ProjetoSchema = new Schema({
     resetPasswordCreatedDate: {type: Date},
 
 	integrantes: [IntegranteSchema],
+	relatorio: [uploadSchema],
 
 	resumo: {type: String},
 	palavraChave: {type: String}
