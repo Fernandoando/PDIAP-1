@@ -92,6 +92,21 @@
 					$scope.hospedagemVerify = 'Não';
 				}
 
+				// projeto.relatorio = {
+				// 	name: 'relatorio_movaci.pdf',
+				// 	size: 58954
+				// }
+
+				if (projeto.relatorio !== undefined) {
+					$scope.f = projeto.relatorio;
+					$scope.calcSize = projeto.relatorio.size/1000;
+					$scope.calcSize = parseFloat($scope.calcSize).toFixed(2);
+					$scope.progresso = 'Status';
+					$scope.status = 'check';
+					$scope.statusColor = '#43a047';
+					$scope.statusText = 'Enviado';
+				}
+
 				if (projeto.eixo === 'Ciências da Computação') {
 					$scope.badget = 'responsive';
 				} else if (projeto.eixo === 'Engenharias') {

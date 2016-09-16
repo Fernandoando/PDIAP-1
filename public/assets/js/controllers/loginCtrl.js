@@ -16,7 +16,7 @@
 				$scope.erro = false;
 				// localStorage.setItem('token','TOKEN_TESTE');
 				$mdDialog.hide();
-				$window.location.href="http://localhost/home";
+				$window.location.href="http://www.movaci.com.br/home";
 			})
 			.error(function() { // authentication failed
 				$rootScope.logado = false;
