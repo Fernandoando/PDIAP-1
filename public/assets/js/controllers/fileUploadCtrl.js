@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAP')
-	.controller('fileUploadCtrl', ['$scope', 'Upload', '$mdToast', function ($scope, Upload, $mdToast) {
+	.controller('fileUploadCtrl', ['$scope', 'Upload', '$mdToast', 'projetosAPI', function ($scope, Upload, $mdToast, projetosAPI) {
 
 		$scope.toast = function(message,tema) {
 			var toast = $mdToast.simple().textContent(message).action('✖').position('top right').theme(tema).hideDelay(10000);
@@ -18,16 +18,19 @@
 			delete $scope.status;
 
 			if (file) {
+				let dadosRelatorio = ({
+					uploadAt: new Date(),
+					name: file.name,
+					size: file.size
+				});
+				let aaa = dadosRelatorio;
+				console.log(aaa);
 				let upload = Upload.upload({
 					url: '/projetos/upload',
 					method: 'POST',
 					data: {
 						file: file,
-						fileData: {
-							uploadAt: new Date(),
-							name: file.name,
-							size: file.size
-						}
+						fileData: dadosRelatorio
 					}
 				});
 
@@ -35,20 +38,35 @@
 				$scope.calcSize = parseFloat($scope.calcSize).toFixed(2);
 
 				upload.then(function (response) {
-					$scope.progresso = 'Status';
-					$scope.status = 'check';
-					$scope.statusColor = '#43a047';
-					$scope.statusText = 'Enviado';
-					$scope.toast('Relatório enviado com sucesso!','success-toast');
+					// projetosAPI.postFileData(dadosRelatorio)
+					// .success(function() {
+					// 	$scope.progresso = 'Status';
+					// 	$scope.status = 'check';
+					// 	$scope.statusColor = '#43a047';
+					// 	$scope.statusText = 'Enviado';
+					// 	$scope.toast('Relatório enviado com sucesso!','success-toast');
+					// })
+					// .error(function() {
+					// 	$scope.progresso = 'Status';
+					// 	$scope.status = 'window-close';
+					// 	$scope.statusColor = '#f44336';
+					// 	$scope.statusText = 'Falhou';
+					// 	$scope.toast('Falha ao enviar o relatório','failed-toast');
+					// });
+						$scope.progresso = 'Status';
+						$scope.status = 'check';
+						$scope.statusColor = '#43a047';
+						$scope.statusText = 'Enviado';
+						$scope.toast('Relatório enviado com sucesso!','success-toast');
 				}, function (response) {
-					if (response.status > 0) {
-						console.log(response.status + ': ' + response.data);
-					}
 					$scope.progresso = 'Status';
 					$scope.status = 'window-close';
 					$scope.statusColor = '#f44336';
 					$scope.statusText = 'Falhou';
 					$scope.toast('Falha ao enviar o relatório','failed-toast');
+					if (response.status > 0) {
+						console.log(response.status + ': ' + response.data);
+					}
 				}, function (evt) {
 					file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 				});

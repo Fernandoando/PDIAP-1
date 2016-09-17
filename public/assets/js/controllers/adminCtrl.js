@@ -92,11 +92,6 @@
 					$scope.hospedagemVerify = 'Não';
 				}
 
-				// projeto.relatorio = {
-				// 	name: 'relatorio_movaci.pdf',
-				// 	size: 58954
-				// }
-
 				if (projeto.relatorio !== undefined) {
 					$scope.f = projeto.relatorio;
 					$scope.calcSize = projeto.relatorio.size/1000;
