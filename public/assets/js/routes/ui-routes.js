@@ -37,11 +37,11 @@
 				}
 			}
 		})
-		.state('inscricao', {
-			url: "/projetos/inscricao",
-			templateUrl: "/views/inscricao.html",
-			controller: "registroCtrl"
-		})
+		// .state('inscricao', {
+		// 	url: "/projetos/inscricao",
+		// 	templateUrl: "/views/inscricao.html",
+		// 	controller: "registroCtrl"
+		// })
 		.state('regulamento', {
 			url: "/regulamento",
 			templateUrl: "/alpha/regulamento.html"
