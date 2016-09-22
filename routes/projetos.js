@@ -112,7 +112,7 @@ router.post('/upload', ensureAuthenticated, function(req, res){
     var image = files.file
     , image_upload_path_old = image.path
     , image_upload_path_new = '../relatorios/'
-    , image_upload_name = req.user.id+'.pdf'
+    , image_upload_name = req.user.numInscricao+'.pdf'
     , image_upload_path_name = image_upload_path_new + image_upload_name
     ;
 
@@ -266,11 +266,7 @@ router.post('/upload', ensureAuthenticated, function(req, res){
       }
     });
 
-    router.get('/qtd', (req, res) => {
-      ProjetoSchema.count({}, function(err, count) {
-        res.json("Projetos cadastrados: "+count);
-      });
-    });
+    
 
     router.get('/', (req, res, next) => {
       res.send('Projetos po');
