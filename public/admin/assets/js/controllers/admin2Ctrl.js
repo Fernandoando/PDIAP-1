@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAPa')
-	.controller('admin2Ctrl', function($scope, $mdDialog, adminAPI) { //adicionar importação de Projetos
+	.controller('admin2Ctrl', function($scope, $rootScope, $mdDialog, adminAPI) { //adicionar importação de Projetos
 
 		// $scope.projetos = new Projetos();
 
@@ -13,18 +13,58 @@
 
 		// $scope.ordenacao = ['aprovado','participa'];
 		// $scope.query = 'nomeProjeto';
+		let relatorio = ({
+			countAprovados: 0,
+			countParticipaSim: 0,
+			countParticipaNao: 0,
+			countPendente: 0
+		});
+		console.log(relatorio);
+		// let countAprovados = 0
+		// , countParticipaSim = 0
+		// , countParticipaNao = 0
+		// , countPendente = 0;
 
 		$scope.carregarProjetos = function() {
 			adminAPI.getTodosProjetos()
 			.success(function(projetos) {
 				angular.forEach(projetos, function (value, key) {
-					let orientadores = [];
-					// console.log(projetos);
+					if (value.aprovado === true) {
+						relatorio.countAprovados++;
+						if (value.participa === true) {
+							relatorio.countParticipaSim++;
+						} else if(value.participa === false) {
+							relatorio.countParticipaNao++;
+						} else {
+							relatorio.countPendente++;
+						}
+					}
+
+					// let orientadores = [];
+					// angular.forEach(value.integrantes, function (value, key) {
+					// 	if (value.tipo === 'Orientador') {
+					// 		orientadores.push(value.nome+' ('+value.telefone+')');
+					// 	}
+					// });
+					let orientadores = "";
+					let alunos = "";
 					angular.forEach(value.integrantes, function (value, key) {
 						if (value.tipo === 'Orientador') {
-							orientadores.push(value.nome+' ('+value.telefone+')');
+							if (orientadores !== "") {
+								orientadores = orientadores+", "+value.nome+" ("+value.telefone+")";
+							} else {
+								orientadores = value.nome+" ("+value.telefone+")";
+							}
+						}
+						if (value.tipo === 'Aluno') {
+							if (alunos !== "") {
+								alunos = alunos+", "+value.nome+" ("+value.telefone+")";
+							} else {
+								alunos = value.nome+" ("+value.telefone+")";
+							}
 						}
 					});
+
 					let obj = ({
 						_id: value._id.$oid,
 						numInscricao: value.numInscricao,
@@ -33,12 +73,17 @@
 						categoria: value.categoria,
 						eixo: value.eixo,
 						orientadores: orientadores,
+						alunos: alunos,
 						resumo: value.resumo,
 						aprovado: value.aprovado,
 						participa: value.participa
 					});
 					$scope.projetos.push(obj);
 				});
+				console.log("aprovados: "+relatorio.countAprovados);
+				console.log("nao: "+relatorio.countParticipaNao);
+				console.log("sim: "+relatorio.countParticipaSim);
+				console.log("pendente: "+relatorio.countPendente);
 			})
 			.error(function(status) {
 				console.log(status);
@@ -195,10 +240,30 @@
 			});
 		};
 
-		$scope.carregarSaberes();
-		$scope.carregarAvaliadores();
+		$rootScope.relatorio = relatorio;
+		$scope.visualizarRelatorio = function(ev) {
+			$mdDialog.show({
+				controller: function dialogController($scope, $rootScope, $mdDialog) {
+					$scope.details = $rootScope.relatorio;
+					$scope.hide = function() {
+						$mdDialog.hide();
+					};
+					$scope.cancel = function() {
+						$mdDialog.cancel();
+					};
+				},
+				templateUrl: 'admin/views/relatorios.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose: false,
+				fullscreen: true // Only for -xs, -sm breakpoints.
+			});
+		};
+
 		$scope.setarProjetos();
 		$scope.carregarProjetos();
+		$scope.carregarSaberes();
+		$scope.carregarAvaliadores();
 
 	});
 })();

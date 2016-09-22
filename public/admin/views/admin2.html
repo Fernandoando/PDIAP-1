@@ -57,9 +57,15 @@
     <span flex></span>
     <md-menu>
       <md-button md-no-ink aria-label="Open demo menu" layout="row" class="hide-hover" style="height:45px;" ng-click="$mdOpenMenu($event)">
-        <md-icon md-svg-src="exit-to-app" style="color:#225024;width:28px;height:28px;"></md-icon>
+        <md-icon md-svg-src="dots-vertical" style="color:#225024;width:28px;height:28px;"></md-icon>
       </md-button>
       <md-menu-content width="3">
+        <md-menu-item>
+          <md-button data-ng-click="visualizarRelatorio($event)" class="grey-text darken-3">
+            <md-icon md-svg-src="clipboard-text" class="grey-text darken-3"></md-icon>
+            Relatórios
+          </md-button>
+        </md-menu-item>
         <md-menu-item>
           <md-button data-ng-click="logout()" class="grey-text darken-3">
             <md-icon md-svg-src="exit-to-app" class="grey-text darken-3"></md-icon>
@@ -74,28 +80,28 @@
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom flex="100">
       <md-tab label="Projetos" flex data-ng-cloak data-ng-click="setarProjetos()">
-          <div ui-view="projetos"></div>
+        <div ui-view="projetos"></div>
       </md-tab>
       <md-tab label="Saberes Docentes" flex data-ng-cloak data-ng-click="setarSaberes()">
-          <div ui-view="saberes"></div>
+        <div ui-view="saberes"></div>
       </md-tab>
       <md-tab label="Avaliadores" flex data-ng-cloak data-ng-click="setarAvaliadores()">
-          <div ui-view="avaliadores"></div>
+        <div ui-view="avaliadores"></div>
       </md-tab>
     </md-tabs>
   </md-content>
 </div>
 
 <!-- <div layout="row" class="footer-admin" style="position:fixed;width:100%;height:50px;background:#424242;bottom:0!important;color:#f5f5f5;letter-spacing:0.5px;" align="center">
-  <div flex="50">
-    <p>Selecionados: {{count}}</p>
-  </div>
-  <span flex></span>
-  <div flex="30">
-    <md-button flex="50" aria-label="Login" class="md-raised md-primary white green darken-1 btnEntrar" data-ng-disabled="count == 0" data-ng-click="update()">
-      <span>Salvar</span>
-    </md-button>
-  </div>
+<div flex="50">
+<p>Selecionados: {{count}}</p>
+</div>
+<span flex></span>
+<div flex="30">
+<md-button flex="50" aria-label="Login" class="md-raised md-primary white green darken-1 btnEntrar" data-ng-disabled="count == 0" data-ng-click="update()">
+<span>Salvar</span>
+</md-button>
+</div>
 </div> -->
 
 <!-- conteúdo dinâmico -->
