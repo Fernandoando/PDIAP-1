@@ -137,15 +137,6 @@
 			return $http(request);
 		};
 
-		let _postFileData = function(fileData) {
-			const request = {
-				url: '/projetos/upload',
-				method: 'POST',
-				data: fileData
-			}
-			return $http(request);
-		};
-
 		return {
 			// saveProjeto: _saveProjeto,
 			saveSaberesDocentes: _saveSaberesDocentes,
@@ -161,8 +152,7 @@
 			postRedefinir: _postRedefinir,
 			postNewPassword: _postNewPassword,
 			postContato: _postContato,
-			removeIntegrante: _removeIntegrante,
-			postFileData: _postFileData
+			removeIntegrante: _removeIntegrante
 		};
 	});
 })();
