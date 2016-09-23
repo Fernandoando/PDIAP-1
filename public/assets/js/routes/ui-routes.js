@@ -67,6 +67,10 @@
 			url: "/categorias-eixos",
 			templateUrl: "/alpha/categorias-eixos.html"
 		})
+		.state('programacao', {
+			url: "/programacao",
+			templateUrl: "/alpha/programacao.html"
+		})
 		.state('saberes-docentes', {
 			url: "/saberes-docentes/inscricao",
 			templateUrl: "/views/saberes.html",

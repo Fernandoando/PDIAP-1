@@ -3456,11 +3456,15 @@ body.landing #main {
 
   .box.features .features-row section {
     border: 0;
-    border-top: solid 1px #e5e5e5 !important;
+    /*border-top: solid 1px #e5e5e5 !important;*/
     float: none;
-    margin: 2em 0 0 0 !important;
-    padding: 2em 0 0 0 !important;
+    /*margin: 2em 0 0 0 !important;*/
+    padding: 0 !important;
     width: 100%;
+  }
+
+  #ifpublica-box {
+    padding-top: 2em !important;
   }
 
   .box.features .features-row section.localizacao {
@@ -3542,6 +3546,14 @@ body.landing #main {
   body.landing #main {
     padding: 0;
     margin-top: 0;
+  }
+
+  #ifpublica-box {
+    position: relative !important;
+  }
+
+  #ifpublica-box div {
+    margin-top: 0 !important;
   }
 
   /* Footer */
@@ -3635,7 +3647,11 @@ body.landing #main {
 
   .box.features .features-row section {
     margin: 3em 0 0 0 !important;
-    padding: 3em 0 0 0 !important;
+    /*padding: 3em 0 0 0 !important;*/
+  }
+
+  #ifpublica-box {
+    padding-top: 0 !important;
   }
 
   .box .image.featured {

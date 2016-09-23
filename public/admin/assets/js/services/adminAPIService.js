@@ -74,6 +74,23 @@
 			return $http(request);
 		};
 
+		let _getEscolasSaberes = function() {
+			const request = {
+				url: '/saberes-docentes/registro',
+				method: 'GET',
+			}
+			return $http(request);
+		};
+
+		let _saveSaberesDocentes = function(saberes) {
+			const request = {
+				url: '/saberes-docentes/registro',
+				method: 'POST',
+				data: saberes
+			}
+			return $http(request);
+		};
+
 		return {
 			postLoginAdmin: _postLoginAdmin,
 			getTodosProjetos: _getTodosProjetos,
@@ -81,7 +98,9 @@
 			getTodosAvaliadores: _getTodosAvaliadores,
 			putSetAprovados: _putSetAprovados,
 			putUnsetAprovados: _putUnsetAprovados,
-			postConfirmacao: _postConfirmacao
+			postConfirmacao: _postConfirmacao,
+			getEscolasSaberes: _getEscolasSaberes,
+			saveSaberesDocentes: _saveSaberesDocentes
 		};
 	});
 })();

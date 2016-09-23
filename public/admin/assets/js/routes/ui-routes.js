@@ -52,18 +52,23 @@
 				loggedin: checkLoggedin
 			}
 		})
-		.state('master', {
-			url: "/admin/master/home",
-			templateUrl: 'admin/views/admin.html',
-			controller: 'adminCtrl',
-			resolve: {
-				loggedin: checkLoggedin
-			}
-		})
+		// .state('master', {
+		// 	url: "/admin/master/home",
+		// 	templateUrl: 'admin/views/admin.html',
+		// 	controller: 'adminCtrl',
+		// 	resolve: {
+		// 		loggedin: checkLoggedin
+		// 	}
+		// })
 		.state('confirmando', {
 			url: "/projetos/confirma/:idProjeto/:situacao",
 			templateUrl: 'admin/views/confirmando.html',
 			controller: 'confirmacaoCtrl'
+		})
+		.state('saberes', {
+			url: "/admin/saberes-docentes/inscricao",
+			templateUrl: 'admin/views/saberes.html',
+			controller: 'saberesCtrl'
 		})
 		.state('404', {
 			url: "/404",

@@ -69,6 +69,13 @@
               </li>
               <li><a href="/regulamento">Regulamento</a></li>
               <li><a href="/alpha/documentos/Lista_Aprovados_MOVACI.pdf" target="_blank">Lista de aprovados</a></li>
+              <li>
+                <a href="#">Programação</a>
+                <ul style="width:155px;">
+                  <li><a href="/programacao">V MOVACI</a></li>
+                  <li><a href="/alpha/documentos/Apresentação_eixos_e_salas_MOVACI.pdf" target="_blank">Apresentações</a></li>
+                </ul>
+              </li>
             </ul>
           </li>
           <li><a href="/contato">Fale Conosco</a></li>
@@ -172,7 +179,7 @@
             L.mapbox.accessToken = 'pk.eyJ1IjoidGlhZ29wb3J0YWx1cHBpIiwiYSI6ImNpam0zdXhhdjAwOTZ1Mmtvd3RwZGx3MnEifQ.k4E8PzMGoP3ddQxpRoKZzA';
 
             var map = L.mapbox.map('map', 'mapbox.streets', {
-              center: [-29.635471, -52.171253],
+              center: [-29.635471, -52.1690000],
               zoom: 16,
               zoomControl: false
             });
@@ -182,7 +189,7 @@
               "type": "Feature",
               "geometry": {
                 "type": "Point",
-                "coordinates": [-52.170643, -29.636026]
+                "coordinates": [-52.169943, -29.637026]
               },
               "properties": {
                 "title": "<center>V MOVACI :D</center>",
@@ -247,6 +254,23 @@
               </div>
             </div>
 
+            <!-- anais -->
+            <section class="box special features">
+              <span class="image featured" style="background:#4caf50;height:10px;"></span>
+              <h3 style="margin-bottom:35px!important;">IFPublica</h3>
+              <div class="features-row" style="border:none!important;">
+                <section style="padding-top:0;">
+                  <p style="margin-bottom:1em!important;">A Biblioteca Digital IFPublica é um repositório de artigos publicados pelo Instituto Federal Sul-rio-grandense (IFSul) câmpus Venâncio Aires.</p>
+                  <p>Após a V MOVACI, todos os anais estarão disponíveis na página!</p>
+                </section>
+                <section id="ifpublica-box" style="position:absolute;right:0;height:100%;padding-top:0">
+                  <div align="center" style="position:relative;top:50%;margin-top:-60px;">
+                    <a id="ifpublica" href="http://quetalsaber.net/ifpublica" target="_blank"><img src="/alpha/images/ifpublica" height="120px" style="padding:25px 35px;border:2px solid #e5e5e5;border-radius:70px;"></img></a>
+                  </div>
+                </section>
+              </div>
+            </section>
+
           </section>
 
           <!-- CTA -->
@@ -289,12 +313,13 @@
         <script type="text/javascript" src="/alpha/assets/js/util.js"></script>
         <script type="text/javascript" src="/alpha/assets/js/main.js"></script>
 
-        <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
-        <script type="text/javascript" src="/bower_components/angular-material/angular-material.js"></script>
-        <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-        <script type="text/javascript" src="/bower_components/angular-aria/angular-aria.js"></script>
-        <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.js"></script>
-        <script type="text/javascript" src="/bower_components/angular-resource/angular-resource.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-material/angular-material.js"></script>
+        <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-aria/angular-aria.js"></script>
+        <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+        <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+        <script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
         <script type="text/javascript" src="assets/js/app.js"></script>
         <script type="text/javascript" src="assets/js/routes/ui-routes.js"></script>
         <script type="text/javascript" src="assets/js/interceptors/authInterceptor.js"></script>

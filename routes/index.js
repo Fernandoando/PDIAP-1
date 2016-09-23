@@ -27,6 +27,12 @@ router.get('/projetos/confirma/*', function(req, res, next) {
   res.render('layout_admin2.ejs');
 });
 
+// para a hora do evento ==================================================== //
+router.get('/admin/saberes-docentes/inscricao', function(req, res, next) {
+  res.render('correriaMOVACI.ejs');
+});
+// ========================================================================== //
+
 router.get('/regulamento', function(req, res, next) {
   res.render('layout3.ejs');
 });
@@ -44,6 +50,10 @@ router.get('/avaliacao-medio-extensao', function(req, res, next) {
 });
 
 router.get('/contato', function(req, res, next) {
+  res.render('layout3.ejs');
+});
+
+router.get('/programacao', function(req, res, next) {
   res.render('layout3.ejs');
 });
 
