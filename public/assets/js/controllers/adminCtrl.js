@@ -31,6 +31,9 @@
 		$scope.mostraAprovados = function() {
 			$window.open('http://www.movaci.com.br/alpha/documentos/Lista_Aprovados_MOVACI.pdf', '_blank');
 		}
+		$scope.mostraApresentacao = function() {
+			$window.open('http://www.movaci.com.br/alpha/documentos/Apresentação_eixos_e_salas_MOVACI.pdf', '_blank');
+		}
 
 		let maskCEP = function() {
 			$scope.projeto2.cep = $scope.projeto2.cep.substring(0,2) + "." + $scope.projeto2.cep.substring(2);

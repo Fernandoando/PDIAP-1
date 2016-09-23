@@ -129,6 +129,10 @@
 			url: "/avaliacao-medio-extensao",
 			templateUrl: "/views/avaliacao-medio-ext.html"
 		})
+		.state('home.programacao', {
+			url: "/programacao",
+			templateUrl: "/views/programacao.html"
+		})
 		.state('nova-senha', {
 			url: "/nova-senha/:username/:token",
 			templateUrl: "/views/nova-senha.html",
