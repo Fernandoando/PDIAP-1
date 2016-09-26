@@ -58,7 +58,14 @@
 						avaliacaoAPI.putAvaliacao(id,notas)
 						.success(function(data, status) {
 							$scope.toast('Avaliação realizada com sucesso!','success-toast');
-							$rootScope.projetos.avaliado = true;
+							var cont = 0, cont1 = 0;
+							angular.forEach($rootScope.projetos, function (value, key) {
+								cont++;
+								if (value.numInscricao === $scope.details.numInscricao) {
+									cont1 = cont;
+									$rootScope.projetos[cont1-1].avaliado = true;
+								}
+							});
 						})
 						.error(function(status) {
 							$scope.toast('Falha.','failed-toast');
