@@ -25,10 +25,6 @@ const uploadSchema = new Schema({
 	uploadAt: {type: Date}
 });
 
-const notasSchema = new Schema({
-	nota: {type: Number}
-});
-
 const ProjetoSchema = new Schema({
 	numInscricao: {type: Schema.Types.ObjectId},
 	nomeProjeto: {type: String},

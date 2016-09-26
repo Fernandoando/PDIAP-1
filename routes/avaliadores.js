@@ -72,22 +72,14 @@ router.post('/registro2', (req, res) => {
 
 router.put('/addNota', (req, res) => {
 	let id = req.body.id
-	,	cont = 0
 	,	arrayNota = req.body.adrovan;
-  console.log(id);
-  console.log(arrayNota);
+
 	ProjetoSchema.findOne({_id: id}, (err, usr) => {
 		if (err) throw err;
-		// for (cont in arrayNota) {
-		// 	let newNota = ({
-		// 		nota: arrayNota[cont]
-		// 	});
-			usr.avaliacao = arrayNota;
-			usr.save((err, usr) => {
-				if (err) throw err;
-			});
-			cont++;
-		// }
+		usr.avaliacao = arrayNota;
+		usr.save((err, usr) => {
+			if (err) throw err;
+		});
 	});
 	res.send(200);
 	console.log("Feito adrovão");

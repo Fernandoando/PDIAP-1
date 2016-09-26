@@ -112,7 +112,7 @@ router.post('/upload', ensureAuthenticated, function(req, res){
     res.write('received upload:\n\n');
     var image = files.file
     , image_upload_path_old = image.path
-    , image_upload_path_new = '/public/relatorios/'
+    , image_upload_path_new = '../pdiap/public/relatorios/'
     , image_upload_name = req.user.numInscricao+'.pdf'
     , image_upload_path_name = image_upload_path_new + image_upload_name
     ;
