@@ -95,9 +95,9 @@
 					$scope.hospedagemVerify = 'Não';
 				}
 
-				if (projeto.relatorio !== undefined) {
-					$scope.f = projeto.relatorio;
-					$scope.calcSize = projeto.relatorio.size/1000;
+				if (projeto.relatorio2 !== undefined) {
+					$scope.f = projeto.relatorio2;
+					$scope.calcSize = projeto.relatorio2.size/1000;
 					$scope.calcSize = parseFloat($scope.calcSize).toFixed(2);
 					$scope.progresso = 'Status';
 					$scope.status = 'check';

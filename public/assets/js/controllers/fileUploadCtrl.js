@@ -18,7 +18,7 @@
 			delete $scope.status;
 
 			if (file) {
-				
+
 				let upload = Upload.upload({
 					url: '/projetos/upload',
 					method: 'POST',
