@@ -33,6 +33,14 @@ router.get('/admin/saberes-docentes/inscricao', function(req, res, next) {
 });
 // ========================================================================== //
 
+// avaliação ================================================================ //
+router.get('/avaliacao/2016', function(req, res, next) {
+  res.render('layout_avaliacao.ejs');
+});
+router.get('/avaliacao/2016/*', function(req, res, next) {
+  res.render('layout_avaliacao2.ejs');
+});
+// ========================================================================== //
 router.get('/regulamento', function(req, res, next) {
   res.render('layout3.ejs');
 });

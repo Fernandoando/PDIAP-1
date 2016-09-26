@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-	.module('PDIAPa')
+	.module('PDIAPav')
 	.config(function($locationProvider, $httpProvider, $stateProvider, $urlMatcherFactoryProvider, $urlRouterProvider) {
 
 		$locationProvider.html5Mode(true);
@@ -20,7 +20,7 @@
 					deferred.resolve();
 				} else { // Not Authenticated
 					$rootScope.logado = false;
-					$window.location.href="http://movaci.com.br/admin";
+					$window.location.href="http://localhost/avaliacao/2016";
 					deferred.reject();
 				}
 			});
@@ -29,7 +29,7 @@
 
 		$stateProvider
 		// .state('admin', {
-		// 	url: "/admin",
+		// 	url: "/admin/avaliacao",
 		// 	views: {
 		// 		'': {
 		// 			templateUrl: '/admin/views/login.html',
@@ -38,41 +38,23 @@
 		// 	}
 		// })
 		.state('home', {
-			url: "/admin/home",
+			url: "/avaliacao/2016/:id",
 			views: {
 				'': {
-					templateUrl: '/admin/views/admin2.html',
-					controller: 'admin2Ctrl'
-				},
-				'projetos@home': { templateUrl: '/admin/views/list-projetos.html' },
-				'saberes@home': { templateUrl: '/admin/views/list-saberes.html' },
-				'avaliadores@home': { templateUrl: '/admin/views/list-avaliadores.html' }
+					templateUrl: '/admin/avaliacao/views/avaliacao.html',
+					controller: 'avaliacaoCtrl'
+				}
+				// 'projetos@home': { templateUrl: '/admin/views/list-projetos.html' },
+				// 'saberes@home': { templateUrl: '/admin/views/list-saberes.html' },
+				// 'avaliadores@home': { templateUrl: '/admin/views/list-avaliadores.html' }
 			},
 			resolve: {
 				loggedin: checkLoggedin
 			}
 		})
-		// .state('master', {
-		// 	url: "/admin/master/home",
-		// 	templateUrl: 'admin/views/admin.html',
-		// 	controller: 'adminCtrl',
-		// 	resolve: {
-		// 		loggedin: checkLoggedin
-		// 	}
-		// })
-		.state('confirmando', {
-			url: "/projetos/confirma/:idProjeto/:situacao",
-			templateUrl: 'admin/views/confirmando.html',
-			controller: 'confirmacaoCtrl'
-		})
-		.state('saberes', {
-			url: "/admin/saberes-docentes/inscricao",
-			templateUrl: 'admin/views/saberes.html',
-			controller: 'saberesCtrl'
-		})
 		.state('404', {
 			url: "/404",
-			templateUrl: 'admin/views/404.html'
+			templateUrl: 'admin/avaliacao/views/404.html'
 		});
 	});
 })();
