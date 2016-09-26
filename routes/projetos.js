@@ -112,7 +112,7 @@ router.post('/upload', ensureAuthenticated, function(req, res){
     res.write('received upload:\n\n');
     var image = files.file
     , image_upload_path_old = image.path
-    , image_upload_path_new = '../relatorios/'
+    , image_upload_path_new = '/public/relatorios/'
     , image_upload_name = req.user.numInscricao+'.pdf'
     , image_upload_path_name = image_upload_path_new + image_upload_name
     ;
@@ -718,7 +718,8 @@ router.post('/redefinir-senha', (req, res) => {
       } else{
         let email = doc.email;
         let nome_projeto = doc.nomeProjeto;
-        let url = "http://www.movaci.com.br/nova-senha/"+username+"/"+token;
+        let url = "http://www.movaci.com.br/nova-senha/"+token;
+        // let url = "http://www.movaci.com.br/nova-senha/"+username+"/"+token;
 
         // res.sendStatus(200);
         res.send(email);
@@ -764,12 +765,12 @@ router.post('/redefinir-senha', (req, res) => {
   });
 });
 
-router.post('/nova-senha/:username/:token', (req, res) => {
+router.post('/nova-senha/:token', (req, res) => {
   if(req.params.token === '') {
     res.status(400).send("erro");
     //console.log('err');
   } else {
-    ProjetoSchema.findOne({username: (req.params.username)}, (err, usr) => {
+    ProjetoSchema.findOne({resetPasswordToken: (req.params.token)}, (err, usr) => {
       if(err || !usr) {
         res.status(400).send("erro2");
       } else if(usr.resetPasswordToken == req.params.token && !usr.hasExpired()) {
