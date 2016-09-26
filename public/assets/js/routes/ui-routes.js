@@ -71,11 +71,11 @@
 			url: "/programacao",
 			templateUrl: "/alpha/programacao.html"
 		})
-		.state('saberes-docentes', {
-			url: "/saberes-docentes/inscricao",
-			templateUrl: "/views/saberes.html",
-			controller: "saberesCtrl"
-		})
+		// .state('saberes-docentes', {
+		// 	url: "/saberes-docentes/inscricao",
+		// 	templateUrl: "/views/saberes.html",
+		// 	controller: "saberesCtrl"
+		// })
 		.state('avaliadores', {
 			url: "/avaliadores/inscricao",
 			templateUrl: "/views/avaliadores.html",

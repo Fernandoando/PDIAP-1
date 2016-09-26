@@ -65,11 +65,11 @@
 			templateUrl: 'admin/views/confirmando.html',
 			controller: 'confirmacaoCtrl'
 		})
-		.state('saberes', {
-			url: "/admin/saberes-docentes/inscricao",
-			templateUrl: 'admin/views/saberes.html',
-			controller: 'saberesCtrl'
-		})
+		// .state('saberes', {
+		// 	url: "/admin/saberes-docentes/inscricao",
+		// 	templateUrl: 'admin/views/saberes.html',
+		// 	controller: 'saberesCtrl'
+		// })
 		.state('404', {
 			url: "/404",
 			templateUrl: 'admin/views/404.html'
