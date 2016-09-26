@@ -124,9 +124,6 @@
     <p data-ng-if="ordenacao != 'nomeEscola'">{{::proj.eixo}}</p>
   </div>
   <div flex="5" layout="row" layout-align="end center" class="btn-plus" style="justify-content:center;margin-left:30px;">
-    <!-- <div data-ng-if="proj.aprovado === true" layout="row" layout-align="center center" class="md-whiteframe-1dp" data-ng-class="{grey:proj.aprovado === true && proj.participa === undefined,green1:proj.participa === true,red:proj.participa === false}" style="width:58px;height:20px;border-radius:4px;font-size:10px;color:#f5f5f5;">
-    <span style="font-weight:500;">Aprovado</span>
-  </div> -->
   <md-icon data-ng-if="!proj.avaliado" class="md-secondary btn-plus" md-svg-src="plus" style="margin:0;"></md-icon>
   <md-icon data-ng-if="proj.avaliado" class="md-secondary" md-svg-src="checkbox-marked-circle-outline" style="color:green;margin:0;"></md-icon>
 </div>

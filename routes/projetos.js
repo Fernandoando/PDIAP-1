@@ -722,7 +722,7 @@ router.post('/redefinir-senha', (req, res) => {
         // let url = "http://www.movaci.com.br/nova-senha/"+username+"/"+token;
 
         // res.sendStatus(200);
-        res.send(email);
+        res.send(url);
 
         var templatesDir = path.resolve(__dirname, '..', 'templates')
         var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'))
@@ -732,7 +732,7 @@ router.post('/redefinir-senha', (req, res) => {
           port: 587,
           auth: {
             user: "contato@movaci.com.br",
-            pass: "mvc2016"
+            pass: "*mo12va45ci78!"
           }
         }));
 

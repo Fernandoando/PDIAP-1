@@ -3,7 +3,7 @@
 
 	angular
 	.module('PDIAPa')
-	.controller('admin2Ctrl', function($scope, $rootScope, $mdDialog, adminAPI) { //adicionar importação de Projetos
+	.controller('admin2Ctrl', function($scope, $rootScope, $window, $mdDialog, adminAPI) { //adicionar importação de Projetos
 
 		// $scope.projetos = new Projetos();
 
@@ -11,19 +11,16 @@
 		$scope.saberes = [];
 		$scope.avaliadores = [];
 
-		// $scope.ordenacao = ['aprovado','participa'];
-		// $scope.query = 'nomeProjeto';
 		let relatorio = ({
 			countAprovados: 0,
 			countParticipaSim: 0,
 			countParticipaNao: 0,
 			countPendente: 0
 		});
-		console.log(relatorio);
-		// let countAprovados = 0
-		// , countParticipaSim = 0
-		// , countParticipaNao = 0
-		// , countPendente = 0;
+
+		$scope.abrir = function(num) {
+			$window.open('http://localhost/relatorios/'+num+'.pdf', '_blank');
+		}
 
 		$scope.carregarProjetos = function() {
 			adminAPI.getTodosProjetos()

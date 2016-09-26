@@ -5,7 +5,7 @@
 	.module('PDIAPav')
 	.controller('avaliacaoCtrl', function($scope, $rootScope, $mdDialog, avaliacaoAPI) {
 
-		$scope.projetos = [];
+		$rootScope.projetos = [];
 		$scope.searchProject = "";
 
 		let carregarProjetos = function() {
@@ -30,10 +30,9 @@
 							avaliacao: avaliacao,
 							avaliado: avaliado
 						});
-						$scope.projetos.push(obj);
+						$rootScope.projetos.push(obj);
 					}
 				});
-				console.log($scope.projetos.length);
 			})
 			.error(function(status) {
 				console.log(status);
@@ -48,7 +47,7 @@
 
 		$scope.visualizarDetalhes = function(projeto,ev) {
 			$mdDialog.show({
-				controller: function dialogController($scope, $mdDialog, $mdToast, avaliacaoAPI) {
+				controller: function dialogController($scope, $rootScope, $mdDialog, $mdToast, avaliacaoAPI) {
 					$scope.details = projeto;
 					$scope.desempate = false;
 					$scope.habilitaDesempate = function() {
@@ -59,6 +58,7 @@
 						avaliacaoAPI.putAvaliacao(id,notas)
 						.success(function(data, status) {
 							$scope.toast('Avaliação realizada com sucesso!','success-toast');
+							$rootScope.projetos.avaliado = true;
 						})
 						.error(function(status) {
 							$scope.toast('Falha.','failed-toast');
