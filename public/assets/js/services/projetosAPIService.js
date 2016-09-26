@@ -119,9 +119,9 @@
 			return $http(request);
 		};
 
-		let _postNewPassword = function(password,username,token) {
+		let _postNewPassword = function(password,token) {
 			const request = {
-				url: '/projetos/nova-senha/'+username+'/'+token,
+				url: '/projetos/nova-senha/'+token,
 				method: 'POST',
 				data: password
 			}

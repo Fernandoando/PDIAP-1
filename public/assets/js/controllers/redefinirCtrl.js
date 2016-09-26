@@ -5,7 +5,7 @@
 	.module('PDIAP')
 	.controller('redefinirCtrl', function($scope, $state, $stateParams, $location, $mdDialog) {
 
-		$scope.username = $stateParams.username;
+		// $scope.username = $stateParams.username;
 		$scope.token = $stateParams.token;
 
 		$scope.newPasswordDialog = function(ev) {
@@ -18,7 +18,7 @@
 			});
 			function novaSenha($scope, projetosAPI) {
 				$scope.redefinirSenha = function(password) {
-					projetosAPI.postNewPassword(password, $stateParams.username, $stateParams.token)
+					projetosAPI.postNewPassword(password, $stateParams.token)
 					.success(function(data) {
 						if (data === 'Senha alterada') {
 							let showAlert1 = function(ev) {

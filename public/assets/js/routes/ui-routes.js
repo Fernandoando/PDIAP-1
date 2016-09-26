@@ -134,7 +134,7 @@
 			templateUrl: "/views/programacao.html"
 		})
 		.state('nova-senha', {
-			url: "/nova-senha/:username/:token",
+			url: "/nova-senha/:token",
 			templateUrl: "/views/nova-senha.html",
 			controller: "redefinirCtrl"
 		})
