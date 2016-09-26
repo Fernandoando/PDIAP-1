@@ -427,7 +427,17 @@ md-tabs md-ink-bar {
   color: transparent !important;
   background: #43a047 !important;
 }
-
+.btn-outline {
+  border: 1px solid grey !important;
+  background: transparent !important;
+  color: #616161 !important;
+  font-size: 13px;
+  box-shadow: none !important;
+}
+.btnEntrar2-2 {
+  padding: 1px 25px;
+  border-radius: 70px;
+}
 
 @media only screen and (max-width: 959px) and (min-width: 0) and (orientation: landscape) {
   md-toolbar { min-height: 70px !important; }

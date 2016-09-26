@@ -3,39 +3,37 @@
 
 	angular
 	.module('PDIAPav')
-	.controller('avaliacaoCtrl', function($scope, $rootScope, $q, $window, $mdDialog, avaliacaoAPI) {
+	.controller('avaliacaoCtrl', function($scope, $rootScope, $mdDialog, avaliacaoAPI) {
 
 		$scope.projetos = [];
 		$scope.searchProject = "";
 
-		let countTotal = 0;
-		let nota1, nota2, nota3;
-		$scope.hosp = [];
 		let carregarProjetos = function() {
 			avaliacaoAPI.getTodosProjetos()
 			.success(function(projetos) {
-				console.log(projetos);
 				angular.forEach(projetos, function (value, key) {
-					if (value.avaliacao !== undefined && value.avaliacao !== "") {
-						nota1 = value.avaliacao.nota1;
-						nota2 = value.avaliacao.nota2;
-						if (value.avaliacao.nota3 !== undefined && value.avaliacao.nota3 !== "") {
-							nota3 = value.avaliacao.nota3;
+					if (value.aprovado === true) {
+						if (value.avaliacao !== undefined && value.avaliacao.length > 0) {
+							var avaliacao = value.avaliacao;
+							var avaliado = true;
+						} else {
+							var avaliacao = [];
+							var avaliado = false;
 						}
+						let obj = ({
+							_id: value._id,
+							numInscricao: value.numInscricao,
+							nomeProjeto: value.nomeProjeto,
+							nomeEscola: value.nomeEscola,
+							categoria: value.categoria,
+							eixo: value.eixo,
+							avaliacao: avaliacao,
+							avaliado: avaliado
+						});
+						$scope.projetos.push(obj);
 					}
-
-					let obj = ({
-						_id: value._id,
-						numInscricao: value.numInscricao,
-						nomeProjeto: value.nomeProjeto,
-						nomeEscola: value.nomeEscola,
-						categoria: value.categoria,
-						eixo: value.eixo,
-						avaliado: value.avaliado,
-						avaliacao: [100,90,99]
-					});
-					$scope.projetos.push(obj);
 				});
+				console.log($scope.projetos.length);
 			})
 			.error(function(status) {
 				console.log(status);
@@ -50,37 +48,27 @@
 
 		$scope.visualizarDetalhes = function(projeto,ev) {
 			$mdDialog.show({
-				controller: function dialogController($scope, $mdDialog, avaliacaoAPI) {
+				controller: function dialogController($scope, $mdDialog, $mdToast, avaliacaoAPI) {
 					$scope.details = projeto;
 					$scope.desempate = false;
 					$scope.habilitaDesempate = function() {
 						$scope.desempate = !$scope.desempate;
 					}
 					$scope.addNotas = function(id,notas) {
-						console.log(id);
 						console.log(notas);
 						avaliacaoAPI.putAvaliacao(id,notas)
 						.success(function(data, status) {
-							let showAlert = function(ev) {
-								$mdDialog.show(
-									$mdDialog.alert()
-									.parent(angular.element(document.querySelector('#popupContainer')))
-									.clickOutsideToClose(false)
-									.textContent('Projeto(s) atualizado(s) com sucesso!')
-									.ok('OK')
-									.targetEvent(ev)
-								).then(function(result) {
-									// $window.location.reload();
-								}, function() {});
-							};
-							showAlert();
-							console.log(status);
-							console.log(data);
+							$scope.toast('Avaliação realizada com sucesso!','success-toast');
 						})
 						.error(function(status) {
+							$scope.toast('Falha.','failed-toast');
 							console.log('Error: '+status);
 						});
 					}
+					$scope.toast = function(message,tema) {
+						var toast = $mdToast.simple().textContent(message).action('✖').position('top right').theme(tema).hideDelay(4000);
+						$mdToast.show(toast);
+					};
 					$scope.hide = function() {
 						$mdDialog.hide();
 					};
@@ -95,8 +83,6 @@
 				fullscreen: true // Only for -xs, -sm breakpoints.
 			});
 		};
-
-
 
 		$rootScope.ordenacao = ['categoria','eixo'];
 		$rootScope.ordenarPor = function(campo) {

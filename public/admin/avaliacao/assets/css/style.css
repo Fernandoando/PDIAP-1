@@ -466,7 +466,14 @@ md-tabs md-ink-bar {
   padding: 30px 0;
   background: rgba(128,128,128,0.07);
 }
-
+md-toast.md-success-toast-theme .md-toast-content {
+  background: #4caf50 !important;
+}
+.md-button.hide-hover:not([disabled]):hover,
+.md-button.md-failed-toast-theme:not([disabled]):hover,
+.md-button.md-success-toast-theme:not([disabled]):hover {
+  background: transparent !important;
+}
 
 @media only screen and (max-width: 959px) and (min-width: 0) {
   md-toolbar { min-height: 70px !important; }

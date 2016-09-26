@@ -44,9 +44,6 @@
 					templateUrl: '/admin/avaliacao/views/avaliacao.html',
 					controller: 'avaliacaoCtrl'
 				}
-				// 'projetos@home': { templateUrl: '/admin/views/list-projetos.html' },
-				// 'saberes@home': { templateUrl: '/admin/views/list-saberes.html' },
-				// 'avaliadores@home': { templateUrl: '/admin/views/list-avaliadores.html' }
 			},
 			resolve: {
 				loggedin: checkLoggedin

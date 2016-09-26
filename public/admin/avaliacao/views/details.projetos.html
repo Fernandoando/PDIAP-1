@@ -23,7 +23,7 @@
             <input type="number" placeholder="000" name="nota2" data-ng-model="details.avaliacao[1]" required/>
           </md-input-container>
         </div>
-        <div layout="row" style="justify-content:center;" data-ng-if="desempate || details.nota3 !== undefined">
+        <div layout="row" style="justify-content:center;" data-ng-if="desempate || details.avaliacao.length == 3">
           <p>Nota do desempate:</p>
           <md-input-container md-no-float class="md-block" style="min-width:75px!important;width:75px;margin-left:0.8em;">
             <input type="number" placeholder="000" name="nota3" data-ng-model="details.avaliacao[2]" required/>
