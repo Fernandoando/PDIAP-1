@@ -25,6 +25,10 @@ const uploadSchema = new Schema({
 	uploadAt: {type: Date}
 });
 
+const notasSchema = new Schema({
+	nota: {type: String}
+});
+
 const ProjetoSchema = new Schema({
 	numInscricao: {type: Schema.Types.ObjectId},
 	nomeProjeto: {type: String},
@@ -55,7 +59,8 @@ const ProjetoSchema = new Schema({
 	relatorio: uploadSchema,
 
 	resumo: {type: String},
-	palavraChave: {type: String}
+	palavraChave: {type: String},
+	avaliacao: [notasSchema]
 
 }, { collection: 'betaPorcaoAPI' });
 

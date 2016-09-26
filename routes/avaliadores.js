@@ -6,12 +6,22 @@ const express = require('express')
 , LocalStrategy = require('passport-local').Strategy
 , Avaliador = require('../controllers/avaliador-controller')
 , session = require('express-session')
+, Admin = require('../controllers/admin2-controller')
+, ProjetoSchema = require('../models/projeto-schema')
 , AvaliadorSchema = require('../models/avaliador-schema');
 
 function splita(arg){
   if (arg !== undefined) {
     let data = arg.replace(/([-.() ])/g,'');
     return data;
+  }
+}
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated())
+  return next();
+  else{
+    res.send('0');
   }
 }
 
@@ -38,6 +48,48 @@ router.post('/registro', (req, res) => {
 
 	Avaliador.createAvaliador(newAvaliador, (callback) => {});
 	res.send('success');
+});
+
+router.post('/login', passport.authenticate('admin2'), (req, res) => {
+  res.send(req.user);
+  //res.redirect('/home');
+  //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
+});
+
+router.get('/loggedin', ensureAuthenticated, (req, res) => {
+  res.send('success');
+});
+
+router.post('/registro2', (req, res) => {
+	let newAdmin = new adminSchema({
+      username: req.body.username,
+      password: req.body.password
+    });
+    Admin.createAdmin(newAdmin);
+    //res.redirect('/admin/login');
+	res.send('OK');
+});
+
+router.put('/addNota', (req, res) => {
+	let id = req.body.id
+	,	cont = 0
+	,	arrayNota = req.body.adrovan;
+	
+	ProjetoSchema.findOne({_id: id}, (err, usr) => {
+		if (err) throw err;
+		for (nota in arrayNota) {
+			let newNota[cont] = ({
+				nota: arrayNota[cont]
+			});
+			usr.avaliacao.push(newNota[cont]);
+			usr.save((err, usr) => {
+				if (err) throw err;
+			});
+			cont++;
+		}
+	});
+	res.send(200);
+	console.log("Feito adrovão");
 });
 
 module.exports = router;

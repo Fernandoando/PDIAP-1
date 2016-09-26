@@ -10,6 +10,7 @@ const express = require('express')
 , crypto = require('crypto')
 , bcrypt = require('bcryptjs')
 , Admin = require('../controllers/admin-controller')
+, Admin2 = require('../controllers/admin2-controller')
 , nodemailer = require('nodemailer')
 , adminSchema = require('../models/admin-schema')
 , smtpTransport = require('nodemailer-smtp-transport')
@@ -163,17 +164,6 @@ router.post('/upload', ensureAuthenticated, function(req, res){
       });
     });
 
-
-
-
-
-
-
-
-
-
-
-
     router.post('/confirma/:id/:situacao', (req, res) => {
       if(req.params.id !== '') {
         ProjetoSchema.findOne({'_id': req.params.id}, (err, usr) => {
@@ -265,8 +255,6 @@ router.post('/upload', ensureAuthenticated, function(req, res){
         })
       }
     });
-
-    
 
     router.get('/', (req, res, next) => {
       res.send('Projetos po');
@@ -414,13 +402,6 @@ router.post('/upload', ensureAuthenticated, function(req, res){
       //res.send('OK');
     });
 
-
-
-
-
-
-
-
     passport.use('user', new LocalStrategy( function(username, password, done) {
       Projeto.getProjectByUsername(username, (err, user) => {
         if(err) throw err;
@@ -445,6 +426,23 @@ router.post('/upload', ensureAuthenticated, function(req, res){
           return done(null, false, {message: 'Unknown admin'});
         }
         Admin.comparePassword(password, admin.password, (err, isMatch) => {
+          if(err) throw err;
+          if(isMatch){
+            return done(null, admin);
+          } else {
+            return done(null, false, {message: 'Invalid password'});
+          }
+        });
+      });
+    }));
+
+    passport.use('admin2', new LocalStrategy( function(username, password, done) {
+      Admin2.getAdminByUsername(username, (err, admin) => {
+        if(err) throw err;
+        if(!admin){
+          return done(null, false, {message: 'Unknown admin'});
+        }
+        Admin2.comparePassword(password, admin.password, (err, isMatch) => {
           if(err) throw err;
           if(isMatch){
             return done(null, admin);
