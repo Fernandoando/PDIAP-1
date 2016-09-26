@@ -156,7 +156,7 @@ router.post('/upload', ensureAuthenticated, function(req, res){
 
         if (err) throw err;
         ProjetoSchema.findOne({'_id': req.user.id}, (err, usr) => {
-          usr.relatorio = dadosRelatorio;
+          usr.relatorio2 = dadosRelatorio;
           usr.save((err, usr) => {
             if (err) throw err;
           })
@@ -732,7 +732,7 @@ router.post('/redefinir-senha', (req, res) => {
           port: 587,
           auth: {
             user: "contato@movaci.com.br",
-            pass: "*mo12va45ci78!"
+            pass: "mvc2016"
           }
         }));
 

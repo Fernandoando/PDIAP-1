@@ -53,6 +53,7 @@ const ProjetoSchema = new Schema({
 
 	integrantes: [IntegranteSchema],
 	relatorio: uploadSchema,
+	relatorio2: uploadSchema,
 
 	resumo: {type: String},
 	palavraChave: {type: String},
