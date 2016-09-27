@@ -442,6 +442,9 @@ md-tabs md-ink-bar {
   min-width: 36px !important;
   width: 36px !important;
 }
+md-select-menu md-content, md-select-menu {
+  max-height: none !important;
+}
 
 @media only screen and (max-width: 959px) and (min-width: 0) and (orientation: landscape) {
   md-toolbar { min-height: 70px !important; }

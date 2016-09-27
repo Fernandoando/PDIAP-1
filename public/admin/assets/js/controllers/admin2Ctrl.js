@@ -19,7 +19,7 @@
 		});
 
 		$scope.abrir = function(num) {
-			$window.open('http://localhost/relatorios/'+num+'.pdf', '_blank');
+			$window.open('http://www.movaci.com.br/relatorios/'+num+'.pdf', '_blank');
 		}
 
 		$scope.carregarProjetos = function() {

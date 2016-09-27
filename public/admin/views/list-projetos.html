@@ -54,7 +54,7 @@
     <div data-ng-if="proj.aprovado === true" layout="row" layout-align="center center" class="md-whiteframe-1dp" data-ng-class="{grey:proj.aprovado === true && proj.participa === undefined,green1:proj.participa === true,red:proj.participa === false}" style="width:58px;height:20px;border-radius:4px;font-size:10px;color:#f5f5f5;">
       <span style="font-weight:500;">Aprovado</span>
     </div>
-    <md-button aria-label="Imprimir" class="md-secondary btn-plus btn-imprimir" data-ng-if="proj.participa === true || proj.participa === undefined" data-ng-click="abrir(proj.numInscricao)" style="border-radius:50%;">
+    <md-button aria-label="Imprimir" class="md-secondary btn-plus btn-imprimir" data-ng-if="proj.participa === true || (proj.aprovado === true && proj.participa === undefined)" data-ng-click="abrir(proj.numInscricao)" style="border-radius:50%;">
       <md-icon md-svg-src="cloud-print"></md-icon>
     </md-button>
     <md-icon data-ng-if="proj.participa === false" md-svg-src="plus" class="md-secondary btn-plus" style="width:36px!important;height:36px!important;padding:0 6px;"></md-icon>
