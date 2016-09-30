@@ -148,6 +148,29 @@ md-checkbox.md-checked .md-ink-ripple {
 .btn-options.md-button.md-raised:not([disabled]) {
   box-shadow: none !important;
 }
+.kkkkk {
+  display: none;
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .toolbar-admin {
+    display: none;
+  }
+  #imprimir, #imprimir * {
+    visibility: visible;
+  }
+  .listItem {
+    display: none !important;
+  }
+  .kkkkk {
+    display: block !important;
+  }
+  #imprimir section {
+    page-break-inside: avoid !important;
+  }
+}
 /* ========================================================================== */
 md-dialog h1,
 md-dialog-content h2 {
@@ -317,7 +340,7 @@ md-list-item.md-3-line > .md-no-style {
 }
 md-list-item.md-no-proxy,
 md-list-item .md-no-style {
-  padding: 5px 45px !important;
+  padding: 10px 45px !important;
 }
 md-list-item .md-secondary-container, md-list-item .md-secondary,
 md-list-item .md-list-item-inner .md-secondary-container,
@@ -474,6 +497,9 @@ md-toast.md-success-toast-theme .md-toast-content {
 .md-button.md-success-toast-theme:not([disabled]):hover {
   background: transparent !important;
 }
+/*.title-categoria {
+  font-family: 'Brandon', helvetica, sans-serif;
+}*/
 
 @media only screen and (max-width: 959px) and (min-width: 0) {
   md-toolbar { min-height: 70px !important; }

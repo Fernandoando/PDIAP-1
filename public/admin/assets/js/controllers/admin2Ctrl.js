@@ -36,13 +36,6 @@
 							relatorio.countPendente++;
 						}
 					}
-
-					// let orientadores = [];
-					// angular.forEach(value.integrantes, function (value, key) {
-					// 	if (value.tipo === 'Orientador') {
-					// 		orientadores.push(value.nome+' ('+value.telefone+')');
-					// 	}
-					// });
 					let orientadores = "";
 					let alunos = "";
 					angular.forEach(value.integrantes, function (value, key) {

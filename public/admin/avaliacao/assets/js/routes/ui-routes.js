@@ -20,7 +20,7 @@
 					deferred.resolve();
 				} else { // Not Authenticated
 					$rootScope.logado = false;
-					$window.location.href="http://localhost/avaliacao/2016";
+					$window.location.href="http://www.movaci.com.br/avaliacao/2016";
 					deferred.reject();
 				}
 			});
@@ -48,6 +48,21 @@
 			resolve: {
 				loggedin: checkLoggedin
 			}
+		})
+		.state('ranking', {
+			url: "/ranking/2016",
+			views: {
+				'': {
+					templateUrl: '/admin/avaliacao/views/ranking.html',
+					controller: 'rankingCtrl'
+				},
+				'ranking1@ranking': { templateUrl: '/admin/avaliacao/views/list-ranking1.html' },
+				'ranking2@ranking': { templateUrl: '/admin/avaliacao/views/list-ranking2.html' },
+				'ranking3@ranking': { templateUrl: '/admin/avaliacao/views/list-ranking3.html' }
+			}
+			// resolve: {
+			// 	loggedin: checkLoggedin
+			// }
 		})
 		.state('404', {
 			url: "/404",
