@@ -152,19 +152,30 @@ md-checkbox.md-checked .md-ink-ripple {
   display: none;
 }
 @media print {
+  /* salvar premiação sem a pontuação ======================================= */
+  .pontuacao { display: none !important; }
+  md-list-item button {
+    padding: 10px 0 !important;
+    margin: 0 45px !important;
+  }
+  md-list md-divider:nth-child(1) {
+    margin-left: 45px;
+    margin-right: 45px;
+  }
+  md-list-item h3:nth-child(1), md-list-item div:nth-child(1) {
+    margin-right: 25px;
+  }
+  /* ======================================================================== */
   body * {
     visibility: hidden;
   }
-  .toolbar-admin {
-    display: none;
+  .toolbar-admin, .listItem {
+    display: none !important;
   }
   #imprimir, #imprimir * {
     visibility: visible;
   }
-  .listItem {
-    display: none !important;
-  }
-  .kkkkk {
+  .kkkkk, #logo-impressao {
     display: block !important;
   }
   #imprimir section {
@@ -497,9 +508,10 @@ md-toast.md-success-toast-theme .md-toast-content {
 .md-button.md-success-toast-theme:not([disabled]):hover {
   background: transparent !important;
 }
-/*.title-categoria {
-  font-family: 'Brandon', helvetica, sans-serif;
-}*/
+.no-hover:hover, .no-hover:hover md-icon {
+  background: transparent !important;
+  color: #fff !important;
+}
 
 @media only screen and (max-width: 959px) and (min-width: 0) {
   md-toolbar { min-height: 70px !important; }

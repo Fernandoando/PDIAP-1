@@ -58,11 +58,12 @@
 				},
 				'ranking1@ranking': { templateUrl: '/admin/avaliacao/views/list-ranking1.html' },
 				'ranking2@ranking': { templateUrl: '/admin/avaliacao/views/list-ranking2.html' },
-				'ranking3@ranking': { templateUrl: '/admin/avaliacao/views/list-ranking3.html' }
+				'ranking3@ranking': { templateUrl: '/admin/avaliacao/views/list-ranking3.html' },
+				'mostratec@ranking': { templateUrl: '/admin/avaliacao/views/list-mostratec.html' }
+			},
+			resolve: {
+				loggedin: checkLoggedin
 			}
-			// resolve: {
-			// 	loggedin: checkLoggedin
-			// }
 		})
 		.state('404', {
 			url: "/404",

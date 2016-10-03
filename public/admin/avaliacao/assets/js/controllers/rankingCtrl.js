@@ -186,6 +186,7 @@
 								avaliacao: value.avaliacao,
 								total: total
 							});
+							$rootScope.projetos.push(obj);
 
 							switch(value.eixo) {
 								case 'Ciências Agrárias, Exatas e da Terra':
