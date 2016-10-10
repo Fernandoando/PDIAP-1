@@ -16,7 +16,8 @@ const IntegranteSchema = new Schema({
 	email: {type: String},
 	cpf: {type: String},
 	telefone: {type: String},
-	tamCamiseta: {type: String}
+	tamCamiseta: {type: String},
+	presenca: {type: Boolean}
 });
 
 const uploadSchema = new Schema({

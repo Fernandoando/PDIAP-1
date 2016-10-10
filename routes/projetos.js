@@ -547,6 +547,19 @@ router.put('/update', ensureAuthenticated, (req, res) => {
   });
 });
 
+router.put('/setPresenca', ensureAuthenticated, (req, res) => {
+  let myArray = req.body;
+
+  for (i in myArray) {
+    ProjetoSchema.findOneAndUpdate({"integrantes._id": myArray[i].id_subdoc},
+      {"$set": {"integrantes.presenca": myArray[i].presenca}}, {new:true},
+      (err, doc) => {
+        if (err) throw err;
+      }
+    );
+  }
+});
+
 router.put('/upgreice', ensureAuthenticated, (req, res) => {
 
   let myArray = req.body
