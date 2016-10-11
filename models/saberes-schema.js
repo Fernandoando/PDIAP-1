@@ -24,6 +24,9 @@ const SaberesSchema = new Schema({
 	},
 	resumo: {
 		type: String
+	},
+	cargaHoraria: {
+		type: String
 	}
 }, { collection: 'saberesCollection' });
 
