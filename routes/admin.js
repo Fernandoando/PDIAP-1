@@ -33,7 +33,7 @@ router.put('/setPresencaProjetos', ensureAuthenticated, (req, res) => {
   let myArray = req.body;
   for (i in myArray) {
     projetoSchema.findOneAndUpdate({"integrantes._id": myArray[i]},
-      {"$set": {"integrantes.presenca": true}}, {new:true},
+      {"$set": {"integrantes.$.presenca": true}}, {new:true},
       (err, doc) => {
         if (err) throw err;
       }
