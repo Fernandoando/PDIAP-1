@@ -6,6 +6,7 @@
 	.controller('saberesCtrl', function($scope, $rootScope, $window, $location, $mdDialog, adminAPI) {
 
 		$scope.escolas = [];
+		$scope.saberesArray = [];
 
 		adminAPI.getEscolasSaberes()
 		.success(function(data) {
@@ -25,7 +26,16 @@
 			});
 		});
 
+		adminAPI.getTodosSaberes()
+		.success(function(saberes) {
+			$scope.saberesArray = saberes;
+		})
+		.error(function(status) {
+			console.log(status);
+		});
+
 		$scope.registrarSaberes = function(saberes) {
+			console.log(saberes);
 			adminAPI.saveSaberesDocentes(saberes)
 			.success(function(data) {
 				if (data === 'success') {
@@ -76,8 +86,84 @@
 				showConfirmDialog();
 				console.log(status);
 			});
-			console.log(saberes);
 		};
+
+		$scope.idPresentes = [];
+		$scope.count = 0;
+		$scope.contador = function(check,idSab) {
+			if (check) {
+				$scope.count--;
+				let index = $scope.idPresentes.indexOf(idSab);
+				$scope.idPresentes.splice(index, 1);
+			}
+			else {
+				$scope.count++;
+				$scope.idPresentes.push(idSab);
+			}
+			console.log($scope.idPresentes);
+		}
+
+		$scope.update = function() {
+			let ids = $scope.idPresentes;
+			adminAPI.putSetAprovados(ids)
+			.success(function(data, status) {
+				$scope.selectedo = false;
+				let showAlert = function(ev) {
+					$mdDialog.show(
+						$mdDialog.alert()
+						.parent(angular.element(document.querySelector('#popupContainer')))
+						.clickOutsideToClose(false)
+						.textContent('Projeto(s) atualizado(s) com sucesso!')
+						.ok('OK')
+						.targetEvent(ev)
+					).then(function(result) {
+						$window.location.reload();
+					}, function() {});
+				};
+				showAlert();
+				console.log(status);
+				console.log(data);
+			})
+			.error(function(status) {
+				console.log('Error: '+status);
+			});
+		}
+
+		$scope.remove = function() {
+			let ids = $scope.idPresentes;
+			adminAPI.putUnsetAprovados(ids)
+			.success(function(data, status) {
+				$scope.selectedo = false;
+				let showAlert = function(ev) {
+					$mdDialog.show(
+						$mdDialog.alert()
+						.parent(angular.element(document.querySelector('#popupContainer')))
+						.clickOutsideToClose(false)
+						.textContent('Projeto(s) atualizado(s) com sucesso!')
+						.ok('OK')
+						.targetEvent(ev)
+					).then(function(result) {
+						$window.location.reload();
+					}, function() {});
+				};
+				showAlert();
+				console.log(status);
+				console.log(data);
+			})
+			.error(function(status) {
+				console.log('Error: '+status);
+			});
+		}
+
+		$scope.ordenacao = ['nome','tipo'];
+		$scope.ordenarPor = function(campo) {
+			$scope.ordenacao = campo;
+		}
+
+		$scope.query = 'nome';
+		$scope.setBusca = function(campo) {
+			$scope.query = campo;
+		}
 
 		let resetForm = function() {
 			delete $scope.saberes;

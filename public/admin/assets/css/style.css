@@ -188,6 +188,54 @@ md-input-container.md-prompt-input-container .md-input,
 .login-content md-input-container .md-input {
   color: #1b5e20 !important;
 }
+md-input-container.md-default-theme .md-input,
+md-input-container .md-input {
+  border-color: rgba(0,0,0,0.3);
+  padding-left: 3px;
+  margin: 3px 0 !important;
+}
+md-input-container .md-input.ng-invalid.ng-dirty {
+  border-width: 0 0 1px 0;
+}
+md-input-container.md-input-focused .md-input {
+  border-width: 0 0 2px 0 !important;
+}
+md-input-container { margin: 10px 0 0 0 !important; }
+md-input-container.md-default-theme label,
+md-input-container label {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+md-input-container.md-default-theme:not(.md-input-invalid).md-input-has-value label,
+md-input-container:not(.md-input-invalid).md-input-has-value label {
+  color: #43a047 !important;
+}
+md-input-container.md-default-theme.md-input-invalid .md-input:not(.ng-dirty),
+md-input-container.md-input-invalid .md-input:not(.ng-dirty) {
+  border-color: rgba(0,0,0,0.3);
+}
+md-input-container.md-default-theme.md-input-invalid:not(.md-input-has-value).md-input-focused .md-input,
+md-input-container.md-input-invalid:not(.md-input-has-value).md-input-focused .md-input {
+  border-color: #43a047 !important;
+}
+md-input-container.md-default-theme.md-input-invalid:not(.md-input-focused).ng-dirty .md-input,
+md-input-container.md-input-invalid:not(.md-input-focused).ng-dirty .md-input {
+  border-color: #dd2c00 !important;
+}
+md-input-container.md-default-theme.md-input-invalid.md-input-focused label,
+md-input-container.md-input-invalid.md-input-focused label,
+md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused label,
+md-input-container:not(.md-input-invalid).md-input-focused label {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-input,
+md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+  border-color: #43a047 !important;
+}
+.message-error {
+  font-size: 12.5px !important;
+  padding: 5px !important;
+  color: #dd2c00;
+}
 .login-content {
   width: 310px !important;
 }
@@ -242,6 +290,10 @@ md-input-container.md-prompt-input-container .md-input,
   width: 70%;
   border-radius: 50px;
 }
+.btnCustom1 {
+  width: 90%;
+  border-radius: 50px;
+}
 .search-field md-autocomplete, .search-field input {
   /*height: 2.4em !important;*/
   background: rgba(255,255,255,0.1);
@@ -292,6 +344,9 @@ md-progress-circular.loading-default .md-inner .md-right .md-half-circle {
 .md-button.md-success-toast-theme:not([disabled]):hover {
   background: transparent !important;
 }
+md-list-item.hide-hover:hover {
+  background: transparent !important;
+}
 md-list {
   padding: 0 !important;
 }
@@ -308,6 +363,10 @@ md-list-item.md-3-line > .md-no-style {
 md-list-item.md-no-proxy,
 md-list-item .md-no-style {
   padding: 5px 45px !important;
+}
+.config-admin md-list-item.md-no-proxy,
+.config-admin md-list-item .md-no-style {
+  padding: 0 26px !important;
 }
 md-list-item .md-secondary-container, md-list-item .md-secondary,
 md-list-item .md-list-item-inner .md-secondary-container,
@@ -330,6 +389,36 @@ md-list-item.list-header.md-no-proxy,
 md-list-item.list-header .md-no-style {
   padding: 0 45px !important;
 }
+
+.config-admin md-list-item p.md-subheader {
+  text-transform: uppercase;
+  background: transparent;
+}
+.submenu {
+  font-size: 15px !important;
+  font-weight: 100;
+}
+md-list-item:hover {
+  background: rgba(158,158,158,0.2);
+}
+md-list-item > div.md-primary > md-icon:not(.md-avatar-icon),
+md-list-item > div.md-secondary > md-icon:not(.md-avatar-icon),
+md-list-item > md-icon:first-child:not(.md-avatar-icon),
+md-list-item > md-icon.md-secondary:not(.md-avatar-icon),
+md-list-item .md-list-item-inner > div.md-primary > md-icon:not(.md-avatar-icon),
+md-list-item .md-list-item-inner > div.md-secondary > md-icon:not(.md-avatar-icon),
+md-list-item .md-list-item-inner > md-icon:first-child:not(.md-avatar-icon),
+md-list-item .md-list-item-inner > md-icon.md-secondary:not(.md-avatar-icon) {
+  margin-top: 12px !important;
+}
+md-list-item > md-icon:first-child:not(.md-avatar-icon),
+md-list-item .md-list-item-inner > md-icon:first-child:not(.md-avatar-icon) {
+  margin-right: 20px !important;
+  margin-left: 0 !important;
+}
+md-list-item .md-button {
+  margin: 0 !important;
+}
 .selecionado {
   background: #e9e9e9;
 }
@@ -343,7 +432,7 @@ md-list-item.list-header .md-no-style {
   background: #4caf50;
 }
 .red {
-  background: #f44336;
+  background: #f44336 !important;
 }
 .grey {
   background: #757575;
@@ -356,6 +445,13 @@ md-list-item.list-header .md-no-style {
 }
 .details {
   width: auto !important;
+  top: initial !important;
+  margin-top: 0 !important;
+  background: #f5f5f5 !important;
+  overflow: hidden !important;
+}
+.details2 {
+  width: 80% !important;
   top: initial !important;
   margin-top: 0 !important;
   background: #f5f5f5 !important;
@@ -384,6 +480,15 @@ md-select .md-select-value {
   padding-top: 0 !important;
   padding-bottom: 1px !important;
   color: rgba(0,0,0,0.5);
+}
+.selectCustom1 md-select.md-default-theme .md-select-value,
+.selectCustom1 md-select .md-select-value {
+  max-width: 100% !important;
+  border-bottom-color: rgba(0,0,0,0.3) !important;
+  padding-left: 3px !important;
+  padding-top: 0 !important;
+  padding-bottom: 1px !important;
+  color: rgba(0,0,0,0.87) !important;
 }
 /*md-select.md-default-theme:not([disabled]):focus .md-select-value,
 md-select:not([disabled]):focus .md-select-value {
@@ -444,6 +549,32 @@ md-tabs md-ink-bar {
 }
 md-select-menu md-content, md-select-menu {
   max-height: none !important;
+}
+.md-toolbar-tools {
+  padding: 0 26px !important;
+}
+.list-header:hover {
+  background: rgba(128,128,128,0.07) !important;
+}
+.loader {
+  position: absolute;
+  z-index: 9;
+  width: calc(100% - 260px);
+  height: 100%;
+  background: rgba(218, 218, 218, 0.95);
+}
+.toolbar-hr {
+  margin-bottom: 1.4em !important;
+}
+.btnEntrar2 {
+  padding: 2px 25px;
+  border-radius: 70px;
+}
+md-toast.md-success-toast-theme .md-toast-content {
+  background: #4caf50 !important;
+}
+md-toast.md-failed-toast-theme .md-toast-content {
+  background: #f44336 !important;
 }
 
 @media only screen and (max-width: 959px) and (min-width: 0) and (orientation: landscape) {

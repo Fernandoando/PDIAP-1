@@ -30,15 +30,28 @@ function ensureAuthenticated(req, res, next) {
 }
 
 router.put('/setPresencaProjetos', ensureAuthenticated, (req, res) => {
-  let myArray = req.body;
-  for (i in myArray) {
-    projetoSchema.findOneAndUpdate({"integrantes._id": myArray[i]},
+  let myArray0 = req.body.integrantesPresentes;
+  let myArray1 = req.body.integrantesAusentes;
+
+  for (var i = 0; i < myArray0.length; i++) {
+    let id_integ = myArray0[i];
+    projetoSchema.findOneAndUpdate({"integrantes._id": id_integ},
       {"$set": {"integrantes.$.presenca": true}}, {new:true},
       (err, doc) => {
         if (err) throw err;
       }
     );
   }
+  for (var i = 0; i < myArray1.length; i++) {
+    let id_integ = myArray1[i];
+    projetoSchema.findOneAndUpdate({"integrantes._id": id_integ},
+      {"$unset": {"integrantes.$.presenca": true}}, {new:true},
+      (err, doc) => {
+        if (err) throw err;
+      }
+    );
+  }
+  res.send('success');
 });
 
 router.put('/setPresencaSaberes', ensureAuthenticated, (req, res) => {
@@ -468,7 +481,7 @@ router.post('/emailUpload', (req, res) => {
 // router.get('/testando', (req, res) => {
 //   projetoSchema.find({"participa":true,"categoria":"Ensino Médio, Técnico e Superior"}).sort({"eixo":1, "nomeProjeto":1}).exec((err, usr) => {
 //     if (err) throw err;
-//     let echu = "";  
+//     let echu = "";
 //     let cont = 0;
 //     for (let user in usr) {
 //       // cont ++;
@@ -515,7 +528,7 @@ router.get('/camisetas', (req, res) => {
   // saberesSchema.find({}).sort({"nome":1}).exec((err, usr) => {Fundamental II (6º ao 9º anos)
     projetoSchema.find({"participa":true,"categoria":"Ensino Médio, Técnico e Superior"}).sort({"eixo":1, "nomeProjeto":1}).exec((err, usr) => {
     if (err) throw err;
-    let echu = "";  
+    let echu = "";
     let cont = 0;
     for (let user in usr) {
       // cont ++;
@@ -601,7 +614,7 @@ router.post('/pdf2', (req, res) => {
     }
 
     // for (let usr in user) {
-      
+
 
     //   if (user[usr].eixo !== echu) {
     //     echu = user[usr].eixo;
@@ -623,17 +636,17 @@ router.post('/pdf2', (req, res) => {
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+user[usr].integrantes[1].nome+ " | Tam. "+user[usr].integrantes[1].tamCamiseta);
     //   }
-      
+
     //   if (user[usr].integrantes[2].tipo !== undefined){
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+user[usr].integrantes[2].nome+ " | Tam. "+user[usr].integrantes[2].tamCamiseta);
     //   }
-      
+
     //   if (user[usr].integrantes[3].tipo !== undefined){
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+user[usr].integrantes[3].nome+ " | Tam. "+user[usr].integrantes[3].tamCamiseta);
     //   }
-      
+
     //   if (user[usr].integrantes[4].tipo !== undefined){
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+user[usr].integrantes[4].nome+ " | Tam. "+user[usr].integrantes[4].tamCamiseta);
@@ -641,7 +654,7 @@ router.post('/pdf2', (req, res) => {
     // }
     myDoc.end();
   });
-  
+
   res.sendStatus(200);
 });
 
@@ -682,17 +695,17 @@ router.post('/pdf2', (req, res) => {
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+usr.integrantes[1].nome+ " | Tam. "+usr.integrantes[1].tamCamiseta);
     //   }
-      
+
     //   if (usr.integrantes[2].tipo !== undefined){
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+usr.integrantes[2].nome+ " | Tam. "+usr.integrantes[2].tamCamiseta);
     //   }
-      
+
     //   if (usr.integrantes[3].tipo !== undefined){
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+usr.integrantes[3].nome+ " | Tam. "+usr.integrantes[3].tamCamiseta);
     //   }
-      
+
     //   if (usr.integrantes[4].tipo !== undefined){
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+usr.integrantes[4].nome+ " | Tam. "+usr.integrantes[4].tamCamiseta);
@@ -736,17 +749,17 @@ router.post('/pdf2', (req, res) => {
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+usr.integrantes[1].nome+ " | Tam. "+usr.integrantes[1].tamCamiseta);
     //   }
-      
+
     //   if (usr.integrantes[2].tipo !== undefined){
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+usr.integrantes[2].nome+ " | Tam. "+usr.integrantes[2].tamCamiseta);
     //   }
-      
+
     //   if (usr.integrantes[3].tipo !== undefined){
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+usr.integrantes[3].nome+ " | Tam. "+usr.integrantes[3].tamCamiseta);
     //   }
-      
+
     //   if (usr.integrantes[4].tipo !== undefined){
     //     myDoc.moveDown(0.5)
     //     myDoc.text("     Nome: "+usr.integrantes[4].nome+ " | Tam. "+usr.integrantes[4].tamCamiseta);
@@ -779,8 +792,8 @@ router.get('/qtd', (req, res) => {
     if (err) throw err;
     for (let user in usr) {
       if (usr[user].hospedagem !== undefined && usr[user].hospedagem !== "") {
-        
-        
+
+
 
         if (usr[user].participa == true) {
           if (usr[user].cidade !== "Venâncio Aires") {
@@ -958,9 +971,9 @@ router.get('/qtd2', (req, res) => {
 
 router.post('/pdf3', (req, res) => {
 
-  
+
   var myDoc = new pdf;
-  
+
   myDoc.pipe(fs.createWriteStream('aprovadosCharqueadas.pdf'));
 
   // myDoc
@@ -1008,14 +1021,14 @@ router.post('/pdf3', (req, res) => {
       .text("Projeto: "+usr.nomeProjeto)
       .moveDown(0.5)
       // .text("Orientador(es): ");
-      
+
       if (usr.integrantes[0].tipo === "Orientador"){
         myDoc.text("Orientador: "+usr.integrantes[0].nome);
       }
       if (usr.integrantes[1].tipo === "Orientador"){
         myDoc.moveDown(0.5)
         .text("Orientador: "+usr.integrantes[1].nome);
-      }     
+      }
     });
 
     projetoSchema.find({"aprovado":true,"categoria":"Fundamental II (6º ao 9º anos)", "cidade":"Charqueadas"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
@@ -1037,7 +1050,7 @@ router.post('/pdf3', (req, res) => {
         .text("Eixo: "+usr.eixo, {align: 'center'})
       }
 
-    
+
       //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
       myDoc.fontSize(12)
       .moveDown(1)
@@ -1046,14 +1059,14 @@ router.post('/pdf3', (req, res) => {
       // .text("Eixo: "+usr.eixo)
       // .moveDown(0.5)
       // .text("Orientador(es): ");
-      
+
       if (usr.integrantes[0].tipo === "Orientador"){
         myDoc.text("Orientador: "+usr.integrantes[0].nome);
       }
       if (usr.integrantes[1].tipo === "Orientador"){
         myDoc.moveDown(0.5)
         .text("Orientador: "+usr.integrantes[1].nome);
-      }     
+      }
     });
 
       projetoSchema.find({"aprovado":true, "categoria":"Ensino Médio, Técnico e Superior", "cidade":"Charqueadas"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
@@ -1082,16 +1095,16 @@ router.post('/pdf3', (req, res) => {
         .text("Eixo: "+usr.eixo, {align: 'center'})
       }
 
-        
+
       //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
       myDoc.fontSize(12)
       .moveDown(1)
       .text("Projeto: "+usr.nomeProjeto)
-      
+
       // .text("Eixo: "+usr.eixo)
       // .moveDown(0.5)
       // .text("Orientador(es): ");
-      
+
       if (usr.integrantes[0].tipo === "Orientador"){
         myDoc.moveDown(0.5)
         .text("Orientador: "+usr.integrantes[0].nome);
@@ -1108,16 +1121,16 @@ router.post('/pdf3', (req, res) => {
       if (usr.integrantes[3].tipo === "Aluno"){
         myDoc.moveDown(0.5)
         .text("Aluno: "+usr.integrantes[3].nome);
-      }  
+      }
       if (usr.integrantes[4].tipo === "Aluno"){
         myDoc.moveDown(0.5)
         .text("Aluno: "+usr.integrantes[4].nome);
-      } 
+      }
 
     });
         res.sendStatus(200);
         myDoc.end();
-      }); 
+      });
     });
   });
 });

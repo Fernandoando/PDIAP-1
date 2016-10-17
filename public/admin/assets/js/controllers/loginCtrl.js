@@ -15,11 +15,12 @@
 				$scope.message = 'Sucesso';
 				$scope.erro = false;
 				$mdDialog.hide();
-				// if (data.username === 'admin2') {
-				// 	$window.location.href="http://www.movaci.com.br/admin/master/home";
-				// } else {
+				// username para logar em /admin/master
+				if (username === 'admin2') {
+					$window.location.href="http://www.movaci.com.br/admin/master/home";
+				} else {
 					$window.location.href="http://www.movaci.com.br/admin/home";
-				// }
+				}
 			})
 			.error(function() { // authentication failed
 				$rootScope.logado = false;

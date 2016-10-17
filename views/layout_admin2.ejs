@@ -21,6 +21,15 @@
   <ui-view></ui-view>
 
   <!--JavaScript-->
+  <script>
+  function resize_iframe() {
+    var height=window.innerWidth;//Firefox
+    if (document.body.clientHeight) {
+      height=document.body.clientHeight;//IE
+    }
+    document.getElementById("glu").style.height=parseInt(height-document.getElementById("glu").offsetTop-8)+"px";
+  }
+  </script>
   <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
   <script type="text/javascript" src="/bower_components/angular-material/angular-material.js"></script>
   <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -40,6 +49,8 @@
   <script type="text/javascript" src="admin/assets/js/controllers/adminSaberesCtrl.js"></script>
   <script type="text/javascript" src="admin/assets/js/controllers/loginCtrl.js"></script>
   <script type="text/javascript" src="admin/assets/js/controllers/confirmacaoCtrl.js"></script>
+  <script type="text/javascript" src="admin/assets/js/controllers/saberesCtrl.js"></script>
+  <script type="text/javascript" src="admin/assets/js/controllers/projetosCtrl.js"></script>
   <script type="text/javascript" src="admin/assets/js/directives/usSpinner.js"></script>
   <script type="text/javascript" src="admin/assets/js/interceptors/authInterceptor.js"></script>
 </body>

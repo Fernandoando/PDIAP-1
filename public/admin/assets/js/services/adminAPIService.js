@@ -91,6 +91,27 @@
 			return $http(request);
 		};
 
+		let _saveAvaliador = function(avaliador) {
+			const request = {
+				url: '/avaliadores/registro',
+				method: 'POST',
+				data: avaliador
+			}
+			return $http(request);
+		};
+
+		let _putPresencaProjetos = function(arrayIntegrantesPresentes,arrayIntegrantesAusentes) {
+			const request = {
+				url: '/admin/setPresencaProjetos',
+				method: 'PUT',
+				data: {
+					integrantesPresentes: arrayIntegrantesPresentes,
+					integrantesAusentes: arrayIntegrantesAusentes
+				}
+			}
+			return $http(request);
+		};
+
 		return {
 			postLoginAdmin: _postLoginAdmin,
 			getTodosProjetos: _getTodosProjetos,
@@ -100,7 +121,9 @@
 			putUnsetAprovados: _putUnsetAprovados,
 			postConfirmacao: _postConfirmacao,
 			getEscolasSaberes: _getEscolasSaberes,
-			saveSaberesDocentes: _saveSaberesDocentes
+			saveSaberesDocentes: _saveSaberesDocentes,
+			saveAvaliador: _saveAvaliador,
+			putPresencaProjetos: _putPresencaProjetos
 		};
 	});
 })();

@@ -7,6 +7,7 @@ router.all('/', function(req, res, next) {
   res.render('layout2.ejs');
 });
 
+// administração interna ==================================================== //
 router.get('/admin', function(req, res, next) {
   res.render('layout_admin.ejs');
 });
@@ -15,21 +16,16 @@ router.get('/admin/home', function(req, res, next) {
   res.render('layout_admin2.ejs');
 });
 
-// router.get('/admin/master', function(req, res, next) {
-//   res.render('layout_master.ejs');
-// });
-//
-// router.get('/admin/master/home', function(req, res, next) {
-//   res.render('layout_admin2.ejs');
-// });
+router.get('/admin/master', function(req, res, next) {
+  res.render('layout_master.ejs');
+});
 
-router.get('/projetos/confirma/*', function(req, res, next) {
+router.all('/admin/master/home/*', function(req, res, next) {
   res.render('layout_admin2.ejs');
 });
 
-// para a hora do evento ==================================================== //
-router.get('/admin/saberes-docentes/inscricao', function(req, res, next) {
-  res.render('correriaMOVACI.ejs');
+router.all('/admin/master/home', function(req, res, next) {
+  res.render('layout_admin2.ejs');
 });
 // ========================================================================== //
 
@@ -44,6 +40,11 @@ router.get('/ranking/2016', function(req, res, next) {
   res.render('layout_avaliacao2.ejs');
 });
 // ========================================================================== //
+
+router.get('/projetos/confirma/*', function(req, res, next) {
+  res.render('layout_admin2.ejs');
+});
+
 router.get('/regulamento', function(req, res, next) {
   res.render('layout3.ejs');
 });

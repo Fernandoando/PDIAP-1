@@ -28,15 +28,6 @@
 		};
 
 		$stateProvider
-		// .state('admin', {
-		// 	url: "/admin",
-		// 	views: {
-		// 		'': {
-		// 			templateUrl: '/admin/views/login.html',
-		// 			controller: 'loginCtrl'
-		// 		}
-		// 	}
-		// })
 		.state('home', {
 			url: "/admin/home",
 			views: {
@@ -52,24 +43,59 @@
 				loggedin: checkLoggedin
 			}
 		})
-		// .state('master', {
-		// 	url: "/admin/master/home",
-		// 	templateUrl: 'admin/views/admin.html',
-		// 	controller: 'adminCtrl',
-		// 	resolve: {
-		// 		loggedin: checkLoggedin
-		// 	}
-		// })
+		.state('master', {
+			url: "/admin/master/home",
+			views: {
+				'': {
+					templateUrl: '/admin/views/admin.html',
+					controller: 'adminCtrl'
+				},
+				'@master': { templateUrl: '/admin/views/saberes-iframe.html' }
+			},
+			resolve: {
+				loggedin: checkLoggedin
+			}
+		})
+		.state('master.seleciona-aprovados', {
+			url: "/seleciona-aprovados",
+			templateUrl: 'admin/views/aprovados.html',
+			controller: 'projetosCtrl'
+		})
+		.state('master.inscricao-saberes', {
+			url: "/saberes-docentes/inscricao",
+			templateUrl: 'admin/views/saberes-iframe.html',
+			controller: 'saberesCtrl'
+		})
+		.state('master.presenca-saberes', {
+			url: "/saberes-docentes/presenca",
+			templateUrl: 'admin/views/presenca_saberes.html',
+			controller: 'saberesCtrl'
+		})
+		.state('master.inscricao-avaliadores', {
+			url: "/avaliadores/inscricao",
+			templateUrl: 'admin/views/avaliadores-iframe.html',
+			controller: 'saberesCtrl'
+		})
+		.state('master.presenca-projetos', {
+			url: "/projetos/presenca",
+			templateUrl: 'admin/views/presenca_projetos.html',
+			controller: 'projetosCtrl'
+		})
+		.state('master.cadastro-palestras', {
+			url: "/cadastro-palestras",
+			templateUrl: 'admin/views/cadastro-palestras.html',
+			controller: 'saberesCtrl'
+		})
+		.state('master.cadastro-oficinas', {
+			url: "/cadastro-oficinas",
+			templateUrl: 'admin/views/cadastro-oficinas.html',
+			controller: 'oficinasCtrl'
+		})
 		.state('confirmando', {
 			url: "/projetos/confirma/:idProjeto/:situacao",
 			templateUrl: 'admin/views/confirmando.html',
 			controller: 'confirmacaoCtrl'
 		})
-		// .state('saberes', {
-		// 	url: "/admin/saberes-docentes/inscricao",
-		// 	templateUrl: 'admin/views/saberes.html',
-		// 	controller: 'saberesCtrl'
-		// })
 		.state('404', {
 			url: "/404",
 			templateUrl: 'admin/views/404.html'
