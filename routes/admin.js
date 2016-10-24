@@ -5,9 +5,12 @@ const express = require('express')
 , passport = require('passport')
 , LocalStrategy = require('passport-local').Strategy
 , Admin = require('../controllers/admin-controller')
+, Oficina = require('../controllers/oficina-controller')
+, Saberes = require('../controllers/saberes-controller')
 , session = require('express-session')
 , adminSchema = require('../models/admin-schema')
 , projetoSchema = require('../models/projeto-schema')
+, oficinaSchema = require('../models/oficina-schema')
 , crypto = require('crypto')
 , bcrypt = require('bcryptjs')
 , nodemailer = require('nodemailer')
@@ -28,6 +31,122 @@ function ensureAuthenticated(req, res, next) {
     res.send('0');
   }
 }
+
+function splita(arg){
+  if (arg !== undefined) {
+    let data = arg.replace(/([-.() ])/g,'');
+    return data;
+  }
+}
+
+function miPermiso(role) {
+  return function(req, res, next) {
+    if(req.user.permissao === role)
+      next();
+    else res.send(403);
+  }
+}
+
+// COLOCAR ensureAuthenticated NAS ROTAS DAS OFICINAS
+
+router.all('/*', ensureAuthenticated, miPermiso("2"));
+
+router.post('/criarOficina', (req, res) => {
+  let newOficina = new oficinaSchema({
+     nome:req.body.nome
+    ,cargaHoraria:req.body.cargaHoraria
+    ,responsavel:req.body.responsavel
+    ,data:req.body.data
+    ,local:req.body.local
+  });
+
+  Oficina.createOficina(newOficina, (callback) => {});
+  res.send('sucess');
+});
+
+router.put('/insereParticipanteOficina', (req, res) => {
+  let myArray = req.body
+  ,   nomeOficina = req.body.nomeOficina;
+
+  myArray.forEach(function (value, i) {
+    let newParticipante = ({
+      nome: value.nome
+      ,cpf: splita(value.cpf)
+      ,email: value.email
+    });
+
+    oficinaSchema.findOne({nome: nomeOficina}, (err, usr) => {
+      if (err) throw err;
+      usr.participantes.push(newParticipante);
+      usr.save((err, usr) => {
+        if (err) throw err;
+      });
+    });
+  });
+  res.send('sucess');
+});
+
+router.get('/mostraOficina', (req, res) => {
+  oficinaSchema.find((err, usr) => {
+    if (err) throw err;
+    res.send(usr);
+  });
+});
+
+// COLOCAR ensureAuthenticated NAS ROTAS DAS OFICINAS E SABERES
+
+router.post('/registroSaberes', (req, res) => {
+  let newSaberes = new SaberesSchema({
+    tipo: req.body.tipo,
+    nome: req.body.nome,
+    email: req.body.email,
+    cpf: splita(req.body.cpf),
+    telefone: splita(req.body.telefone),
+    escola: req.body.escola,
+    resumo: req.body.resumo
+  });
+  Saberes.createSaberes(newSaberes, (callback) => {});
+  res.send('success');
+});
+
+router.post('/criarAtividadeSaberes', (req, res) => {
+  let newOficina = new oficinaSchema({
+     nome:req.body.nome
+    ,cargaHoraria:req.body.cargaHoraria
+    ,responsavel:req.body.responsavel
+    ,data:req.body.data
+    ,local:req.body.local
+  });
+
+  Oficina.createOficina(newOficina, (callback) => {});
+  res.send('sucess');
+});
+
+router.put('/setPresencaSaberes', (req, res) => {
+  let id = req.body.id;
+  let cargaHoraria = req.body.cargaHoraria;
+  for (i in myArray) {
+    saberesSchema.findOneAndUpdate({"_id": id},
+      {"$set": {"cargaHoraria": cargaHoraria}}, {new:true},
+      (err, doc) => {
+        if (err) throw err;
+      }
+    );
+  }
+});
+
+// COLOCAR ensureAuthenticated NAS ROTAS DAS OFICINAS E SABERES
+
+router.post('/registro', (req, res) => {
+  let newAdmin = new adminSchema({
+      username: req.body.username,
+      password: req.body.password,
+      permissao: 2
+    });
+    Admin.createAdmin(newAdmin);
+    //res.redirect('/admin/login');
+  res.send('OK');
+});
 
 router.put('/setPresencaProjetos', ensureAuthenticated, (req, res) => {
   let myArray0 = req.body.integrantesPresentes;
@@ -52,29 +171,6 @@ router.put('/setPresencaProjetos', ensureAuthenticated, (req, res) => {
     );
   }
   res.send('success');
-});
-
-router.put('/setPresencaSaberes', ensureAuthenticated, (req, res) => {
-  let id = req.body.id;
-  let cargaHoraria = req.body.cargaHoraria;
-  for (i in myArray) {
-    saberesSchema.findOneAndUpdate({"_id": id},
-      {"$set": {"cargaHoraria": cargaHoraria}}, {new:true},
-      (err, doc) => {
-        if (err) throw err;
-      }
-    );
-  }
-});
-
-router.post('/registro', (req, res) => {
-	let newAdmin = new adminSchema({
-      username: req.body.username,
-      password: req.body.password
-    });
-    Admin.createAdmin(newAdmin);
-    //res.redirect('/admin/login');
-	res.send('OK');
 });
 
 /*passport.use('admin',new LocalStrategy((username, password, done) => {
@@ -204,7 +300,7 @@ router.post('/aprovadosemail', (req, res) => {
         port: 587,
         auth: {
           user: "no-reply4@movaci.com.br",
-          pass: "*mo12va45ci78!"
+          pass: "mvc2016"
         },
         getSocket: true
   }));
@@ -279,7 +375,7 @@ router.post('/reprovadosemail', (req, res) => {
         port: 587,
         auth: {
           user: "contato@movaci.com.br",
-          pass: "*mo12va45ci78!"
+          pass: "mvc2016"
         },
         getSocket: true
   }));
@@ -432,7 +528,7 @@ router.post('/emailUpload', (req, res) => {
         port: 587,
         auth: {
           user: "no-reply5@movaci.com.br",
-          pass: "*mo12va45ci78!"
+          pass: "mvc2016"
         },
         getSocket: true
   }));
@@ -773,366 +869,366 @@ router.post('/pdf2', (req, res) => {
 
 // });
 
-router.get('/qtd', (req, res) => {
-  let contador = 0;
-  var myDoc = new pdf;
+// router.get('/qtd', (req, res) => {
+//   let contador = 0;
+//   var myDoc = new pdf;
 
-  myDoc.pipe(fs.createWriteStream('hospedagem.pdf'));
+//   myDoc.pipe(fs.createWriteStream('hospedagem.pdf'));
 
-  myDoc
-  .image('public/assets/images/logo.png',210, 55, { fit: [200,350] })
-  .moveDown(3)
-  .text("Projetos aprovados com necessidade de hospedagem", {align: 'center'})
-  .moveDown(1)
-  .fontSize(12)
-  .text("30 projetos; 58 integrantes", {align: 'center'})
-  .moveDown(2)
+//   myDoc
+//   .image('public/assets/images/logo.png',210, 55, { fit: [200,350] })
+//   .moveDown(3)
+//   .text("Projetos aprovados com necessidade de hospedagem", {align: 'center'})
+//   .moveDown(1)
+//   .fontSize(12)
+//   .text("30 projetos; 58 integrantes", {align: 'center'})
+//   .moveDown(2)
 
-  projetoSchema.find({'aprovado': true}).sort({"categoria":1, "eixo":1, "numInscricao":1}).exec((err, usr) => {
-    if (err) throw err;
-    for (let user in usr) {
-      if (usr[user].hospedagem !== undefined && usr[user].hospedagem !== "") {
-
-
-
-        if (usr[user].participa == true) {
-          if (usr[user].cidade !== "Venâncio Aires") {
-            contador++;
-            console.log('\n\n'+contador+'\n'+usr[user].nomeProjeto);
-            myDoc
-            .fontSize(14)
-            // .moveDown(5)
-            .text(usr[user].nomeProjeto, {align: 'left'})
-            .fontSize(12)
-            .moveDown(0.5)
-            .text("   Categoria: "+usr[user].categoria, {align: 'left'})
-            .moveDown(0.5)
-            .text("   Necessitam hospedagem: "+usr[user].hospedagem, {align: 'left'})
-            .moveDown(0.5)
-            .text("   Confirmação participação: sim", {align: 'left'})
-            .moveDown(0.5)
-
-            .text("   Escola: "+usr[user].nomeEscola, {align: 'left'})
-            .moveDown(0.5)
-            .text("   Orientador: "+usr[user].integrantes[0].nome, {align: 'left'})
-            .moveDown(0.5)
-            .text("       Telefone: "+usr[user].integrantes[0].telefone, {align: 'left'})
-            .moveDown(2)
-          }
-        } else if (usr[user].participa == undefined) {
-          if (usr[user].cidade !== "Venâncio Aires") {
-            contador++;
-            console.log('\n\n'+contador+'\n'+usr[user].nomeProjeto);
-            myDoc
-            .fontSize(14)
-            // .moveDown(5)
-            .text(usr[user].nomeProjeto, {align: 'left'})
-            .fontSize(12)
-            .moveDown(0.5)
-            .text("   Categoria: "+usr[user].categoria, {align: 'left'})
-            .moveDown(0.5)
-            .text("   Necessitam hospedagem: "+usr[user].hospedagem, {align: 'left'})
-            .moveDown(0.5)
-            .text("   Confirmação participação: não", {align: 'left'})
-            .moveDown(0.5)
-
-            .text("   Escola: "+usr[user].nomeEscola, {align: 'left'})
-            .moveDown(0.5)
-            .text("   Orientador: "+usr[user].integrantes[0].nome, {align: 'left'})
-            .moveDown(0.5)
-            .text("       Telefone: "+usr[user].integrantes[0].telefone, {align: 'left'})
-            .moveDown(2)
-          }
-
-        }
-
-      } else {
-        // contador ++;
-        // console.log(usr[user].nomeProjeto);
-        // console.log("NAN");
-          // console.log(contador);
-
-          // myDoc
-          //   // .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-          //   .fontSize(12)
-          //   // .moveDown(5)
-          //   .text("Projeto: "+usr[user].nomeProjeto, {align: 'left'})
-          //   .fontSize(16)
-          //   .moveDown(5)
-          //   .text("Projetos com necessidade de hospedagem", {align: 'center'})
-          //   .fontSize(14)
-          //   .moveDown(2.5)
-          //   .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
-          //   .moveDown(1)
-
-          // }
-        }
-        // console.log(contador);
-      };
-      res.sendStatus(200);
-      myDoc.end();
-    });
-});
-
-router.get('/pdfSaberes', (req, res) => {
-  var myDoc = new pdf;
-  let cont = 0;
-  myDoc.pipe(fs.createWriteStream('participantesSaberes.pdf'));
-  myDoc
-    .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-    .fontSize(16)
-    .moveDown(4)
-    .text("Participantes do V Seminário Saberes Docentes", {align: 'center'})
-    .moveDown(2)
-    .fontSize(12)
-
-  // saberesSchema.find({}).sort({"nome":1}).exec((err, usr) => {
-    saberesSchema.find({}).sort({"nome":1}).exec((err, usr) => {
-    if (err) throw err;
-    for (let user in usr) {
-      cont ++;
-      console.log(usr[user].nome);
-      myDoc
-        .text(cont+". "+usr[user].nome)
-        .moveDown(1.5)
-    }
-    myDoc.end();
-  });
-  res.sendStatus(200);
-});
-
-router.get('/qtd2', (req, res) => {
-  let contador = 0;
-  var myDoc = new pdf;
-
-  myDoc.pipe(fs.createWriteStream('naoConfirmaram.pdf'));
-
-  myDoc
-    .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-    .moveDown(5)
-    .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
-    .fontSize(16)
-    .moveDown(2)
-    .text("Projetos aprovados que necessitam confirmar presença", {align: 'center'})
-    .moveDown(2)
-    .fontSize(12)
-    .text("Total: 41 projetos", {align: 'right'})
-    .moveDown(.5)
-    .fontSize(12)
-    .text("19/09/16", {align: 'right'})
-
-  projetoSchema.find({"aprovado": true, "participa": undefined}).sort({"categoria":1, "eixo":1, "numInscricao":1}).exec((err, usr) => {
-    if (err) throw err;
-    for (let user in usr) {
-      contador ++
-
-      myDoc
-        .text("Projeto: "+usr[user].nomeProjeto+ "     N°: "+usr[user].numInscricao)
-        .moveDown(0.7)
-        .text("Categoria: "+usr[user].categoria)
-        .moveDown(1)
-        .text("Eixo: "+usr[user].eixo)
-        .moveDown(1)
-        .text("Escola: "+usr[user].nomeEscola)
-        .moveDown(1)
-        .text("    Nome orientador: "+usr[user].integrantes[0].nome)
-        .moveDown(1)
-        .text("    Telefone orientador: "+usr[user].integrantes[0].telefone)
-        .moveDown(1)
-        .text("    E-mail orientador: "+usr[user].integrantes[0].email)
-        .moveDown(3)
-      // if (usr[user].hospedagem == undefined) {
-
-      // } else {
-      //   contador ++;
-      //   console.log(usr[user].nomeProjeto);
-      //     // console.log(contador);
-
-      //     // myDoc
-      //     //   // .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-      //     //   .fontSize(12)
-      //     //   // .moveDown(5)
-      //     //   .text("Projeto: "+usr[user].nomeProjeto, {align: 'left'})
-      //     //   .fontSize(16)
-      //     //   .moveDown(5)
-      //     //   .text("Projetos com necessidade de hospedagem", {align: 'center'})
-      //     //   .fontSize(14)
-      //     //   .moveDown(2.5)
-      //     //   .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
-      //     //   .moveDown(1)
-
-      //     }
-        }
-        console.log(contador);
-        myDoc.end();
-      });
-  res.sendStatus(200);
-});
-
-router.post('/pdf3', (req, res) => {
+//   projetoSchema.find({'aprovado': true}).sort({"categoria":1, "eixo":1, "numInscricao":1}).exec((err, usr) => {
+//     if (err) throw err;
+//     for (let user in usr) {
+//       if (usr[user].hospedagem !== undefined && usr[user].hospedagem !== "") {
 
 
-  var myDoc = new pdf;
 
-  myDoc.pipe(fs.createWriteStream('aprovadosCharqueadas.pdf'));
+//         if (usr[user].participa == true) {
+//           if (usr[user].cidade !== "Venâncio Aires") {
+//             contador++;
+//             console.log('\n\n'+contador+'\n'+usr[user].nomeProjeto);
+//             myDoc
+//             .fontSize(14)
+//             // .moveDown(5)
+//             .text(usr[user].nomeProjeto, {align: 'left'})
+//             .fontSize(12)
+//             .moveDown(0.5)
+//             .text("   Categoria: "+usr[user].categoria, {align: 'left'})
+//             .moveDown(0.5)
+//             .text("   Necessitam hospedagem: "+usr[user].hospedagem, {align: 'left'})
+//             .moveDown(0.5)
+//             .text("   Confirmação participação: sim", {align: 'left'})
+//             .moveDown(0.5)
 
-  // myDoc
-  //     .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-  //     .fontSize(20)
-  //     .moveDown(5)
-  //     .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
-  //     .fontSize(16)
-  //     .moveDown(5)
-  //     .text("Projetos selecionados", {align: 'center'})
-  //     .fontSize(12)
-  //     .moveDown(2.5)
-  //     .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
+//             .text("   Escola: "+usr[user].nomeEscola, {align: 'left'})
+//             .moveDown(0.5)
+//             .text("   Orientador: "+usr[user].integrantes[0].nome, {align: 'left'})
+//             .moveDown(0.5)
+//             .text("       Telefone: "+usr[user].integrantes[0].telefone, {align: 'left'})
+//             .moveDown(2)
+//           }
+//         } else if (usr[user].participa == undefined) {
+//           if (usr[user].cidade !== "Venâncio Aires") {
+//             contador++;
+//             console.log('\n\n'+contador+'\n'+usr[user].nomeProjeto);
+//             myDoc
+//             .fontSize(14)
+//             // .moveDown(5)
+//             .text(usr[user].nomeProjeto, {align: 'left'})
+//             .fontSize(12)
+//             .moveDown(0.5)
+//             .text("   Categoria: "+usr[user].categoria, {align: 'left'})
+//             .moveDown(0.5)
+//             .text("   Necessitam hospedagem: "+usr[user].hospedagem, {align: 'left'})
+//             .moveDown(0.5)
+//             .text("   Confirmação participação: não", {align: 'left'})
+//             .moveDown(0.5)
 
-  projetoSchema.find({"aprovado":true,"categoria":"Fundamental I (1º ao 5º anos)", "cidade":"Charqueadas"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
-    if (err) throw err;
-    myDoc
-    .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-    .fontSize(20)
-    .moveDown(5)
-    .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
-    .fontSize(16)
-    .moveDown(5)
-    .text("Projetos selecionados - campus Charqueadas", {align: 'center'})
-    .fontSize(14)
-    .moveDown(2.5)
-    .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
-    .moveDown(1)
+//             .text("   Escola: "+usr[user].nomeEscola, {align: 'left'})
+//             .moveDown(0.5)
+//             .text("   Orientador: "+usr[user].integrantes[0].nome, {align: 'left'})
+//             .moveDown(0.5)
+//             .text("       Telefone: "+usr[user].integrantes[0].telefone, {align: 'left'})
+//             .moveDown(2)
+//           }
 
-    var echu = "";
+//         }
 
-    users.forEach(function(usr){
+//       } else {
+//         // contador ++;
+//         // console.log(usr[user].nomeProjeto);
+//         // console.log("NAN");
+//           // console.log(contador);
 
-      myDoc.moveDown(1)
-      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//           // myDoc
+//           //   // .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//           //   .fontSize(12)
+//           //   // .moveDown(5)
+//           //   .text("Projeto: "+usr[user].nomeProjeto, {align: 'left'})
+//           //   .fontSize(16)
+//           //   .moveDown(5)
+//           //   .text("Projetos com necessidade de hospedagem", {align: 'center'})
+//           //   .fontSize(14)
+//           //   .moveDown(2.5)
+//           //   .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
+//           //   .moveDown(1)
 
-      if (usr.eixo !== echu) {
-        echu = usr.eixo;
-        myDoc.fontSize(14)
-        .text("Eixo: "+usr.eixo, {align: 'center'})
-      }
+//           // }
+//         }
+//         // console.log(contador);
+//       };
+//       res.sendStatus(200);
+//       myDoc.end();
+//     });
+// });
 
-      myDoc.fontSize(12)
-      .moveDown(1)
-      .text("Projeto: "+usr.nomeProjeto)
-      .moveDown(0.5)
-      // .text("Orientador(es): ");
+// router.get('/pdfSaberes', (req, res) => {
+//   var myDoc = new pdf;
+//   let cont = 0;
+//   myDoc.pipe(fs.createWriteStream('participantesSaberes.pdf'));
+//   myDoc
+//     .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//     .fontSize(16)
+//     .moveDown(4)
+//     .text("Participantes do V Seminário Saberes Docentes", {align: 'center'})
+//     .moveDown(2)
+//     .fontSize(12)
 
-      if (usr.integrantes[0].tipo === "Orientador"){
-        myDoc.text("Orientador: "+usr.integrantes[0].nome);
-      }
-      if (usr.integrantes[1].tipo === "Orientador"){
-        myDoc.moveDown(0.5)
-        .text("Orientador: "+usr.integrantes[1].nome);
-      }
-    });
+//   // saberesSchema.find({}).sort({"nome":1}).exec((err, usr) => {
+//     saberesSchema.find({}).sort({"nome":1}).exec((err, usr) => {
+//     if (err) throw err;
+//     for (let user in usr) {
+//       cont ++;
+//       console.log(usr[user].nome);
+//       myDoc
+//         .text(cont+". "+usr[user].nome)
+//         .moveDown(1.5)
+//     }
+//     myDoc.end();
+//   });
+//   res.sendStatus(200);
+// });
 
-    projetoSchema.find({"aprovado":true,"categoria":"Fundamental II (6º ao 9º anos)", "cidade":"Charqueadas"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
-      if (err) throw err;
-      myDoc.addPage()
-      .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-      .moveDown(5)
-      .text("FUNDAMENTAL II (6° ao 9° ano)", {align: 'center'})
-      .moveDown(1)
+// router.get('/qtd2', (req, res) => {
+//   let contador = 0;
+//   var myDoc = new pdf;
 
-      users.forEach(function(usr){
+//   myDoc.pipe(fs.createWriteStream('naoConfirmaram.pdf'));
 
-      myDoc.moveDown(1.5)
-      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//   myDoc
+//     .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//     .moveDown(5)
+//     .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
+//     .fontSize(16)
+//     .moveDown(2)
+//     .text("Projetos aprovados que necessitam confirmar presença", {align: 'center'})
+//     .moveDown(2)
+//     .fontSize(12)
+//     .text("Total: 41 projetos", {align: 'right'})
+//     .moveDown(.5)
+//     .fontSize(12)
+//     .text("19/09/16", {align: 'right'})
 
-      if (usr.eixo !== echu) {
-        echu = usr.eixo;
-        myDoc.fontSize(14)
-        .text("Eixo: "+usr.eixo, {align: 'center'})
-      }
+//   projetoSchema.find({"aprovado": true, "participa": undefined}).sort({"categoria":1, "eixo":1, "numInscricao":1}).exec((err, usr) => {
+//     if (err) throw err;
+//     for (let user in usr) {
+//       contador ++
+
+//       myDoc
+//         .text("Projeto: "+usr[user].nomeProjeto+ "     N°: "+usr[user].numInscricao)
+//         .moveDown(0.7)
+//         .text("Categoria: "+usr[user].categoria)
+//         .moveDown(1)
+//         .text("Eixo: "+usr[user].eixo)
+//         .moveDown(1)
+//         .text("Escola: "+usr[user].nomeEscola)
+//         .moveDown(1)
+//         .text("    Nome orientador: "+usr[user].integrantes[0].nome)
+//         .moveDown(1)
+//         .text("    Telefone orientador: "+usr[user].integrantes[0].telefone)
+//         .moveDown(1)
+//         .text("    E-mail orientador: "+usr[user].integrantes[0].email)
+//         .moveDown(3)
+//       // if (usr[user].hospedagem == undefined) {
+
+//       // } else {
+//       //   contador ++;
+//       //   console.log(usr[user].nomeProjeto);
+//       //     // console.log(contador);
+
+//       //     // myDoc
+//       //     //   // .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//       //     //   .fontSize(12)
+//       //     //   // .moveDown(5)
+//       //     //   .text("Projeto: "+usr[user].nomeProjeto, {align: 'left'})
+//       //     //   .fontSize(16)
+//       //     //   .moveDown(5)
+//       //     //   .text("Projetos com necessidade de hospedagem", {align: 'center'})
+//       //     //   .fontSize(14)
+//       //     //   .moveDown(2.5)
+//       //     //   .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
+//       //     //   .moveDown(1)
+
+//       //     }
+//         }
+//         console.log(contador);
+//         myDoc.end();
+//       });
+//   res.sendStatus(200);
+// });
+
+// router.post('/pdf3', (req, res) => {
 
 
-      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-      myDoc.fontSize(12)
-      .moveDown(1)
-      .text("Projeto: "+usr.nomeProjeto)
-      .moveDown(0.5)
-      // .text("Eixo: "+usr.eixo)
-      // .moveDown(0.5)
-      // .text("Orientador(es): ");
+//   var myDoc = new pdf;
 
-      if (usr.integrantes[0].tipo === "Orientador"){
-        myDoc.text("Orientador: "+usr.integrantes[0].nome);
-      }
-      if (usr.integrantes[1].tipo === "Orientador"){
-        myDoc.moveDown(0.5)
-        .text("Orientador: "+usr.integrantes[1].nome);
-      }
-    });
+//   myDoc.pipe(fs.createWriteStream('aprovadosCharqueadas.pdf'));
 
-      projetoSchema.find({"aprovado":true, "categoria":"Ensino Médio, Técnico e Superior", "cidade":"Charqueadas"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
-        if (err) throw err;
-        myDoc.addPage()
-        .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-        .fontSize(20)
-        .moveDown(3)
-        .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
-        .fontSize(16)
-        .moveDown(3)
-        .text("Projetos selecionados - campus Charqueadas", {align: 'center'})
-        .fontSize(14)
-        .moveDown(2.5)
-        .text("ENSINO MÉDIO, TÉNICO E SUPERIOR", {align: 'center'})
-        .moveDown(1)
+//   // myDoc
+//   //     .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//   //     .fontSize(20)
+//   //     .moveDown(5)
+//   //     .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
+//   //     .fontSize(16)
+//   //     .moveDown(5)
+//   //     .text("Projetos selecionados", {align: 'center'})
+//   //     .fontSize(12)
+//   //     .moveDown(2.5)
+//   //     .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
 
-        users.forEach(function(usr){
+//   projetoSchema.find({"aprovado":true,"categoria":"Fundamental I (1º ao 5º anos)", "cidade":"Charqueadas"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
+//     if (err) throw err;
+//     myDoc
+//     .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//     .fontSize(20)
+//     .moveDown(5)
+//     .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
+//     .fontSize(16)
+//     .moveDown(5)
+//     .text("Projetos selecionados - campus Charqueadas", {align: 'center'})
+//     .fontSize(14)
+//     .moveDown(2.5)
+//     .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
+//     .moveDown(1)
 
-      myDoc.moveDown(1.5)
-      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//     var echu = "";
 
-      if (usr.eixo !== echu) {
-        echu = usr.eixo;
-        myDoc.fontSize(14)
-        .text("Eixo: "+usr.eixo, {align: 'center'})
-      }
+//     users.forEach(function(usr){
+
+//       myDoc.moveDown(1)
+//       //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+
+//       if (usr.eixo !== echu) {
+//         echu = usr.eixo;
+//         myDoc.fontSize(14)
+//         .text("Eixo: "+usr.eixo, {align: 'center'})
+//       }
+
+//       myDoc.fontSize(12)
+//       .moveDown(1)
+//       .text("Projeto: "+usr.nomeProjeto)
+//       .moveDown(0.5)
+//       // .text("Orientador(es): ");
+
+//       if (usr.integrantes[0].tipo === "Orientador"){
+//         myDoc.text("Orientador: "+usr.integrantes[0].nome);
+//       }
+//       if (usr.integrantes[1].tipo === "Orientador"){
+//         myDoc.moveDown(0.5)
+//         .text("Orientador: "+usr.integrantes[1].nome);
+//       }
+//     });
+
+//     projetoSchema.find({"aprovado":true,"categoria":"Fundamental II (6º ao 9º anos)", "cidade":"Charqueadas"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
+//       if (err) throw err;
+//       myDoc.addPage()
+//       .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//       .moveDown(5)
+//       .text("FUNDAMENTAL II (6° ao 9° ano)", {align: 'center'})
+//       .moveDown(1)
+
+//       users.forEach(function(usr){
+
+//       myDoc.moveDown(1.5)
+//       //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+
+//       if (usr.eixo !== echu) {
+//         echu = usr.eixo;
+//         myDoc.fontSize(14)
+//         .text("Eixo: "+usr.eixo, {align: 'center'})
+//       }
 
 
-      //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-      myDoc.fontSize(12)
-      .moveDown(1)
-      .text("Projeto: "+usr.nomeProjeto)
+//       //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//       myDoc.fontSize(12)
+//       .moveDown(1)
+//       .text("Projeto: "+usr.nomeProjeto)
+//       .moveDown(0.5)
+//       // .text("Eixo: "+usr.eixo)
+//       // .moveDown(0.5)
+//       // .text("Orientador(es): ");
 
-      // .text("Eixo: "+usr.eixo)
-      // .moveDown(0.5)
-      // .text("Orientador(es): ");
+//       if (usr.integrantes[0].tipo === "Orientador"){
+//         myDoc.text("Orientador: "+usr.integrantes[0].nome);
+//       }
+//       if (usr.integrantes[1].tipo === "Orientador"){
+//         myDoc.moveDown(0.5)
+//         .text("Orientador: "+usr.integrantes[1].nome);
+//       }
+//     });
 
-      if (usr.integrantes[0].tipo === "Orientador"){
-        myDoc.moveDown(0.5)
-        .text("Orientador: "+usr.integrantes[0].nome);
-      }
-      if (usr.integrantes[1].tipo === "Orientador"){
-        myDoc.moveDown(0.5)
-        .text("Orientador: "+usr.integrantes[1].nome);
-      }
+//       projetoSchema.find({"aprovado":true, "categoria":"Ensino Médio, Técnico e Superior", "cidade":"Charqueadas"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
+//         if (err) throw err;
+//         myDoc.addPage()
+//         .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//         .fontSize(20)
+//         .moveDown(3)
+//         .text("V Mostra Venâncio-airense de Cultura e Inovação", {align: 'center'})
+//         .fontSize(16)
+//         .moveDown(3)
+//         .text("Projetos selecionados - campus Charqueadas", {align: 'center'})
+//         .fontSize(14)
+//         .moveDown(2.5)
+//         .text("ENSINO MÉDIO, TÉNICO E SUPERIOR", {align: 'center'})
+//         .moveDown(1)
 
-      if (usr.integrantes[2].tipo === "Aluno"){
-        myDoc.moveDown(0.5)
-        .text("Aluno: "+usr.integrantes[2].nome);
-      }
-      if (usr.integrantes[3].tipo === "Aluno"){
-        myDoc.moveDown(0.5)
-        .text("Aluno: "+usr.integrantes[3].nome);
-      }
-      if (usr.integrantes[4].tipo === "Aluno"){
-        myDoc.moveDown(0.5)
-        .text("Aluno: "+usr.integrantes[4].nome);
-      }
+//         users.forEach(function(usr){
 
-    });
-        res.sendStatus(200);
-        myDoc.end();
-      });
-    });
-  });
-});
+//       myDoc.moveDown(1.5)
+//       //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+
+//       if (usr.eixo !== echu) {
+//         echu = usr.eixo;
+//         myDoc.fontSize(14)
+//         .text("Eixo: "+usr.eixo, {align: 'center'})
+//       }
+
+
+//       //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//       myDoc.fontSize(12)
+//       .moveDown(1)
+//       .text("Projeto: "+usr.nomeProjeto)
+
+//       // .text("Eixo: "+usr.eixo)
+//       // .moveDown(0.5)
+//       // .text("Orientador(es): ");
+
+//       if (usr.integrantes[0].tipo === "Orientador"){
+//         myDoc.moveDown(0.5)
+//         .text("Orientador: "+usr.integrantes[0].nome);
+//       }
+//       if (usr.integrantes[1].tipo === "Orientador"){
+//         myDoc.moveDown(0.5)
+//         .text("Orientador: "+usr.integrantes[1].nome);
+//       }
+
+//       if (usr.integrantes[2].tipo === "Aluno"){
+//         myDoc.moveDown(0.5)
+//         .text("Aluno: "+usr.integrantes[2].nome);
+//       }
+//       if (usr.integrantes[3].tipo === "Aluno"){
+//         myDoc.moveDown(0.5)
+//         .text("Aluno: "+usr.integrantes[3].nome);
+//       }
+//       if (usr.integrantes[4].tipo === "Aluno"){
+//         myDoc.moveDown(0.5)
+//         .text("Aluno: "+usr.integrantes[4].nome);
+//       }
+
+//     });
+//         res.sendStatus(200);
+//         myDoc.end();
+//       });
+//     });
+//   });
+// });
 
 module.exports = router;
