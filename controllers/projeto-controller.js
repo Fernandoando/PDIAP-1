@@ -2,7 +2,8 @@
 
 const mongoose = require('mongoose')
 ,	bcrypt = require('bcryptjs')
-,	Projeto = require('../models/projeto-schema');
+,	Projeto = require('../models/projeto-schema')
+,	Admin = require('../models/admin-schema');
 
 module.exports.createProject = (newProject, callback) => {
 	bcrypt.genSalt(10, (err, salt) => {
@@ -35,6 +36,31 @@ module.exports.getProjectByUsername = (username, callback) => {
 	let query = {username: username};
 	Projeto.findOne(query, callback);
 }
+
+
+
+// NOVO LOGIN ÚNICO
+
+module.exports.getLoginProjeto = (username, user) => {
+	let query = {username: username};
+	Projeto.findOne(query, user);
+}
+
+module.exports.getLoginAdmin = (username, user) => {
+	let query = {username: username};
+	Admin.findOne(query, user);
+}
+
+module.exports.compareLogin = (candidatePassword, hash, callback) => {
+	bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+    	if(err) throw err;
+    	callback(null, isMatch);
+	});
+}
+
+// NOVO LOGIN ÚNICO
+
+
 
 module.exports.getProjects = (req, res) => {
   const query = getQuery(req);

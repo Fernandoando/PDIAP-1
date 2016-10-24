@@ -95,7 +95,6 @@ function splita(arg){
 
 const formidable = require('formidable'),
 fs = require('fs');
-// ensureAuthenticated
 
 // function home(res){
 //     res.end("<html><body><form action='/upload' method='post' enctype='multipart/form-data'><input name='image' type='file'/><input type='submit'></form></body></html>");
@@ -338,6 +337,7 @@ router.post('/upload', ensureAuthenticated, function(req, res){
           email: req.body.email,
           username: req.body.username,
           password: req.body.password,
+          permissao: 1,
           createdAt: Date.now(),
           resumo: req.body.resumo,
           palavraChave: req.body.palavraChave
@@ -402,74 +402,117 @@ router.post('/upload', ensureAuthenticated, function(req, res){
       //res.send('OK');
     });
 
-    passport.use('user', new LocalStrategy( function(username, password, done) {
-      Projeto.getProjectByUsername(username, (err, user) => {
-        if(err) throw err;
-        if(!user){
-          return done(null, false, {message: 'Unknown User'});
-        }
-        Projeto.comparePassword(password, user.password, (err, isMatch) => {
-          if(err) throw err;
-          if(isMatch){
-            return done(null, user);
-          } else {
-            return done(null, false, {message: 'Invalid password'});
-          }
-        });
-      });
-    }));
 
-    passport.use('admin', new LocalStrategy( function(username, password, done) {
-      Admin.getAdminByUsername(username, (err, admin) => {
-        if(err) throw err;
-        if(!admin){
-          return done(null, false, {message: 'Unknown admin'});
-        }
-        Admin.comparePassword(password, admin.password, (err, isMatch) => {
-          if(err) throw err;
-          if(isMatch){
-            return done(null, admin);
-          } else {
-            return done(null, false, {message: 'Invalid password'});
-          }
-        });
-      });
-    }));
+  // NOVO LOGIN ÚNICO
+  
+    // passport.use('unico', new LocalStrategy(function(username, password, done) {
+    //   Projeto.getLoginProjeto(username, (err, user) => {
+    //     if(err) throw err;
+    //     if(!user){
+    //       console.log('entrou no !user '+username);
+    //       Projeto.getLoginAdmin(username, (err, user) => {
+    //         console.log('entrou no !user de novo');
+    //         if(err) throw err;
+    //         if(!user){
+    //           console.log('entrou no !user de novo de novo');
+    //           return done(null, false, {message: 'Unknown User'});
+    //         }
+    //         Projeto.compareLogin(password, user.password, (err, isMatch) => {
+    //           console.log('OLHA, deu certo e agora vai comparar: '+password);
+    //           if(err) throw err;
+    //           if(isMatch){
+    //             return done(null, user);
+    //             console.log("Pior que deu");
+    //           } else {
+    //             console.log("Pior que não deu");
+    //             return done(null, false, {message: 'Invalid password'});
+    //           }
+    //         }); 
+    //       });
+    //       // return done(null, false, {message: 'Unknown User'});
+    //     } else {
+    //       Projeto.compareLogin(password, user.password, (err, isMatch) => {
+    //         if(err) throw err;
+    //         if(isMatch){
+    //           return done(null, user);
+    //         } else {
+    //           return done(null, false, {message: 'Invalid password'});
+    //         }
+    //       }); 
+    //     }
+    //   });
+    // }));
 
-    passport.use('admin2', new LocalStrategy( function(username, password, done) {
-      Admin2.getAdminByUsername(username, (err, admin) => {
-        if(err) throw err;
-        if(!admin){
-          return done(null, false, {message: 'Unknown admin'});
-        }
-        Admin2.comparePassword(password, admin.password, (err, isMatch) => {
-          if(err) throw err;
-          if(isMatch){
-            return done(null, admin);
-          } else {
-            return done(null, false, {message: 'Invalid password'});
-          }
-        });
-      });
-    }));
+  // NOVO LOGIN ÚNICO
 
-    passport.serializeUser(function(user, done){
-      done(null, user.id);
-    });
+    // passport.use('user', new LocalStrategy( function(username, password, done) {
+    //   Projeto.getProjectByUsername(username, (err, user) => {
+    //     if(err) throw err;
+    //     if(!user){
+    //       return done(null, false, {message: 'Unknown User'});
+    //     }
+    //     Projeto.comparePassword(password, user.password, (err, isMatch) => {
+    //       if(err) throw err;
+    //       if(isMatch){
+    //         return done(null, user);
+    //       } else {
+    //         return done(null, false, {message: 'Invalid password'});
+    //       }
+    //     });
+    //   });
+    // }));
 
-    passport.deserializeUser(function(id, done){
-      adminSchema.findById(id, function(err, user){
-        if(err) done(err);
-        if(user){
-          done(null, user);
-        } else {
-          ProjetoSchema.findById(id, function(err, user){
-            if(err) done(err);
-            done(null, user);
-          })
-        }
-      });
-    });
+    // passport.use('admin', new LocalStrategy( function(username, password, done) {
+    //   Admin.getAdminByUsername(username, (err, admin) => {
+    //     if(err) throw err;
+    //     if(!admin){
+    //       return done(null, false, {message: 'Unknown admin'});
+    //     }
+    //     Admin.comparePassword(password, admin.password, (err, isMatch) => {
+    //       if(err) throw err;
+    //       if(isMatch){
+    //         return done(null, admin);
+    //       } else {
+    //         return done(null, false, {message: 'Invalid password'});
+    //       }
+    //     });
+    //   });
+    // }));
+
+    // passport.use('admin2', new LocalStrategy( function(username, password, done) {
+    //   Admin2.getAdminByUsername(username, (err, admin) => {
+    //     if(err) throw err;
+    //     if(!admin){
+    //       return done(null, false, {message: 'Unknown admin'});
+    //     }
+    //     Admin2.comparePassword(password, admin.password, (err, isMatch) => {
+    //       if(err) throw err;
+    //       if(isMatch){
+    //         return done(null, admin);
+    //       } else {
+    //         return done(null, false, {message: 'Invalid password'});
+    //       }
+    //     });
+    //   });
+    // }));
+
+    // passport.serializeUser(function(user, done){
+    //   done(null, user.id);
+    // });
+
+    // passport.deserializeUser(function(id, done){
+    //   adminSchema.findById(id, function(err, user){
+    //     if(err) done(err);
+    //     if(user){
+    //       done(null, user);
+    //     } else {
+    //       ProjetoSchema.findById(id, function(err, user){
+    //         if(err) done(err);
+    //         done(null, user);
+    //       })
+    //     }
+    //   });
+    // });
 
 
 
@@ -507,15 +550,29 @@ done(err, user);
 });
 });*/
 
-router.post('/login', passport.authenticate('user'), (req, res) => {
-  res.send(req.user);
-  //res.redirect('/home');
-  //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
-});
+function miPermiso(role) {
+  return function(req, res, next) {
+    if(req.user.permissao === role)
+      next();
+    else res.send(403);
+  }
+}
 
-router.get('/home', ensureAuthenticated, (req, res) => {
-  res.send(req.user);
-});
+// router.post('/login', passport.authenticate('unico'), (req, res) => {
+//   // res.send(req.session);
+//   res.redirect('/home');
+//   //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
+// });
+
+// router.get('/home', ensureAuthenticated, miPermiso("2"), (req, res) => {
+//   res.redirect('/admin');
+//   // res.send(req.user);
+// });
+
+// router.get('/home', ensureAuthenticated, miPermiso("1"), (req, res) => {
+//   // res.send(req.user);
+//   res.redirect('/projeto');
+// });
 
 /*router.post('/login/admin', passport.authenticate('admin'), (req, res) => {
 res.send(req.user);
@@ -523,12 +580,12 @@ res.send(req.user);
 //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
 });*/
 
-router.post('/logout', (req, res) => {
-  req.logout();
-  //res.sendStatus(200);
-  //res.clearCookie('userid');
-  res.redirect('/');
-});
+// router.post('/logout', (req, res) => {
+//   req.logout();
+//   //res.sendStatus(200);
+//   //res.clearCookie('userid');
+//   res.redirect('/');
+// });
 
 router.get('/update', (req, res) => {
   res.send('Página de update');

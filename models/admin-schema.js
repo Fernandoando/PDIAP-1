@@ -9,6 +9,9 @@ const AdminSchema = new Schema({
 	},
 	password: {
 		type: String
+	},
+	permissao: {
+		type: String
 	}
 }, { collection: 'adminCollection' });
 

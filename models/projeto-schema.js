@@ -42,6 +42,7 @@ const ProjetoSchema = new Schema({
 	username: {type: String, required: true, unique: true, uniqueCaseInsensitive:true},
 	email: {type: String, required: true},
 	password: {type: String, required: true},
+	permissao: {type: String},
 	aprovado: {type: Boolean},
 	participa: {type: Boolean},
 	participa_updated: {type: Boolean},
