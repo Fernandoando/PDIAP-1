@@ -47,8 +47,6 @@ function miPermiso(role) {
   }
 }
 
-// COLOCAR ensureAuthenticated NAS ROTAS DAS OFICINAS
-
 router.all('/*', ensureAuthenticated, miPermiso("2"));
 
 router.post('/criarOficina', (req, res) => {
@@ -64,28 +62,6 @@ router.post('/criarOficina', (req, res) => {
   res.send('sucess');
 });
 
-router.put('/insereParticipanteOficina', (req, res) => {
-  let myArray = req.body
-  ,   nomeOficina = req.body.nomeOficina;
-
-  myArray.forEach(function (value, i) {
-    let newParticipante = ({
-      nome: value.nome
-      ,cpf: splita(value.cpf)
-      ,email: value.email
-    });
-
-    oficinaSchema.findOne({nome: nomeOficina}, (err, usr) => {
-      if (err) throw err;
-      usr.participantes.push(newParticipante);
-      usr.save((err, usr) => {
-        if (err) throw err;
-      });
-    });
-  });
-  res.send('sucess');
-});
-
 router.get('/mostraOficina', (req, res) => {
   oficinaSchema.find((err, usr) => {
     if (err) throw err;
@@ -93,7 +69,29 @@ router.get('/mostraOficina', (req, res) => {
   });
 });
 
-// COLOCAR ensureAuthenticated NAS ROTAS DAS OFICINAS E SABERES
+// ====================================
+
+// router.put('/insereParticipanteOficina', (req, res) => {
+//   let myArray = req.body
+//   ,   nomeOficina = req.body.nomeOficina;
+
+//   myArray.forEach(function (value, i) {
+//     let newParticipante = ({
+//       nome: value.nome
+//       ,cpf: splita(value.cpf)
+//       ,email: value.email
+//     });
+
+//     oficinaSchema.findOne({nome: nomeOficina}, (err, usr) => {
+//       if (err) throw err;
+//       usr.participantes.push(newParticipante);
+//       usr.save((err, usr) => {
+//         if (err) throw err;
+//       });
+//     });
+//   });
+//   res.send('sucess');
+// });
 
 router.post('/registroSaberes', (req, res) => {
   let newSaberes = new SaberesSchema({
@@ -109,44 +107,44 @@ router.post('/registroSaberes', (req, res) => {
   res.send('success');
 });
 
-router.post('/criarAtividadeSaberes', (req, res) => {
-  let newOficina = new oficinaSchema({
-     nome:req.body.nome
-    ,cargaHoraria:req.body.cargaHoraria
-    ,responsavel:req.body.responsavel
-    ,data:req.body.data
-    ,local:req.body.local
-  });
+// router.post('/criarAtividadeSaberes', (req, res) => {
+//   let newOficina = new oficinaSchema({
+//      nome:req.body.nome
+//     ,cargaHoraria:req.body.cargaHoraria
+//     ,responsavel:req.body.responsavel
+//     ,data:req.body.data
+//     ,local:req.body.local
+//   });
 
-  Oficina.createOficina(newOficina, (callback) => {});
-  res.send('sucess');
-});
+//   Oficina.createOficina(newOficina, (callback) => {});
+//   res.send('sucess');
+// });
 
-router.put('/setPresencaSaberes', (req, res) => {
-  let id = req.body.id;
-  let cargaHoraria = req.body.cargaHoraria;
-  for (i in myArray) {
-    saberesSchema.findOneAndUpdate({"_id": id},
-      {"$set": {"cargaHoraria": cargaHoraria}}, {new:true},
-      (err, doc) => {
-        if (err) throw err;
-      }
-    );
-  }
-});
+// router.put('/setPresencaSaberes', (req, res) => {
+//   let id = req.body.id;
+//   let cargaHoraria = req.body.cargaHoraria;
+//   for (i in myArray) {
+//     saberesSchema.findOneAndUpdate({"_id": id},
+//       {"$set": {"cargaHoraria": cargaHoraria}}, {new:true},
+//       (err, doc) => {
+//         if (err) throw err;
+//       }
+//     );
+//   }
+// });
 
-// COLOCAR ensureAuthenticated NAS ROTAS DAS OFICINAS E SABERES
+// ====================================
 
-router.post('/registro', (req, res) => {
-  let newAdmin = new adminSchema({
-      username: req.body.username,
-      password: req.body.password,
-      permissao: 2
-    });
-    Admin.createAdmin(newAdmin);
-    //res.redirect('/admin/login');
-  res.send('OK');
-});
+// router.post('/registro', (req, res) => {
+//   let newAdmin = new adminSchema({
+//       username: req.body.username,
+//       password: req.body.password,
+//       permissao: 2
+//     });
+//     Admin.createAdmin(newAdmin);
+//     //res.redirect('/admin/login');
+//   res.send('OK');
+// });
 
 router.put('/setPresencaProjetos', ensureAuthenticated, (req, res) => {
   let myArray0 = req.body.integrantesPresentes;
@@ -173,69 +171,25 @@ router.put('/setPresencaProjetos', ensureAuthenticated, (req, res) => {
   res.send('success');
 });
 
-/*passport.use('admin',new LocalStrategy((username, password, done) => {
-  Admin.getAdminByUsername(username, (err, admin) => {
-    if(err) throw err;
-    if(!admin){
-      return done(null, false, {message: 'Unknown admin'});
-    }
-    Admin.comparePassword(password, admin.password, (err, isMatch) => {
-      if(err) throw err;
-      if(isMatch){
-        return done(null, admin);
-      } else {
-        return done(null, false, {message: 'Invalid password'});
-      }
-    });
-  });
-}));
-
-passport.serializeUser((sponsor, done) => {
-  done(null, sponsor.id);
-});
-
-passport.deserializeUser((id, done) => {
-  Admin.getAdminById(id, (err, sponsor) => {
-    done(err, sponsor);
-  });
-});
-*/
-router.post('/login', passport.authenticate('admin'), (req, res) => {
-  res.send(req.user);
-  //res.redirect('/home');
-  //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
-});
-
-router.get('/loggedin', ensureAuthenticated, (req, res) => {
-  res.send('success');
-});
-
-router.get('/projetos', ensureAuthenticated, (req, res) => {
+router.get('/projetos', (req, res) => {
   projetoSchema.find((err, usr) => {
   	if (err) throw err;
   	res.send(usr);
   });
 });
 
-router.post('/avaliador', ensureAuthenticated, (req, res) => {
+router.post('/avaliador', (req, res) => {
   avaliadorSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
   });
 });
 
-router.post('/saberes', ensureAuthenticated, (req, res) => {
+router.post('/saberes', (req, res) => {
   saberesSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
   });
-});
-
-router.post('/logout', (req, res) => {
-  req.logout();
-  //res.sendStatus(200);
-  //res.clearCookie('userid');
-  res.redirect('/');
 });
 
 router.put('/upgreice', ensureAuthenticated, (req, res) => {
@@ -570,8 +524,8 @@ router.post('/emailUpload', (req, res) => {
       });
       res.send('ok');
     });
-};
-});
+    };
+  });
 });
 
 // router.get('/testando', (req, res) => {

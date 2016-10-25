@@ -17,6 +17,8 @@ const express = require('express')
 , path = require('path')
 , EmailTemplate = require('email-templates').EmailTemplate
 , wellknown = require('nodemailer-wellknown')
+, formidable = require('formidable')
+, fs = require('fs')
 , async = require('async');
 
 function testaEmail(req, res) {
@@ -86,470 +88,6 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
-function splita(arg){
-  if (arg !== undefined) {
-    let data = arg.replace(/([-.() ])/g,'');
-    return data;
-  }
-}
-
-const formidable = require('formidable'),
-fs = require('fs');
-
-// function home(res){
-//     res.end("<html><body><form action='/upload' method='post' enctype='multipart/form-data'><input name='image' type='file'/><input type='submit'></form></body></html>");
-// }
-
-router.get('/upload', function(req, res, next) {
-  res.render('view-teste.ejs');
-})
-
-router.post('/upload', ensureAuthenticated, function(req, res){
-  var form = new formidable.IncomingForm();
-  form.parse(req, function(err, fields, files) {
-    res.writeHead(200, {'content-type': 'text/plain'});
-    res.write('received upload:\n\n');
-    var image = files.file
-    , image_upload_path_old = image.path
-    , image_upload_path_new = '../pdiap/public/relatorios/'
-    , image_upload_name = req.user.numInscricao+'.pdf'
-    , image_upload_path_name = image_upload_path_new + image_upload_name
-    ;
-
-    if (fs.existsSync(image_upload_path_new)) {
-      fs.rename(
-        image_upload_path_old,
-        image_upload_path_name,
-        function (err) {
-          if (err) {
-            console.log('Err: ', err);
-            res.end('Deu merda na hora de mover a imagem!');
-          }
-          var msg = 'Relatório ' + image_upload_name + ' salv0 em: ' + image_upload_path_new;
-          console.log(msg);
-          res.end(msg);
-        });
-      }
-      else {
-        fs.mkdir(image_upload_path_new, function (err) {
-          if (err) {
-            console.log('Err: ', err);
-            res.end('Deu merda na hora de criar o diretório!');
-          }
-          fs.rename(
-            image_upload_path_old,
-            image_upload_path_name,
-            function(err) {
-              var msg = 'Relatório ' + image_upload_name + ' salv0 em: ' + image_upload_path_new;
-              console.log(msg);
-              res.end(msg);
-            });
-          });
-        }
-
-        let dadosRelatorio = {
-          name: files.file.name,
-          size: files.file.size,
-          uploadAt: files.file.lastModifiedDate
-        };
-
-        if (err) throw err;
-        ProjetoSchema.findOne({'_id': req.user.id}, (err, usr) => {
-          usr.relatorio2 = dadosRelatorio;
-          usr.save((err, usr) => {
-            if (err) throw err;
-          })
-        });
-      });
-    });
-
-    router.post('/confirma/:id/:situacao', (req, res) => {
-      if(req.params.id !== '') {
-        ProjetoSchema.findOne({'_id': req.params.id}, (err, usr) => {
-          if(err){
-            console.log("Something wrong when updating data!");
-          } else {
-            if (usr.aprovado === true && usr.participa_updated === undefined) {
-              // var templatesDir = path.resolve(__dirname, '..', 'templates');
-              // var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));
-              // Prepare nodemailer transport object
-              // const transport = nodemailer.createTransport(smtpTransport({
-              //   host: 'smtp.zoho.com',
-              //   port: 587,
-              //   auth: {
-              //     user: "contato@movaci.com.br",
-              //     pass: "mvc2016"
-              //   }
-              // }));
-
-              if(req.params.situacao === '2456') { //------------------------------------------------------------------2456 cod participa
-
-                ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':true, 'participa_updated':true}}, {upsert:true,new: true}, (err,docs) => {
-                  if (err) throw err;
-                  //console.log('ok');
-                  // res.redirect('/DEUCERTO');
-                  res.send(docs.nomeProjeto);
-                });
-
-                // var locals = {
-                //   email: usr.email,
-                //   projeto: usr.nomeProjeto,
-                //   url: 'urlTESTE'
-                // }
-                // template.render(locals, function (err, results) {
-                //   if (err) {
-                //     return console.error(err)
-                //   }
-                //   transport.sendMail({
-                //     from: 'V MOVACI <contato@movaci.com.br>',
-                //       to: 'rswarovsky@gmail.com',//locals.email,
-                //       subject: 'V MOVACI - Confirmação de presença',
-                //       html: results.html,
-                //       text: results.text
-                //     }, function (err, responseStatus) {
-                //       if (err) {
-                //         return console.error(err)
-                //       }
-                //       console.log(responseStatus.message)
-                //     });
-                // });
-              }
-
-              if(req.params.situacao === '9877') { //------------------------------------------------------------------9877 cod não participa
-
-                ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':false, 'participa_updated':true}}, {upsert:true,new: true}, (err,docs) => {
-                  if (err) throw err;
-                  //console.log('ok');
-                  // res.redirect('/DEUCERTO2');
-                  res.send(docs.nomeProjeto);
-                });
-
-                // var locals = {
-                //   email: usr.email,
-                //   projeto: usr.nomeProjeto,
-                //   url: 'urlTESTE'
-                // }
-                // template.render(locals, function (err, results) {
-                //   if (err) {
-                //     return console.error(err)
-                //   }
-                //   transport.sendMail({
-                //     from: 'V MOVACI <contato@movaci.com.br>',
-                //       to: 'rswarovsky@gmail.com',//locals.email,
-                //       subject: 'V MOVACI - Confirmação de presença',
-                //       html: results.html,
-                //       text: results.text
-                //     }, function (err, responseStatus) {
-                //       if (err) {
-                //         return console.error(err)
-                //       }
-                //       console.log(responseStatus.message)
-                //     });
-                // });
-              }
-            } else {
-              res.sendStatus(401);
-            }
-          }
-        })
-      }
-    });
-
-    router.get('/', (req, res, next) => {
-      res.send('Projetos po');
-    });
-
-    router.get('/registro', testaUsernameEEscola, (req, res) => {});
-
-    router.get('/login', (req, res) => {
-      res.send('página de login');
-    });
-
-    router.post('/registro', testaUsername2, (req, res) => {
-      let  username = req.body.username
-      ,   password = req.body.password
-      ,   password2 = req.body.password2
-
-      req.checkBody('username', 'Username is required').notEmpty();
-      req.checkBody('password', 'Password is required').notEmpty();
-      req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-      let errors = req.validationErrors();
-
-      if(errors){
-        //res.status(501).send('error');
-        console.log("Errors: "+errors);
-      } else {
-
-        let newIntegrante = ({
-          tipo: "Orientador",
-          nome: req.body.nomeOrientador1,
-          email: req.body.emailOrientador1,
-          cpf: splita(req.body.cpfOrientador1),
-          telefone: splita(req.body.telefoneOrientador1),
-          tamCamiseta: req.body.tamCamisetaOrientador1
-        });
-
-        let newIntegrante2 = ({
-          tipo: "Orientador",
-          nome: req.body.nomeOrientador2,
-          email: req.body.emailOrientador2,
-          cpf: splita(req.body.cpfOrientador2),
-          telefone: splita(req.body.telefoneOrientador2),
-          tamCamiseta: req.body.tamCamisetaOrientador2
-        });
-
-        let newIntegrante3 = ({
-          tipo: "Aluno",
-          nome: req.body.nomeAluno1,
-          email: req.body.emailAluno1,
-          cpf: splita(req.body.cpfAluno1),
-          telefone: splita(req.body.telefoneAluno1),
-          tamCamiseta: req.body.tamCamisetaAluno1
-        });
-
-        let newIntegrante4 = ({
-          tipo: "Aluno",
-          nome: req.body.nomeAluno2,
-          email: req.body.emailAluno2,
-          cpf: splita(req.body.cpfAluno2),
-          telefone: splita(req.body.telefoneAluno2),
-          tamCamiseta: req.body.tamCamisetaAluno2
-        });
-
-        let newIntegrante5 = ({
-          tipo: "Aluno",
-          nome: req.body.nomeAluno3,
-          email: req.body.emailAluno3,
-          cpf: splita(req.body.cpfAluno3),
-          telefone: splita(req.body.telefoneAluno3),
-          tamCamiseta: req.body.tamCamisetaAluno3
-        });
-
-        let newProject = new ProjetoSchema({
-          nomeProjeto: req.body.nomeProjeto,
-          categoria: req.body.categoria,
-          eixo: req.body.eixo,
-          nomeEscola: req.body.nomeEscola,
-          cep: splita(req.body.cep),
-          cidade: req.body.cidade,
-          estado: req.body.estado,
-          hospedagem: req.body.hospedagem,
-          email: req.body.email,
-          username: req.body.username,
-          password: req.body.password,
-          permissao: 1,
-          createdAt: Date.now(),
-          resumo: req.body.resumo,
-          palavraChave: req.body.palavraChave
-        });
-
-        newProject.integrantes.push(newIntegrante);
-
-        if(req.body.nomeOrientador2 && req.body.emailOrientador2 && req.body.cpfOrientador2 && req.body.telefoneOrientador2 && req.body.tamCamisetaOrientador2){
-          newProject.integrantes.push(newIntegrante2);
-        }
-
-        newProject.integrantes.push(newIntegrante3);
-
-        if(req.body.nomeAluno2 && req.body.emailAluno2 && req.body.cpfAluno2 && req.body.telefoneAluno2 && req.body.tamCamisetaAluno2){
-          newProject.integrantes.push(newIntegrante4);
-        }
-
-        if(req.body.nomeAluno3 && req.body.emailAluno3 && req.body.cpfAluno3 && req.body.telefoneAluno3 && req.body.tamCamisetaAluno3){
-          newProject.integrantes.push(newIntegrante5);
-        }
-
-        Projeto.createProject(newProject);
-
-        let email = req.body.email
-        let nomeProjeto = req.body.nomeProjeto
-        let username = req.body.username
-        var templatesDir = path.resolve(__dirname, '..', 'templates');
-        var template = new EmailTemplate(path.join(templatesDir, 'inscricao'));
-        const transport = nodemailer.createTransport(smtpTransport({
-          host: 'smtp.zoho.com',
-          port: 587,
-          auth: {
-            user: "contato@movaci.com.br",
-            pass: "mvc2016"
-          }
-        }));
-
-        var locals = {
-          email: email,
-          projeto: nomeProjeto,
-          username: username
-        }
-
-        template.render(locals, function (err, results) {
-          if (err) {
-            return console.error(err)
-          }
-
-          transport.sendMail({
-            from: 'V MOVACI <contato@movaci.com.br>',
-            to: locals.email,
-            subject: 'V MOVACI - Confirmação de inscrição',
-            html: results.html,
-            text: results.text
-          }, function (err, responseStatus) {
-            if (err) throw err;
-          })
-        });
-
-        // res.redirect('/projetos/login');
-      }
-      //res.send('OK');
-    });
-
-
-  // NOVO LOGIN ÚNICO
-  
-    // passport.use('unico', new LocalStrategy(function(username, password, done) {
-    //   Projeto.getLoginProjeto(username, (err, user) => {
-    //     if(err) throw err;
-    //     if(!user){
-    //       console.log('entrou no !user '+username);
-    //       Projeto.getLoginAdmin(username, (err, user) => {
-    //         console.log('entrou no !user de novo');
-    //         if(err) throw err;
-    //         if(!user){
-    //           console.log('entrou no !user de novo de novo');
-    //           return done(null, false, {message: 'Unknown User'});
-    //         }
-    //         Projeto.compareLogin(password, user.password, (err, isMatch) => {
-    //           console.log('OLHA, deu certo e agora vai comparar: '+password);
-    //           if(err) throw err;
-    //           if(isMatch){
-    //             return done(null, user);
-    //             console.log("Pior que deu");
-    //           } else {
-    //             console.log("Pior que não deu");
-    //             return done(null, false, {message: 'Invalid password'});
-    //           }
-    //         }); 
-    //       });
-    //       // return done(null, false, {message: 'Unknown User'});
-    //     } else {
-    //       Projeto.compareLogin(password, user.password, (err, isMatch) => {
-    //         if(err) throw err;
-    //         if(isMatch){
-    //           return done(null, user);
-    //         } else {
-    //           return done(null, false, {message: 'Invalid password'});
-    //         }
-    //       }); 
-    //     }
-    //   });
-    // }));
-
-  // NOVO LOGIN ÚNICO
-
-    // passport.use('user', new LocalStrategy( function(username, password, done) {
-    //   Projeto.getProjectByUsername(username, (err, user) => {
-    //     if(err) throw err;
-    //     if(!user){
-    //       return done(null, false, {message: 'Unknown User'});
-    //     }
-    //     Projeto.comparePassword(password, user.password, (err, isMatch) => {
-    //       if(err) throw err;
-    //       if(isMatch){
-    //         return done(null, user);
-    //       } else {
-    //         return done(null, false, {message: 'Invalid password'});
-    //       }
-    //     });
-    //   });
-    // }));
-
-    // passport.use('admin', new LocalStrategy( function(username, password, done) {
-    //   Admin.getAdminByUsername(username, (err, admin) => {
-    //     if(err) throw err;
-    //     if(!admin){
-    //       return done(null, false, {message: 'Unknown admin'});
-    //     }
-    //     Admin.comparePassword(password, admin.password, (err, isMatch) => {
-    //       if(err) throw err;
-    //       if(isMatch){
-    //         return done(null, admin);
-    //       } else {
-    //         return done(null, false, {message: 'Invalid password'});
-    //       }
-    //     });
-    //   });
-    // }));
-
-    // passport.use('admin2', new LocalStrategy( function(username, password, done) {
-    //   Admin2.getAdminByUsername(username, (err, admin) => {
-    //     if(err) throw err;
-    //     if(!admin){
-    //       return done(null, false, {message: 'Unknown admin'});
-    //     }
-    //     Admin2.comparePassword(password, admin.password, (err, isMatch) => {
-    //       if(err) throw err;
-    //       if(isMatch){
-    //         return done(null, admin);
-    //       } else {
-    //         return done(null, false, {message: 'Invalid password'});
-    //       }
-    //     });
-    //   });
-    // }));
-
-    // passport.serializeUser(function(user, done){
-    //   done(null, user.id);
-    // });
-
-    // passport.deserializeUser(function(id, done){
-    //   adminSchema.findById(id, function(err, user){
-    //     if(err) done(err);
-    //     if(user){
-    //       done(null, user);
-    //     } else {
-    //       ProjetoSchema.findById(id, function(err, user){
-    //         if(err) done(err);
-    //         done(null, user);
-    //       })
-    //     }
-    //   });
-    // });
-
-
-
-
-
-
-
-
-
-    // Setando a estatégia do Passport
-    /*passport.use(new LocalStrategy((username, password, done) => {
-    Projeto.getProjectByUsername(username, (err, user) => {
-    if(err) throw err;
-    if(!user){
-    return done(null, false, {message: 'Unknown User'});
-  }
-  Projeto.comparePassword(password, user.password, (err, isMatch) => {
-  if(err) throw err;
-  if(isMatch){
-  return done(null, user);
-} else {
-return done(null, false, {message: 'Invalid password'});
-}
-});
-});
-}));
-
-passport.serializeUser((user, done) => {
-done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-Projeto.getProjectById(id, (err, user) => {
-done(err, user);
-});
-});*/
-
 function miPermiso(role) {
   return function(req, res, next) {
     if(req.user.permissao === role)
@@ -558,40 +96,105 @@ function miPermiso(role) {
   }
 }
 
-// router.post('/login', passport.authenticate('unico'), (req, res) => {
-//   // res.send(req.session);
-//   res.redirect('/home');
-//   //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
-// });
+function splita(arg){
+  if (arg !== undefined) {
+    let data = arg.replace(/([-.() ])/g,'');
+    return data;
+  }
+}
 
-// router.get('/home', ensureAuthenticated, miPermiso("2"), (req, res) => {
-//   res.redirect('/admin');
-//   // res.send(req.user);
-// });
+router.all('/*', ensureAuthenticated, miPermiso("1"));
 
-// router.get('/home', ensureAuthenticated, miPermiso("1"), (req, res) => {
-//   // res.send(req.user);
-//   res.redirect('/projeto');
-// });
+router.get('/upload', function(req, res, next) { res.render('view-teste.ejs') });
 
-/*router.post('/login/admin', passport.authenticate('admin'), (req, res) => {
-res.send(req.user);
-//res.redirect('/home');
-//res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
-});*/
+router.post('/upload', function(req, res){
+  var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    res.writeHead(200, {'content-type': 'text/plain'});
+    res.write('received upload:\n\n');
+    
+    var image = files.file
+    , image_upload_path_old = image.path
+    , image_upload_path_new = '../pdiap/public/relatorios/'
+    , image_upload_name = req.user.numInscricao+'.pdf'
+    , image_upload_path_name = image_upload_path_new + image_upload_name;
 
-// router.post('/logout', (req, res) => {
-//   req.logout();
-//   //res.sendStatus(200);
-//   //res.clearCookie('userid');
-//   res.redirect('/');
-// });
+    if (fs.existsSync(image_upload_path_new)) {
+      fs.rename(image_upload_path_old, image_upload_path_name, function (err) {
+        if (err) {
+          console.log('Err: ', err);
+          res.end('Deu problema na hora de mover a imagem');
+        }
+        
+        var msg = 'Relatório ' + image_upload_name + ' salv0 em: ' + image_upload_path_new;
+        console.log(msg);
+        res.end(msg);
+      });
+    } else {
+      fs.mkdir(image_upload_path_new, function (err) {
+      if (err) {
+        console.log('Err: ', err);
+        res.end('Deu merda na hora de criar o diretório!');
+      }
+      fs.rename(image_upload_path_old, image_upload_path_name, function(err) {
+        var msg = 'Relatório ' + image_upload_name + ' salv0 em: ' + image_upload_path_new;
+        console.log(msg);
+        res.end(msg);
+      });
+    });
+  }
+
+  let dadosRelatorio = {
+    name: files.file.name,
+    size: files.file.size,
+    uploadAt: files.file.lastModifiedDate
+  };
+
+  if (err) throw err;
+  ProjetoSchema.findOne({'_id': req.user.id}, (err, usr) => {
+    usr.relatorio2 = dadosRelatorio;
+    usr.save((err, usr) => {
+      if (err) throw err;
+    });
+  });
+  });
+});
+
+router.post('/confirma/:id/:situacao', (req, res) => {
+  if(req.params.id !== '') {
+    ProjetoSchema.findOne({'_id': req.params.id}, (err, usr) => {
+    if(err){
+      console.log("Something wrong when updating data!");
+    } else {
+      if (usr.aprovado === true && usr.participa_updated === undefined) {
+        if(req.params.situacao === '2456') {
+          ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':true, 'participa_updated':true}}, {upsert:true,new: true}, (err,docs) => {
+            if (err) throw err;
+            res.send(docs.nomeProjeto);
+          });
+        }
+
+        if(req.params.situacao === '9877') { //------------------------------------------------------------------9877 cod não participa
+          ProjetoSchema.update({'_id': req.params.id}, {$set:{'participa':false, 'participa_updated':true}}, {upsert:true,new: true}, (err,docs) => {
+            if (err) throw err;
+            res.send(docs.nomeProjeto);
+          });
+        }
+      } else
+      res.sendStatus(401);
+    }})
+  }
+});
+
+router.get('/', (req, res, next) => {
+  // res.send('Projetos po');
+});
 
 router.get('/update', (req, res) => {
   res.send('Página de update');
 });
 
-router.put('/update', ensureAuthenticated, (req, res) => {
+router.put('/update', (req, res) => {
   if (req.body.cep !== undefined){
     req.body.cep = splita(req.body.cep);
   }
@@ -604,7 +207,7 @@ router.put('/update', ensureAuthenticated, (req, res) => {
   });
 });
 
-router.put('/upgreice', ensureAuthenticated, (req, res) => {
+router.put('/upgreice', (req, res) => {
 
   let myArray = req.body
   ,   id = req.user.id;
@@ -651,11 +254,11 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
       if (err) throw err;
     });
   }
-});
-res.redirect('/home/update');
+  });
+  res.redirect('/home/update');
 });
 
-/*router.put('/updateOrientador', ensureAuthenticated, (req, res) => {
+/*router.put('/updateOrientador', (req, res) => {
 let id = req.user.id;
 
 if(req.body.nomeOrientador1 !== undefined && req.body.emailOrientador1 !== undefined && req.body.cpfOrientador1 !== undefined && req.body.telefoneOrientador1 !== undefined && req.body.tamCamisetaOrientador1 !== undefined){
@@ -719,7 +322,7 @@ res.status(200).send('OK');;
 } else res.status(200).send('ultima af coisa deu');
 });
 
-router.put('/novoIntegrante', ensureAuthenticated, (req, res) => {
+router.put('/novoIntegrante', (req, res) => {
 
 let newIntegrante = ({
 tipo: req.body.tipo,
@@ -746,7 +349,7 @@ res.status(200).json(docs);
 
 });*/
 
-router.put('/removerIntegrante', ensureAuthenticated, (req, res) => {
+router.put('/removerIntegrante', (req, res) => {
   let id = req.body.integrantes_id;
 
   ProjetoSchema.findOne({"integrantes._id": id}, (err, usr) => {
@@ -763,126 +366,126 @@ router.put('/removerIntegrante', ensureAuthenticated, (req, res) => {
   });
 });
 
-router.post('/redefinir-senha', (req, res) => {
-  let username = req.body.username;
-  console.log(username);
-  crypto.randomBytes(20, (err, buf) => {
-    let token = buf.toString('hex');
+// router.post('/redefinir-senha', (req, res) => {
+//   let username = req.body.username;
+//   console.log(username);
+//   crypto.randomBytes(20, (err, buf) => {
+//     let token = buf.toString('hex');
 
-    ProjetoSchema.findOneAndUpdate({username: username}, {$set:{resetPasswordToken:token, resetPasswordCreatedDate:Date.now() + 3600000}}, {upsert:true, new: true}, function(err, doc){
-      if(err){
-        console.log("Something wrong when updating data!");
-      } else{
-        let email = doc.email;
-        let nome_projeto = doc.nomeProjeto;
-        let url = "http://www.movaci.com.br/nova-senha/"+token;
-        // let url = "http://www.movaci.com.br/nova-senha/"+username+"/"+token;
+//     ProjetoSchema.findOneAndUpdate({username: username}, {$set:{resetPasswordToken:token, resetPasswordCreatedDate:Date.now() + 3600000}}, {upsert:true, new: true}, function(err, doc){
+//       if(err){
+//         console.log("Something wrong when updating data!");
+//       } else{
+//         let email = doc.email;
+//         let nome_projeto = doc.nomeProjeto;
+//         let url = "http://www.movaci.com.br/nova-senha/"+token;
+//         // let url = "http://www.movaci.com.br/nova-senha/"+username+"/"+token;
 
-        // res.sendStatus(200);
-        res.send(url);
+//         // res.sendStatus(200);
+//         res.send(url);
 
-        var templatesDir = path.resolve(__dirname, '..', 'templates')
-        var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'))
-        // Prepare nodemailer transport object
-        const transport = nodemailer.createTransport(smtpTransport({
-          host: 'smtp.zoho.com',
-          port: 587,
-          auth: {
-            user: "contato@movaci.com.br",
-            pass: "mvc2016"
-          }
-        }));
+//         var templatesDir = path.resolve(__dirname, '..', 'templates')
+//         var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'))
+//         // Prepare nodemailer transport object
+//         const transport = nodemailer.createTransport(smtpTransport({
+//           host: 'smtp.zoho.com',
+//           port: 587,
+//           auth: {
+//             user: "contato@movaci.com.br",
+//             pass: "mvc2016"
+//           }
+//         }));
 
-        var locals = {
-          email: email,
-          projeto: nome_projeto,
-          url: url,
-        }
+//         var locals = {
+//           email: email,
+//           projeto: nome_projeto,
+//           url: url,
+//         }
 
-        template.render(locals, function (err, results) {
-          if (err) {
-            return console.error(err)
-          }
+//         template.render(locals, function (err, results) {
+//           if (err) {
+//             return console.error(err)
+//           }
 
-          transport.sendMail({
-            from: 'V MOVACI <contato@movaci.com.br>',
-            to: locals.email,
-            subject: 'V MOVACI - Redefinição de senha',
-            html: results.html,
-            text: results.text
-          }, function (err, responseStatus) {
-            if (err) {
-              return console.error(err)
-            }
-            console.log(responseStatus.message)
-          })
-        });
-      }
-    });
-  });
-});
+//           transport.sendMail({
+//             from: 'V MOVACI <contato@movaci.com.br>',
+//             to: locals.email,
+//             subject: 'V MOVACI - Redefinição de senha',
+//             html: results.html,
+//             text: results.text
+//           }, function (err, responseStatus) {
+//             if (err) {
+//               return console.error(err)
+//             }
+//             console.log(responseStatus.message)
+//           })
+//         });
+//       }
+//     });
+//   });
+// });
 
-router.post('/nova-senha/:token', (req, res) => {
-  if(req.params.token === '') {
-    res.status(400).send("erro");
-    //console.log('err');
-  } else {
-    ProjetoSchema.findOne({resetPasswordToken: (req.params.token)}, (err, usr) => {
-      if(err || !usr) {
-        res.status(400).send("erro2");
-      } else if(usr.resetPasswordToken == req.params.token && !usr.hasExpired()) {
-        usr.resetPasswordToken = undefined;
-        usr.resetPasswordCreatedDate = undefined;
-        let password = req.body.password;
+// router.post('/nova-senha/:token', (req, res) => {
+//   if(req.params.token === '') {
+//     res.status(400).send("erro");
+//     //console.log('err');
+//   } else {
+//     ProjetoSchema.findOne({resetPasswordToken: (req.params.token)}, (err, usr) => {
+//       if(err || !usr) {
+//         res.status(400).send("erro2");
+//       } else if(usr.resetPasswordToken == req.params.token && !usr.hasExpired()) {
+//         usr.resetPasswordToken = undefined;
+//         usr.resetPasswordCreatedDate = undefined;
+//         let password = req.body.password;
 
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(password, salt, (err, hash) => {
-            usr.password = hash;
-            usr.save((err, usr) => {
-              if(err) throw err;
-              //console.log(usr);
-              res.status(200).send('Senha alterada');
-            });
-          });
-        });
-      } else {
-        res.status(400).send("erro3");
-      }
-    });
-  };
-});
+//         bcrypt.genSalt(10, (err, salt) => {
+//           bcrypt.hash(password, salt, (err, hash) => {
+//             usr.password = hash;
+//             usr.save((err, usr) => {
+//               if(err) throw err;
+//               //console.log(usr);
+//               res.status(200).send('Senha alterada');
+//             });
+//           });
+//         });
+//       } else {
+//         res.status(400).send("erro3");
+//       }
+//     });
+//   };
+// });
 
-router.post('/contato', (req, res) => {
-  let email = req.body.email
-  ,   nome = req.body.nome
-  ,   assunto = req.body.assunto
-  ,   mensagem = req.body.mensagem;
+// router.post('/contato', (req, res) => {
+//   let email = req.body.email
+//   ,   nome = req.body.nome
+//   ,   assunto = req.body.assunto
+//   ,   mensagem = req.body.mensagem;
 
-  const transporter = nodemailer.createTransport(smtpTransport({
-    host: 'smtp.zoho.com',
-    port: 587,
-    auth: {
-      user: "contato@movaci.com.br",
-      pass: "mvc2016"
-    }
-  }));
+//   const transporter = nodemailer.createTransport(smtpTransport({
+//     host: 'smtp.zoho.com',
+//     port: 587,
+//     auth: {
+//       user: "contato@movaci.com.br",
+//       pass: "mvc2016"
+//     }
+//   }));
 
-  var mailOptions = {
-    from: 'contato@movaci.com.br',
-    to: 'contato@movaci.com.br',
-    subject: assunto,
-    text: '',
-    html: '<b> Contato via site:</b><br><b>De: </b>'+nome+' '+email+'<br><b>Assunto: </b>'+assunto+'<br><b>Mensagem: </b>'+mensagem
-  };
+//   var mailOptions = {
+//     from: 'contato@movaci.com.br',
+//     to: 'contato@movaci.com.br',
+//     subject: assunto,
+//     text: '',
+//     html: '<b> Contato via site:</b><br><b>De: </b>'+nome+' '+email+'<br><b>Assunto: </b>'+assunto+'<br><b>Mensagem: </b>'+mensagem
+//   };
 
-  transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-      return console.log(error);
-    } else {
-      res.send('success');
-    }
-    console.log('Message sent: ' + info.response);
-  });
-});
+//   transporter.sendMail(mailOptions, function(error, info){
+//     if(error){
+//       return console.log(error);
+//     } else {
+//       res.send('success');
+//     }
+//     console.log('Message sent: ' + info.response);
+//   });
+// });
 
 module.exports = router;
