@@ -67,8 +67,8 @@
               <md-option value="1" data-ng-focus="ordenarPor('numInscricao')">Nº de Inscrição</md-option>
               <md-option value="2" data-ng-focus="ordenarPor('nomeProjeto')">Nome do projeto</md-option>
               <md-option value="3" data-ng-focus="ordenarPor('nomeEscola')">Escola</md-option>
-              <md-option value="4" data-ng-focus="ordenarPor(['categoria','eixo'])">Categoria/eixo</md-option>
-              <md-option value="5" data-ng-focus="ordenarPor(['eixo','aprovado'])" data-ng-selected="true">Eixo/aprovado</md-option>
+              <md-option value="4" data-ng-focus="ordenarPor(['categoria','eixo'])" data-ng-selected="true">Categoria/eixo</md-option>
+              <!-- <md-option value="5" data-ng-focus="ordenarPor(['eixo','aprovado'])">Eixo/aprovado</md-option> -->
             </md-optgroup>
           </md-select>
         </div>
@@ -77,22 +77,19 @@
     </md-toolbar>
 
     <md-content>
-      <div layout="row" style="justify-content:center;padding:30px 0;background:rgba(128,128,128,0.07);">
-        <!-- <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#3f51b5;border-radius:50%;margin-right:8px;"></div>Fundamental I</div>
-        <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#9c27b0;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Fundamental II</div>
-        <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#4caf50;border-radius:50%;margin-right:8px;margin-left:15px;"></div>Ensino Médio, Técnico e Superior</div> -->
-        <div layout style="align-items:center;"><div style="width:15px;height:15px;background:#4caf50;border-radius:50%;margin-right:8px;"></div>Aprovado</div>
-      </div>
-      <div layout="row" style="justify-content:center;padding-bottom:20px;background:rgba(128,128,128,0.07);">
+      <div layout="row" style="justify-content:center;padding:40px 0 20px 0;background:rgba(128,128,128,0.07);">
         TOTAL: {{projetos.length}}
       </div>
-      <md-list flex style="margin-bottom:50px;" data-ng-init="ordenacao = ['eixo','aprovado']">
+      <md-list flex style="margin-bottom:50px;" data-ng-init="ordenacao = ['categoria','eixo']">
         <md-list-item class="list-header">
           <div class="md-list-item-text" flex="10" style="margin-left:29px;margin-right:5px;text-align:center;">
             <p>Nº</p>
           </div>
           <div class="md-list-item-text" flex="80" layout="column" style="text-align:center;">
             <p>Projetos</p>
+          </div>
+          <div class="md-list-item-text" flex="10" layout="column" style="text-align:center;">
+            <p>Aprovado</p>
           </div>
           <md-divider></md-divider>
         </md-list-item>
@@ -113,9 +110,10 @@
           roxo:proj.categoria == 'Fundamental II (6º ao 9º anos)',
           green1:proj.categoria == 'Ensino Médio, Técnico e Superior'}">
         </div> -->
-        <div layout flex="5" layout-align="center center" style="align-self:center;">
-          <div style="width:15px;height:15px;border-radius:50%;" class="green1" data-ng-if="proj.aprovado === true">
-          </div>
+        <div layout flex="10" layout-align="center center" style="align-self:center;">
+          <!-- <div style="width:15px;height:15px;border-radius:50%;" class="green1" data-ng-if="proj.aprovado === true">
+          </div> -->
+          <md-icon data-ng-if="proj.aprovado" class="md-secondary" md-svg-src="checkbox-marked-circle-outline" style="color:green;margin:0;width:20px;height:20px;"></md-icon>
         </div>
         <md-divider></md-divider>
       </md-list-item>
@@ -123,20 +121,20 @@
   </md-content>
 
   <div layout="row" class="footer-admin" style="position:fixed;width:calc(100% - 260px);height:50px;background:#424242;bottom:0!important;color:#f5f5f5;" align="center">
-    <div flex="40">
+    <div flex="50">
       <p>Selecionados: {{count}}</p>
     </div>
-    <span flex></span>
-    <div flex="30">
-      <md-button flex="100" aria-label="Salvar Aprovados" class="md-raised md-primary white green darken-1 btnCustom1" data-ng-disabled="count == 0" data-ng-click="update()">
+    <!-- <span flex></span> -->
+    <div flex="50">
+      <md-button flex="50" aria-label="Salvar Aprovados" class="md-raised md-primary white green darken-1 btnCustom1" data-ng-disabled="count == 0" data-ng-click="update()">
         <span>Salvar</span>
       </md-button>
     </div>
-    <div flex="30">
+    <!-- <div flex="30">
       <md-button flex="100" aria-label="Remover Aprovados" class="md-raised md-primary white red btnCustom1" data-ng-disabled="count == 0" data-ng-click="remove()">
         <span>Remover</span>
       </md-button>
-    </div>
+    </div> -->
   </div>
 
   <!-- conteúdo dinâmico -->

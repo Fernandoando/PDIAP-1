@@ -254,7 +254,7 @@ passport.use('unico', new LocalStrategy(function(username, password, done) {
                 console.log("Pior que não deu");
                 return done(null, false, {message: 'Invalid password'});
               }
-            }); 
+            });
           });
           // return done(null, false, {message: 'Unknown User'});
         } else {
@@ -265,7 +265,7 @@ passport.use('unico', new LocalStrategy(function(username, password, done) {
             } else {
               return done(null, false, {message: 'Invalid password'});
             }
-          }); 
+          });
         }
       });
 }));
@@ -293,7 +293,7 @@ router.post('/login', passport.authenticate('unico'), (req, res) => {
     res.send({redirect:'/projetos'});
   } else if (req.user.permissao === "2") {
     // res.redirect('/admin/');
-    res.send({redirect:'/admin'});
+    res.send({redirect:'/admin/home'});
   }
   //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
 });
@@ -400,9 +400,9 @@ router.all('/', function(req, res, next) {
 });
 
 // administração interna ==================================================== //
-router.get('/admin', function(req, res, next) {
-  res.render('layout_admin.ejs');
-});
+// router.get('/admin', function(req, res, next) {
+//   res.render('layout_admin.ejs');
+// });
 
 router.get('/admin/home', function(req, res, next) {
   res.render('layout_admin2.ejs');
@@ -465,13 +465,13 @@ router.get('/categorias-eixos', function(req, res, next) {
   res.render('layout3.ejs');
 });
 
-// router.all('/home/*', function(req, res, next) {
+// router.all('/projetos/*', function(req, res, next) {
 //   res.render('layout.ejs');
 // });
 
-// router.all('/home', function(req, res, next) {
-//   res.render('layout.ejs');
-// });
+router.all('/projetos', function(req, res, next) {
+  res.render('layout.ejs');
+});
 
 router.all('/404', function(req, res, next) {
   res.render('layout.ejs');

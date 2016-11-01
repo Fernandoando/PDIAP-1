@@ -10,5 +10,10 @@
 		   		$rootScope.logado = false;
 					$window.location.href="http://www.movaci.com.br/admin";
 				};
+				$rootScope.logout2 = function() {
+		   		$http.post('/admin/logout');
+		   		$rootScope.logado = false;
+					$window.location.href="http://www.movaci.com.br/admin/master";
+				};
 		});
 })();

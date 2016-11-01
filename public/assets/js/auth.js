@@ -2,14 +2,45 @@
 	'use strict';
 
 	angular
-	.module('PDIAP')
-	.controller('loginCtrl', function($scope, $rootScope, $window, $location, $mdDialog, projetosAPI) {
+	.module('auth',[])
+	.factory("authAPI", function($http) {
+
+		let _postLogin = function(username,password) {
+			const request = {
+				url: '/login',
+				method: 'POST',
+				data: {
+					username: username,
+					password: password
+				}
+			}
+			return $http(request);
+		};
+
+		return {
+			postLogin: _postLogin
+		};
+	})
+	.controller('homeCtrl', function($scope, $rootScope, $location, $mdDialog) {
+
+		$scope.showLoginDialog = function(ev) {
+			$mdDialog.show({
+				// controller: () => this,
+				templateUrl: '/views/login.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose: true
+			});
+		};
+
+	})
+	.controller('loginCtrl', function($scope, $rootScope, $window, $location, $mdDialog, authAPI) {
 
 		$scope.login = function() {
 			const username = $scope.user.username;
 			const password = $scope.user.password;
 
-			projetosAPI.postLogin(username,password)
+			authAPI.postLogin(username,password)
 			.success(function(projeto) { // authentication OK
 				$rootScope.logado = true;
 				$scope.message = 'Sucesso';
@@ -76,5 +107,13 @@
 				enviarEmail(username);
 			}, function() {});
 		};
+	})
+	.run(function($rootScope, $http, $window) {
+			// Função logout está disponível em todas as páginas
+			$rootScope.logout = function() {
+				$http.post('/logout');
+				$rootScope.logado = false;
+				$window.location.href="http://www.movaci.com.br";
+			};
 	});
 })();

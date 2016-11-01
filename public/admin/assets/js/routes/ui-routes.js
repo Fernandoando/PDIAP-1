@@ -14,15 +14,21 @@
 			var deferred = $q.defer(); // Inicializa nova promissa
 			$rootScope.logado = false;
 
-			$http.get('/admin/loggedin').success(function(projetos) {
-				if (projetos !== '0') { // Authenticated
+			$http.get('/admin/loggedin').success(function(projetos, status) {
+				console.log(status);
+				if (status !== 403) { // Authenticated
 					$rootScope.logado = true;
 					deferred.resolve();
 				} else { // Not Authenticated
 					$rootScope.logado = false;
-					$window.location.href="http://movaci.com.br/admin";
+					$window.location.href="http://movaci.com.br";
 					deferred.reject();
 				}
+			})
+			.error(function(status) { // Not Authenticated
+				$rootScope.logado = false;
+				$window.location.href="http://movaci.com.br";
+				deferred.reject();
 			});
 			return deferred.promise;
 		};
@@ -51,10 +57,10 @@
 					controller: 'adminCtrl'
 				},
 				'@master': { templateUrl: '/admin/views/saberes-iframe.html' }
-			},
-			resolve: {
-				loggedin: checkLoggedin
 			}
+			// resolve: {
+			// 	loggedin: checkLoggedin
+			// }
 		})
 		.state('master.seleciona-aprovados', {
 			url: "/seleciona-aprovados",

@@ -84,7 +84,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated())
   return next();
   else{
-    res.send('0');
+    res.send(403);
   }
 }
 
@@ -105,6 +105,10 @@ function splita(arg){
 
 router.all('/*', ensureAuthenticated, miPermiso("1"));
 
+router.get('/loggedin', ensureAuthenticated, (req, res, next) => {
+  res.send(req.user);
+});
+
 router.get('/upload', function(req, res, next) { res.render('view-teste.ejs') });
 
 router.post('/upload', function(req, res){
@@ -112,7 +116,7 @@ router.post('/upload', function(req, res){
   form.parse(req, function(err, fields, files) {
     res.writeHead(200, {'content-type': 'text/plain'});
     res.write('received upload:\n\n');
-    
+
     var image = files.file
     , image_upload_path_old = image.path
     , image_upload_path_new = '../pdiap/public/relatorios/'
@@ -125,7 +129,7 @@ router.post('/upload', function(req, res){
           console.log('Err: ', err);
           res.end('Deu problema na hora de mover a imagem');
         }
-        
+
         var msg = 'Relatório ' + image_upload_name + ' salv0 em: ' + image_upload_path_new;
         console.log(msg);
         res.end(msg);

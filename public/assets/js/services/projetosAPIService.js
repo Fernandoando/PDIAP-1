@@ -31,21 +31,21 @@
 			return $http(request);
 		};
 
-		let _postLogin = function(username,password) {
-			const request = {
-				url: '/projetos/login',
-				method: 'POST',
-				data: {
-					username: username,
-					password: password
-				}
-			}
-			return $http(request);
-		};
+		// let _postLogin = function(username,password) {
+		// 	const request = {
+		// 		url: '/login',
+		// 		method: 'POST',
+		// 		data: {
+		// 			username: username,
+		// 			password: password
+		// 		}
+		// 	}
+		// 	return $http(request);
+		// };
 
 		let _getProjeto = function() {
 			const request = {
-				url: '/projetos/home',
+				url: '/projetos/loggedin',
 				method: 'GET',
 			}
 			return $http(request);
@@ -141,7 +141,7 @@
 			// saveProjeto: _saveProjeto,
 			saveSaberesDocentes: _saveSaberesDocentes,
 			saveAvaliador: _saveAvaliador,
-			postLogin: _postLogin,
+			// postLogin: _postLogin,
 			getProjeto: _getProjeto,
 			getCategorias: _getCategorias,
 			getEstados: _getEstados,

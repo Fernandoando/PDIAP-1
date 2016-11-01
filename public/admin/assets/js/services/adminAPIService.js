@@ -4,22 +4,14 @@
 	angular
 	.module('PDIAPa')
 	.factory("adminAPI", function($http) {
-		let _postLoginAdmin = function(username,password) {
-			const request = {
-				url: '/admin/login',
-				method: 'POST',
-				data: {
-					username: username,
-					password: password
-				}
-			}
-			return $http(request);
-		};
-
-		// let _getTodosProjetos = function() {
+		// let _postLoginAdmin = function(username,password) {
 		// 	const request = {
-		// 		url: '/dados/projetos300816.json',
-		// 		method: 'GET',
+		// 		url: '/login',
+		// 		method: 'POST',
+		// 		data: {
+		// 			username: username,
+		// 			password: password
+		// 		}
 		// 	}
 		// 	return $http(request);
 		// };
@@ -48,11 +40,14 @@
 			return $http(request);
 		};
 
-		let _putSetAprovados = function(projeto) {
+		let _putSetAprovados = function(arrayProjetosAprovados,arrayProjetosReprovados) {
 			const request = {
 				url: '/admin/upgreice',
 				method: 'PUT',
-				data: projeto
+				data: {
+					projetosAprovados: arrayProjetosAprovados,
+					projetosReprovados: arrayProjetosReprovados
+				}
 			}
 			return $http(request);
 		};
@@ -113,7 +108,7 @@
 		};
 
 		return {
-			postLoginAdmin: _postLoginAdmin,
+			// postLoginAdmin: _postLoginAdmin,
 			getTodosProjetos: _getTodosProjetos,
 			getTodosSaberes: _getTodosSaberes,
 			getTodosAvaliadores: _getTodosAvaliadores,

@@ -16,8 +16,8 @@
 				$scope.erro = false;
 				$mdDialog.hide();
 				// username para logar em /admin/master
-				if (username === 'admin2') {
-					$window.location.href="http://www.movaci.com.br/admin/master/home";
+				if (username === 'admin') {
+					$window.location.href="http://localhost/admin/master/home";
 				} else {
 					$window.location.href="http://www.movaci.com.br/admin/home";
 				}

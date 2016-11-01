@@ -9,20 +9,25 @@
 		$urlMatcherFactoryProvider.caseInsensitive(true);
 		$urlRouterProvider.otherwise("/404");
 
-		let checkLoggedin = function($q, $rootScope, $http, $location, $state) {
+		let checkLoggedin = function($q, $rootScope, $http, $location, $window) {
 
 			var deferred = $q.defer(); // Inicializa nova promissa
 			$rootScope.logado = false;
 
-			$http.get('/projetos/home').success(function(projeto) {
-				if (projeto !== '0') { // Authenticated
+			$http.get('/projetos/loggedin').success(function(projeto, status) {
+				if (status !== 403) { // Authenticated
 					$rootScope.logado = true;
 					deferred.resolve();
 				} else { // Not Authenticated
 					$rootScope.logado = false;
-					$state.go('index');
+					$window.location.href="http://movaci.com.br";
 					deferred.reject();
 				}
+			})
+			.error(function(status) { // Not Authenticated
+				$rootScope.logado = false;
+				$window.location.href="http://movaci.com.br";
+				deferred.reject();
 			});
 			return deferred.promise;
 		};
@@ -30,12 +35,7 @@
 		$stateProvider
 		.state('index', {
 			url: "/",
-			views: {
-				'': {
-					templateUrl: '/alpha/index.html',
-					controller: "homeCtrl"
-				}
-			}
+			templateUrl: '/alpha/index.html'
 		})
 		// .state('inscricao', {
 		// 	url: "/projetos/inscricao",
@@ -76,13 +76,13 @@
 		// 	templateUrl: "/views/saberes.html",
 		// 	controller: "saberesCtrl"
 		// })
-		.state('avaliadores', {
-			url: "/avaliadores/inscricao",
-			templateUrl: "/views/avaliadores.html",
-			controller: "avaliadoresCtrl"
-		})
+		// .state('avaliadores', {
+		// 	url: "/avaliadores/inscricao",
+		// 	templateUrl: "/views/avaliadores.html",
+		// 	controller: "avaliadoresCtrl"
+		// })
 		.state('home', {
-			url: "/home",
+			url: "/projetos",
 			views: {
 				'': {
 					templateUrl: '/views/admin.html',

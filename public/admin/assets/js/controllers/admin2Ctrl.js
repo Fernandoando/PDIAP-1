@@ -70,10 +70,6 @@
 					});
 					$scope.projetos.push(obj);
 				});
-				console.log("aprovados: "+relatorio.countAprovados);
-				console.log("nao: "+relatorio.countParticipaNao);
-				console.log("sim: "+relatorio.countParticipaSim);
-				console.log("pendente: "+relatorio.countPendente);
 			})
 			.error(function(status) {
 				console.log(status);

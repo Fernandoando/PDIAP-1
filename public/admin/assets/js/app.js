@@ -2,5 +2,5 @@
 	'use strict';
 
 	angular
-		.module('PDIAPa', ['ngResource','ngMaterial','ui.router']);
+		.module('PDIAPa', ['ngResource','ngMaterial','ui.router','auth']);
 })();

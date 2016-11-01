@@ -8,6 +8,7 @@
 		$rootScope.projetos = [];
 		$scope.searchProject = "";
 		$scope.idAprovados = [];
+		$scope.count = 0;
 
 		let countTotal = 0;
 		$scope.hosp = [];
@@ -27,8 +28,12 @@
 						integrantes: value.integrantes
 					});
 					$rootScope.projetos.push(obj);
+					if (obj.aprovado === true) {
+						$scope.count++;
+					}
 				});
 				console.log($rootScope.projetos);
+
 			})
 			.error(function(status) {
 				console.log(status);
@@ -41,18 +46,40 @@
 		// 	return deferred;
 		// }
 
-		$scope.count = 0;
+		// $scope.count = 0;
+		// $scope.contador = function(check,idProj) {
+		// 	if (check) {
+		// 		$scope.count--;
+		// 		let index = $scope.idAprovados.indexOf(idProj);
+		// 		$scope.idAprovados.splice(index, 1);
+		// 	}
+		// 	else {
+		// 		$scope.count++;
+		// 		$scope.idAprovados.push(idProj);
+		// 	}
+		// }
+
+		$scope.idProjetosAprovados = [];
+		$scope.idProjetosReprovados = [];
 		$scope.contador = function(check,idProj) {
 			if (check) {
 				$scope.count--;
-				let index = $scope.idAprovados.indexOf(idProj);
-				$scope.idAprovados.splice(index, 1);
+				let index = $scope.idProjetosAprovados.indexOf(idProj);
+				if (index !== -1) {
+					$scope.idProjetosAprovados.splice(index, 1);
+				}
+				$scope.idProjetosReprovados.push(idProj);
 			}
 			else {
 				$scope.count++;
-				$scope.idAprovados.push(idProj);
+				let index = $scope.idProjetosReprovados.indexOf(idProj);
+				if (index !== -1) {
+					$scope.idProjetosReprovados.splice(index, 1);
+				}
+				$scope.idProjetosAprovados.push(idProj);
 			}
-			// console.log($scope.idAprovados);
+			console.log("Aprovados: "+$scope.idProjetosAprovados);
+			console.log("Reprovados: "+$scope.idProjetosReprovados);
 		}
 
 		$scope.visualizarDetalhes = function(projeto,ev) {
@@ -80,7 +107,6 @@
 						}
 						else {
 							let index = $scope.idIntegrantesAusentes.indexOf(idIntegrante);
-							console.log(index);
 							if (index !== -1) {
 								$scope.idIntegrantesAusentes.splice(index, 1);
 							}
@@ -151,56 +177,47 @@
 		};
 
 		$scope.update = function() {
-			let ids = $scope.idAprovados;
-			adminAPI.putSetAprovados(ids)
+			adminAPI.putSetAprovados($scope.idProjetosAprovados,$scope.idProjetosReprovados)
 			.success(function(data, status) {
-				$scope.selectedo = false;
-				let showAlert = function(ev) {
-					$mdDialog.show(
-						$mdDialog.alert()
-						.parent(angular.element(document.querySelector('#popupContainer')))
-						.clickOutsideToClose(false)
-						.textContent('Projeto(s) atualizado(s) com sucesso!')
-						.ok('OK')
-						.targetEvent(ev)
-					).then(function(result) {
-						$window.location.reload();
-					}, function() {});
-				};
-				showAlert();
-				console.log(status);
-				console.log(data);
+				$scope.toast('Projeto(s) atualizados com sucesso!','success-toast');
+				// $scope.selectedo = false;
+				var count = 0;
+				if ($scope.idProjetosAprovados.length !== 0) {
+					// for (var i = 0; i < $rootScope.projetos.length; i++) {
+						// if ($rootScope.projetos[i]._id === $scope.details._id) {
+							angular.forEach($rootScope.projetos, function (value, key) {
+								for (var x = 0; x < $scope.idProjetosAprovados.length; x++) {
+									if (value._id === $scope.idProjetosAprovados[x]) {
+										$rootScope.projetos[count].aprovado = true;
+									}
+								}
+								count++;
+							});
+						// }
+					// }
+					count = 0;
+				}
+				if ($scope.idProjetosReprovados.length !== 0) {
+					// for (var i = 0; i < $rootScope.projetos.length; i++) {
+						// if ($rootScope.projetos[i]._id === $scope.details._id) {
+							angular.forEach($rootScope.projetos, function (value, key) {
+								for (var x = 0; x < $scope.idProjetosReprovados.length; x++) {
+									if (value._id === $scope.idProjetosReprovados[x]) {
+										$rootScope.projetos[count].aprovado = false;
+									}
+								}
+								count++;
+							});
+						// }
+					// }
+				}
 			})
 			.error(function(status) {
 				console.log('Error: '+status);
 			});
 		}
 
-		$scope.remove = function() {
-			let ids = $scope.idAprovados;
-			adminAPI.putUnsetAprovados(ids)
-			.success(function(data, status) {
-				$scope.selectedo = false;
-				let showAlert = function(ev) {
-					$mdDialog.show(
-						$mdDialog.alert()
-						.parent(angular.element(document.querySelector('#popupContainer')))
-						.clickOutsideToClose(false)
-						.textContent('Projeto(s) atualizado(s) com sucesso!')
-						.ok('OK')
-						.targetEvent(ev)
-					).then(function(result) {
-						$window.location.reload();
-					}, function() {});
-				};
-				showAlert();
-				console.log(status);
-				console.log(data);
-			})
-			.error(function(status) {
-				console.log('Error: '+status);
-			});
-		}
+
 
 		// $scope.ordenacao = ['categoria','eixo'];
 		$scope.ordenarPor = function(campo) {

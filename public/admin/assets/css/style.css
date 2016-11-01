@@ -291,8 +291,9 @@ md-input-container:not(.md-input-invalid).md-input-focused .md-input {
   border-radius: 50px;
 }
 .btnCustom1 {
-  width: 90%;
+  width: 60%;
   border-radius: 50px;
+  min-width: 100px !important;
 }
 .search-field md-autocomplete, .search-field input {
   /*height: 2.4em !important;*/

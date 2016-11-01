@@ -45,6 +45,7 @@
 			.success(function(projeto) {
 				$scope.nomeDoProjeto = projeto.nomeProjeto;
 				$scope.projeto = projeto;
+				console.log(projeto);
 				if (projeto.aprovado === true) {
 					if (projeto.participa === true) {
 						$scope.aviso1_1 = 'PARABÉNS!';

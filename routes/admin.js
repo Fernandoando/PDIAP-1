@@ -28,7 +28,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
   return next();
   } else {
-    res.send('0');
+    res.send(403);
   }
 }
 
@@ -48,6 +48,10 @@ function miPermiso(role) {
 }
 
 router.all('/*', ensureAuthenticated, miPermiso("2"));
+
+router.get('/loggedin', ensureAuthenticated, (req, res) => {
+  res.send('success');
+});
 
 router.post('/criarOficina', (req, res) => {
   let newOficina = new oficinaSchema({
