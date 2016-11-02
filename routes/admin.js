@@ -11,6 +11,7 @@ const express = require('express')
 , adminSchema = require('../models/admin-schema')
 , projetoSchema = require('../models/projeto-schema')
 , oficinaSchema = require('../models/oficina-schema')
+, ativSaberesSchema = require('../models/ativ-saberes')
 , crypto = require('crypto')
 , bcrypt = require('bcryptjs')
 , nodemailer = require('nodemailer')
@@ -28,7 +29,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
   return next();
   } else {
-    res.send(403);
+    res.sendStatus(403);
   }
 }
 
@@ -43,17 +44,18 @@ function miPermiso(role) {
   return function(req, res, next) {
     if(req.user.permissao === role)
       next();
-    else res.send(403);
+    else res.sendStatus(403);
   }
 }
 
-router.all('/*', ensureAuthenticated, miPermiso("2"));
+// router.all('/*', ensureAuthenticated, miPermiso("2"));
+router.all('/*', ensureAuthenticated);
 
 router.get('/loggedin', ensureAuthenticated, (req, res) => {
   res.send('success');
 });
 
-router.post('/criarOficina', (req, res) => {
+router.post('/criarOficina', miPermiso("3"), (req, res) => {
   let newOficina = new oficinaSchema({
      nome:req.body.nome
     ,cargaHoraria:req.body.cargaHoraria
@@ -66,38 +68,56 @@ router.post('/criarOficina', (req, res) => {
   res.send('sucess');
 });
 
-router.get('/mostraOficina', (req, res) => {
+router.get('/mostraOficina', miPermiso("3"||"2"), (req, res) => {
   oficinaSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
   });
 });
 
-// ====================================
+router.put('/insereParticipanteOficina', miPermiso("3"), (req, res) => {
+  let myArray = req.body
+  ,   nomeOficina = req.body.nomeOficina;
 
-// router.put('/insereParticipanteOficina', (req, res) => {
-//   let myArray = req.body
-//   ,   nomeOficina = req.body.nomeOficina;
+  myArray.forEach(function (value, i) {
+    let newParticipante = ({
+      nome: value.nome
+      ,cpf: splita(value.cpf)
+      ,email: value.email
+    });
 
-//   myArray.forEach(function (value, i) {
-//     let newParticipante = ({
-//       nome: value.nome
-//       ,cpf: splita(value.cpf)
-//       ,email: value.email
-//     });
+    oficinaSchema.findOne({nome: nomeOficina}, (err, usr) => {
+      if (err) throw err;
+      usr.participantes.push(newParticipante);
+      usr.save((err, usr) => {
+        if (err) throw err;
+      });
+    });
+  });
+  res.send('sucess');
+});
 
-//     oficinaSchema.findOne({nome: nomeOficina}, (err, usr) => {
-//       if (err) throw err;
-//       usr.participantes.push(newParticipante);
-//       usr.save((err, usr) => {
-//         if (err) throw err;
-//       });
-//     });
-//   });
-//   res.send('sucess');
-// });
+router.post('/criarAtividadeSaberes', (req, res) => {
+  let newSaberes = new ativSaberesSchema({
+     nome:req.body.nome
+    ,cargaHoraria:req.body.cargaHoraria
+    ,responsavel:req.body.responsavel
+    ,data:req.body.data
+    ,local:req.body.local
+  });
 
-router.post('/registroSaberes', (req, res) => {
+  Saberes.createAtivSaberes(newSaberes, (callback) => {});
+  res.send('sucess');
+});
+
+router.get('/mostraAtividadeSaberes', miPermiso("3"||"2"), (req, res) => {
+  ativSaberesSchema.find((err, usr) => {
+    if (err) throw err;
+    res.send(usr);
+  });
+});
+
+router.post('/registroSaberes', miPermiso("3"), (req, res) => {
   let newSaberes = new SaberesSchema({
     tipo: req.body.tipo,
     nome: req.body.nome,
@@ -111,33 +131,18 @@ router.post('/registroSaberes', (req, res) => {
   res.send('success');
 });
 
-// router.post('/criarAtividadeSaberes', (req, res) => {
-//   let newOficina = new oficinaSchema({
-//      nome:req.body.nome
-//     ,cargaHoraria:req.body.cargaHoraria
-//     ,responsavel:req.body.responsavel
-//     ,data:req.body.data
-//     ,local:req.body.local
-//   });
-
-//   Oficina.createOficina(newOficina, (callback) => {});
-//   res.send('sucess');
-// });
-
-// router.put('/setPresencaSaberes', (req, res) => {
-//   let id = req.body.id;
-//   let cargaHoraria = req.body.cargaHoraria;
-//   for (i in myArray) {
-//     saberesSchema.findOneAndUpdate({"_id": id},
-//       {"$set": {"cargaHoraria": cargaHoraria}}, {new:true},
-//       (err, doc) => {
-//         if (err) throw err;
-//       }
-//     );
-//   }
-// });
-
-// ====================================
+router.put('/setPresencaSaberes', (req, res) => {
+  let id = req.body.id;
+  let cargaHoraria = req.body.cargaHoraria;
+  for (i in myArray) {
+    saberesSchema.findOneAndUpdate({"_id": id},
+      {"$set": {"cargaHoraria": cargaHoraria}}, {new:true},
+      (err, doc) => {
+        if (err) throw err;
+      }
+    );
+  }
+});
 
 // router.post('/registro', (req, res) => {
 //   let newAdmin = new adminSchema({
@@ -150,7 +155,7 @@ router.post('/registroSaberes', (req, res) => {
 //   res.send('OK');
 // });
 
-router.put('/setPresencaProjetos', ensureAuthenticated, (req, res) => {
+router.put('/setPresencaProjetos', miPermiso("3"), (req, res) => {
   let myArray0 = req.body.integrantesPresentes;
   let myArray1 = req.body.integrantesAusentes;
 
@@ -175,28 +180,28 @@ router.put('/setPresencaProjetos', ensureAuthenticated, (req, res) => {
   res.send('success');
 });
 
-router.get('/projetos', (req, res) => {
+router.get('/projetos', miPermiso("3"||"2"), (req, res) => {
   projetoSchema.find((err, usr) => {
   	if (err) throw err;
   	res.send(usr);
   });
 });
 
-router.post('/avaliador', (req, res) => {
+router.post('/avaliador', miPermiso("3"||"2"), (req, res) => {
   avaliadorSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
   });
 });
 
-router.post('/saberes', (req, res) => {
+router.post('/saberes', miPermiso("3"||"2"), (req, res) => {
   saberesSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
   });
 });
 
-router.put('/upgreice', ensureAuthenticated, (req, res) => {
+router.put('/upgreice', ensureAuthenticated, miPermiso("3"), (req, res) => {
 
   let myArray = req.body
 
@@ -212,7 +217,7 @@ router.put('/upgreice', ensureAuthenticated, (req, res) => {
   res.send('success');
 });
 
-router.put('/upgreice2', ensureAuthenticated, (req, res) => {
+router.put('/upgreice2', ensureAuthenticated, miPermiso("3"), (req, res) => {
 
   let myArray = req.body
 
@@ -227,7 +232,7 @@ router.put('/upgreice2', ensureAuthenticated, (req, res) => {
   res.send('success');
 });
 
-router.post('/aprovadosemail', (req, res) => {
+router.post('/aprovadosemail', miPermiso("3"), (req, res) => {
   var templatesDir = path.resolve(__dirname, '..', 'templates');
   var emailTemplates = require('email-templates');
   //var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));
@@ -304,7 +309,7 @@ router.post('/aprovadosemail', (req, res) => {
   });
 });
 
-router.post('/reprovadosemail', (req, res) => {
+router.post('/reprovadosemail', miPermiso("3"), (req, res) => {
   var templatesDir = path.resolve(__dirname, '..', 'templates');
   var emailTemplates = require('email-templates');
   //var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));
@@ -460,7 +465,7 @@ router.post('/reprovadosemail', (req, res) => {
   });
 });*/
 
-router.post('/emailUpload', (req, res) => {
+router.post('/emailUpload', miPermiso("3"), (req, res) => {
   var templatesDir = path.resolve(__dirname, '..', 'templates');
   var emailTemplates = require('email-templates');
   //var template = new EmailTemplate(path.join(templatesDir, 'redefinicao'));
@@ -567,7 +572,7 @@ router.post('/emailUpload', (req, res) => {
 //       });
 // });
 
-router.get('/camisetas', (req, res) => {
+router.get('/camisetas', miPermiso("3"), (req, res) => {
   var myDoc = new pdf;
   let cont = 0;
   myDoc.pipe(fs.createWriteStream('camisetasMedio.pdf'));
@@ -643,7 +648,7 @@ router.get('/camisetas', (req, res) => {
   res.sendStatus(200);
 });
 
-router.post('/pdf2', (req, res) => {
+router.post('/pdf2', miPermiso("3"), (req, res) => {
 
   var myDoc = new pdf;
 

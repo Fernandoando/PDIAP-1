@@ -65,6 +65,17 @@ function testaUsername2(req, res, next) {
   });
 }
 
+// router.post('/registro2', (req, res) => {
+//   let newAdmin = new adminSchema({
+//       username: req.body.username,
+//       password: req.body.password,
+//       permissao: 3
+//     });
+//     Admin.createAdmin(newAdmin);
+//     //res.redirect('/admin/login');
+//   res.send('OK');
+// });
+
 router.post('/contato', (req, res) => {
   let email = req.body.email
   ,   nome = req.body.nome
@@ -292,6 +303,9 @@ router.post('/login', passport.authenticate('unico'), (req, res) => {
     // res.redirect('/projetos/');
     res.send({redirect:'/projetos'});
   } else if (req.user.permissao === "2") {
+    // res.redirect('/admin/');
+    res.send({redirect:'/admin/home'});
+  } else if (req.user.permissao === "3") {
     // res.redirect('/admin/');
     res.send({redirect:'/admin/home'});
   }

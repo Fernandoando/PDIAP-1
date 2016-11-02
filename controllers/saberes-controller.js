@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose')
-,	Saberes = require('../models/saberes-schema');
 
 module.exports.createSaberes = (newSaberes, callback) => {
 	newSaberes.save((callback) => {
@@ -9,5 +8,12 @@ module.exports.createSaberes = (newSaberes, callback) => {
 		//res.status(200).send("success");
 		//return data;
 		//console.log(data);
+	});
+};
+
+module.exports.createAtivSaberes = (newSaberes, callback) => {
+	newSaberes.save((err, data) => {
+		if(err) throw err;
+		console.log(data);
 	});
 };
