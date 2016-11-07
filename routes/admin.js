@@ -40,9 +40,9 @@ function splita(arg){
   }
 }
 
-function miPermiso(role) {
+function miPermiso(role,role2) {
   return function(req, res, next) {
-    if(req.user.permissao === role)
+    if(req.user.permissao === role || req.user.permissao === role2)
       next();
     else res.sendStatus(403);
   }
@@ -148,7 +148,7 @@ router.put('/setPresencaSaberes', (req, res) => {
 //   let newAdmin = new adminSchema({
 //       username: req.body.username,
 //       password: req.body.password,
-//       permissao: 2
+//       permissao: req.body.permissao
 //     });
 //     Admin.createAdmin(newAdmin);
 //     //res.redirect('/admin/login');
@@ -180,21 +180,21 @@ router.put('/setPresencaProjetos', miPermiso("3"), (req, res) => {
   res.send('success');
 });
 
-router.get('/projetos', miPermiso("3"||"2"), (req, res) => {
+router.get('/projetos', miPermiso("2","3"), (req, res) => {
   projetoSchema.find((err, usr) => {
   	if (err) throw err;
   	res.send(usr);
   });
 });
 
-router.post('/avaliador', miPermiso("3"||"2"), (req, res) => {
+router.post('/avaliador', miPermiso("2","3"), (req, res) => {
   avaliadorSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
   });
 });
 
-router.post('/saberes', miPermiso("3"||"2"), (req, res) => {
+router.post('/saberes', miPermiso("2","3"), (req, res) => {
   saberesSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);

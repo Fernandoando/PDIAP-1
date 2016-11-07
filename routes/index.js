@@ -307,7 +307,7 @@ router.post('/login', passport.authenticate('unico'), (req, res) => {
     res.send({redirect:'/admin/home'});
   } else if (req.user.permissao === "3") {
     // res.redirect('/admin/');
-    res.send({redirect:'/admin/home'});
+    res.send({redirect:'/master'});
   }
   //res.cookie('userid', user.id, { maxAge: 2592000000 });  // Expires in one month
 });
@@ -422,15 +422,15 @@ router.get('/admin/home', function(req, res, next) {
   res.render('layout_admin2.ejs');
 });
 
-router.get('/admin/master', function(req, res, next) {
-  res.render('layout_master.ejs');
-});
+// router.get('/admin/master', function(req, res, next) {
+//   res.render('layout_master.ejs');
+// });
 
-router.all('/admin/master/home/*', function(req, res, next) {
+router.all('/master', function(req, res, next) {
   res.render('layout_admin2.ejs');
 });
 
-router.all('/admin/master/home', function(req, res, next) {
+router.all('/master/*', function(req, res, next) {
   res.render('layout_admin2.ejs');
 });
 // ========================================================================== //
