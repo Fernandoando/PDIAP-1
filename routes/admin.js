@@ -5,13 +5,13 @@ const express = require('express')
 , passport = require('passport')
 , LocalStrategy = require('passport-local').Strategy
 , Admin = require('../controllers/admin-controller')
-, Oficina = require('../controllers/oficina-controller')
+, Evento = require('../controllers/evento-controller')
 , Saberes = require('../controllers/saberes-controller')
 , session = require('express-session')
 , adminSchema = require('../models/admin-schema')
 , projetoSchema = require('../models/projeto-schema')
-, oficinaSchema = require('../models/oficina-schema')
-, ativSaberesSchema = require('../models/ativ-saberes')
+, eventoSchema = require('../models/evento-schema')
+, participanteSchema = require('../models/participante-schema')
 , crypto = require('crypto')
 , bcrypt = require('bcryptjs')
 , nodemailer = require('nodemailer')
@@ -55,21 +55,26 @@ router.get('/loggedin', ensureAuthenticated, (req, res) => {
   res.send('success');
 });
 
-router.post('/criarOficina', miPermiso("3"), (req, res) => {
-  let newOficina = new oficinaSchema({
-     nome:req.body.nome
-    ,cargaHoraria:req.body.cargaHoraria
-    ,responsavel:req.body.responsavel
-    ,data:req.body.data
-    ,local:req.body.local
+router.post('/criarEvento', miPermiso("3"), (req, res) => {
+  let newResponsavel = ({
+     nome: req.body.nomeResponsavel
+    ,cpf: splita(req.body.cpf)
   });
 
-  Oficina.createOficina(newOficina, (callback) => {});
+  let newEvento = new eventoSchema({
+    tipo: req.body.tipo
+    ,nome: req.body.nome
+    ,cargaHoraria: req.body.cargaHoraria
+    ,data: req.body.data
+    ,responsavel: newResponsavel
+  });
+  // console.log(newEvento);
+  Evento.createEvento(newEvento, (callback) => {});
   res.send('sucess');
 });
 
-router.get('/mostraOficina', miPermiso("3"||"2"), (req, res) => {
-  oficinaSchema.find((err, usr) => {
+router.get('/mostraEvento', miPermiso("3","2"), (req, res) => {
+  eventoSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
   });
@@ -97,27 +102,30 @@ router.put('/insereParticipanteOficina', miPermiso("3"), (req, res) => {
   res.send('sucess');
 });
 
-router.post('/criarAtividadeSaberes', (req, res) => {
-  let newSaberes = new ativSaberesSchema({
-     nome:req.body.nome
-    ,cargaHoraria:req.body.cargaHoraria
-    ,responsavel:req.body.responsavel
-    ,data:req.body.data
-    ,local:req.body.local
+router.post('/criarParticipante', miPermiso("3","2"), (req, res) => {  
+  let myArray = req.body.objetos;
+  let newParticipante = new participanteSchema({
+     nome: req.body.nome
+    ,cpf: splita(req.body.cpf)
   });
 
-  Saberes.createAtivSaberes(newSaberes, (callback) => {});
+  myArray.forEach(function (value, i) {
+    let newEvento = ({
+      tipo: value.tipo
+      ,nome: value.nome
+      ,cargaHoraria: value.cargaHoraria
+    });
+    newParticipante.eventos.push(newEvento);
+  });
+
+  newParticipante.save((err, data) => {
+    if(err) throw err;
+    console.log(data);
+  });
   res.send('sucess');
 });
 
-router.get('/mostraAtividadeSaberes', miPermiso("3"||"2"), (req, res) => {
-  ativSaberesSchema.find((err, usr) => {
-    if (err) throw err;
-    res.send(usr);
-  });
-});
-
-router.post('/registroSaberes', miPermiso("3"), (req, res) => {
+router.post('/registroSaberes', miPermiso("3","2"), (req, res) => {
   let newSaberes = new SaberesSchema({
     tipo: req.body.tipo,
     nome: req.body.nome,
@@ -129,6 +137,13 @@ router.post('/registroSaberes', miPermiso("3"), (req, res) => {
   });
   Saberes.createSaberes(newSaberes, (callback) => {});
   res.send('success');
+});
+
+router.get('/mostraEventoSaberes', miPermiso("3","2"), (req, res) => {
+  eventoSchema.find({"tipo":"Saberes Docentes"},(err, usr) => {
+    if (err) throw err;
+    res.send(usr);
+  });
 });
 
 router.put('/setPresencaSaberes', (req, res) => {

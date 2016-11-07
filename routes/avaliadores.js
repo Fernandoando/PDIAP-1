@@ -6,7 +6,6 @@ const express = require('express')
 , LocalStrategy = require('passport-local').Strategy
 , Avaliador = require('../controllers/avaliador-controller')
 , session = require('express-session')
-, Admin = require('../controllers/admin2-controller')
 , ProjetoSchema = require('../models/projeto-schema')
 , AvaliadorSchema = require('../models/avaliador-schema');
 
@@ -58,16 +57,6 @@ router.post('/login', passport.authenticate('admin2'), (req, res) => {
 
 router.get('/loggedin', ensureAuthenticated, (req, res) => {
   res.send('success');
-});
-
-router.post('/registro2', (req, res) => {
-	let newAdmin = new adminSchema({
-      username: req.body.username,
-      password: req.body.password
-    });
-    Admin.createAdmin(newAdmin);
-    //res.redirect('/admin/login');
-	res.send('OK');
 });
 
 router.put('/addNota', (req, res) => {
