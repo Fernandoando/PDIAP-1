@@ -56,16 +56,15 @@ router.get('/loggedin', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/criarEvento', miPermiso("3"), (req, res) => {
-  let myArray = req.body.objetos;
-  
   let newEvento = new eventoSchema({
     tipo: req.body.tipo
     ,nome: req.body.nome
     ,cargaHoraria: req.body.cargaHoraria
     ,data: req.body.data
-    ,responsavel: newResponsavel
   });
-  
+
+  let myArray = req.body.objetos;
+
   myArray.forEach(function (value, i) {
     let newResponsavel = ({
       nome: req.body.nomeResponsavel
@@ -85,6 +84,14 @@ router.get('/mostraEvento', miPermiso("3","2"), (req, res) => {
   eventoSchema.find((err, usr) => {
     if (err) throw err;
     res.send(usr);
+  });
+});
+
+router.put('/removeEvento', (req, res) => {
+  let id = req.body.evento;
+
+  eventoSchema.remove({"_id": id}, (err) => {
+    if (err) throw err;
   });
 });
 
