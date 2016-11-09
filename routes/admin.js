@@ -56,11 +56,8 @@ router.get('/loggedin', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/criarEvento', miPermiso("3"), (req, res) => {
-  let newResponsavel = ({
-     nome: req.body.nomeResponsavel
-    ,cpf: splita(req.body.cpf)
-  });
-
+  let myArray = req.body.objetos;
+  
   let newEvento = new eventoSchema({
     tipo: req.body.tipo
     ,nome: req.body.nome
@@ -68,8 +65,19 @@ router.post('/criarEvento', miPermiso("3"), (req, res) => {
     ,data: req.body.data
     ,responsavel: newResponsavel
   });
-  // console.log(newEvento);
-  Evento.createEvento(newEvento, (callback) => {});
+  
+  myArray.forEach(function (value, i) {
+    let newResponsavel = ({
+      nome: req.body.nomeResponsavel
+      ,cpf: splita(req.body.cpf)
+    });
+    newEvento.responsavel.push(newResponsavel);
+  });
+
+  newEvento.save((err, data) => {
+    if(err) throw err;
+    console.log(data);
+  });
   res.send('sucess');
 });
 
@@ -80,27 +88,27 @@ router.get('/mostraEvento', miPermiso("3","2"), (req, res) => {
   });
 });
 
-router.put('/insereParticipanteOficina', miPermiso("3"), (req, res) => {
-  let myArray = req.body
-  ,   nomeOficina = req.body.nomeOficina;
+// router.put('/insereParticipanteOficina', miPermiso("3"), (req, res) => {
+//   let myArray = req.body
+//   ,   nomeOficina = req.body.nomeOficina;
 
-  myArray.forEach(function (value, i) {
-    let newParticipante = ({
-      nome: value.nome
-      ,cpf: splita(value.cpf)
-      ,email: value.email
-    });
+//   myArray.forEach(function (value, i) {
+//     let newParticipante = ({
+//       nome: value.nome
+//       ,cpf: splita(value.cpf)
+//       ,email: value.email
+//     });
 
-    oficinaSchema.findOne({nome: nomeOficina}, (err, usr) => {
-      if (err) throw err;
-      usr.participantes.push(newParticipante);
-      usr.save((err, usr) => {
-        if (err) throw err;
-      });
-    });
-  });
-  res.send('sucess');
-});
+//     oficinaSchema.findOne({nome: nomeOficina}, (err, usr) => {
+//       if (err) throw err;
+//       usr.participantes.push(newParticipante);
+//       usr.save((err, usr) => {
+//         if (err) throw err;
+//       });
+//     });
+//   });
+//   res.send('sucess');
+// });
 
 router.post('/criarParticipante', miPermiso("3","2"), (req, res) => {  
   let myArray = req.body.objetos;
@@ -146,7 +154,7 @@ router.get('/mostraEventoSaberes', miPermiso("3","2"), (req, res) => {
   });
 });
 
-router.put('/setPresencaSaberes', (req, res) => {
+router.put('/setPresencaSaberes', miPermiso("3","2"), (req, res) => {
   let id = req.body.id;
   let cargaHoraria = req.body.cargaHoraria;
   for (i in myArray) {
