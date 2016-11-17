@@ -10,9 +10,9 @@ const responsavelSchema = new Schema({
 
 const EventoSchema = new Schema({
 	 tipo: {type: String}
-	,nome: {type: String}
+	,titulo: {type: String}
 	,cargaHoraria: {type: String}
-	,responsavel: responsavelSchema
+	,responsavel: [responsavelSchema]
 	,data: {type: String}
 }, { collection: 'eventoCollection' });
 

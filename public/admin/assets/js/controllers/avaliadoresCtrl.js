@@ -21,7 +21,6 @@
 			// 	curriculo: curriculo1,
 			// 	turnos: avaliador.turnos
 			// });
-			console.log(avaliador);
 			adminAPI.saveAvaliador(avaliador)
 			.success(function(data, status) {
 				if (data === 'success') {

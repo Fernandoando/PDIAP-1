@@ -5,14 +5,14 @@ const mongoose = require('mongoose')
 
 const eventoSchema = new Schema({
 	 tipo: {type: String}
-	,nome: {type: String}
+	,titulo: {type: String}
 	,cargaHoraria: {type: String}
 });
 
 const ParticipantelSchema = new Schema({
 	 nome: {type: String}
 	,cpf: {type: String}
-	,eventos: eventoSchema
+	,eventos: [eventoSchema]
 }, { collection: 'participanteCollection' });
 
 const Participante = module.exports = mongoose.model('Participante', ParticipantelSchema);

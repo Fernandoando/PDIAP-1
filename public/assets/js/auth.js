@@ -47,6 +47,7 @@
 				$scope.erro = false;
 				// localStorage.setItem('token','TOKEN_TESTE');
 				$mdDialog.hide();
+				// console.log(projeto);
 				$window.location.href = projeto.redirect;
 			})
 			.error(function() { // authentication failed
@@ -113,7 +114,7 @@
 			$rootScope.logout = function() {
 				$http.post('/logout');
 				$rootScope.logado = false;
-				$window.location.href="http://www.movaci.com.br";
+				$window.location.href="/";
 			};
 	});
 })();

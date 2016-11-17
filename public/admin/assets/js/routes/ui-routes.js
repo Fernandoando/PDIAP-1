@@ -50,13 +50,16 @@
 			}
 		})
 		.state('master', {
-			url: "/admin/master/home",
+			url: "/master",
 			views: {
 				'': {
 					templateUrl: '/admin/views/admin.html',
 					controller: 'adminCtrl'
 				},
-				'@master': { templateUrl: '/admin/views/saberes-iframe.html' }
+				'@master': {
+					templateUrl: '/admin/views/presenca_projetos.html',
+					controller: 'projetosCtrl' 
+				}
 			}
 			// resolve: {
 			// 	loggedin: checkLoggedin
@@ -67,35 +70,24 @@
 			templateUrl: 'admin/views/aprovados.html',
 			controller: 'projetosCtrl'
 		})
-		.state('master.inscricao-saberes', {
-			url: "/saberes-docentes/inscricao",
-			templateUrl: 'admin/views/saberes-iframe.html',
-			controller: 'saberesCtrl'
-		})
-		.state('master.presenca-saberes', {
-			url: "/saberes-docentes/presenca",
-			templateUrl: 'admin/views/presenca_saberes.html',
-			controller: 'saberesCtrl'
-		})
 		.state('master.inscricao-avaliadores', {
 			url: "/avaliadores/inscricao",
-			templateUrl: 'admin/views/avaliadores-iframe.html',
-			controller: 'saberesCtrl'
+			templateUrl: 'admin/views/avaliadores-iframe.html'
 		})
 		.state('master.presenca-projetos', {
 			url: "/projetos/presenca",
 			templateUrl: 'admin/views/presenca_projetos.html',
 			controller: 'projetosCtrl'
 		})
-		.state('master.cadastro-palestras', {
-			url: "/cadastro-palestras",
-			templateUrl: 'admin/views/cadastro-palestras.html',
-			controller: 'saberesCtrl'
+		.state('master.cadastro-eventos', {
+			url: "/cadastro-eventos",
+			templateUrl: 'admin/views/cadastro-eventos.html',
+			controller: 'eventosCtrl'
 		})
-		.state('master.cadastro-oficinas', {
-			url: "/cadastro-oficinas",
-			templateUrl: 'admin/views/cadastro-oficinas.html',
-			controller: 'oficinasCtrl'
+		.state('master.cadastro-participantes', {
+			url: "/cadastro-participantes",
+			templateUrl: 'admin/views/cadastro-participantes.html',
+			controller: 'participantesCtrl'
 		})
 		.state('confirmando', {
 			url: "/projetos/confirma/:idProjeto/:situacao",

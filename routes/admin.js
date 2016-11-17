@@ -27,7 +27,7 @@ const express = require('express')
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-  return next();
+    return next();
   } else {
     res.sendStatus(403);
   }
@@ -43,7 +43,7 @@ function splita(arg){
 function miPermiso(role,role2) {
   return function(req, res, next) {
     if(req.user.permissao === role || req.user.permissao === role2)
-      next();
+    next();
     else res.sendStatus(403);
   }
 }
@@ -56,19 +56,19 @@ router.get('/loggedin', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/criarEvento', miPermiso("3"), (req, res) => {
+  let myArray = req.body.responsavel;
+
   let newEvento = new eventoSchema({
     tipo: req.body.tipo
-    ,nome: req.body.nome
+    ,titulo: req.body.titulo
     ,cargaHoraria: req.body.cargaHoraria
     ,data: req.body.data
   });
 
-  let myArray = req.body.objetos;
-
   myArray.forEach(function (value, i) {
     let newResponsavel = ({
-      nome: req.body.nomeResponsavel
-      ,cpf: splita(req.body.cpf)
+      nome: value.nome
+      ,cpf: splita(value.cpf)
     });
     newEvento.responsavel.push(newResponsavel);
   });
@@ -77,7 +77,7 @@ router.post('/criarEvento', miPermiso("3"), (req, res) => {
     if(err) throw err;
     console.log(data);
   });
-  res.send('sucess');
+  res.send('success');
 });
 
 router.get('/mostraEvento', miPermiso("3","2"), (req, res) => {
@@ -87,12 +87,12 @@ router.get('/mostraEvento', miPermiso("3","2"), (req, res) => {
   });
 });
 
-router.put('/removeEvento', (req, res) => {
-  let id = req.body.evento;
-
+router.put('/removeEvento', miPermiso("3"), (req, res) => {
+  let id = req.body.id;
   eventoSchema.remove({"_id": id}, (err) => {
     if (err) throw err;
   });
+  res.send('success');
 });
 
 // router.put('/insereParticipanteOficina', miPermiso("3"), (req, res) => {
@@ -117,27 +117,70 @@ router.put('/removeEvento', (req, res) => {
 //   res.send('sucess');
 // });
 
-router.post('/criarParticipante', miPermiso("3","2"), (req, res) => {  
-  let myArray = req.body.objetos;
+router.post('/criarParticipante', miPermiso("3"), (req, res) => {
   let newParticipante = new participanteSchema({
-     nome: req.body.nome
+    nome: req.body.nome
     ,cpf: splita(req.body.cpf)
   });
 
-  myArray.forEach(function (value, i) {
-    let newEvento = ({
-      tipo: value.tipo
-      ,nome: value.nome
-      ,cargaHoraria: value.cargaHoraria
+  if (req.body.eventos !== undefined) {
+    let myArray = req.body.eventos;
+    myArray.forEach(function (value, i) {
+      let newEvento = ({
+        tipo: value.tipo
+        ,titulo: value.titulo
+        ,cargaHoraria: value.cargaHoraria
+      });
+      newParticipante.eventos.push(newEvento);
     });
-    newParticipante.eventos.push(newEvento);
-  });
+  }
 
   newParticipante.save((err, data) => {
     if(err) throw err;
     console.log(data);
   });
-  res.send('sucess');
+  res.send('success');
+});
+
+router.get('/mostraParticipante', miPermiso("3","2"), (req, res) => {
+  participanteSchema.find((err, usr) => {
+    if (err) throw err;
+    res.send(usr);
+  });
+});
+
+router.put('/removeParticipante', (req, res) => {
+  let id = req.body.id;
+  participanteSchema.remove({"_id": id}, (err) => {
+    if (err) throw err;
+  });
+  res.send('success');
+});
+
+router.put('/atualizaParticipante', miPermiso("3"), (req, res) => {
+  var id = req.body.id;
+  let nome = req.body.nome;
+  let cpf = splita(req.body.cpf);
+
+  participanteSchema.findOneAndUpdate({"_id": id},{"$set": {"nome": nome, "cpf": cpf}, "$unset": {"eventos": ""}}, {new:true}, (err, doc) => {
+      if (err) throw err;
+    });
+
+  if (req.body.eventos !== undefined) {
+    let myArray = req.body.eventos;
+    myArray.forEach(function (value, i) {
+      var newEvento = ({
+        tipo: value.tipo
+        ,titulo: value.titulo
+        ,cargaHoraria: value.cargaHoraria
+      });
+
+      participanteSchema.findOneAndUpdate({"_id": id},{"$push": {"eventos": newEvento}}, {new:true}, (err, doc) => {
+        if (err) throw err;
+      });
+    });
+  }
+  res.send('success');
 });
 
 router.post('/registroSaberes', miPermiso("3","2"), (req, res) => {
@@ -154,25 +197,43 @@ router.post('/registroSaberes', miPermiso("3","2"), (req, res) => {
   res.send('success');
 });
 
-router.get('/mostraEventoSaberes', miPermiso("3","2"), (req, res) => {
-  eventoSchema.find({"tipo":"Saberes Docentes"},(err, usr) => {
-    if (err) throw err;
-    res.send(usr);
+router.get('/mostraCPFparticipantes', miPermiso("3"), (req, res) => {
+  participanteSchema.find('cpf','cpf -_id', (error, cpfs) => {
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    } else
+    return res.status(200).send(cpfs);
   });
 });
 
-router.put('/setPresencaSaberes', miPermiso("3","2"), (req, res) => {
-  let id = req.body.id;
-  let cargaHoraria = req.body.cargaHoraria;
-  for (i in myArray) {
-    saberesSchema.findOneAndUpdate({"_id": id},
-      {"$set": {"cargaHoraria": cargaHoraria}}, {new:true},
-      (err, doc) => {
-        if (err) throw err;
-      }
-    );
-  }
+router.get('/mostraCPFsaberes', miPermiso("3"), (req, res) => {
+  saberesSchema.find('cpf','cpf -_id', (error, cpfs) => {
+    if(error) {
+      return res.status(400).send({msg:"error occurred"});
+    } else
+    return res.status(200).send(cpfs);
+  });
 });
+
+// router.get('/mostraEventoSaberes', miPermiso("3","2"), (req, res) => {
+//   eventoSchema.find({"tipo":"Saberes Docentes"},(err, usr) => {
+//     if (err) throw err;
+//     res.send(usr);
+//   });
+// });
+
+// router.put('/setPresencaSaberes', miPermiso("3","2"), (req, res) => {
+//   let id = req.body.id;
+//   let cargaHoraria = req.body.cargaHoraria;
+//   for (i in myArray) {
+//     saberesSchema.findOneAndUpdate({"_id": id},
+//     {"$set": {"cargaHoraria": cargaHoraria}}, {new:true},
+//     (err, doc) => {
+//       if (err) throw err;
+//     }
+//   );
+// }
+// });
 
 // router.post('/registro', (req, res) => {
 //   let newAdmin = new adminSchema({
@@ -192,28 +253,28 @@ router.put('/setPresencaProjetos', miPermiso("3"), (req, res) => {
   for (var i = 0; i < myArray0.length; i++) {
     let id_integ = myArray0[i];
     projetoSchema.findOneAndUpdate({"integrantes._id": id_integ},
-      {"$set": {"integrantes.$.presenca": true}}, {new:true},
-      (err, doc) => {
-        if (err) throw err;
-      }
-    );
+    {"$set": {"integrantes.$.presenca": true}}, {new:true},
+    (err, doc) => {
+      if (err) throw err;
+    }
+  );
+}
+for (var i = 0; i < myArray1.length; i++) {
+  let id_integ = myArray1[i];
+  projetoSchema.findOneAndUpdate({"integrantes._id": id_integ},
+  {"$unset": {"integrantes.$.presenca": true}}, {new:true},
+  (err, doc) => {
+    if (err) throw err;
   }
-  for (var i = 0; i < myArray1.length; i++) {
-    let id_integ = myArray1[i];
-    projetoSchema.findOneAndUpdate({"integrantes._id": id_integ},
-      {"$unset": {"integrantes.$.presenca": true}}, {new:true},
-      (err, doc) => {
-        if (err) throw err;
-      }
-    );
-  }
-  res.send('success');
+);
+}
+res.send('success');
 });
 
 router.get('/projetos', miPermiso("2","3"), (req, res) => {
   projetoSchema.find((err, usr) => {
-  	if (err) throw err;
-  	res.send(usr);
+    if (err) throw err;
+    res.send(usr);
   });
 });
 
@@ -242,9 +303,9 @@ router.put('/upgreice', ensureAuthenticated, miPermiso("3"), (req, res) => {
     (err, doc) => {
       if (err) throw err;
     }
-    );
-  }
-  res.send('success');
+  );
+}
+res.send('success');
 });
 
 router.put('/upgreice2', ensureAuthenticated, miPermiso("3"), (req, res) => {
@@ -288,22 +349,22 @@ router.post('/aprovadosemail', miPermiso("3"), (req, res) => {
           console.log(users[i]);
         }
 
-      const transporter = nodemailer.createTransport(smtpTransport({
-        host: 'smtp.zoho.com',
-        port: 587,
-        auth: {
-          user: "no-reply4@movaci.com.br",
-          pass: "mvc2016"
-        },
-        getSocket: true
-  }));
+        const transporter = nodemailer.createTransport(smtpTransport({
+          host: 'smtp.zoho.com',
+          port: 587,
+          auth: {
+            user: "no-reply4@movaci.com.br",
+            pass: "mvc2016"
+          },
+          getSocket: true
+        }));
 
-      var Render = function(locals) {
-        this.locals = locals;
-        this.send = function(err, html, text) {
-          if (err) {
-            console.log(err);
-          } else {
+        var Render = function(locals) {
+          this.locals = locals;
+          this.send = function(err, html, text) {
+            if (err) {
+              console.log(err);
+            } else {
 
               transporter.sendMail({
                 from: 'no-reply4@movaci.com.br',
@@ -312,29 +373,29 @@ router.post('/aprovadosemail', miPermiso("3"), (req, res) => {
                 html: html,
                 text: text
 
-          }, function(err, responseStatus) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(responseStatus.message);
+              }, function(err, responseStatus) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log(responseStatus.message);
+                }
+              });
             }
-          });
-          }
+          };
+          this.batch = function(batch) {
+            batch(this.locals, templatesDir, this.send);
+          };
         };
-        this.batch = function(batch) {
-          batch(this.locals, templatesDir, this.send);
-        };
-      };
 
-    // Load the template and send the emails
-    template('rateada', true, function(err, batch) {
-        for(var user in users) {
-             var render = new Render(users[user]);
+        // Load the template and send the emails
+        template('rateada', true, function(err, batch) {
+          for(var user in users) {
+            var render = new Render(users[user]);
             render.batch(batch);
-        };
+          };
+        });
+        res.send('ok');
       });
-      res.send('ok');
-    });
     };
   });
 });
@@ -363,22 +424,22 @@ router.post('/reprovadosemail', miPermiso("3"), (req, res) => {
           console.log(users[i]);
         }
 
-      const transporter = nodemailer.createTransport(smtpTransport({
-        host: 'smtp.zoho.com',
-        port: 587,
-        auth: {
-          user: "contato@movaci.com.br",
-          pass: "mvc2016"
-        },
-        getSocket: true
-  }));
+        const transporter = nodemailer.createTransport(smtpTransport({
+          host: 'smtp.zoho.com',
+          port: 587,
+          auth: {
+            user: "contato@movaci.com.br",
+            pass: "mvc2016"
+          },
+          getSocket: true
+        }));
 
-      var Render = function(locals) {
-        this.locals = locals;
-        this.send = function(err, html, text) {
-          if (err) {
-            console.log(err);
-          } else {
+        var Render = function(locals) {
+          this.locals = locals;
+          this.send = function(err, html, text) {
+            if (err) {
+              console.log(err);
+            } else {
 
               transporter.sendMail({
                 from: 'contato@movaci.com.br',
@@ -387,112 +448,112 @@ router.post('/reprovadosemail', miPermiso("3"), (req, res) => {
                 html: html,
                 text: text
 
-          }, function(err, responseStatus) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(responseStatus.message);
+              }, function(err, responseStatus) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log(responseStatus.message);
+                }
+              });
             }
-          });
-          }
+          };
+          this.batch = function(batch) {
+            batch(this.locals, templatesDir, this.send);
+          };
         };
-        this.batch = function(batch) {
-          batch(this.locals, templatesDir, this.send);
-        };
-      };
 
-    // Load the template and send the emails
-    template('confirmacao_nao', true, function(err, batch) {
-        for(var user in users) {
-             var render = new Render(users[user]);
+        // Load the template and send the emails
+        template('confirmacao_nao', true, function(err, batch) {
+          for(var user in users) {
+            var render = new Render(users[user]);
             render.batch(batch);
-        };
+          };
+        });
+        res.send('ok');
       });
-      res.send('ok');
-    });
     };
   });
 });
 
 /*router.post('/aprovados', (req, res) => {
-  console.log(req.body.username);
-  const transporter = nodemailer.createTransport(smtpTransport({
-    host: 'smtp.zoho.com',
-    port: 587,
-    auth: {
-      user: "contato@movaci.com.br",
-      pass: "*mvc2016"
-    }
-  }));
+console.log(req.body.username);
+const transporter = nodemailer.createTransport(smtpTransport({
+host: 'smtp.zoho.com',
+port: 587,
+auth: {
+user: "contato@movaci.com.br",
+pass: "*mvc2016"
+}
+}));
 
-  let maillist = [];
+let maillist = [];
 
-  projetoSchema.find({"aprovado": true}).exec(function(err, users) {
-    if (err) throw err;
-    users.forEach(function(usr) {
-      maillist.push(usr.email);
-      console.log(maillist);
-    });
-  });
+projetoSchema.find({"aprovado": true}).exec(function(err, users) {
+if (err) throw err;
+users.forEach(function(usr) {
+maillist.push(usr.email);
+console.log(maillist);
+});
+});
 
-  maillist.toString();
+maillist.toString();
 
-  /*var mailOptions = {
-    from: 'contato@movaci.com.br',
-    to: maillist,
-    subject: 'Teste aprovados',
-    text: '',
-    html: '<b> Teste:</b><br><b>De: </b>'
-  };
-  transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-      return console.log(error);
-    } else {
-      res.send('success');
-    }
-    console.log('Message sent: ' + info.response);
-  });*/
+/*var mailOptions = {
+from: 'contato@movaci.com.br',
+to: maillist,
+subject: 'Teste aprovados',
+text: '',
+html: '<b> Teste:</b><br><b>De: </b>'
+};
+transporter.sendMail(mailOptions, function(error, info){
+if(error){
+return console.log(error);
+} else {
+res.send('success');
+}
+console.log('Message sent: ' + info.response);
+});*/
 
 
 /*router.get('/pdf', (req, res) =>{
 
-	var pdf = require('pdfkit');
-	var fs = require('fs');
+var pdf = require('pdfkit');
+var fs = require('fs');
 
-	projetoSchema.find().sort({"categoria":1, "eixo":1, "numInscricao":1}).exec(function(err, users) {
-  	if (err) throw err;
-  	//res.send(usr);
-  	var myDoc = new pdf;
-  	myDoc.pipe(fs.createWriteStream('output.pdf'));
-  	users.forEach(function(usr){
+projetoSchema.find().sort({"categoria":1, "eixo":1, "numInscricao":1}).exec(function(err, users) {
+if (err) throw err;
+//res.send(usr);
+var myDoc = new pdf;
+myDoc.pipe(fs.createWriteStream('output.pdf'));
+users.forEach(function(usr){
 
-  		myDoc.addPage()
-  		.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-  		.fontSize(12)
-  		.text("Num. inscrição: "+usr.numInscricao, 410, 70)
-  		.fontSize(18)
-  		.text("Projeto",70,110)
-  		.fontSize(12)
-  		.text("Nome do projeto: "+usr.nomeProjeto,70,140)
-  		.text("Categoria: "+usr.categoria,70,170)
-  		.text("Eixo: "+usr.eixo,70,190)
-  		.fontSize(18)
-  		.text("Escola",70,220)
-  		.fontSize(12)
-  		.text("Nome: "+usr.nomeEscola,70,250)
-  		.text("Cidade: "+usr.cidade+"     Estado: "+usr.estado,70,270)
-  		.fontSize(18)
-  		.text("Resumo",70,300)
-  		.fontSize(12)
-  		.text("Palavras-chave: "+usr.palavraChave,70,320)
-  		.text(usr.resumo,70,350, {align: 'justify'})
+myDoc.addPage()
+.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+.fontSize(12)
+.text("Num. inscrição: "+usr.numInscricao, 410, 70)
+.fontSize(18)
+.text("Projeto",70,110)
+.fontSize(12)
+.text("Nome do projeto: "+usr.nomeProjeto,70,140)
+.text("Categoria: "+usr.categoria,70,170)
+.text("Eixo: "+usr.eixo,70,190)
+.fontSize(18)
+.text("Escola",70,220)
+.fontSize(12)
+.text("Nome: "+usr.nomeEscola,70,250)
+.text("Cidade: "+usr.cidade+"     Estado: "+usr.estado,70,270)
+.fontSize(18)
+.text("Resumo",70,300)
+.fontSize(12)
+.text("Palavras-chave: "+usr.palavraChave,70,320)
+.text(usr.resumo,70,350, {align: 'justify'})
 
-  		console.log(usr.numInscricao);
+console.log(usr.numInscricao);
 
-	});
-	res.sendStatus(200);
-	myDoc.end();
-  });
+});
+res.sendStatus(200);
+myDoc.end();
+});
 });*/
 
 router.post('/emailUpload', miPermiso("3"), (req, res) => {
@@ -516,22 +577,22 @@ router.post('/emailUpload', miPermiso("3"), (req, res) => {
           users.push({'email':usr.email});
         });
 
-      const transporter = nodemailer.createTransport(smtpTransport({
-        host: 'smtp.zoho.com',
-        port: 587,
-        auth: {
-          user: "no-reply5@movaci.com.br",
-          pass: "mvc2016"
-        },
-        getSocket: true
-  }));
+        const transporter = nodemailer.createTransport(smtpTransport({
+          host: 'smtp.zoho.com',
+          port: 587,
+          auth: {
+            user: "no-reply5@movaci.com.br",
+            pass: "mvc2016"
+          },
+          getSocket: true
+        }));
 
-      var Render = function(locals) {
-        this.locals = locals;
-        this.send = function(err, html, text) {
-          if (err) {
-            console.log(err);
-          } else {
+        var Render = function(locals) {
+          this.locals = locals;
+          this.send = function(err, html, text) {
+            if (err) {
+              console.log(err);
+            } else {
 
               transporter.sendMail({
                 from: 'no-reply5@movaci.com.br',
@@ -540,29 +601,29 @@ router.post('/emailUpload', miPermiso("3"), (req, res) => {
                 html: html,
                 text: text
 
-          }, function(err, responseStatus) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(responseStatus.message);
+              }, function(err, responseStatus) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log(responseStatus.message);
+                }
+              });
             }
-          });
-          }
+          };
+          this.batch = function(batch) {
+            batch(this.locals, templatesDir, this.send);
+          };
         };
-        this.batch = function(batch) {
-          batch(this.locals, templatesDir, this.send);
-        };
-      };
 
-    // Load the template and send the emails
-    template('upload', true, function(err, batch) {
-        for(var user in users) {
-             var render = new Render(users[user]);
+        // Load the template and send the emails
+        template('upload', true, function(err, batch) {
+          for(var user in users) {
+            var render = new Render(users[user]);
             render.batch(batch);
-        };
+          };
+        });
+        res.send('ok');
       });
-      res.send('ok');
-    });
     };
   });
 });
@@ -607,15 +668,15 @@ router.get('/camisetas', miPermiso("3"), (req, res) => {
   let cont = 0;
   myDoc.pipe(fs.createWriteStream('camisetasMedio.pdf'));
   myDoc
-    .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-    .fontSize(16)
-    .moveDown(4)
-    .text("Relação das camisetas - Ensino Médio, Técnico e Superior", {align: 'center'})
-    .moveDown(2)
-    .fontSize(12)
+  .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+  .fontSize(16)
+  .moveDown(4)
+  .text("Relação das camisetas - Ensino Médio, Técnico e Superior", {align: 'center'})
+  .moveDown(2)
+  .fontSize(12)
 
   // saberesSchema.find({}).sort({"nome":1}).exec((err, usr) => {Fundamental II (6º ao 9º anos)
-    projetoSchema.find({"participa":true,"categoria":"Ensino Médio, Técnico e Superior"}).sort({"eixo":1, "nomeProjeto":1}).exec((err, usr) => {
+  projetoSchema.find({"participa":true,"categoria":"Ensino Médio, Técnico e Superior"}).sort({"eixo":1, "nomeProjeto":1}).exec((err, usr) => {
     if (err) throw err;
     let echu = "";
     let cont = 0;
@@ -630,14 +691,14 @@ router.get('/camisetas', miPermiso("3"), (req, res) => {
       }
 
       myDoc
-        .text(cont+". "+usr[user].nomeProjeto)
-        .moveDown(0.1)
-        .text("  Participa: "+usr[user].participa)
-        .moveDown(0.1)
-        .text("  Escola: "+usr[user].nomeEscola)
-        .moveDown(0.1)
-        .text("  Integrantes: ")
-        .moveDown(0.1)
+      .text(cont+". "+usr[user].nomeProjeto)
+      .moveDown(0.1)
+      .text("  Participa: "+usr[user].participa)
+      .moveDown(0.1)
+      .text("  Escola: "+usr[user].nomeEscola)
+      .moveDown(0.1)
+      .text("  Integrantes: ")
+      .moveDown(0.1)
 
       // let af = usr[user].integrantes.length;
       // console.log(af);
@@ -648,8 +709,8 @@ router.get('/camisetas', miPermiso("3"), (req, res) => {
       usr[user].integrantes.forEach (function(integ) {
         // console.log(integ.nome);
         if (integ.tipo === "Orientador") {
-            cont ++;
-            console.log(cont);
+          cont ++;
+          console.log(cont);
         }
         if (integ.tipo !== undefined){
           myDoc.text("     "+integ.nome+ " | Tam. "+integ.tamCamiseta);
@@ -685,14 +746,14 @@ router.post('/pdf2', miPermiso("3"), (req, res) => {
   myDoc.pipe(fs.createWriteStream('relacaoCamisetas.pdf'));
 
   myDoc
-    .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-    .fontSize(20)
-    .moveDown(2.5)
-    .text("Relação camisetas", {align: 'center'})
-    .fontSize(14)
-    .moveDown(2.5)
-    .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
-    .moveDown(1)
+  .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+  .fontSize(20)
+  .moveDown(2.5)
+  .text("Relação camisetas", {align: 'center'})
+  .fontSize(14)
+  .moveDown(2.5)
+  .text("FUNDAMENTAL I (1° ao 5° ano)", {align: 'center'})
+  .moveDown(1)
 
   projetoSchema.find({"aprovado":true,"categoria":"Fundamental I (1º ao 5º anos)"}).sort({"eixo":1, "nomeProjeto":1}).exec((err, user) => {
     if (err) throw err;
@@ -747,118 +808,118 @@ router.post('/pdf2', miPermiso("3"), (req, res) => {
   res.sendStatus(200);
 });
 
-    // projetoSchema.find({"aprovado":true,"categoria":"Fundamental II (6º ao 9º anos)"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
-    //   if (err) throw err;
-    //   myDoc.addPage()
-    //   .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-    //   .moveDown(5)
-    //   .text("FUNDAMENTAL II (6° ao 9° ano)", {align: 'center'})
-    //   .moveDown(1)
+// projetoSchema.find({"aprovado":true,"categoria":"Fundamental II (6º ao 9º anos)"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
+//   if (err) throw err;
+//   myDoc.addPage()
+//   .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//   .moveDown(5)
+//   .text("FUNDAMENTAL II (6° ao 9° ano)", {align: 'center'})
+//   .moveDown(1)
 
-    //   users.forEach(function(usr){
+//   users.forEach(function(usr){
 
-    //     myDoc.moveDown(1.5)
-    //   //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//     myDoc.moveDown(1.5)
+//   //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
 
-    //   if (usr.eixo !== echu) {
-    //     echu = usr.eixo;
-    //     myDoc.fontSize(14)
-    //     .text("Eixo: "+usr.eixo, {align: 'center'})
-    //   }
-
-
-    //   //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-    //   myDoc.fontSize(12)
-    //   .moveDown(1)
-    //   .text("Projeto: "+usr.nomeProjeto)
-    //   .moveDown(0.5)
-    //   // .text("Eixo: "+usr.eixo)
-    //   // .moveDown(0.5)
-    //   // .text("Orientador(es): ");
-
-    //   if (usr.integrantes[0].tipo !== undefined){
-    //     myDoc.text("     Nome: "+usr.integrantes[0].nome+ " | Tam. "+usr.integrantes[0].tamCamiseta);
-    //   }
-
-    //   if (usr.integrantes[1].tipo !== undefined){
-    //     myDoc.moveDown(0.5)
-    //     myDoc.text("     Nome: "+usr.integrantes[1].nome+ " | Tam. "+usr.integrantes[1].tamCamiseta);
-    //   }
-
-    //   if (usr.integrantes[2].tipo !== undefined){
-    //     myDoc.moveDown(0.5)
-    //     myDoc.text("     Nome: "+usr.integrantes[2].nome+ " | Tam. "+usr.integrantes[2].tamCamiseta);
-    //   }
-
-    //   if (usr.integrantes[3].tipo !== undefined){
-    //     myDoc.moveDown(0.5)
-    //     myDoc.text("     Nome: "+usr.integrantes[3].nome+ " | Tam. "+usr.integrantes[3].tamCamiseta);
-    //   }
-
-    //   if (usr.integrantes[4].tipo !== undefined){
-    //     myDoc.moveDown(0.5)
-    //     myDoc.text("     Nome: "+usr.integrantes[4].nome+ " | Tam. "+usr.integrantes[4].tamCamiseta);
-    //   }
-    // });
-
-    //   projetoSchema.find({"aprovado":true, "categoria":"Ensino Médio, Técnico e Superior"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
-    //     if (err) throw err;
-    //     myDoc.addPage()
-    //     .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-    //     .moveDown(5)
-    //     .text("ENSINO MÉDIO, TÉNICO E SUPERIOR", {align: 'center'})
-    //     .moveDown(1)
-
-    //     users.forEach(function(usr){
-
-    //       myDoc.moveDown(1.5)
-    //   //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-
-    //   if (usr.eixo !== echu) {
-    //     echu = usr.eixo;
-    //     myDoc.fontSize(14)
-    //     .text("Eixo: "+usr.eixo, {align: 'center'})
-    //   }
+//   if (usr.eixo !== echu) {
+//     echu = usr.eixo;
+//     myDoc.fontSize(14)
+//     .text("Eixo: "+usr.eixo, {align: 'center'})
+//   }
 
 
-    //   //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
-    //   myDoc.fontSize(12)
-    //   .moveDown(1)
-    //   .text("Projeto: "+usr.nomeProjeto)
-    //   .moveDown(0.5)
-    //   // .text("Eixo: "+usr.eixo)
-    //   // .moveDown(0.5)
-    //   // .text("Orientador(es): ");
+//   //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//   myDoc.fontSize(12)
+//   .moveDown(1)
+//   .text("Projeto: "+usr.nomeProjeto)
+//   .moveDown(0.5)
+//   // .text("Eixo: "+usr.eixo)
+//   // .moveDown(0.5)
+//   // .text("Orientador(es): ");
 
-    //   if (usr.integrantes[0].tipo !== undefined){
-    //     myDoc.text("     Nome: "+usr.integrantes[0].nome+ " | Tam. "+usr.integrantes[0].tamCamiseta);
-    //   }
+//   if (usr.integrantes[0].tipo !== undefined){
+//     myDoc.text("     Nome: "+usr.integrantes[0].nome+ " | Tam. "+usr.integrantes[0].tamCamiseta);
+//   }
 
-    //   if (usr.integrantes[1].tipo !== undefined){
-    //     myDoc.moveDown(0.5)
-    //     myDoc.text("     Nome: "+usr.integrantes[1].nome+ " | Tam. "+usr.integrantes[1].tamCamiseta);
-    //   }
+//   if (usr.integrantes[1].tipo !== undefined){
+//     myDoc.moveDown(0.5)
+//     myDoc.text("     Nome: "+usr.integrantes[1].nome+ " | Tam. "+usr.integrantes[1].tamCamiseta);
+//   }
 
-    //   if (usr.integrantes[2].tipo !== undefined){
-    //     myDoc.moveDown(0.5)
-    //     myDoc.text("     Nome: "+usr.integrantes[2].nome+ " | Tam. "+usr.integrantes[2].tamCamiseta);
-    //   }
+//   if (usr.integrantes[2].tipo !== undefined){
+//     myDoc.moveDown(0.5)
+//     myDoc.text("     Nome: "+usr.integrantes[2].nome+ " | Tam. "+usr.integrantes[2].tamCamiseta);
+//   }
 
-    //   if (usr.integrantes[3].tipo !== undefined){
-    //     myDoc.moveDown(0.5)
-    //     myDoc.text("     Nome: "+usr.integrantes[3].nome+ " | Tam. "+usr.integrantes[3].tamCamiseta);
-    //   }
+//   if (usr.integrantes[3].tipo !== undefined){
+//     myDoc.moveDown(0.5)
+//     myDoc.text("     Nome: "+usr.integrantes[3].nome+ " | Tam. "+usr.integrantes[3].tamCamiseta);
+//   }
 
-    //   if (usr.integrantes[4].tipo !== undefined){
-    //     myDoc.moveDown(0.5)
-    //     myDoc.text("     Nome: "+usr.integrantes[4].nome+ " | Tam. "+usr.integrantes[4].tamCamiseta);
-    //   }
-    // });
-      // });
-    // });
-  //   res.sendStatus(200);
-  //   myDoc.end();
-  // });
+//   if (usr.integrantes[4].tipo !== undefined){
+//     myDoc.moveDown(0.5)
+//     myDoc.text("     Nome: "+usr.integrantes[4].nome+ " | Tam. "+usr.integrantes[4].tamCamiseta);
+//   }
+// });
+
+//   projetoSchema.find({"aprovado":true, "categoria":"Ensino Médio, Técnico e Superior"}).sort({"eixo":1, "numInscricao":1}).exec(function(err, users) {
+//     if (err) throw err;
+//     myDoc.addPage()
+//     .image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//     .moveDown(5)
+//     .text("ENSINO MÉDIO, TÉNICO E SUPERIOR", {align: 'center'})
+//     .moveDown(1)
+
+//     users.forEach(function(usr){
+
+//       myDoc.moveDown(1.5)
+//   //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+
+//   if (usr.eixo !== echu) {
+//     echu = usr.eixo;
+//     myDoc.fontSize(14)
+//     .text("Eixo: "+usr.eixo, {align: 'center'})
+//   }
+
+
+//   //.image('public/assets/images/logo.png',70, 55, { fit: [200,350] })
+//   myDoc.fontSize(12)
+//   .moveDown(1)
+//   .text("Projeto: "+usr.nomeProjeto)
+//   .moveDown(0.5)
+//   // .text("Eixo: "+usr.eixo)
+//   // .moveDown(0.5)
+//   // .text("Orientador(es): ");
+
+//   if (usr.integrantes[0].tipo !== undefined){
+//     myDoc.text("     Nome: "+usr.integrantes[0].nome+ " | Tam. "+usr.integrantes[0].tamCamiseta);
+//   }
+
+//   if (usr.integrantes[1].tipo !== undefined){
+//     myDoc.moveDown(0.5)
+//     myDoc.text("     Nome: "+usr.integrantes[1].nome+ " | Tam. "+usr.integrantes[1].tamCamiseta);
+//   }
+
+//   if (usr.integrantes[2].tipo !== undefined){
+//     myDoc.moveDown(0.5)
+//     myDoc.text("     Nome: "+usr.integrantes[2].nome+ " | Tam. "+usr.integrantes[2].tamCamiseta);
+//   }
+
+//   if (usr.integrantes[3].tipo !== undefined){
+//     myDoc.moveDown(0.5)
+//     myDoc.text("     Nome: "+usr.integrantes[3].nome+ " | Tam. "+usr.integrantes[3].tamCamiseta);
+//   }
+
+//   if (usr.integrantes[4].tipo !== undefined){
+//     myDoc.moveDown(0.5)
+//     myDoc.text("     Nome: "+usr.integrantes[4].nome+ " | Tam. "+usr.integrantes[4].tamCamiseta);
+//   }
+// });
+// });
+// });
+//   res.sendStatus(200);
+//   myDoc.end();
+// });
 
 // });
 

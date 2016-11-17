@@ -32,8 +32,6 @@
 						$scope.count++;
 					}
 				});
-				console.log($rootScope.projetos);
-
 			})
 			.error(function(status) {
 				console.log(status);
@@ -78,8 +76,8 @@
 				}
 				$scope.idProjetosAprovados.push(idProj);
 			}
-			console.log("Aprovados: "+$scope.idProjetosAprovados);
-			console.log("Reprovados: "+$scope.idProjetosReprovados);
+			// console.log("Aprovados: "+$scope.idProjetosAprovados);
+			// console.log("Reprovados: "+$scope.idProjetosReprovados);
 		}
 
 		$scope.visualizarDetalhes = function(projeto,ev) {
@@ -112,8 +110,8 @@
 							}
 							$scope.idIntegrantesPresentes.push(idIntegrante);
 						}
-						console.log("Presentes: "+$scope.idIntegrantesPresentes);
-						console.log("Ausentes: "+$scope.idIntegrantesAusentes);
+						// console.log("Presentes: "+$scope.idIntegrantesPresentes);
+						// console.log("Ausentes: "+$scope.idIntegrantesAusentes);
 					}
 					$scope.setPresenca = function() {
 						adminAPI.putPresencaProjetos($scope.idIntegrantesPresentes,$scope.idIntegrantesAusentes)
@@ -216,8 +214,6 @@
 				console.log('Error: '+status);
 			});
 		}
-
-
 
 		// $scope.ordenacao = ['categoria','eixo'];
 		$scope.ordenarPor = function(campo) {
