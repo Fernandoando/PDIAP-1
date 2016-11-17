@@ -206,14 +206,14 @@ router.get('/mostraCPFparticipantes', miPermiso("3"), (req, res) => {
   });
 });
 
-router.get('/mostraCPFsaberes', miPermiso("3"), (req, res) => {
-  saberesSchema.find('cpf','cpf -_id', (error, cpfs) => {
-    if(error) {
-      return res.status(400).send({msg:"error occurred"});
-    } else
-    return res.status(200).send(cpfs);
-  });
-});
+// router.get('/mostraCPFsaberes', miPermiso("3"), (req, res) => {
+//   saberesSchema.find('cpf','cpf -_id', (error, cpfs) => {
+//     if(error) {
+//       return res.status(400).send({msg:"error occurred"});
+//     } else
+//     return res.status(200).send(cpfs);
+//   });
+// });
 
 // router.get('/mostraEventoSaberes', miPermiso("3","2"), (req, res) => {
 //   eventoSchema.find({"tipo":"Saberes Docentes"},(err, usr) => {

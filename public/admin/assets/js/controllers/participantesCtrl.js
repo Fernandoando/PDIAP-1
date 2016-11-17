@@ -50,21 +50,6 @@
 		};
 		$scope.mostraEventos = mostraEventos();
 
-		// let getCPFsaberes = function() {
-		// 	adminAPI.getCPFsaberes()
-		// 	.success(function(cpfs) {
-		// 		$scope.CPFparticipantes = [];
-		// 		angular.forEach(cpfs, function (value, key) {
-		// 			$scope.CPFsaberes.push(formatCPF(value.cpf));
-		// 		});
-		// 		console.log($scope.CPFsaberes);
-		// 	})
-		// 	.error(function(status) {
-		// 		console.log('Error: '+status);
-		// 	});
-		// };
-		// $scope.getCPFsaberes = getCPFsaberes();
-
 		let getCPFparticipantes = function() {
 			adminAPI.getCPFparticipantes()
 			.success(function(cpfs) {
@@ -72,7 +57,7 @@
 				angular.forEach(cpfs, function (value, key) {
 					$scope.CPFparticipantes.push(formatCPF(value.cpf));
 				});
-				console.log($scope.CPFparticipantes);
+				// console.log($scope.CPFparticipantes);
 				mostraSaberes();
 			})
 			.error(function(status) {
@@ -119,9 +104,6 @@
 							cpf: formatCPF(value.cpf)
 						});
 						$rootScope.participantes.push(pacote);
-						if (value.nome === 'cfvygbh') {
-							console.log(value);
-						}
 					}
 				});
 			})
