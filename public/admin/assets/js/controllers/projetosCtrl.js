@@ -132,6 +132,7 @@
 									}
 								}
 							}
+							count = 0;
 							if ($scope.idIntegrantesAusentes.length !== 0) {
 								for (var i = 0; i < $rootScope.projetos.length; i++) {
 									if ($rootScope.projetos[i]._id === $scope.details._id) {
@@ -146,7 +147,7 @@
 									}
 								}
 							}
-
+							$mdDialog.hide();
 							$scope.idIntegrantesPresentes = [];
 							$scope.idIntegrantesAusentes = [];
 						})
