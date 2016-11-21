@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express')
 , router = express.Router()
 , passport = require('passport')
@@ -5,6 +7,8 @@ const express = require('express')
 , Projeto = require('../controllers/projeto-controller')
 , session = require('express-session')
 , ProjetoSchema = require('../models/projeto-schema')
+, avaliadorSchema = require('../models/avaliador-schema')
+, participanteSchema = require('../models/participante-schema')
 , crypto = require('crypto')
 , bcrypt = require('bcryptjs')
 , Admin = require('../controllers/admin-controller')
@@ -14,6 +18,7 @@ const express = require('express')
 , path = require('path')
 , EmailTemplate = require('email-templates').EmailTemplate
 , wellknown = require('nodemailer-wellknown')
+, Promise = require('promise')
 , async = require('async');
 
 function splita(arg){
@@ -74,6 +79,62 @@ function testaUsername2(req, res, next) {
 //     //res.redirect('/admin/login');
 //   res.send('OK');
 // });
+
+router.post('/certificado', (req, res) => {
+  let cpf = splita(req.body.cpf)
+  let array = []
+
+  function pesquisaProjeto(cpf) {
+    return new Promise(function (fulfill, reject) {
+      ProjetoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
+        if (err) return reject(err)
+        fulfill(usr)
+      });
+    })
+  }
+
+  function pesquisaAvaliador(cpf) {
+    return new Promise(function (fulfill, reject) {
+      avaliadorSchema.find({'cpf':cpf}, 'nome -_id',(err, usr) => {
+        if (err) return reject(err)
+        fulfill(usr)
+      })
+    })
+  }
+
+  function pesquisaParticipante(cpf) {
+    return new Promise(function (fulfill, reject) {
+      participanteSchema.find({'cpf':cpf}, 'nome eventos -_id', (err, usr) => {
+        if (err) return reject(err)
+        fulfill(usr)
+      })
+    })
+  }
+
+  const one = pesquisaProjeto(cpf).then(usr => ({
+    tipo: usr[0].integrantes[0].tipo,
+    nome: usr[0].integrantes[0].nome
+  }))
+  .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+
+  const two = pesquisaAvaliador(cpf).then(usr => ({
+    tipo: "Avaliador",
+    nome: usr[0].nome
+  }))
+  .catch(err => console.log("Não encontrou nada nos avaliadores. " + err.message))
+
+  const three = pesquisaParticipante(cpf).then(usr => ({
+    tipo: "Participante",
+    nome: usr[0].nome,
+    eventos: usr[0].eventos
+  }))
+  .catch(err => console.log("Não encontrou nada nos participantes dos eventos. " + err.message))
+
+  Promise.all([one, two, three])
+  .then(arr => {
+    res.send(arr.filter(val => val !== undefined ))
+  })
+});
 
 router.post('/contato', (req, res) => {
   let email = req.body.email
