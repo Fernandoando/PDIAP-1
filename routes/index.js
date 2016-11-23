@@ -9,6 +9,8 @@ const express = require('express')
 , ProjetoSchema = require('../models/projeto-schema')
 , avaliadorSchema = require('../models/avaliador-schema')
 , participanteSchema = require('../models/participante-schema')
+, eventoSchema = require('../models/evento-schema')
+, premiadoSchema = require('../models/premiados2016-schema')
 , crypto = require('crypto')
 , bcrypt = require('bcryptjs')
 , Admin = require('../controllers/admin-controller')
@@ -88,8 +90,9 @@ router.post('/certificado', (req, res) => {
     return new Promise(function (fulfill, reject) {
       ProjetoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
         if (err) return reject(err)
+        if (usr == 0) return reject({err})
         fulfill(usr)
-      });
+      })
     })
   }
 
@@ -107,6 +110,26 @@ router.post('/certificado', (req, res) => {
       participanteSchema.find({'cpf':cpf}, 'nome eventos -_id', (err, usr) => {
         if (err) return reject(err)
         fulfill(usr)
+      })
+    })
+  }
+
+  function pesquisaEvento(cpf) {
+    return new Promise(function (fullfill, reject) {
+      eventoSchema.find({'responsavel.cpf':cpf}, 'tipo titulo cargaHoraria data responsavel.$ -_id', (err, usr) => {
+        if (err) return reject(err)
+        if (usr == 0) return reject({err})
+        fullfill(usr)
+      })
+    })
+  }
+
+  function pesquisaPremiado(cpf) {
+    return new Promise(function (fullfill, reject) {
+      premiadoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ nomeProjeto categoria eixo colocacao mostratec -_id',(err, usr) => {
+        if (err) return reject(err)
+        if (usr == 0) return reject({err})
+        fullfill(usr)
       })
     })
   }
@@ -138,11 +161,56 @@ router.post('/certificado', (req, res) => {
   }))
   .catch(err => console.log("Não encontrou nada nos participantes dos eventos. " + err.message))
 
-  Promise.all([one, two, three])
+  const four = pesquisaEvento(cpf).then(usr => {
+    let array = []
+    for (let i in usr) {
+      let participante = {
+        responsavelNome: usr[i].responsavel[0].nome,
+        tipo: usr[i].tipo,
+        titulo: usr[i].titulo,
+        cargaHoraria: usr[i].cargaHoraria,
+        data: usr[i].data
+      }
+      array.push(participante)
+    }
+    return array
+  })
+  .catch(err => console.log("Não encontrou nada nos responsáveis de eventos. " + err.message))
+
+  const five = pesquisaPremiado(cpf).then(usr => {
+    let array = []
+    for (let i in usr) {
+      let premiado = {
+        tipo: "Premiado",
+        tipoIntegrante: usr[i].integrantes[0].tipo,
+        nome: usr[i].integrantes[0].nome,
+        nomeProjeto: usr[i].nomeProjeto,
+        categoria: usr[i].categoria,
+        eixo: usr[i].eixo,
+        colocacao: usr[i].colocacao,
+        mostratec: usr[i].mostratec
+      }
+      array.push(premiado)
+    }
+    if (array !== undefined)
+    return array
+  })
+  .catch(err => console.log("Não encontrou nada nos premiados. " + err.message))
+
+  Promise.all([one, two, three, four, five])
   .then(arr => {
-    res.send(arr.filter(val => val !== undefined ))
+    res.send(arr.filter(val => val !== undefined))
   })
 });
+
+router.post('/testi', (req, res) => {
+  let cpf = splita(req.body.cpf);
+  console.log(cpf);
+  premiadoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ nomeProjeto colocacao mostratec -_id',(err, usr) => {
+    if (err) return err
+    res.send(usr)
+  })
+})
 
 router.post('/contato', (req, res) => {
   let email = req.body.email
