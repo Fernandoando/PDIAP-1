@@ -111,11 +111,18 @@ router.post('/certificado', (req, res) => {
     })
   }
 
-  const one = pesquisaProjeto(cpf).then(usr => ({
-    tipo: usr[0].integrantes[0].tipo,
-    nome: usr[0].integrantes[0].nome,
-    nomeProjeto: usr[0].nomeProjeto
-  }))
+  const one = pesquisaProjeto(cpf).then(usr => {
+    let array = []
+    for (let i in usr) {
+      let participante = {
+        tipo: usr[i].integrantes[0].tipo,
+        nome: usr[i].integrantes[0].nome,
+        nomeProjeto: usr[i].nomeProjeto
+      }
+      array.push(participante)
+    }
+    return array
+  })
   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
 
   const two = pesquisaAvaliador(cpf).then(usr => ({
