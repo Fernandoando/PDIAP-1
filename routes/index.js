@@ -113,7 +113,8 @@ router.post('/certificado', (req, res) => {
 
   const one = pesquisaProjeto(cpf).then(usr => ({
     tipo: usr[0].integrantes[0].tipo,
-    nome: usr[0].integrantes[0].nome
+    nome: usr[0].integrantes[0].nome,
+    nomeProjeto: usr[0].nomeProjeto
   }))
   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
 
