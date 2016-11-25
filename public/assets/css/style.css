@@ -890,6 +890,16 @@ footer {
 /*#ifpublica img:hover {
   background: black !important;
 }*/
+.details2 {
+  width: 70% !important;
+  top: initial !important;
+  margin-top: 0 !important;
+  background: #eee !important;
+  overflow: hidden !important;
+}
+.btn-close:focus {
+  outline-color: transparent !im;
+}
 /* ========================================================================== */
 
 @media only screen and (max-width: 959px) and (min-width: 0) and (orientation: landscape) {

@@ -33,7 +33,7 @@ function splita(arg){
 function miPermiso(role) {
   return function(req, res, next) {
     if(req.user.permissao === role)
-      next();
+    next();
     else res.send(403);
   }
 }
@@ -88,7 +88,8 @@ router.post('/certificado', (req, res) => {
 
   function pesquisaProjeto(cpf) {
     return new Promise(function (fulfill, reject) {
-      ProjetoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
+      // ProjetoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
+      ProjetoSchema.find({'integrantes.cpf':cpf,'integrantes.presenca':true}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
         fulfill(usr)
@@ -137,14 +138,17 @@ router.post('/certificado', (req, res) => {
   const one = pesquisaProjeto(cpf).then(usr => {
     let array = []
     for (let i in usr) {
-      let participante = {
+      var participante = {
         tipo: usr[i].integrantes[0].tipo,
         nome: usr[i].integrantes[0].nome,
         nomeProjeto: usr[i].nomeProjeto
       }
       array.push(participante)
     }
-    return array
+    return {
+      tipo:'Projeto',
+      integrantes:array
+    }
   })
   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
 
@@ -165,15 +169,17 @@ router.post('/certificado', (req, res) => {
     let array = []
     for (let i in usr) {
       let participante = {
-        responsavelNome: usr[i].responsavel[0].nome,
+        responsavel: usr[i].responsavel[0].nome,
         tipo: usr[i].tipo,
         titulo: usr[i].titulo,
-        cargaHoraria: usr[i].cargaHoraria,
-        data: usr[i].data
+        cargaHoraria: usr[i].cargaHoraria
       }
       array.push(participante)
     }
-    return array
+    return {
+      tipo:'Evento',
+      evento:array
+    }
   })
   .catch(err => console.log("Não encontrou nada nos responsáveis de eventos. " + err.message))
 
@@ -181,19 +187,20 @@ router.post('/certificado', (req, res) => {
     let array = []
     for (let i in usr) {
       let premiado = {
-        tipo: "Premiado",
-        tipoIntegrante: usr[i].integrantes[0].tipo,
         nome: usr[i].integrantes[0].nome,
         nomeProjeto: usr[i].nomeProjeto,
         categoria: usr[i].categoria,
         eixo: usr[i].eixo,
-        colocacao: usr[i].colocacao,
-        mostratec: usr[i].mostratec
+        colocacao: usr[i].colocacao
       }
       array.push(premiado)
     }
-    if (array !== undefined)
-    return array
+    if (array !== undefined) {
+      return {
+        tipo: "Premiado",
+        projeto: array
+      }
+    }
   })
   .catch(err => console.log("Não encontrou nada nos premiados. " + err.message))
 
@@ -262,159 +269,159 @@ router.post('/registro', testaUsername2, (req, res) => {
     console.log("Errors: "+errors);
   } else {
     let newIntegrante = ({
-    tipo: "Orientador",
-    nome: req.body.nomeOrientador1,
-    email: req.body.emailOrientador1,
-    cpf: splita(req.body.cpfOrientador1),
-    telefone: splita(req.body.telefoneOrientador1),
-    tamCamiseta: req.body.tamCamisetaOrientador1
-  });
+      tipo: "Orientador",
+      nome: req.body.nomeOrientador1,
+      email: req.body.emailOrientador1,
+      cpf: splita(req.body.cpfOrientador1),
+      telefone: splita(req.body.telefoneOrientador1),
+      tamCamiseta: req.body.tamCamisetaOrientador1
+    });
 
-  let newIntegrante2 = ({
-    tipo: "Orientador",
-    nome: req.body.nomeOrientador2,
-    email: req.body.emailOrientador2,
-    cpf: splita(req.body.cpfOrientador2),
-    telefone: splita(req.body.telefoneOrientador2),
-    tamCamiseta: req.body.tamCamisetaOrientador2
-  });
+    let newIntegrante2 = ({
+      tipo: "Orientador",
+      nome: req.body.nomeOrientador2,
+      email: req.body.emailOrientador2,
+      cpf: splita(req.body.cpfOrientador2),
+      telefone: splita(req.body.telefoneOrientador2),
+      tamCamiseta: req.body.tamCamisetaOrientador2
+    });
 
-  let newIntegrante3 = ({
-    tipo: "Aluno",
-    nome: req.body.nomeAluno1,
-    email: req.body.emailAluno1,
-    cpf: splita(req.body.cpfAluno1),
-    telefone: splita(req.body.telefoneAluno1),
-    tamCamiseta: req.body.tamCamisetaAluno1
-  });
+    let newIntegrante3 = ({
+      tipo: "Aluno",
+      nome: req.body.nomeAluno1,
+      email: req.body.emailAluno1,
+      cpf: splita(req.body.cpfAluno1),
+      telefone: splita(req.body.telefoneAluno1),
+      tamCamiseta: req.body.tamCamisetaAluno1
+    });
 
-  let newIntegrante4 = ({
-    tipo: "Aluno",
-    nome: req.body.nomeAluno2,
-    email: req.body.emailAluno2,
-    cpf: splita(req.body.cpfAluno2),
-    telefone: splita(req.body.telefoneAluno2),
-    tamCamiseta: req.body.tamCamisetaAluno2
-  });
+    let newIntegrante4 = ({
+      tipo: "Aluno",
+      nome: req.body.nomeAluno2,
+      email: req.body.emailAluno2,
+      cpf: splita(req.body.cpfAluno2),
+      telefone: splita(req.body.telefoneAluno2),
+      tamCamiseta: req.body.tamCamisetaAluno2
+    });
 
-  let newIntegrante5 = ({
-    tipo: "Aluno",
-    nome: req.body.nomeAluno3,
-    email: req.body.emailAluno3,
-    cpf: splita(req.body.cpfAluno3),
-    telefone: splita(req.body.telefoneAluno3),
-    tamCamiseta: req.body.tamCamisetaAluno3
-  });
+    let newIntegrante5 = ({
+      tipo: "Aluno",
+      nome: req.body.nomeAluno3,
+      email: req.body.emailAluno3,
+      cpf: splita(req.body.cpfAluno3),
+      telefone: splita(req.body.telefoneAluno3),
+      tamCamiseta: req.body.tamCamisetaAluno3
+    });
 
-  let newProject = new ProjetoSchema({
-    nomeProjeto: req.body.nomeProjeto,
-    categoria: req.body.categoria,
-    eixo: req.body.eixo,
-    nomeEscola: req.body.nomeEscola,
-    cep: splita(req.body.cep),
-    cidade: req.body.cidade,
-    estado: req.body.estado,
-    hospedagem: req.body.hospedagem,
-    email: req.body.email,
-    username: req.body.username,
-    password: req.body.password,
-    permissao: 1,
-    createdAt: Date.now(),
-    resumo: req.body.resumo,
-    palavraChave: req.body.palavraChave
-  });
+    let newProject = new ProjetoSchema({
+      nomeProjeto: req.body.nomeProjeto,
+      categoria: req.body.categoria,
+      eixo: req.body.eixo,
+      nomeEscola: req.body.nomeEscola,
+      cep: splita(req.body.cep),
+      cidade: req.body.cidade,
+      estado: req.body.estado,
+      hospedagem: req.body.hospedagem,
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password,
+      permissao: 1,
+      createdAt: Date.now(),
+      resumo: req.body.resumo,
+      palavraChave: req.body.palavraChave
+    });
 
-  newProject.integrantes.push(newIntegrante);
+    newProject.integrantes.push(newIntegrante);
 
-  if(req.body.nomeOrientador2 && req.body.emailOrientador2 && req.body.cpfOrientador2 && req.body.telefoneOrientador2 && req.body.tamCamisetaOrientador2){
-    newProject.integrantes.push(newIntegrante2);
-  }
-
-  newProject.integrantes.push(newIntegrante3);
-
-  if(req.body.nomeAluno2 && req.body.emailAluno2 && req.body.cpfAluno2 && req.body.telefoneAluno2 && req.body.tamCamisetaAluno2){
-    newProject.integrantes.push(newIntegrante4);
-  }
-
-  if(req.body.nomeAluno3 && req.body.emailAluno3 && req.body.cpfAluno3 && req.body.telefoneAluno3 && req.body.tamCamisetaAluno3){
-    newProject.integrantes.push(newIntegrante5);
-  }
-
-  Projeto.createProject(newProject);
-
-  let email = req.body.email
-  let nomeProjeto = req.body.nomeProjeto
-  let username = req.body.username
-  var templatesDir = path.resolve(__dirname, '..', 'templates');
-  var template = new EmailTemplate(path.join(templatesDir, 'inscricao'));
-  const transport = nodemailer.createTransport(smtpTransport({
-    host: 'smtp.zoho.com',
-    port: 587,
-    auth: {
-      user: "contato@movaci.com.br",
-      pass: "mvc2016"
+    if(req.body.nomeOrientador2 && req.body.emailOrientador2 && req.body.cpfOrientador2 && req.body.telefoneOrientador2 && req.body.tamCamisetaOrientador2){
+      newProject.integrantes.push(newIntegrante2);
     }
-  }));
 
-  var locals = {
-    email: email,
-    projeto: nomeProjeto,
-    username: username
-  }
+    newProject.integrantes.push(newIntegrante3);
 
-  template.render(locals, function (err, results) {
-    if (err) throw err;
-    transport.sendMail({
-      from: 'V MOVACI <contato@movaci.com.br>',
-      to: locals.email,
-      subject: 'V MOVACI - Confirmação de inscrição',
-      html: results.html,
-      text: results.text
-    }, function (err, responseStatus) {
+    if(req.body.nomeAluno2 && req.body.emailAluno2 && req.body.cpfAluno2 && req.body.telefoneAluno2 && req.body.tamCamisetaAluno2){
+      newProject.integrantes.push(newIntegrante4);
+    }
+
+    if(req.body.nomeAluno3 && req.body.emailAluno3 && req.body.cpfAluno3 && req.body.telefoneAluno3 && req.body.tamCamisetaAluno3){
+      newProject.integrantes.push(newIntegrante5);
+    }
+
+    Projeto.createProject(newProject);
+
+    let email = req.body.email
+    let nomeProjeto = req.body.nomeProjeto
+    let username = req.body.username
+    var templatesDir = path.resolve(__dirname, '..', 'templates');
+    var template = new EmailTemplate(path.join(templatesDir, 'inscricao'));
+    const transport = nodemailer.createTransport(smtpTransport({
+      host: 'smtp.zoho.com',
+      port: 587,
+      auth: {
+        user: "contato@movaci.com.br",
+        pass: "mvc2016"
+      }
+    }));
+
+    var locals = {
+      email: email,
+      projeto: nomeProjeto,
+      username: username
+    }
+
+    template.render(locals, function (err, results) {
       if (err) throw err;
-    })
-  });
-  // res.redirect('/projetos/login');
+      transport.sendMail({
+        from: 'V MOVACI <contato@movaci.com.br>',
+        to: locals.email,
+        subject: 'V MOVACI - Confirmação de inscrição',
+        html: results.html,
+        text: results.text
+      }, function (err, responseStatus) {
+        if (err) throw err;
+      })
+    });
+    // res.redirect('/projetos/login');
   }
   //res.send('OK');
 });
 
 passport.use('unico', new LocalStrategy(function(username, password, done) {
-      Projeto.getLoginProjeto(username, (err, user) => {
+  Projeto.getLoginProjeto(username, (err, user) => {
+    if(err) throw err;
+    if(!user){
+      console.log('entrou no !user '+username);
+      Projeto.getLoginAdmin(username, (err, user) => {
+        console.log('entrou no !user de novo');
         if(err) throw err;
         if(!user){
-          console.log('entrou no !user '+username);
-          Projeto.getLoginAdmin(username, (err, user) => {
-            console.log('entrou no !user de novo');
-            if(err) throw err;
-            if(!user){
-              console.log('entrou no !user de novo de novo');
-              return done(null, false, {message: 'Unknown User'});
-            }
-            Projeto.compareLogin(password, user.password, (err, isMatch) => {
-              console.log('OLHA, deu certo e agora vai comparar: '+password);
-              if(err) throw err;
-              if(isMatch){
-                return done(null, user);
-                console.log("Pior que deu");
-              } else {
-                console.log("Pior que não deu");
-                return done(null, false, {message: 'Invalid password'});
-              }
-            });
-          });
-          // return done(null, false, {message: 'Unknown User'});
+          console.log('entrou no !user de novo de novo');
+          return done(null, false, {message: 'Unknown User'});
+        }
+        Projeto.compareLogin(password, user.password, (err, isMatch) => {
+          console.log('OLHA, deu certo e agora vai comparar: '+password);
+          if(err) throw err;
+          if(isMatch){
+            return done(null, user);
+            console.log("Pior que deu");
+          } else {
+            console.log("Pior que não deu");
+            return done(null, false, {message: 'Invalid password'});
+          }
+        });
+      });
+      // return done(null, false, {message: 'Unknown User'});
+    } else {
+      Projeto.compareLogin(password, user.password, (err, isMatch) => {
+        if(err) throw err;
+        if(isMatch){
+          return done(null, user);
         } else {
-          Projeto.compareLogin(password, user.password, (err, isMatch) => {
-            if(err) throw err;
-            if(isMatch){
-              return done(null, user);
-            } else {
-              return done(null, false, {message: 'Invalid password'});
-            }
-          });
+          return done(null, false, {message: 'Invalid password'});
         }
       });
+    }
+  });
 }));
 
 passport.serializeUser(function(user, done){ done(null, user.id) });

@@ -97,6 +97,9 @@
     </nav>
   </header>
 
+  <img id="preview" src="assets/images/Certificado_MOVACI4.jpeg" style="display:none!important;">
+  <img id="verso" src="assets/images/Verso_Certificado_MOVACI.jpeg" style="display:none!important;">
+
   <!-- Banner -->
   <section id="banner">
     <div class="dias">
@@ -107,16 +110,9 @@
     <p style="color:#424242!important;">V Mostra Venâncio-airense de Cultura e Inovação</p>
     <nav id="nav">
       <ul class="actions">
-        <li>
-          <a href="#" class="button special" style="width:14em;">Lista de premiados</a>
-          <ul style="margin-left:-5%!important;">
-            <li><a href="/alpha/documentos/MOVACI_PREMIAÇÃO_FUNDAMENTAL_I.pdf" target="_blank">Fundamental I</a></li>
-            <li><a href="/alpha/documentos/MOVACI_PREMIAÇÃO_FUNDAMENTAL_II.pdf" target="_blank">Fundamental II</a></li>
-            <li><a href="/alpha/documentos/MOVACI_PREMIAÇÃO_MÉDIO.pdf" target="_blank">Ensino Médio</a></li>
-            <li><a href="/alpha/documentos/MOVACI_CLASSIFICADOS_MOSTRATEC.pdf" target="_blank">MOSTRATEC</a></li>
-          </ul>
-        </li>
-        <li><a class="button" data-ng-click="showLoginDialog($event)" style="width:13em;">Logar</a></li>
+        <!-- <li><a href="" class="button special" data-ng-click="showEmitCertificate($event)" style="width:14em;">Emitir Certificado</a></li> -->
+        <li><a href="" class="button special" style="width:14em;text-decoration:line-through!important;">Emitir Certificado</a></li>
+        <li><a href="" class="button" data-ng-click="showLoginDialog($event)" style="width:13em;">Logar</a></li>
       </ul>
     </nav>
     <h3 id="dias2">28, 29 e 30 DE SETEMBRO</h3>
@@ -365,6 +361,8 @@
       <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
       <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
       <script type="text/javascript" src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+      <script type="text/javascript" src="bower_components/pdfmake/build/pdfmake.min.js"></script>
+      <script type="text/javascript" src="bower_components/pdfmake/build/vfs_fonts.js"></script>
       <script type="text/javascript" src="assets/js/auth.js"></script>
       <script type="text/javascript" src="assets/js/app.js"></script>
       <script type="text/javascript" src="assets/js/routes/ui-routes.js"></script>

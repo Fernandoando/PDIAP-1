@@ -2654,6 +2654,10 @@ input[type="button"]:disabled,
   opacity: 0.25;
 }
 
+.button:focus {
+  outline-color: transparent;
+}
+
 /* Header */
 
 /*#page-wrapper {

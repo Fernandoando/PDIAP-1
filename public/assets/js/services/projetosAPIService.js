@@ -69,7 +69,7 @@
 
 		let _getUsersEscolas = function() {
 			const request = {
-				url: '/projetos/registro',
+				url: '/registro',
 				method: 'GET',
 			}
 			return $http(request);
@@ -112,7 +112,7 @@
 
 		let _postRedefinir = function(username) {
 			const request = {
-				url: '/projetos/redefinir-senha',
+				url: '/redefinir-senha',
 				method: 'POST',
 				data: username
 			}
@@ -121,7 +121,7 @@
 
 		let _postNewPassword = function(password,token) {
 			const request = {
-				url: '/projetos/nova-senha/'+token,
+				url: '/nova-senha/'+token,
 				method: 'POST',
 				data: password
 			}
@@ -130,9 +130,18 @@
 
 		let _postContato = function(contato) {
 			const request = {
-				url: '/projetos/contato',
+				url: '/contato',
 				method: 'POST',
 				data: contato
+			}
+			return $http(request);
+		};
+
+		let _postCertificado = function(cpf) {
+			const request = {
+				url: '/certificado',
+				method: 'POST',
+				data: {cpf: cpf}
 			}
 			return $http(request);
 		};
@@ -152,7 +161,8 @@
 			postRedefinir: _postRedefinir,
 			postNewPassword: _postNewPassword,
 			postContato: _postContato,
-			removeIntegrante: _removeIntegrante
+			removeIntegrante: _removeIntegrante,
+			postCertificado: _postCertificado
 		};
 	});
 })();
