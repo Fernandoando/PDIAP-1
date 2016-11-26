@@ -86,10 +86,25 @@ router.post('/certificado', (req, res) => {
   let cpf = splita(req.body.cpf)
   let array = []
 
-  function pesquisaProjeto(cpf) {
+  function pesquisaProjetoAluno(cpf) {
     return new Promise(function (fulfill, reject) {
-      // ProjetoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
-      ProjetoSchema.find({'integrantes.cpf':cpf,'integrantes.presenca':true}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
+      // ProjetoSchema.find({'integrantes.cpf':cpf,'integrantes.presenca':true}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
+      ProjetoSchema.find(
+        {'integrantes':{$elemMatch:{'cpf':cpf,'presenca':true, 'tipo':'Aluno'}}, 'aprovado':true},
+        'integrantes.$ nomeProjeto -_id',(err, usr) => {
+        if (err) return reject(err)
+        if (usr == 0) return reject({err})
+        fulfill(usr)
+      })
+    })
+  }
+
+  function pesquisaProjetoOrientador(cpf) {
+    return new Promise(function (fulfill, reject) {
+      // ProjetoSchema.find({'integrantes.cpf':cpf,'integrantes.presenca':true}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
+      ProjetoSchema.find(
+        {'integrantes':{$elemMatch:{'cpf':cpf, 'tipo':'Orientador'}}, 'aprovado':true},
+        'integrantes.$ nomeProjeto -_id',(err, usr) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
         fulfill(usr)
@@ -135,7 +150,7 @@ router.post('/certificado', (req, res) => {
     })
   }
 
-  const one = pesquisaProjeto(cpf).then(usr => {
+  const one = pesquisaProjetoAluno(cpf).then(usr => {
     let array = []
     for (let i in usr) {
       var participante = {
@@ -204,7 +219,24 @@ router.post('/certificado', (req, res) => {
   })
   .catch(err => console.log("Não encontrou nada nos premiados. " + err.message))
 
-  Promise.all([one, two, three, four, five])
+  const six = pesquisaProjetoOrientador(cpf).then(usr => {
+    let array = []
+    for (let i in usr) {
+      var participante = {
+        tipo: usr[i].integrantes[0].tipo,
+        nome: usr[i].integrantes[0].nome,
+        nomeProjeto: usr[i].nomeProjeto
+      }
+      array.push(participante)
+    }
+    return {
+      tipo:'Projeto',
+      integrantes:array
+    }
+  })
+  .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+
+  Promise.all([one, two, three, four, five, six])
   .then(arr => {
     res.send(arr.filter(val => val !== undefined))
   })
