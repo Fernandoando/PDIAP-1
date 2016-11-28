@@ -161,7 +161,7 @@ router.post('/certificado', (req, res) => {
       array.push(participante)
     }
     return {
-      tipo:'Projeto',
+      tipo:'ProjetoAluno',
       integrantes:array
     }
   })
@@ -230,7 +230,7 @@ router.post('/certificado', (req, res) => {
       array.push(participante)
     }
     return {
-      tipo:'Projeto',
+      tipo:'ProjetoOrientador',
       integrantes:array
     }
   })

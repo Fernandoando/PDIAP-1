@@ -888,7 +888,7 @@ footer {
   text-decoration: none;
 }
 /*#ifpublica img:hover {
-  background: black !important;
+background: black !important;
 }*/
 .details2 {
   width: 70% !important;
@@ -899,6 +899,20 @@ footer {
 }
 .btn-close:focus {
   outline-color: transparent !im;
+}
+.btn-certificado {
+  margin:0!important;
+  padding:1px 30px;
+  border:1px solid #43a047;
+  box-shadow:none!important;
+}
+.text-certificado {
+  width:50%;
+  margin:0;
+  padding-right:15px;
+  text-align:right;
+  font-size:16px;
+  color:#424242;
 }
 /* ========================================================================== */
 
