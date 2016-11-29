@@ -3,6 +3,10 @@
 const mongoose = require('mongoose')
 ,	Schema = mongoose.Schema;
 
+const certificadoSchema = new Schema({
+	tipo: {type: String}
+});
+
 const AvaliadorSchema = new Schema({
 	nome: {
 		type: String
@@ -42,7 +46,8 @@ const AvaliadorSchema = new Schema({
 	},
 	turnos: {
 		type: String
-	}
+	},
+	certificados: [certificadoSchema]
 }, { collection: 'avaliadorCollection' });
 
 const Avaliador = module.exports = mongoose.model('Avaliador', AvaliadorSchema);

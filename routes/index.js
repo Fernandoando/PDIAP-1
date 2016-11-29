@@ -91,7 +91,7 @@ router.post('/certificado', (req, res) => {
       // ProjetoSchema.find({'integrantes.cpf':cpf,'integrantes.presenca':true}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
       ProjetoSchema.find(
         {'integrantes':{$elemMatch:{'cpf':cpf,'presenca':true, 'tipo':'Aluno'}}, 'aprovado':true},
-        'integrantes.$ nomeProjeto -_id',(err, usr) => {
+        'integrantes.$ nomeProjeto numInscricao -_id',(err, usr) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
         fulfill(usr)
@@ -104,10 +104,11 @@ router.post('/certificado', (req, res) => {
       // ProjetoSchema.find({'integrantes.cpf':cpf,'integrantes.presenca':true}, 'integrantes.$ nomeProjeto -_id',(err, usr) => {
       ProjetoSchema.find(
         {'integrantes':{$elemMatch:{'cpf':cpf, 'tipo':'Orientador'}}, 'aprovado':true},
-        'integrantes.$ nomeProjeto -_id',(err, usr) => {
+        'integrantes.$ nomeProjeto numInscricao -_id',(err, usr) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
         fulfill(usr)
+        // console.log("PESQUISA PROJETO:"+usr)
       })
     })
   }
@@ -150,19 +151,102 @@ router.post('/certificado', (req, res) => {
     })
   }
 
-  const one = pesquisaProjetoAluno(cpf).then(usr => {
+  function inserirToken(cpf, numInscricao, tipo) {
+    console.log(cpf +"      "+numInscricao+"      "+tipo)
+    return new Promise(function (fulfill, reject) {
+      ProjetoSchema.findOneAndUpdate({'integrantes':{$elemMatch:{'cpf':cpf}},'numInscricao':numInscricao},
+        {'$push': {'integrantes.$.certificados': {tipo:tipo}}}, [{new:true}],
+        (err, usr) => {
+          if (err) return reject(err)
+          // console.log(usr)
+          ProjetoSchema.find({'integrantes':{$elemMatch:{'cpf':cpf}},'numInscricao':numInscricao},
+          'integrantes.$', (err, usr) => {
+            let array = []
+            var participante = {
+              tipo: usr[0].integrantes[0].tipo,
+              nome: usr[0].integrantes[0].nome,
+              nomeProjeto: usr[0].nomeProjeto,
+              token: usr[0].integrantes[0].certificados[0].id,
+              tokentipo: usr[0].integrantes[0].certificados[0].tipo
+            }
+            array.push(participante)
+            var retorno = {
+              tipo:tipo,
+              integrantes:array
+            }
+            fulfill(retorno)
+          })
+        })
+    })
+  }
+
+  function pesquisaProjetoOrientador2(cpf) {
+    return new Promise(function (fullfill, reject) {
+  ProjetoSchema.find({'integrantes':{$elemMatch:{'cpf':cpf}}},
+  'integrantes.$', (err, usr) => {
+    // console.log(usr)
+    if (err) return reject(err)
+    if (usr == 0) return reject({err})
     let array = []
     for (let i in usr) {
       var participante = {
         tipo: usr[i].integrantes[0].tipo,
         nome: usr[i].integrantes[0].nome,
         nomeProjeto: usr[i].nomeProjeto
+        // token: usr[i].integrantes[0].certificados[0].id,
+        // tokentipo: usr[i].integrantes[0].certificados[0].tipo
       }
       array.push(participante)
     }
-    return {
-      tipo:'ProjetoAluno',
+    var retorno = {
+      tipo:'ProjetoOrientador',
       integrantes:array
+    }
+    fullfill(retorno)
+    console.log(fullfill)
+  })
+})}
+
+  function inserirToken2(cpf, numInscricao, tipo) {
+    // console.log(cpf +"      "+numInscricao+"      "+tipo)
+    return new Promise(function (fullfill, reject) {
+      ProjetoSchema.findOneAndUpdate({'integrantes':{$elemMatch:{'cpf':cpf}}},
+        {'$push': {'integrantes.$.certificados': {tipo:tipo}}}, [{new:true}],
+        (err, usr) => {
+          if (err) return reject(err)
+          // console.log(usr)
+          fullfill(usr)
+        })
+    })
+  }
+
+  const one = pesquisaProjetoAluno(cpf).then(usr => {
+    let contador
+    let array = []
+    for (let i in usr) {
+      for (let x in usr[i].integrantes[0].certificados) {
+        if (usr[i].integrantes[0].certificados[x].tipo === "ProjetoAluno") {
+          console.log("Achei um ProjetoAluno " + usr[i].integrantes[0].certificados[x].id)
+          contador = true
+
+          var participante = {
+            tipo: usr[i].integrantes[0].tipo,
+            nome: usr[i].integrantes[0].nome,
+            nomeProjeto: usr[i].nomeProjeto,
+            token: usr[i].integrantes[0].certificados[x].id,
+            tokentipo: usr[i].integrantes[0].certificados[x].tipo
+          }
+          array.push(participante)
+        }
+      }
+      if (contador == true) {
+        return {
+          tipo:'ProjetoAluno',
+          integrantes:array
+        }
+      } else {
+        return inserirToken(usr[i].integrantes[0].cpf, usr[i].numInscricao, "ProjetoAluno")
+      }
     }
   })
   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
@@ -220,21 +304,16 @@ router.post('/certificado', (req, res) => {
   .catch(err => console.log("Não encontrou nada nos premiados. " + err.message))
 
   const six = pesquisaProjetoOrientador(cpf).then(usr => {
-    let array = []
+    // console.log(usr)
     for (let i in usr) {
-      var participante = {
-        tipo: usr[i].integrantes[0].tipo,
-        nome: usr[i].integrantes[0].nome,
-        nomeProjeto: usr[i].nomeProjeto
+      if (usr[i].integrantes.certificados == undefined) {
+          // console.log("Achei um ProjetoAluno " + usr[i].integrantes[0].certificados[x].id)
+          inserirToken2(usr[i].integrantes[0].cpf, usr[i].numInscricao, "ProjetoOrientador")
       }
-      array.push(participante)
     }
-    return {
-      tipo:'ProjetoOrientador',
-      integrantes:array
-    }
+    return pesquisaProjetoOrientador2(cpf)
   })
-  .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+  .catch(err => console.log("Não encontrou nada nos projetos orientadores. " + err.message))
 
   Promise.all([one, two, three, four, five, six])
   .then(arr => {
