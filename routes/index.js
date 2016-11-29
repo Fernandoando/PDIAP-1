@@ -114,10 +114,35 @@ router.post('/certificado', (req, res) => {
   }
 
   function pesquisaAvaliador(cpf) {
-    return new Promise(function (fulfill, reject) {
-      avaliadorSchema.find({'cpf':cpf}, 'nome -_id',(err, usr) => {
+    return new Promise(function (fullfill, reject) {
+      avaliadorSchema.find({'cpf':cpf}, 'nome token -_id',(err, usr) => {
         if (err) return reject(err)
-        fulfill(usr)
+        console.log("PRIMEIRO FIND: "+usr)
+        if (usr.token == undefined) {
+          var mongoose = require('mongoose');
+          var newId = new mongoose.mongo.ObjectId()
+          console.log("usr[0].token igual undefined "+newId)
+          avaliadorSchema.update({'cpf':cpf}, {$set:{'token':newId}}, ['-_id',{new:true}], (err, usr) => {
+            if (err) return reject(err)
+            fullfill(usr)
+            console.log("INSERIU "+usr)
+          })
+        } else
+          fullfill(usr)
+      })
+      .then(usr => ({
+        tipo: "Avaliador",
+        nome: usr[0].nome,
+        token: usr[0].token
+      }))
+    })
+  }
+
+  function pesquisaAvaliador2(cpf) {
+    return new Promise(function (fullfill, reject) {
+      avaliadorSchema.find({'cpf':cpf}, 'nome token -_id',(err, usr) => {
+        if (err) return reject(err)
+        fullfill(usr)
       })
     })
   }
@@ -244,10 +269,13 @@ router.post('/certificado', (req, res) => {
   })
   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
 
-  const two = pesquisaAvaliador(cpf).then(usr => ({
-    tipo: "Avaliador",
-    nome: usr[0].nome
-  }))
+  const two = pesquisaAvaliador(cpf).then(usr => {
+    return pesquisaAvaliador2(cpf).then(usr => ({
+      tipo: "Avaliador",
+      nome: usr[0].nome,
+      token: usr[0].token
+    }))
+  })
   .catch(err => console.log("Não encontrou nada nos avaliadores. " + err.message))
 
   const three = pesquisaParticipante(cpf).then(usr => ({

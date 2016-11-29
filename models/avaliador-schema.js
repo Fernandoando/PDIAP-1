@@ -47,7 +47,9 @@ const AvaliadorSchema = new Schema({
 	turnos: {
 		type: String
 	},
-	certificados: [certificadoSchema]
+	token: {
+		type: String
+	}
 }, { collection: 'avaliadorCollection' });
 
 const Avaliador = module.exports = mongoose.model('Avaliador', AvaliadorSchema);
