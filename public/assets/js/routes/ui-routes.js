@@ -138,6 +138,11 @@
 			templateUrl: "/views/nova-senha.html",
 			controller: "redefinirCtrl"
 		})
+		.state('consulta_certificado', {
+			url: "/certificados/consulta-validade",
+			templateUrl: "/views/consulta_certificado.html",
+			controller: "certificadosCtrl"
+		})
 		.state('404', {
 			url: "/404",
 			templateUrl: "/views/404.html"
