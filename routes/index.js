@@ -159,7 +159,7 @@ router.post('/certificado', (req, res) => {
         (err, usr) => {
           if (err) return reject(err)
           ProjetoSchema.find({'integrantes':{$elemMatch:{'cpf':cpf}},'numInscricao':numInscricao},
-          'integrantes.$', (err, usr) => {
+          'integrantes.$ nomeProjeto', (err, usr) => {
             let array = []
             var participante = {
               tipo: usr[0].integrantes[0].tipo,
@@ -221,7 +221,7 @@ router.post('/certificado', (req, res) => {
     let contador = false
     let array = []
     for (let i in usr) {
-        if (usr[i].integrantes[0].certificados[0].tipo === "ProjetoAluno") {
+        if (usr[i].integrantes[0].certificados !== undefined) {
           contador = true
           var participante = {
             tipo: usr[i].integrantes[0].tipo,
