@@ -3,10 +3,6 @@
 const mongoose = require('mongoose')
 ,	Schema = mongoose.Schema;
 
-const certificadoSchema = new Schema({
-	tipo: {type: String}
-});
-
 const AvaliadorSchema = new Schema({
 	nome: {
 		type: String

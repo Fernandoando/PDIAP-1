@@ -13,7 +13,7 @@ const IntegranteSchema = new Schema({
 	presenca: {type: Boolean}
 });
 
-const PremiadoSchema = new Schema({
+const premiadoSchema = new Schema({
 	numInscricao: {type: String},
 	nomeProjeto: {type: String},
 	categoria: {type: String},
@@ -46,7 +46,9 @@ const PremiadoSchema = new Schema({
 	palavraChave: {type: String},
 	avaliacao: {type: Array},
   colocacao: {type: String},
-  mostratec: {type: Boolean}
+  mostratec: {type: Boolean},
+	token: {type:String}
+
 }, { collection: 'premiados2016' });
 
-const Premiado = module.exports = mongoose.model('Premiado', PremiadoSchema);
+const Premiado = module.exports = mongoose.model('Premiado', premiadoSchema);

@@ -16,6 +16,7 @@ const express = require('express')
 , Admin = require('../controllers/admin-controller')
 , nodemailer = require('nodemailer')
 , adminSchema = require('../models/admin-schema')
+, mongoose = require('mongoose')
 , smtpTransport = require('nodemailer-smtp-transport')
 , path = require('path')
 , EmailTemplate = require('email-templates').EmailTemplate
@@ -117,15 +118,12 @@ router.post('/certificado', (req, res) => {
     return new Promise(function (fullfill, reject) {
       avaliadorSchema.find({'cpf':cpf}, 'nome token -_id',(err, usr) => {
         if (err) return reject(err)
-        console.log("PRIMEIRO FIND: "+usr)
         if (usr.token == undefined) {
-          var mongoose = require('mongoose');
           var newId = new mongoose.mongo.ObjectId()
           console.log("usr[0].token igual undefined "+newId)
           avaliadorSchema.update({'cpf':cpf}, {$set:{'token':newId}}, ['-_id',{new:true}], (err, usr) => {
             if (err) return reject(err)
             fullfill(usr)
-            console.log("INSERIU "+usr)
           })
         } else
           fullfill(usr)
@@ -168,10 +166,11 @@ router.post('/certificado', (req, res) => {
 
   function pesquisaPremiado(cpf) {
     return new Promise(function (fullfill, reject) {
-      premiadoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ nomeProjeto categoria eixo colocacao mostratec -_id',(err, usr) => {
+      premiadoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ categoria eixo colocacao mostratec token nomeProjeto numInscricao -_id',(err, usr) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
         fullfill(usr)
+        console.log(usr)
       })
     })
   }
@@ -348,20 +347,31 @@ router.post('/certificado', (req, res) => {
 
   const five = pesquisaPremiado(cpf).then(usr => {
     let array = []
-    for (let i in usr) {
+    for(let i in usr) {
+      // if(usr[i].token === undefined) {
+      //   let numInscricao = usr[i].numInscricao
+      //   ,   token = new mongoose.mongo.ObjectId()
+      //   premiadoSchema.findOneAndUpdate({'numInscricao':numInscricao},
+      //   {$set:{'token':token}},
+      //   (err, data) => {
+      //     if (err) return err
+      //     console.log(">>>>>>>>>>>"+data)
+      //   })
+      // }
       let premiado = {
         nome: usr[i].integrantes[0].nome,
         nomeProjeto: usr[i].nomeProjeto,
         categoria: usr[i].categoria,
         eixo: usr[i].eixo,
-        colocacao: usr[i].colocacao
+        colocacao: usr[i].colocacao,
+        token: usr[i].token
       }
       array.push(premiado)
-    }
-    if (array !== undefined) {
-      return {
-        tipo: "Premiado",
-        projeto: array
+      if (array !== undefined) {
+        return {
+          tipo: "Premiado",
+          projeto: array
+        }
       }
     }
   })
@@ -387,9 +397,9 @@ router.post('/certificado', (req, res) => {
 router.post('/testi', (req, res) => {
   let cpf = splita(req.body.cpf);
   console.log(cpf);
-  premiadoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ nomeProjeto colocacao mostratec -_id',(err, usr) => {
+  premiadoSchema.update({'numInscricao':64},{$set:{'token':'TOKENDOCARALHO'}}, ['integrantes.$ nomeProjeto token colocacao mostratec -_id',{new:true}],(err, data) => {
     if (err) return err
-    res.send(usr)
+    console.log(data)
   })
 })
 
