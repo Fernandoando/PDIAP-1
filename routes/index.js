@@ -164,17 +164,6 @@ router.post('/certificado', (req, res) => {
     })
   }
 
-  function pesquisaPremiado(cpf) {
-    return new Promise(function (fullfill, reject) {
-      premiadoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ categoria eixo colocacao mostratec token nomeProjeto numInscricao -_id',(err, usr) => {
-        if (err) return reject(err)
-        if (usr == 0) return reject({err})
-        fullfill(usr)
-        console.log(usr)
-      })
-    })
-  }
-
   function inserirToken(cpf, numInscricao, tipo) {
     console.log(cpf +"      "+numInscricao+"      "+tipo)
     return new Promise(function (fulfill, reject) {
@@ -231,6 +220,52 @@ router.post('/certificado', (req, res) => {
             }
             fulfill(retorno)
           })
+        })
+    })
+  }
+
+  function pesquisaPremiado(cpf) {
+    return new Promise(function (fullfill, reject) {
+      premiadoSchema.find({'integrantes.cpf':cpf}, 'integrantes.$ categoria eixo colocacao mostratec token nomeProjeto numInscricao _id',(err, usr) => {
+        if (err) return reject(err)
+        if (usr == 0) return reject({err})
+        fullfill(usr)
+        console.log(usr)
+      })
+    })
+  }
+
+  function inserirTokenPremiado(cpf, id) {
+    console.log("aaaaaaaaaa");
+    console.log(cpf +"      "+id+"      "+tipo)
+    return new Promise(function (fullfill, reject) {
+      var newId = new mongoose.mongo.ObjectId()
+      premiadoSchema.findOneAndUpdate({'_id':id},
+        {'$set': {'token': newId}}, [{new:true}],
+        (err, usr) => {
+          if (err) return reject(err)
+          if (err) console.log('OKKKKKKKKKKK')
+          // premiadoSchema.find({'integrantes':{$elemMatch:{'cpf':cpf}}}, ' integrantes.$ nomeProjeto numInscricao token categoria eixo colocacao -_id', (err, usr) => {
+          //   let array = []
+          //   console.log(usr[0].token);
+          //   for (let i in usr) {
+          //     let participante = {
+          //       nome: usr[i].integrantes[0].nome,
+          //       nomeProjeto: usr[i].nomeProjeto,
+          //       categoria: usr[i].categoria,
+          //       eixo: usr[i].eixo,
+          //       colocacao: usr[i].colocacao,
+          //       token: usr[i].token
+          //     }
+          //     array.push(participante)
+          //   }
+          //   var retorno = {
+          //     tipo:'Premiado',
+          //     evento:array
+          //   }
+          //   fulfill(retorno)
+          // })
+          fullfill(usr)
         })
     })
   }
@@ -346,18 +381,76 @@ router.post('/certificado', (req, res) => {
   .catch(err => console.log("Não encontrou nada nos responsáveis de eventos. " + err.message))
 
   const five = pesquisaPremiado(cpf).then(usr => {
+    // let array = []
+    // for(let i in usr) {
+    //   let premiado = {
+    //     nome: usr[i].integrantes[0].nome,
+    //     nomeProjeto: usr[i].nomeProjeto,
+    //     categoria: usr[i].categoria,
+    //     eixo: usr[i].eixo,
+    //     colocacao: usr[i].colocacao,
+    //     token: usr[i].token
+    //   }
+    //   if (premiado.token == undefined) {
+    //     var newId = new mongoose.mongo.ObjectId()
+    //     premiadoSchema.findOneAndUpdate({'_id':usr[i]._id},
+    //     {'$set': {'token': newId}}, [{new:true}],
+    //     (err, usr) => {
+    //       // console.log(err)
+    //       // console.log(usr)
+    //     })
+    //   } else {
+    //     array.push(premiado)
+    //   }
+    // }
+    // return {
+    //   tipo:'Premiado',
+    //   projetos:array
+    // }
     let array = []
     for(let i in usr) {
-      // if(usr[i].token === undefined) {
-      //   let numInscricao = usr[i].numInscricao
-      //   ,   token = new mongoose.mongo.ObjectId()
-      //   premiadoSchema.findOneAndUpdate({'numInscricao':numInscricao},
-      //   {$set:{'token':token}},
-      //   (err, data) => {
-      //     if (err) return err
-      //     console.log(">>>>>>>>>>>"+data)
-      //   })
-      // }
+      if (usr[i].token == undefined) {
+        var newId = new mongoose.mongo.ObjectId()
+        premiadoSchema.findOneAndUpdate({'_id':usr[i]._id},
+        {'$set': {'token': newId}}, [{new:true}],
+        (err, usr) => {
+          // console.log(err)
+          console.log(usr)
+        })
+        // .then(usr => {
+        //   for(let i in usr) {
+        //     let premiado = {
+        //       nome: usr[i].integrantes[0].nome,
+        //       nomeProjeto: usr[i].nomeProjeto,
+        //       categoria: usr[i].categoria,
+        //       eixo: usr[i].eixo,
+        //       colocacao: usr[i].colocacao,
+        //       token: usr[i].token
+        //     }
+        //     array.push(premiado)
+        //   }
+        // })
+      }
+    }
+    // for (let i in usr) {
+    //   let premiado = {
+    //     nome: usr[i].integrantes[0].nome,
+    //     nomeProjeto: usr[i].nomeProjeto,
+    //     categoria: usr[i].categoria,
+    //     eixo: usr[i].eixo,
+    //     colocacao: usr[i].colocacao,
+    //     token: usr[i].token
+    //   }
+    //   array.push(premiado)
+    // }
+    // return {
+    //   tipo:'Premiado',
+    //   projetos:array
+    // // }
+    return pesquisaPremiado(cpf)
+  }).then(usr => {
+    let array = []
+    for (let i in usr) {
       let premiado = {
         nome: usr[i].integrantes[0].nome,
         nomeProjeto: usr[i].nomeProjeto,
@@ -367,12 +460,10 @@ router.post('/certificado', (req, res) => {
         token: usr[i].token
       }
       array.push(premiado)
-      if (array !== undefined) {
-        return {
-          tipo: "Premiado",
-          projeto: array
-        }
-      }
+    }
+    return {
+      tipo:'Premiado',
+      projetos:array
     }
   })
   .catch(err => console.log("Não encontrou nada nos premiados. " + err.message))
@@ -393,15 +484,6 @@ router.post('/certificado', (req, res) => {
     res.send(arr.filter(val => val !== undefined))
   })
 });
-
-router.post('/testi', (req, res) => {
-  let cpf = splita(req.body.cpf);
-  console.log(cpf);
-  premiadoSchema.update({'numInscricao':64},{$set:{'token':'TOKENDOCARALHO'}}, ['integrantes.$ nomeProjeto token colocacao mostratec -_id',{new:true}],(err, data) => {
-    if (err) return err
-    console.log(data)
-  })
-})
 
 router.post('/contato', (req, res) => {
   let email = req.body.email
