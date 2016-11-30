@@ -146,10 +146,10 @@ router.post('/certificado', (req, res) => {
   }
 
   function pesquisaParticipante(cpf) {
-    return new Promise(function (fulfill, reject) {
-      participanteSchema.find({'cpf':cpf}, 'nome eventos -_id', (err, usr) => {
+    return new Promise(function (fullfill, reject) {
+      participanteSchema.find({'cpf':cpf}, 'nome tokenSaberes eventos -_id', (err, usr) => {
         if (err) return reject(err)
-        fulfill(usr)
+        fullfill(usr)
       })
     })
   }
@@ -344,11 +344,34 @@ router.post('/certificado', (req, res) => {
   })
   .catch(err => console.log("Não encontrou nada nos avaliadores. " + err.message))
 
-  const three = pesquisaParticipante(cpf).then(usr => ({
-    tipo: "Participante",
-    nome: usr[0].nome,
-    eventos: usr[0].eventos
-  }))
+  const three = pesquisaParticipante(cpf).then(usr => {
+    // console.log(usr[0].tokenSaberes)
+    let array = []
+      if (usr[0].tokenSaberes == undefined && usr[0].eventos[0]) {
+        let newId = new mongoose.mongo.ObjectId()
+        participanteSchema.findOneAndUpdate({'cpf':cpf},
+        {'$set': {'tokenSaberes': newId}}, [{new:true}],
+        (err, usr) => {
+          // console.log(err)
+          console.log("OK")
+        })
+      }
+    return pesquisaParticipante(cpf)
+  })
+  .then(usr => {
+    let array = []
+    let premiado = {
+      tipo: "Participante",
+      nome: usr[0].nome,
+      tokenSaberes: usr[0].tokenSaberes,
+      eventos: usr[0].eventos
+    }
+    array.push(premiado)
+    return {
+      tipo:'Participante',
+      eventos:array
+    }
+  })
   .catch(err => console.log("Não encontrou nada nos participantes dos eventos. " + err.message))
 
   const four = pesquisaEvento(cpf).then(usr => {
