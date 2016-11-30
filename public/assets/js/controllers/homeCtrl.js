@@ -153,6 +153,7 @@
 								saberesDocentes.push(value);
 							} else if (value.tipo === "Oficina") {
 								oficina.push(value);
+								console.log(oficina);
 							}
 						});
 					}
@@ -331,6 +332,12 @@
 									text: 'Venâncio Aires, ' +mesString+ ' de '  +ano+ '.',
 									alignment: 'center',
 									fontSize: 14
+								},
+								{
+									text: 'Número de validação: ' +dados.token,
+									// alignment: 'center',
+									fontSize: 12,
+									margin: [0,190,0,0]
 								}
 							]
 						};

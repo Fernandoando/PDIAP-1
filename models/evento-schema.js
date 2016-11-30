@@ -3,9 +3,15 @@
 const mongoose = require('mongoose')
 ,	Schema = mongoose.Schema;
 
+const certificadoSchema = new Schema({
+	token: {type: Schema.Types.ObjectId, ref: 'Certificado'},
+	tipo: {type: String}
+});
+
 const responsavelSchema = new Schema({
 	 nome: {type: String}
 	,cpf: {type: String}
+	, certificados: [certificadoSchema]
 });
 
 const EventoSchema = new Schema({

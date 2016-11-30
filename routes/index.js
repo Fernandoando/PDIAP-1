@@ -158,7 +158,7 @@ router.post('/certificado', (req, res) => {
 
   function pesquisaEvento(cpf) {
     return new Promise(function (fullfill, reject) {
-      eventoSchema.find({'responsavel.cpf':cpf}, 'tipo titulo cargaHoraria data responsavel.$ -_id', (err, usr) => {
+      eventoSchema.find({'responsavel.cpf':cpf}, 'tipo titulo cargaHoraria data responsavel.$', (err, usr) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
         fullfill(usr)
@@ -204,6 +204,38 @@ router.post('/certificado', (req, res) => {
     })
   }
 
+  function inserirTokenEvento(cpf, id, tipo) {
+    console.log("aaaaaaaaaa");
+    console.log(cpf +"      "+id+"      "+tipo)
+    return new Promise(function (fulfill, reject) {
+      eventoSchema.findOneAndUpdate({'responsavel':{$elemMatch:{'cpf':cpf}},'_id':id},
+        {'$set': {'responsavel.$.certificados': {tipo:tipo}}}, [{new:true}],
+        (err, usr) => {
+          if (err) return reject(err)
+          eventoSchema.find({'responsavel.cpf':cpf}, 'tipo titulo cargaHoraria data responsavel.$ -_id', (err, usr) => {
+            let array = []
+            console.log(usr[0].responsavel[0]);
+            for (let i in usr) {
+              let participante = {
+                responsavel: usr[i].responsavel[0].nome,
+                tipo: usr[i].tipo,
+                titulo: usr[i].titulo,
+                cargaHoraria: usr[i].cargaHoraria,
+                token: usr[i].responsavel[0].certificados[0]._id,
+                tokentipo: usr[i].responsavel[0].certificados[0].tipo
+              }
+              array.push(participante)
+            }
+            var retorno = {
+              tipo:tipo,
+              evento:array
+            }
+            fulfill(retorno)
+          })
+        })
+    })
+  }
+
   function pesquisaProjetoOrientador2(cpf) {
     return new Promise(function (fullfill, reject) {
     ProjetoSchema.find(
@@ -217,7 +249,7 @@ router.post('/certificado', (req, res) => {
         tipo: usr[i].integrantes[0].tipo,
         nome: usr[i].integrantes[0].nome,
         nomeProjeto: usr[i].nomeProjeto,
-        token: usr[i].integrantes[0].certificados[0].id,
+        token: usr[i].integrantes[0].certificados[0]._id,
         tokentipo: usr[i].integrantes[0].certificados[0].tipo
       }
       array.push(participante)
@@ -246,13 +278,13 @@ router.post('/certificado', (req, res) => {
     let contador = false
     let array = []
     for (let i in usr) {
-        if (usr[i].integrantes[0].certificados !== undefined) {
+        if (usr[i].integrantes[0].certificados !== undefined && usr[i].integrantes[0].certificados.lenght > 0) {
           contador = true
           var participante = {
             tipo: usr[i].integrantes[0].tipo,
             nome: usr[i].integrantes[0].nome,
             nomeProjeto: usr[i].nomeProjeto,
-            token: usr[i].integrantes[0].certificados[0].id,
+            token: usr[i].integrantes[0].certificados[0]._id,
             tokentipo: usr[i].integrantes[0].certificados[0].tipo
           }
           array.push(participante)
@@ -287,18 +319,29 @@ router.post('/certificado', (req, res) => {
 
   const four = pesquisaEvento(cpf).then(usr => {
     let array = []
+    let contador = false
     for (let i in usr) {
-      let participante = {
-        responsavel: usr[i].responsavel[0].nome,
-        tipo: usr[i].tipo,
-        titulo: usr[i].titulo,
-        cargaHoraria: usr[i].cargaHoraria
+      if (usr[i].responsavel[0].certificados !== undefined && usr[i].responsavel[0].certificados.lenght > 0) {
+        console.log(usr[i].responsavel[0]);
+        contador = true
+        let participante = {
+          responsavel: usr[i].responsavel[0].nome,
+          tipo: usr[i].tipo,
+          titulo: usr[i].titulo,
+          cargaHoraria: usr[i].cargaHoraria,
+          token: usr[i].responsavel[0].certificados[0]._id,
+          tokentipo: usr[i].responsavel[0].certificados[0].tipo
+        }
+        array.push(participante)
+      } else {
+        return inserirTokenEvento(cpf, usr[i]._id, "Evento")
       }
-      array.push(participante)
     }
-    return {
-      tipo:'Evento',
-      evento:array
+    if (contador === true) {
+      return {
+        tipo:'Evento',
+        evento:array
+      }
     }
   })
   .catch(err => console.log("Não encontrou nada nos responsáveis de eventos. " + err.message))
@@ -326,7 +369,7 @@ router.post('/certificado', (req, res) => {
 
   const six = pesquisaProjetoOrientador(cpf).then(usr => {
     for (let i in usr) {
-      if (usr[i].integrantes[0].certificados === undefined) {
+      if (usr[i].integrantes[0].certificados === undefined || usr[i].integrantes[0].certificados.lenght === 0 ) {
           // console.log("Achei um ProjetoAluno " + usr[i].integrantes[0].certificados[x].id)
           inserirToken2(cpf, usr[i].numInscricao, "ProjetoOrientador");
       }
