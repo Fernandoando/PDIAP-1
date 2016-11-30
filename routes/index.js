@@ -508,6 +508,173 @@ router.post('/certificado', (req, res) => {
   })
 });
 
+router.post('/conferirCertificado', (req, res) => {
+  let id = req.body.id
+
+  function pesquisaProjetoAluno(id) {
+    return new Promise(function (fulfill, reject) {
+      ProjetoSchema.find(
+        {'integrantes':{$elemMatch:{'certificados._id':id}}},
+        'integrantes.$ nomeProjeto numInscricao -_id',(err, usr) => {
+        if (err) return reject(err)
+        if (usr == 0) return reject({err})
+        fulfill(usr)
+        console.log("1")
+      })
+    })
+  }
+
+  function pesquisaProjetoOrientador(id) {
+    return new Promise(function (fulfill, reject) {
+      ProjetoSchema.find(
+        {'integrantes':{$elemMatch:{'certificados._id':id}}},
+        'integrantes.$ nomeProjeto -_id',(err, usr) => {
+        if (err) return reject(err)
+        if (usr == 0) return reject({err})
+        fulfill(usr)
+        console.log("2")
+      })
+    })
+  }
+
+  function pesquisaAvaliador(id) {
+    return new Promise(function (fulfill, reject) {
+      avaliadorSchema.find({'token':id}, 'nome token -_id',(err, usr) => {
+        if (err) return reject(err)
+        fulfill(usr)
+        console.log("3")
+      })
+    })
+  }
+
+  function pesquisaParticipante(id) {
+    return new Promise(function (fulfill, reject) {
+      participanteSchema.find({'tokenSaberes':id}, 'nome tokenSaberes eventos -_id', (err, usr) => {
+        if (err) return reject(err)
+        fulfill(usr)
+        console.log("4")
+      })
+    })
+  }
+
+  function pesquisaEvento(id) {
+    return new Promise(function (fulfill, reject) {
+      eventoSchema.find({'responsavel':{$elemMatch:{'certificados._id':id}}}, 'tipo titulo cargaHoraria data responsavel.$ -_id', (err, usr) => {
+        if (err) return reject(err)
+        if (usr == 0) return reject({err})
+        fulfill(usr)
+        console.log("5")
+      })
+    })
+  }
+
+  function pesquisaPremiado(id) {
+    return new Promise(function (fulfill, reject) {
+      premiadoSchema.find({'integrantes.certificados._id':id}, 'integrantes.$ nomeProjeto categoria eixo colocacao mostratec -_id',(err, usr) => {
+        if (err) return reject(err)
+        if (usr == 0) return reject({err})
+        fulfill(usr)
+        console.log("6")
+      })
+    })
+  }
+
+  const one = pesquisaProjetoAluno(id).then(usr => {
+    let array = []
+      for (let i in usr) {
+        var participante = {
+         tipo: usr[i].integrantes[0].tipo,
+         nome: usr[i].integrantes[0].nome,
+         nomeProjeto: usr[i].nomeProjeto,
+         token: usr[i].integrantes[0].certificados[0]._id
+       }
+       array.push(participante)
+     }
+     return {
+       tipo:'Projeto',
+       integrantes:array
+     }
+  })
+  .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+
+  const two = pesquisaAvaliador(id).then(usr => ({
+     tipo: "Avaliador",
+     nome: usr[0].nome,
+     token: usr[0].token
+   }))
+   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+
+  const three = pesquisaParticipante(id).then(usr => ({
+     tipo: "Participante",
+     nome: usr[0].nome,
+     eventos: usr[0].eventos,
+     tokenSaberes: usr[0].tokenSaberes
+   }))
+   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+
+  const four = pesquisaEvento(id).then(usr => {
+     let array = []
+     for (let i in usr) {
+       let participante = {
+         responsavel: usr[i].responsavel[0].nome,
+         tipo: usr[i].tipo,
+         titulo: usr[i].titulo,
+         cargaHoraria: usr[i].cargaHoraria,
+         token: usr[i].responsavel[0].certificados[0]._id
+       }
+       array.push(participante)
+     }
+     return {
+       tipo:"Evento",
+       evento:array
+     }
+   })
+   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+
+  const five = pesquisaPremiado(id).then(usr => {
+     let array = []
+     for (let i in usr) {
+       let premiado = {
+         nome: usr[i].integrantes[0].nome,
+         nomeProjeto: usr[i].nomeProjeto,
+         categoria: usr[i].categoria,
+         eixo: usr[i].eixo,
+         colocacao: usr[i].colocacao,
+         token: usr[i].token
+       }
+       array.push(premiado)
+     }
+       return {
+         tipo: "Premiado",
+         projeto: array
+       }
+    })
+    .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+
+  const six = pesquisaProjetoOrientador(id).then(usr => {
+    let array = []
+    for (let i in usr) {
+      var participante = {
+        tipo: usr[i].integrantes[0].tipo,
+        nome: usr[i].integrantes[0].nome,
+        nomeProjeto: usr[i].nomeProjeto,
+        token: usr[i].integrantes[0].certificados[0]._id
+      }
+      array.push(participante)
+    }
+    return {
+      tipo:'ProjetoOrientador',
+      integrantes:array
+    }
+  })
+  .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+
+  Promise.all([one, two, three, four, five, six])
+  .then(arr => {
+    res.send(arr.filter(val => val !== undefined))
+  })
+});
+
 router.post('/contato', (req, res) => {
   let email = req.body.email
   ,   nome = req.body.nome
