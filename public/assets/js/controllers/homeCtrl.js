@@ -286,7 +286,7 @@
 							var texto = ['Certificamos que o projeto ' +dados.nomeProjeto.toUpperCase()+ ' obteve o '+
 							dados.colocacao+ 'º LUGAR na categoria ' +dados.categoria.toUpperCase()+ ' e eixo ' +dados.eixo.toUpperCase()+
 							', durante a ', {text: 'V MOVACI - Mostra Venâncio-airense de Cultura e Inovação, do Instituto Federal de Educação, '+
-							'Ciência e Tecnologia Sul-rio-grandense, ',bold: true}, 'IFSul, Câmpus Venâncio Aires, ocorrida de 28 a 30 de setembro de 2016.\n\n\n\n\n\n\n\n\n'];
+							'Ciência e Tecnologia Sul-rio-grandense, ',bold: true}, 'IFSul, Câmpus Venâncio Aires, ocorrida de 28 a 30 de setembro de 2016.\n\n'];
 						} else if (tipo === 'Responsavel-saberes') {
 							var texto = ['Certificamos que ' +dados.responsavel.toUpperCase()+ ' atuou como conferencista, abordando tema '+
 							dados.titulo.toUpperCase()+ ' do Seminário Saberes Docentes, realizado na ', {text: 'V MOVACI - Mostra Venâncio-airense de Cultura '+
@@ -334,13 +334,6 @@
 									alignment: 'center',
 									fontSize: 14
 								}
-								// {
-								// 	text: 'Número de validação: ' +dados.token+ '. As informações deste certificado podem ser validadas em www.movaci.com.br/certificados.',
-								// 	alignment: 'center',
-								// 	fontSize: 11,
-								// 	// margin: [0,182,0,0],
-								// 	color: '#616161'
-								// }
 							],
 							footer: [
 								{
@@ -466,14 +459,7 @@
 								{
 									text: 'Venâncio Aires, ' +mesString+ ' de '  +ano+ '.',
 									alignment: 'center',
-									fontSize: 14
-								},
-								{
-									text: 'Número de validação: ' +dados.token+ '. As informações deste certificado podem ser validadas em www.movaci.com.br/certificados.',
-									alignment: 'center',
-									fontSize: 11,
-									margin: [0,162,0,0],
-									color: '#616161',
+									fontSize: 14,
 									pageBreak: 'after'
 								},
 								{
@@ -481,7 +467,20 @@
 									fontSize: 14,
 									margin: [0,60,0,0]
 								}
-							]
+							],
+							footer: function(currentPage) {
+								if (currentPage === 1) {
+									return [
+										{
+											text: 'Número de validação: ' +dados.token+ '. As informações deste certificado podem ser validadas em www.movaci.com.br/certificados.',
+											alignment: 'center',
+											fontSize: 11
+											// margin: [0,20],
+											// color: '#757575'
+										}
+									]
+								}
+							}
 						};
 						if (modo === 1) {
 							pdfMake.createPdf(docDefinition).open();
