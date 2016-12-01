@@ -2,5 +2,5 @@
 	'use strict';
 
 	angular
-		.module('PDIAP', ['ngResource','ngMaterial','ui.router','ngFileUpload','auth']);
+		.module('PDIAP', ['ngResource','ngSanitize','ngMaterial','ui.router','ngFileUpload','auth']);
 })();

@@ -116,6 +116,7 @@
 							countCertificados++;
 							presenca_oficina = {
 								nome: data[i].nome,
+								token: data[i].tokenOficinas,
 								eventos: evts1,
 								cargaHoraria: ch1
 							};
@@ -124,6 +125,7 @@
 							countCertificados++;
 							presenca_saberes = {
 								nome: data[i].nome,
+								token: data[i].tokenSaberes,
 								cargaHoraria: ch2,
 								eventos: eventos
 							};
@@ -153,13 +155,12 @@
 								saberesDocentes.push(value);
 							} else if (value.tipo === "Oficina") {
 								oficina.push(value);
-								console.log(oficina);
 							}
 						});
 					}
 					i = data.map(function(e) { return e.tipo; }).indexOf('Premiado');
 					if (i !== -1) {
-						angular.forEach(data[i].projeto, function (value, key){
+						angular.forEach(data[i].projetos, function (value, key){
 							countCertificados++;
 							premiados.push(value);
 						});
@@ -285,7 +286,7 @@
 							var texto = ['Certificamos que o projeto ' +dados.nomeProjeto.toUpperCase()+ ' obteve o '+
 							dados.colocacao+ 'º LUGAR na categoria ' +dados.categoria.toUpperCase()+ ' e eixo ' +dados.eixo.toUpperCase()+
 							', durante a ', {text: 'V MOVACI - Mostra Venâncio-airense de Cultura e Inovação, do Instituto Federal de Educação, '+
-							'Ciência e Tecnologia Sul-rio-grandense, ',bold: true}, 'IFSul, Câmpus Venâncio Aires, ocorrida de 28 a 30 de setembro de 2016.\n\n'];
+							'Ciência e Tecnologia Sul-rio-grandense, ',bold: true}, 'IFSul, Câmpus Venâncio Aires, ocorrida de 28 a 30 de setembro de 2016.\n\n\n\n\n\n\n\n\n'];
 						} else if (tipo === 'Responsavel-saberes') {
 							var texto = ['Certificamos que ' +dados.responsavel.toUpperCase()+ ' atuou como conferencista, abordando tema '+
 							dados.titulo.toUpperCase()+ ' do Seminário Saberes Docentes, realizado na ', {text: 'V MOVACI - Mostra Venâncio-airense de Cultura '+
@@ -332,12 +333,22 @@
 									text: 'Venâncio Aires, ' +mesString+ ' de '  +ano+ '.',
 									alignment: 'center',
 									fontSize: 14
-								},
+								}
+								// {
+								// 	text: 'Número de validação: ' +dados.token+ '. As informações deste certificado podem ser validadas em www.movaci.com.br/certificados.',
+								// 	alignment: 'center',
+								// 	fontSize: 11,
+								// 	// margin: [0,182,0,0],
+								// 	color: '#616161'
+								// }
+							],
+							footer: [
 								{
-									text: 'Número de validação: ' +dados.token,
-									// alignment: 'center',
-									fontSize: 12,
-									margin: [0,190,0,0]
+									text: 'Número de validação: ' +dados.token+ '. As informações deste certificado podem ser validadas em www.movaci.com.br/certificados.',
+									alignment: 'center',
+									fontSize: 11,
+									// margin: [0,20],
+									// color: '#757575'
 								}
 							]
 						};
@@ -431,6 +442,7 @@
 							pageSize: 'A4',
 							pageOrientation: 'landscape',
 							background: function(currentPage) {
+								console.log(currentPage);
 								if (currentPage === 1) {
 									var img_url = url_1+url_2;
 								} else if (currentPage === 2) {
@@ -454,7 +466,14 @@
 								{
 									text: 'Venâncio Aires, ' +mesString+ ' de '  +ano+ '.',
 									alignment: 'center',
-									fontSize: 14,
+									fontSize: 14
+								},
+								{
+									text: 'Número de validação: ' +dados.token+ '. As informações deste certificado podem ser validadas em www.movaci.com.br/certificados.',
+									alignment: 'center',
+									fontSize: 11,
+									margin: [0,162,0,0],
+									color: '#616161',
 									pageBreak: 'after'
 								},
 								{

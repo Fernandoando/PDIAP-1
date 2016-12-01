@@ -139,9 +139,18 @@
 
 		let _postCertificado = function(cpf) {
 			const request = {
-				url: '/certificado',
+				url: '/emitirCertificado',
 				method: 'POST',
 				data: {cpf: cpf}
+			}
+			return $http(request);
+		};
+
+		let _postConferirCertificado = function(token) {
+			const request = {
+				url: '/conferirCertificado',
+				method: 'POST',
+				data: {id: token}
 			}
 			return $http(request);
 		};
@@ -162,7 +171,8 @@
 			postNewPassword: _postNewPassword,
 			postContato: _postContato,
 			removeIntegrante: _removeIntegrante,
-			postCertificado: _postCertificado
+			postCertificado: _postCertificado,
+			postConferirCertificado: _postConferirCertificado
 		};
 	});
 })();

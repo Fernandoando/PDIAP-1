@@ -139,7 +139,7 @@
 			controller: "redefinirCtrl"
 		})
 		.state('consulta_certificado', {
-			url: "/certificados/consulta-validade",
+			url: "/certificados",
 			templateUrl: "/views/consulta_certificado.html",
 			controller: "certificadosCtrl"
 		})

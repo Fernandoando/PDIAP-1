@@ -83,7 +83,7 @@ function testaUsername2(req, res, next) {
 //   res.send('OK');
 // });
 
-router.post('/certificado', (req, res) => {
+router.post('/emitirCertificado', (req, res) => {
   let cpf = splita(req.body.cpf)
   let array = []
 
@@ -118,9 +118,8 @@ router.post('/certificado', (req, res) => {
     return new Promise(function (fullfill, reject) {
       avaliadorSchema.find({'cpf':cpf}, 'nome token -_id',(err, usr) => {
         if (err) return reject(err)
-        if (usr.token == undefined) {
+        if (usr.length > 0 && usr[0].token === undefined) {
           var newId = new mongoose.mongo.ObjectId()
-          console.log("usr[0].token igual undefined "+newId)
           avaliadorSchema.update({'cpf':cpf}, {$set:{'token':newId}}, ['-_id',{new:true}], (err, usr) => {
             if (err) return reject(err)
             fullfill(usr)
@@ -147,7 +146,7 @@ router.post('/certificado', (req, res) => {
 
   function pesquisaParticipante(cpf) {
     return new Promise(function (fullfill, reject) {
-      participanteSchema.find({'cpf':cpf}, 'nome tokenSaberes eventos -_id', (err, usr) => {
+      participanteSchema.find({'cpf':cpf}, 'nome tokenSaberes tokenOficinas eventos -_id', (err, usr) => {
         if (err) return reject(err)
         fullfill(usr)
       })
@@ -312,7 +311,7 @@ router.post('/certificado', (req, res) => {
     let contador = false
     let array = []
     for (let i in usr) {
-        if (usr[i].integrantes[0].certificados !== undefined && usr[i].integrantes[0].certificados.lenght > 0) {
+        if (usr[i].integrantes[0].certificados !== undefined && usr[i].integrantes[0].certificados[0]._id !== undefined) {
           contador = true
           var participante = {
             tipo: usr[i].integrantes[0].tipo,
@@ -346,31 +345,48 @@ router.post('/certificado', (req, res) => {
 
   const three = pesquisaParticipante(cpf).then(usr => {
     // console.log(usr[0].tokenSaberes)
-    let array = []
-      if (usr[0].tokenSaberes == undefined && usr[0].eventos[0]) {
-        let newId = new mongoose.mongo.ObjectId()
-        participanteSchema.findOneAndUpdate({'cpf':cpf},
+    // let array = []
+    let contador1 = false
+    let contador2 = false
+    if (usr[0].eventos.length > 0) {
+      for (var i in usr[0].eventos) {
+        if (usr[0].eventos[i].tipo === 'Oficina') {
+          contador1 = true;
+        }
+        else if (usr[0].eventos[i].tipo === 'Seminário Saberes Docentes') {
+          contador2 = true;
+        }
+      }
+    }
+    if (usr[0].tokenSaberes === undefined && contador2) {
+      let newId = new mongoose.mongo.ObjectId()
+      participanteSchema.findOneAndUpdate({'cpf':cpf},
         {'$set': {'tokenSaberes': newId}}, [{new:true}],
         (err, usr) => {
-          // console.log(err)
           console.log("OK")
-        })
-      }
+      })
+    }
+    if (usr[0].tokenOficinas === undefined && contador1) {
+      let newId = new mongoose.mongo.ObjectId()
+      participanteSchema.findOneAndUpdate({'cpf':cpf},
+        {'$set': {'tokenOficinas': newId}}, [{new:true}],
+        (err, usr) => {
+          console.log("OK")
+      })
+    }
     return pesquisaParticipante(cpf)
   })
   .then(usr => {
-    let array = []
-    let premiado = {
+    // let array = []
+    let participante = {
       tipo: "Participante",
       nome: usr[0].nome,
       tokenSaberes: usr[0].tokenSaberes,
+      tokenOficinas: usr[0].tokenOficinas,
       eventos: usr[0].eventos
     }
-    array.push(premiado)
-    return {
-      tipo:'Participante',
-      eventos:array
-    }
+    // array.push(participante)
+    return participante
   })
   .catch(err => console.log("Não encontrou nada nos participantes dos eventos. " + err.message))
 
@@ -378,7 +394,7 @@ router.post('/certificado', (req, res) => {
     let array = []
     let contador = false
     for (let i in usr) {
-      if (usr[i].responsavel[0].certificados !== undefined && usr[i].responsavel[0].certificados.lenght > 0) {
+      if (usr[i].responsavel[0].certificados !== undefined && usr[i].responsavel[0].certificados[0]._id !== undefined) {
         console.log(usr[i].responsavel[0]);
         contador = true
         let participante = {
@@ -514,7 +530,7 @@ router.post('/conferirCertificado', (req, res) => {
   function pesquisaProjetoAluno(id) {
     return new Promise(function (fulfill, reject) {
       ProjetoSchema.find(
-        {'integrantes':{$elemMatch:{'certificados._id':id}}},
+        {'integrantes':{$elemMatch:{'certificados._id':id,'tipo':'Aluno'}}},
         'integrantes.$ nomeProjeto numInscricao -_id',(err, usr) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
@@ -527,7 +543,7 @@ router.post('/conferirCertificado', (req, res) => {
   function pesquisaProjetoOrientador(id) {
     return new Promise(function (fulfill, reject) {
       ProjetoSchema.find(
-        {'integrantes':{$elemMatch:{'certificados._id':id}}},
+        {'integrantes':{$elemMatch:{'certificados._id':id,'tipo':'Orientador'}}},
         'integrantes.$ nomeProjeto -_id',(err, usr) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
@@ -539,7 +555,7 @@ router.post('/conferirCertificado', (req, res) => {
 
   function pesquisaAvaliador(id) {
     return new Promise(function (fulfill, reject) {
-      avaliadorSchema.find({'token':id}, 'nome token -_id',(err, usr) => {
+      avaliadorSchema.find({'token':id}, 'nome cpf token -_id',(err, usr) => {
         if (err) return reject(err)
         fulfill(usr)
         console.log("3")
@@ -547,9 +563,19 @@ router.post('/conferirCertificado', (req, res) => {
     })
   }
 
-  function pesquisaParticipante(id) {
+  function pesquisaParticipanteSaberes(id) {
     return new Promise(function (fulfill, reject) {
-      participanteSchema.find({'tokenSaberes':id}, 'nome tokenSaberes eventos -_id', (err, usr) => {
+      participanteSchema.find({'tokenSaberes':id}, 'nome tokenSaberes cpf eventos -_id', (err, usr) => {
+        if (err) return reject(err)
+        fulfill(usr)
+        console.log("4")
+      })
+    })
+  }
+
+  function pesquisaParticipanteOficinas(id) {
+    return new Promise(function (fulfill, reject) {
+      participanteSchema.find({'tokenOficinas':id}, 'nome tokenOficinas cpf eventos -_id', (err, usr) => {
         if (err) return reject(err)
         fulfill(usr)
         console.log("4")
@@ -570,7 +596,7 @@ router.post('/conferirCertificado', (req, res) => {
 
   function pesquisaPremiado(id) {
     return new Promise(function (fulfill, reject) {
-      premiadoSchema.find({'integrantes.certificados._id':id}, 'integrantes.$ nomeProjeto categoria eixo colocacao mostratec -_id',(err, usr) => {
+      premiadoSchema.find({'token':id}, 'nomeProjeto categoria eixo colocacao token -_id',(err, usr) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
         fulfill(usr)
@@ -580,19 +606,20 @@ router.post('/conferirCertificado', (req, res) => {
   }
 
   const one = pesquisaProjetoAluno(id).then(usr => {
-    let array = []
-      for (let i in usr) {
+    // let array = []
+      // for (let i in usr) {
         var participante = {
-         tipo: usr[i].integrantes[0].tipo,
-         nome: usr[i].integrantes[0].nome,
-         nomeProjeto: usr[i].nomeProjeto,
-         token: usr[i].integrantes[0].certificados[0]._id
+         tipo: usr[0].integrantes[0].tipo,
+         nome: usr[0].integrantes[0].nome,
+         cpf: usr[0].integrantes[0].cpf,
+         nomeProjeto: usr[0].nomeProjeto,
+         token: usr[0].integrantes[0].certificados[0]._id
        }
-       array.push(participante)
-     }
+      //  array.push(participante)
+    //  }
      return {
-       tipo:'Projeto',
-       integrantes:array
+       tipo:'ProjetoAluno',
+       integrantes:participante
      }
   })
   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
@@ -600,76 +627,88 @@ router.post('/conferirCertificado', (req, res) => {
   const two = pesquisaAvaliador(id).then(usr => ({
      tipo: "Avaliador",
      nome: usr[0].nome,
+     cpf: usr[0].cpf,
      token: usr[0].token
    }))
    .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
 
-  const three = pesquisaParticipante(id).then(usr => ({
+  const three = pesquisaParticipanteSaberes(id).then(usr => ({
      tipo: "Participante",
      nome: usr[0].nome,
+     cpf: usr[0].cpf,
      eventos: usr[0].eventos,
      tokenSaberes: usr[0].tokenSaberes
    }))
    .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
 
-  const four = pesquisaEvento(id).then(usr => {
-     let array = []
-     for (let i in usr) {
+   const four = pesquisaParticipanteOficinas(id).then(usr => ({
+      tipo: "Participante",
+      nome: usr[0].nome,
+      cpf: usr[0].cpf,
+      eventos: usr[0].eventos,
+      tokenOficinas: usr[0].tokenOficinas
+    }))
+    .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
+
+  const five = pesquisaEvento(id).then(usr => {
+    //  let array = []
+    //  for (let i in usr) {
        let participante = {
-         responsavel: usr[i].responsavel[0].nome,
-         tipo: usr[i].tipo,
-         titulo: usr[i].titulo,
-         cargaHoraria: usr[i].cargaHoraria,
-         token: usr[i].responsavel[0].certificados[0]._id
+         responsavel: usr[0].responsavel[0].nome,
+         cpf: usr[0].responsavel[0].cpf,
+         tipo: usr[0].tipo,
+         titulo: usr[0].titulo,
+         cargaHoraria: usr[0].cargaHoraria,
+         token: usr[0].responsavel[0].certificados[0]._id
        }
-       array.push(participante)
-     }
+      //  array.push(participante)
+    //  }
      return {
        tipo:"Evento",
-       evento:array
+       evento:participante
      }
    })
    .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
 
-  const five = pesquisaPremiado(id).then(usr => {
-     let array = []
-     for (let i in usr) {
+  const six = pesquisaPremiado(id).then(usr => {
+    //  let array = []
+    //  for (let i in usr) {
        let premiado = {
-         nome: usr[i].integrantes[0].nome,
-         nomeProjeto: usr[i].nomeProjeto,
-         categoria: usr[i].categoria,
-         eixo: usr[i].eixo,
-         colocacao: usr[i].colocacao,
-         token: usr[i].token
+         nomeProjeto: usr[0].nomeProjeto,
+         categoria: usr[0].categoria,
+         eixo: usr[0].eixo,
+         colocacao: usr[0].colocacao,
+         token: usr[0].token
        }
-       array.push(premiado)
-     }
+      //  array.push(premiado)
+    //  }
        return {
          tipo: "Premiado",
-         projeto: array
+         projeto: premiado
        }
     })
     .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
 
-  const six = pesquisaProjetoOrientador(id).then(usr => {
-    let array = []
-    for (let i in usr) {
+  const seven = pesquisaProjetoOrientador(id).then(usr => {
+    // let array = []
+    // for (let i in usr) {
       var participante = {
-        tipo: usr[i].integrantes[0].tipo,
-        nome: usr[i].integrantes[0].nome,
-        nomeProjeto: usr[i].nomeProjeto,
-        token: usr[i].integrantes[0].certificados[0]._id
+        tipo: usr[0].integrantes[0].tipo,
+        nome: usr[0].integrantes[0].nome,
+        cpf: usr[0].integrantes[0].cpf,
+        nomeProjeto: usr[0].nomeProjeto,
+        token: usr[0].integrantes[0].certificados[0]._id
       }
-      array.push(participante)
-    }
+      // array.push(participante)
+    // }
     return {
       tipo:'ProjetoOrientador',
-      integrantes:array
+      integrantes:participante
     }
   })
   .catch(err => console.log("Não encontrou nada nos projetos. " + err.message))
 
-  Promise.all([one, two, three, four, five, six])
+  Promise.all([one, two, three, four, five, six, seven])
   .then(arr => {
     res.send(arr.filter(val => val !== undefined))
   })
@@ -1106,7 +1145,7 @@ router.all('/nova-senha/*', function(req, res, next) {
   res.render('layout.ejs');
 });
 
-router.get('/certificados/consulta-validade', function(req, res, next) {
+router.get('/certificados', function(req, res, next) {
   res.render('layout.ejs');
 });
 

@@ -4,7 +4,7 @@
     <md-progress-circular md-mode="indeterminate" md-diameter="40" class="loading-default" style="display:flex;align-self:center;"></md-progress-circular>
   </div>
 </span>
-<div data-ng-if="verif !== 'pending'" layout="row" layout-fill class="admin-page">
+<div data-ng-if="verif !== 'pending'" layout="row" layout-fill>
   <section layout="column" role="main" flex>
     <md-toolbar role="toolbar" class="md-whiteframe-2dp" style="background:#43a047;min-height:70px!important;">
       <div class="md-toolbar-tools" style="min-height:70px!important;">
@@ -62,16 +62,16 @@
                             </span>
                           </div>
                         </form>
-                        <div style="color:#388e3c;text-transform:uppercase;display:inline-flex;align-items:center;">
+                        <div data-ng-if="texto.length > 0" style="color:#388e3c;text-transform:uppercase;display:inline-flex;align-items:center;">
                           <md-icon md-svg-icon="check" style="width:40px;height:40px;color:inherit;margin-bottom:10px;"></md-icon>
                           <h5 style="color:inherit;font-size:17px;">Certificado válido</h5>
                         </div>
-                        <div style="color:#d32f2f;text-transform:uppercase;display:inline-flex;align-items:center;">
+                        <div data-ng-if="texto.length === 0" style="color:#d32f2f;text-transform:uppercase;display:inline-flex;align-items:center;">
                           <md-icon md-svg-icon="close" style="width:40px;height:40px;color:inherit;margin-bottom:5px;"></md-icon>
                           <h5 style="color:inherit;font-size:17px;">Certificado não encontrado</h5>
                         </div>
+                        <p ng-bind-html='texto'></p>
                       </td>
-
                     </tr>
                   </tbody></table>
                 </td>
@@ -170,7 +170,7 @@
 </tr>
 </table>
 </center>
-<footer id="footer" style="background:none!important;">
+<footer id="footer" style="background:none!important;position:relative!important;">
   <p>&copy; MOVACI. Todos os direitos reservados.</p>
 </footer>
 </section>
