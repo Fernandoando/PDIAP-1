@@ -159,6 +159,7 @@ router.post('/emitirCertificado', (req, res) => {
         if (err) return reject(err)
         if (usr == 0) return reject({err})
         fullfill(usr)
+        console.log("EVENTO \n"+usr)
       })
     })
   }
@@ -391,12 +392,14 @@ router.post('/emitirCertificado', (req, res) => {
   .catch(err => console.log("Não encontrou nada nos participantes dos eventos. " + err.message))
 
   const four = pesquisaEvento(cpf).then(usr => {
+    console.log("AINDA EVENTO \n"+usr)
     let array = []
     let contador = false
     for (let i in usr) {
-      if (usr[i].responsavel[0].certificados !== undefined && usr[i].responsavel[0].certificados[0]._id !== undefined) {
+      if (usr[i].responsavel[0].certificados[0] !== undefined) {
         console.log(usr[i].responsavel[0]);
         contador = true
+        console.log("CONTADO: "+contador)
         let participante = {
           responsavel: usr[i].responsavel[0].nome,
           tipo: usr[i].tipo,
@@ -406,7 +409,8 @@ router.post('/emitirCertificado', (req, res) => {
           tokentipo: usr[i].responsavel[0].certificados[0].tipo
         }
         array.push(participante)
-      } else {
+      } else if (usr[i].responsavel[0].certificados[0] == undefined) {
+        console.log("CHEGAMOS AQUI ENT")
         return inserirTokenEvento(cpf, usr[i]._id, "Evento")
       }
     }
