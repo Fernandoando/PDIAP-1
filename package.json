@@ -3,8 +3,10 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "start": "nodemon bin/www --exec babel-node --presets es2015",
-    "producao": "pm2 start bin/www"
+    "start": "nodemon --exec babel-node bin/www --inspect",
+    "producao": "pm2 start bin/www",
+    "lint": "eslint '**/*.js'",
+    "lint:fix": "eslint '**/*.js' --fix"
   },
   "dependencies": {
     "async": "^2.0.1",
@@ -36,15 +38,29 @@
     "swig-email-templates": "^3.0.0"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-cli": "^6.14.0",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-preset-stage-2": "^6.13.0",
+    "babel-cli": "6.18.0",
+    "babel-preset-latest": "^6.24.1",
+    "chai": "^3.5.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-config-airbnb-base": "^11.1.2",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0",
+    "eslint-plugin-standard": "^2.0.0",
+    "mocha": "^3.2.0",
+    "nock": "^9.0.2",
+    "supertest": "^2.0.1",
+    "testdouble": "^1.10.1",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-ignore": "^2.0.1",
     "gulp-install": "^0.6.0",
     "gulp-sourcemaps": "^1.6.0"
+  },
+  "apidoc": {
+    "title": "PDIAP",
+    "url": "movaci.com.br:3000"
   }
 }

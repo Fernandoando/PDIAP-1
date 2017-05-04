@@ -1,0 +1,23 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: /docker/Dockerfile
+    ports:
+      - "3000:3000"
+      - "80:80"
+    volumes:
+      - .:/home/app/pdiap
+      - /home/app/pdiap/node_modules
+    depends_on:
+      - mongo
+    command: docker/wait-for-it.sh mongo:27017 -- npm start
+    restart: always
+  mongo:
+    image: sameersbn/mongodb:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - /srv/docker/mongodb:/var/lib/mongodb
+    restart: always

@@ -1,8 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose')
-,	dbURL = 'mongodb://localhost:27017/loginapp';
-//,	dbURL = 'mongodb://172.17.0.2:27017/loginapp';
+,	dbURL = 'mongodb://mongo:27017/loginapp';
 
 mongoose.connect(dbURL);
 
